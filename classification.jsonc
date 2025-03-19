@@ -1,0 +1,39 @@
+{
+    "math": { // 00
+        "algebra": { // 00-00
+            "abstract algebra": [ // 00-00-00
+                "Lambert W function" // 00-00-00-00
+            ],
+            "elementary algebra": [ // 00-00-01
+
+            ],
+            "linear algebra": [ // 00-00-02
+
+            ]
+        },
+        "arithmetic": { // 00-01
+
+        },
+        "trigonometry": { // 00-02
+
+        },
+        "calculus": { // 00-03
+
+        }
+    },
+    "physics": { // 01
+        "relativity": { // 01-00
+            "special relativity": [ // 01-00-00
+
+            ],
+            "general relativity": [ // 01-00-01
+
+            ]
+        },
+        "mechanics": { // 01-01
+            "kinematics": [ // 01-01-00
+
+            ]
+        }
+    }
+}
