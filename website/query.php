@@ -1,6 +1,7 @@
 <?php
 // RESPONSE IS JSON
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
 
 // DATABASE CONNECTION DETAILS
 $host = 'sql211.infinityfree.com';
@@ -20,21 +21,9 @@ if ($connection->connect_error) {
 // GET SEARCH VALUE
 $searchValue = $_GET['id'] ?? '';
 
-// RETURNS ERROR IF SEARCH EMPTY
-if (empty($searchValue)) {
-    echo json_encode(['error' => 'No search value provided.']);
-    exit;
-}
-
 // PREPARES QUERY
 $searchQuery = 'SELECT * FROM problems WHERE id = ?';
 $stmt = $connection->prepare($searchQuery);
-
-// THROW ERROR IF ERROR IN SEARCH
-if (!$stmt) {
-    echo json_encode(['error' => 'Error preparing the statement: ' . $connection->error]);
-    exit;
-}
 
 // BINDS STRING PARAMETER TO THE SEARCH VALUE
 $stmt->bind_param('s', $searchValue);
@@ -45,7 +34,7 @@ $stmt->execute();
 // GETS QUERY RESULTS
 $result = $stmt->get_result();
 
-// INITALIZE DATA VARIABLE
+// INITIALIZE DATA VARIABLE
 $data = [];
 
 // ADD ROWS AND RETURN
@@ -53,7 +42,12 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $data[] = $row;
     }
-    echo json_encode($data);
+    // EXTRACT FIRST DATA FIELD
+    if (isset($data[0]['data'])) {
+        echo $data[0]['data'];
+    } else {
+        echo json_encode(['error' => 'Data field not found.']);
+    }
 } else {
     echo json_encode(['message' => 'No results found.']);
 }

@@ -27,7 +27,7 @@ CREATE TABLE `problems` (
   `data` json NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf16;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `problems` (
 
 LOCK TABLES `problems` WRITE;
 /*!40000 ALTER TABLE `problems` DISABLE KEYS */;
-INSERT INTO `problems` VALUES (0000000000,'{\"name\": \"Solve for $x$.\", \"proof\": [\"80^x+x=80 \\\\\\\\ 80^x = 80-x \\\\\\\\ 80-x=80^x\\\\\\\\ (80-x)80^{-x}=1\\\\\\\\ (80-x)80^{80-x}=80^{80}\\\\\\\\ (80-x)\\\\left(e^{\\\\ln80}\\\\right)^{80-x}=80^{80}\\\\\\\\ (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\\\\\ \\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\ln 80 \\\\\\\\ W(\\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80}) = W(80^{80}\\\\ln 80) \\\\\\\\ (80-x)\\\\ln 80 = W(80^{80}\\\\ln 80) \\\\\\\\ 80-x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80} \\\\\\\\ -x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}-80 \\\\\\\\ \\\\boxed{x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}}\"], \"content\": [\"00000000\"], \"solutions\": [\"x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}\"], \"intructions\": \"Solve analytically for $x$:\\n\\n$$\\n80^x + x = 80 \\n$$\"}');
+INSERT INTO `problems` VALUES (0000000000,'{\"content\": [\"00000000\"], \"ilatexProofs\": [\"$80^x+x=80 \\\\\\\\ 80^x = 80-x \\\\\\\\ 80-x=80^x\\\\\\\\ (80-x)80^{-x}=1\\\\\\\\ (80-x)80^{80-x}=80^{80}\\\\\\\\ (80-x)\\\\left(e^{\\\\ln80}\\\\right)^{80-x}=80^{80}\\\\\\\\ (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\\\\\ \\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\ln 80 \\\\\\\\ W(\\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80}) = W(80^{80}\\\\ln 80) \\\\\\\\ (80-x)\\\\ln 80 = W(80^{80}\\\\ln 80) \\\\\\\\ 80-x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80} \\\\\\\\ -x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}-80 \\\\\\\\ \\\\boxed{x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}}$\"], \"ilatexSolutions\": [\"$x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}$\"], \"textDescription\": \"Solve for x\", \"latexInstructions\": \"Solve analytically for $x$:\\n\\n$\\n80^x + x = 80 \\n$\"}');
 /*!40000 ALTER TABLE `problems` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-15 18:53:51
+-- Dump completed on 2025-03-20 18:11:14

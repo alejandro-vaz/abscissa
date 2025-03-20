@@ -1,10 +1,20 @@
-// SELECTS ALL LATEX ELEMENTS
-const latexViewers = document.querySelectorAll('#latexViewer');
+const renderLatex = (element) => {
+    katex.render(element.textContent, element, { throwOnError: false });
+};
 
-// ITERATES OVER EVERY ELEMENT AND RENDERS IT
-latexViewers.forEach((latexViewer) => {
-    const latexContent = latexViewer.textContent;
-    katex.render(latexContent, latexViewer, {
-        throwOnError: false
+// INITIAL RENDERING
+document.querySelectorAll('.latex').forEach(renderLatex);
+
+// OBSERVE DYNAMICALLY ADDED ELEMENTS
+new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.classList.contains('latex')) {
+                    renderLatex(node);
+                }
+                node.querySelectorAll('.latex').forEach(renderLatex);
+            }
+        });
     });
-});
+}).observe(document.body, { childList: true, subtree: true });
