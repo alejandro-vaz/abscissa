@@ -1,0 +1,23 @@
+# *Abscissa* changelog
+
+## *Abscissa* 0.0.1
+
+- [X] (Major) Initial release.
+
+### *Abscissa* 0.1.9
+
+- [X] (Patch) Changed problems *JSON* structure.
+
+- [X] (Minor) Improved *content* element *ID* inside elements structure.
+
+- [X] (Patch) Changed codes for classification to *base-*$36$.
+
+- [X] (Patch) Remade query handling and requisites.
+
+- [X] (Patch) Remade website titles.
+
+- [X] (Patch) Improved *LaTeX* math parsing via `website/render.js`.
+
+- [X] (Patch) Added comments to all code.
+
+- [X] (Minor) Remade `website/style.less`.

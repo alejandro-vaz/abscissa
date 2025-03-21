@@ -1,69 +1,63 @@
-document.getElementById('searchButton').addEventListener('click', handleSearch);
+// LISTEN TO CLICK AND EXECUTE SEARCH
+document.getElementById('searchButton').addEventListener('click', search);
 
 // SEARCH FUNCTION
-function handleSearch() {
-    // GET SEARCH ID
+function search() {
+    // GET ID
     const searchId = document.getElementById('searchId').value;
-
-    // ALERT IF IT IS EMPTY
-    if (!searchId) {
-        alert('Please enter an ID to search.');
+    // ALERT IF IT IS NOT SIX DIGITS OR UPPERCASE LETTERS
+    if (!/^[A-Z0-9]{6}$/.test(searchId)) {
+        alert('Please enter a valid ID (6 uppercase letters or digits).');
         return;
     }
-
-    // CALL QUERY.PHP
+    // CALL QUERY.PHP AND PROCESS DATA
     fetch(`query.php?id=${encodeURIComponent(searchId)}`)
         .then(response => response.json())
         .then(data => {
+            // GET AND ERASE CONTENT DIV
             const resultsDiv = document.getElementById('content');
-            resultsDiv.innerHTML = ''; // Clear previous content
-
-            // Create an h2 for "textDescription"
+            resultsDiv.innerHTML = '';
+            // INSERT TEXTDESCRIPTION INTO H2
             if (data.textDescription) {
                 const header = document.createElement('h2');
+                header.className = "content-title"
                 header.textContent = data.textDescription;
                 resultsDiv.appendChild(header);
             }
-
-            // Create a p with class "latex" for "latexInstructions" and apply >>latex
+            // PARSE INSTRUCTIONS
             if (data.latexInstructions) {
-                const latexInstructions = document.createElement('p');
-                latexInstructions.innerHTML = processInlineLatex(data.latexInstructions);
-                resultsDiv.appendChild(latexInstructions);
+                const instructionsHeader = document.createElement('h3');
+                instructionsHeader.textContent = "Instructions";
+                instructionsHeader.className = "content-institle"
+                resultsDiv.appendChild(instructionsHeader);
+                const instructionsDiv = document.createElement('div');
+                instructionsDiv.className = "content-instructions";
+                instructionsDiv.innerHTML = data.latexInstructions;
+                resultsDiv.appendChild(instructionsDiv);
             }
-
-            // Create a ul for "ilatexSolutions" and apply >>latex to each item
-            if (Array.isArray(data.ilatexSolutions)) {
-                const solutionsList = document.createElement('ul');
-                data.ilatexSolutions.forEach(solution => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = processLatex(solution);
-                    solutionsList.appendChild(listItem);
+            // ALL SOLUTIONS DIV
+            if (data.latexSolutions && typeof data.latexSolutions === 'object') {
+                const solutionsContainer = document.createElement('div');
+                solutionsContainer.className = "content-solutions";
+                Object.entries(data.latexSolutions).forEach(([solution, proof]) => {
+                    // ONE-PAIR SUBDIV
+                    const solutionProofDiv = document.createElement('div');
+                    solutionProofDiv.className = "content-solutions-div";
+                    // SOLUTION SUBSECTION
+                    const solutionSection = document.createElement('div');
+                    solutionSection.className = "content-solutions-solution";
+                    solutionSection.innerHTML = `<h4>Solution</h4> <div>${solution}</div>`;
+                    solutionProofDiv.appendChild(solutionSection);
+                    // PROOF SUBSECTION
+                    const proofSection = document.createElement('div');
+                    proofSection.className = "content-solutions-proof";
+                    proofSection.innerHTML = `<h4>Proof</h4> <div>${proof}</div>`;
+                    solutionProofDiv.appendChild(proofSection);
+                    // APPEND PAIR DIV
+                    solutionsContainer.appendChild(solutionProofDiv);
                 });
-                resultsDiv.appendChild(solutionsList);
-            }
-
-            // Create a ul for "ilatexProofs" and apply >>latex to each item
-            if (Array.isArray(data.ilatexProofs)) {
-                const proofsList = document.createElement('ul');
-                data.ilatexProofs.forEach(proof => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = processLatex(proof);
-                    proofsList.appendChild(listItem);
-                });
-                resultsDiv.appendChild(proofsList);
+                // APPEND ALL DIV
+                resultsDiv.appendChild(solutionsContainer);
             }
         });
-}
-
-// Function to process >>latex
-function processLatex(input) {
-    return input.replace(/\$(.+?)\$/g, '<div class="latex">$1</div>');
-}
-
-function processInlineLatex(input) {
-    // Replace $...$ with <span class="latex">...</span>, preserving line breaks
-    return input
-        .replace(/\n/g, '<br>')
-        .replace(/\$(.+?)\$/g, '<span class="latex">$1</span>');
 }

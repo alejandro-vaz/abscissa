@@ -1,5 +1,5 @@
 <?php
-// RESPONSE IS JSON
+// RESPONSE SET TO JSON
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 

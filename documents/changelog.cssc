@@ -1,3 +1,12 @@
 /h1 ·Abscissa· changelog
 /h2 ·Abscissa· 0.0.1
-/X Initial release.
+/X (Major) Initial release.
+/h3 ·Abscissa· 0.1.9
+/X (Patch) Changed problems ·JSON· structure.
+/X (Minor) Improved ·content· element ·ID· inside elements structure.
+/X (Patch) Changed codes for classification to ·base-·/=36/=.
+/X (Patch) Remade query handling and requisites.
+/X (Patch) Remade website titles.
+/X (Patch) Improved ·LaTeX· math parsing via /_website/render.js/_.
+/X (Patch) Added comments to all code.
+/X (Minor) Remade /_website/¬style.less/_.

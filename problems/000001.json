@@ -1,0 +1,11 @@
+{
+    "textDescription": "(#000001) Calculate definite integral",
+    "content": [
+        "0300",
+        "0301"
+    ],
+    "latexInstructions": "Solve the following definite integral analytically:<br>$$\\int_0^1{e^x dx}$$",
+    "latexSolutions": {
+        "$$e - 1$$": "$$\\begin{align*} &\\int_0^1 e^x dx \\\\ &=e^x \\Bigg|^1_0 \\\\ &=e^1 - e^0 \\\\ &= \\boxed{e - 1} \\end{align*}$$"
+    }
+}

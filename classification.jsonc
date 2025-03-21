@@ -1,37 +1,43 @@
 {
-    "math": { // 00
-        "algebra": { // 00-00
-            "abstract algebra": [ // 00-00-00
-                "Lambert W function" // 00-00-00-00
+    "math": { // 0
+        "algebra": { // 00
+            "abstract algebra": [ // 000
+                "Lambert W function" // 0000
             ],
-            "elementary algebra": [ // 00-00-01
+            "elementary algebra": [ // 001
 
             ],
-            "linear algebra": [ // 00-00-02
+            "linear algebra": [ // 002
 
             ]
         },
-        "arithmetic": { // 00-01
+        "arithmetic": { // 01
 
         },
-        "trigonometry": { // 00-02
+        "trigonometry": { // 02
 
         },
-        "calculus": { // 00-03
+        "calculus": { // 03
+            "differential calculus": [ // 030
+                "Definite integral", // 0300
+                "Indefinite integral" // 0301
+            ]
+        },
+        "multivariable calculus": { // 04
 
         }
     },
-    "physics": { // 01
-        "relativity": { // 01-00
-            "special relativity": [ // 01-00-00
+    "physics": { // 1
+        "relativity": { // 10
+            "special relativity": [ // 100
 
             ],
-            "general relativity": [ // 01-00-01
+            "general relativity": [ // 101
 
             ]
         },
-        "mechanics": { // 01-01
-            "kinematics": [ // 01-01-00
+        "mechanics": { // 11
+            "kinematics": [ // 110
 
             ]
         }
