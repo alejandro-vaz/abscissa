@@ -1,5 +1,10 @@
-// LISTEN TO CLICK AND EXECUTE SEARCH
+// LISTEN TO CLICK OR ENTER AND EXECUTE SEARCH
 document.getElementById('searchButton').addEventListener('click', search);
+document.getElementById('searchId').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        search()
+    }
+})
 
 // SEARCH FUNCTION
 function search() {
@@ -11,7 +16,7 @@ function search() {
         return;
     }
     // CALL QUERY.PHP AND PROCESS DATA
-    fetch(`query.php?id=${encodeURIComponent(searchId)}`)
+    fetch(`../db/query.php?id=${encodeURIComponent(searchId)}`)
         .then(response => response.json())
         .then(data => {
             // GET AND ERASE CONTENT DIV
@@ -19,9 +24,10 @@ function search() {
             resultsDiv.innerHTML = '';
             // INSERT TEXTDESCRIPTION INTO H2
             if (data.textDescription) {
+                resultsDiv.style.borderWidth = "5px"
                 const header = document.createElement('h2');
                 header.className = "content-title"
-                header.textContent = data.textDescription;
+                header.innerHTML = `<span class="content-title-light">(#${searchId})</span> ${data.textDescription}`;
                 resultsDiv.appendChild(header);
             }
             // PARSE INSTRUCTIONS
@@ -61,3 +67,4 @@ function search() {
             }
         });
 }
+

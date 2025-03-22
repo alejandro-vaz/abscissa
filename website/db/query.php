@@ -45,11 +45,7 @@ if ($result->num_rows > 0) {
     // EXTRACT FIRST DATA FIELD
     if (isset($data[0]['data'])) {
         echo $data[0]['data'];
-    } else {
-        echo json_encode(['error' => 'Data field not found.']);
     }
-} else {
-    echo json_encode(['message' => 'No results found.']);
 }
 
 // CLOSE CONNECTION AND END

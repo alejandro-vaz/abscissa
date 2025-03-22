@@ -1,5 +1,6 @@
 /h1 ·Abscissa· changelog
 /h2 ·Abscissa· 0.0.1
+---
 /X (Major) Initial release.
 /h3 ·Abscissa· 0.1.9
 /X (Patch) Changed problems ·JSON· structure.
@@ -10,3 +11,12 @@
 /X (Patch) Improved ·LaTeX· math parsing via /_website/render.js/_.
 /X (Patch) Added comments to all code.
 /X (Minor) Remade /_website/¬style.less/_.
+/h3 ·Abscissa· 0.2.0
+/X (Patch) Increase /_.main/_ /_#content/_ size to /_1000px/_.
+/X (Patch) Remove /_#content/_ border if empty.
+/X (Patch) Remade margin handling.
+/X (Patch) Completely removed scrollbar.
+/X (Patch) Added navbar with button and /_general.js/_.
+/X (Patch) Improved filetree structure.
+/X (Patch) Enter now leads to field execution.
+/X (Patch) Switched main theme to black.

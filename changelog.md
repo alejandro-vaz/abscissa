@@ -2,6 +2,8 @@
 
 ## *Abscissa* 0.0.1
 
+---
+
 - [X] (Major) Initial release.
 
 ### *Abscissa* 0.1.9
@@ -21,3 +23,21 @@
 - [X] (Patch) Added comments to all code.
 
 - [X] (Minor) Remade `website/style.less`.
+
+### *Abscissa* 0.2.0
+
+- [X] (Patch) Increase `.main` `#content` size to `1000px`.
+
+- [X] (Patch) Remove `#content` border if empty.
+
+- [X] (Patch) Remade margin handling.
+
+- [X] (Patch) Completely removed scrollbar.
+
+- [X] (Patch) Added navbar with button and `general.js`.
+
+- [X] (Patch) Improved filetree structure.
+
+- [X] (Patch) Enter now leads to field execution.
+
+- [X] (Patch) Switched main theme to black.

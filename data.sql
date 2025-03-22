@@ -36,7 +36,7 @@ CREATE TABLE `problems` (
 
 LOCK TABLES `problems` WRITE;
 /*!40000 ALTER TABLE `problems` DISABLE KEYS */;
-INSERT INTO `problems` VALUES ('000000','{\"content\": [\"0000\"], \"latexSolutions\": {\"$$x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}$$\": \"$$80^x+x=80 \\\\\\\\ 80^x = 80-x \\\\\\\\ 80-x=80^x\\\\\\\\ (80-x)80^{-x}=1\\\\\\\\ (80-x)80^{80-x}=80^{80}\\\\\\\\ (80-x)\\\\left(e^{\\\\ln80}\\\\right)^{80-x}=80^{80}\\\\\\\\ (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\\\\\ \\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\ln 80 \\\\\\\\ W(\\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80}) = W(80^{80}\\\\ln 80) \\\\\\\\ (80-x)\\\\ln 80 = W(80^{80}\\\\ln 80) \\\\\\\\ 80-x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80} \\\\\\\\ -x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}-80 \\\\\\\\ \\\\boxed{x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}}$$\"}, \"textDescription\": \"(#000000) Solve for x\", \"latexInstructions\": \"Solve analytically for $x$:<br>$$80^x + x = 80 $$\"}'),('000001','{\"content\": [\"0300\", \"0301\"], \"latexSolutions\": {\"$$e - 1$$\": \"$$\\\\begin{align*} &\\\\int_0^1 e^x dx \\\\\\\\ &=e^x \\\\Bigg|^1_0 \\\\\\\\ &=e^1 - e^0 \\\\\\\\ &= \\\\boxed{e - 1} \\\\end{align*}$$\"}, \"textDescription\": \"(#000001) Calculate definite integral\", \"latexInstructions\": \"Solve the following definite integral analytically:<br>$$\\\\int_0^1{e^x dx}$$\"}');
+INSERT INTO `problems` VALUES ('000000','{\"content\": [\"0000\"], \"latexSolutions\": {\"$$x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}$$\": \"$$80^x+x=80 \\\\\\\\ 80^x = 80-x \\\\\\\\ 80-x=80^x\\\\\\\\ (80-x)80^{-x}=1\\\\\\\\ (80-x)80^{80-x}=80^{80}\\\\\\\\ (80-x)\\\\left(e^{\\\\ln80}\\\\right)^{80-x}=80^{80}\\\\\\\\ (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\\\\\ \\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80} = 80^{80}\\\\ln 80 \\\\\\\\ W(\\\\ln 80 \\\\cdot (80-x)e^{(80-x)\\\\ln 80}) = W(80^{80}\\\\ln 80) \\\\\\\\ (80-x)\\\\ln 80 = W(80^{80}\\\\ln 80) \\\\\\\\ 80-x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80} \\\\\\\\ -x = \\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}-80 \\\\\\\\ \\\\boxed{x = 80-\\\\frac{W(80^{80}\\\\ln 80)}{\\\\ln 80}}$$\"}, \"textDescription\": \"Solve for x\", \"latexInstructions\": \"Solve analytically for $x$:<br>$$80^x + x = 80 $$\"}'),('000001','{\"content\": [\"0300\", \"0301\"], \"latexSolutions\": {\"$$e - 1$$\": \"$$\\\\int_0^1 e^x dx \\\\\\\\ =e^x \\\\Bigg|^1_0 \\\\\\\\ =e^1 - e^0 \\\\\\\\ = \\\\boxed{e - 1}$$\"}, \"textDescription\": \"Calculate definite integral\", \"latexInstructions\": \"Solve the following definite integral analytically:<br>$$\\\\int_0^1{e^x dx}$$\"}');
 /*!40000 ALTER TABLE `problems` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-21 20:51:41
+-- Dump completed on 2025-03-22 10:47:05
