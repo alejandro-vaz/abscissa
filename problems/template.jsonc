@@ -1,12 +1,10 @@
 {
-    "textDescription": "(#IDCODE) Example", // NAME AND CODE
+    "textDescription": "Example", // NAME
     "content": [
         "CODE",
         "MORE"
     ], // ID CODES FOR CONTENT CLASSIFICATION
     "latexInstructions": "Instructions which might include LaTeX code between dollar signs.", // INSTRUCTIONS FOR THE PROBLEM
-    "latexSolutions": {
-        "Answer": "Proof",
-        "Other": "More"
-    } // SOLUTIONS AND PROOFS, INCLUDE PROOFS BETWEEN DOUBLE DOLLAR SIGNS
+    "latexSolution": "Solution", // BETWEEN DOUBLE DOLLAR SIGNS
+    "latexProof": "Proof" // BETWEEN DOUBLE DOLLAR SIGNS
 }

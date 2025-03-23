@@ -24,7 +24,6 @@ except:
     print("Connection failed.")
     exit(1)
 
-
 # CONNECT TO TERMINAL
 cursor = db_connection.cursor()
 # USE GENERAL CHARACTER SETS
@@ -67,7 +66,7 @@ export_command = [
     "data"
 ]
 # RUN EXPORT
-with open("data.sql", "w") as output_file:
+with open("data/data.sql", "w") as output_file:
     subprocess.run(export_command, stdout=output_file, check=True)
 cursor.close()
 db_connection.close()

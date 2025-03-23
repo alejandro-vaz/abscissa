@@ -1,0 +1,9 @@
+{
+    "textDescription": "Solve inequality",
+    "content": [
+
+    ],
+    "latexInstructions": "Solve the following inequality:<br>$$\\frac{x-3}{2}-2x\\ge 1 - \\frac{2x-5}{3}$$",
+    "latexSolution": "$$x \\le -5 \\Longleftrightarrow  x \\in \\left(-\\infty, -5\\right]$$",
+    "latexProof": "$$\\frac{x-3}{2}-2x\\ge 1 - \\frac{2x-5}{3} \\\\ 3x-9-12x\\ge 6 - 4x + 10 \\\\ -9x-9\\geq-4x+16 \\\\ -25 \\ge 5x \\\\ 5x \\le -25 \\\\ \\boxed{x \\le -5} \\Longleftrightarrow x \\in \\left(-\\infty, -5\\right]$$"
+}

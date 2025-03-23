@@ -1,0 +1,9 @@
+{
+    "textDescription": "Solve for x",
+    "content": [
+        "0000"
+    ],
+    "latexInstructions": "Solve analytically for $x$ in the next equation and express it in terms of mathematical constants:<br>$$x \\ln x = 1$$",
+    "latexSolution": "$$x = \\Omega^{-1} = e^{\\Omega}$$",
+    "latexProof": "$$x \\ln x = 1 \\\\ \\text{CHANGE OF VARIABLE} \\\\ u = \\ln x \\Longleftrightarrow x = e^u \\\\ \\text{APPLY CHANGE} \\\\ e^u \\ln (e^u) = 1 \\\\ u \\cdot e^u \\ln e = 1 \\\\ ue^u = 1 \\\\ W(ue^u)= W(1) \\\\ u = W(1) = \\Omega \\\\ \\text{REVERT TO VARIABLE CHANGE} \\\\ \\Omega = \\ln x \\\\ x = e^\\Omega \\\\ \\text{APPLY LAMBERT W DIVISION IDENTITY} \\\\ e^{W(z)} = \\frac{z}{W(z)} \\\\ e^{W(1)} = \\frac{1}{W(1)} \\\\ e^\\Omega = \\frac{1}{\\Omega} \\\\ \\boxed{x = \\Omega^{-1}} = e^{\\Omega} \\approx 1.763222834$$"
+}

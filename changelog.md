@@ -41,3 +41,17 @@
 - [X] (Patch) Enter now leads to field execution.
 
 - [X] (Patch) Switched main theme to black.
+
+#### *Abscissa* 0.2.7
+
+- [X] (Patch) Unified style.
+
+- [X] (Patch) Simplified problem structure.
+
+- [X] (Patch) Added input checking in search.
+
+- [X] (Minor) Added a `Show solution` button.
+
+- [X] (Patch) Added $2$ problems.
+
+- [X] (Patch) Added numerical approximations for problem answers.

@@ -1,10 +1,13 @@
 /* MAIN SECTION */
 body > .main {
-    border: 20px solid #fff;
-    border-radius: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2.5px dashed #fff;
+    border-radius: 10px;
     width: min(100vw, 1000px);
-    background-color: #fff;
+    background-color: #000;
     box-sizing: border-box;
+    color: #fff;
 }
 
 .main > h1 {
@@ -17,7 +20,7 @@ body > .main {
     border-width: 0;
     border-style: dashed;
     border-color: #000;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 20px;
 }
 #content:empty {
@@ -32,7 +35,7 @@ body > .main {
     margin-bottom: 0;
 }
 .content-title-light {
-    color: #999;
+    color: #aaa;
 }
 .content-institle {
     margin-top: 10px;
@@ -40,13 +43,16 @@ body > .main {
 }
 
 /* CONTENT SOLUTIONS */
-.content-solutions {
-    padding: 10px;
+#showSolution {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
-.content-solutions-div {
-    background-color: #f0f0f0;
-    border-radius: 20px;
-    border: 20px solid #f0f0f0;
+
+.content-solutions {
+    border-radius: 10px;
+    border: 2.5px dashed #0f0;
+    padding: 20px;
 }
 .content-solutions-solution > h4, .content-solutions-proof > h4 {
     margin-top: 0;

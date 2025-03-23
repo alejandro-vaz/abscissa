@@ -13,6 +13,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- NAVBAR -->
     <div class="menu">
         <button class="menu-button" id="menu-search">SEARCH</button>
         <div></div>
@@ -20,7 +21,7 @@
     <!-- SEARCH -->
     <div class="main">
         <h1>Problem database</h1>
-        <input type="text" id="searchId" maxlength="6" minlength="6" class="input-text" autocomplete="off">
+        <input type="text" id="searchId" maxlength="6" class="input-text" autocomplete="off" placeholder="000000" pattern=".{6}">
         <button id="searchButton" class="input-button">Search</button>
         <!-- RESULTS -->
         <div id="content"></div>
