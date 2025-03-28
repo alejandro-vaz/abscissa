@@ -55,3 +55,15 @@
 - [X] (Patch) Added $2$ problems.
 
 - [X] (Patch) Added numerical approximations for problem answers.
+
+#### *Abscissa* 0.2.12
+
+- [X] (Patch) Remade `problems` table and included `content` as a row.
+
+- [X] (Patch) Added multilanguage support on `problems` table.
+
+- [X] (Patch) Made minor style adjustments.
+
+- [X] (Patch) Added interactive `python` solver.
+
+- [X] (Patch) Migrated full database to cloud.

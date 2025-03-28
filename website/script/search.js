@@ -24,7 +24,7 @@ function search() {
         return;
     }
     // CALL QUERY.PHP AND PROCESS DATA
-    fetch(`../db/query.php?id=${encodeURIComponent(searchId)}`)
+    fetch(`../db/problem.php?id=${encodeURIComponent(searchId)}`)
         .then(response => response.json())
         .then(data => {
             // GET AND ERASE CONTENT DIV

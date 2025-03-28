@@ -27,3 +27,9 @@
 /X (Minor) Added a /_Show solution/_ button.
 /X (Patch) Added /=2/= problems.
 /X (Patch) Added numerical approximations for problem answers.
+/h4 ·Abscissa· 0.2.12
+/X (Patch) Remade /_problems/_ table and included /_content/_ as a row.
+/X (Patch) Added multilanguage support on /_problems/_ table.
+/X (Patch) Made minor style adjustments.
+/X (Patch) Added interactive /_python/_ solver.
+/X (Patch) Migrated full database to cloud.

@@ -40,7 +40,7 @@ body::-webkit-scrollbar {
     border: 1.25px solid #fff;
     border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.1s ease, background-color 0.1s ease;
+    transition: transform 0.1s ease, background-color 0.3s ease;
 }
 .input-button:active {
     transform: scale(0.95);

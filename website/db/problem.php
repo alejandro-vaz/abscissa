@@ -43,8 +43,8 @@ if ($result->num_rows > 0) {
         $data[] = $row;
     }
     // EXTRACT FIRST DATA FIELD
-    if (isset($data[0]['data'])) {
-        echo $data[0]['data'];
+    if (isset($data[0]['data_en'])) {
+        echo $data[0]['data_en'];
     }
 }
 
