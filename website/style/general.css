@@ -1,14 +1,22 @@
-/* MAIN BODY */
-html, body {
+/* MAIN DOCUMENT */
+body {
     background: #000;
     font-family: Arial, sans-serif;
-    overflow-y: scroll;
-    scrollbar-width: none;
     margin: 20px;
-    margin-top: 50px;
+    margin-top: 80px;
 }
-body::-webkit-scrollbar {
-    display: none;
+html {
+    scrollbar-width: none;
+    overflow-y: scroll;
+}
+
+/* MAIN SECTION */
+#main {
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: min(100vw, 1000px);
+    box-sizing: border-box;
 }
 
 /* TEXT INPUT */
@@ -49,20 +57,45 @@ body::-webkit-scrollbar {
     background-color: rgba(77, 77, 160, 0.25);
 }
 
-/* MENU */
-.menu {
+/* NAVBAR ELEMENTS */
+#navbar {
     width: 100%;
     height: 50px;
-    background: linear-gradient(to right, rgb(77, 77, 160), rgb(127, 127, 210), rgb(77, 77, 160));
+    background: linear-gradient(to right, #4d4da0, #7f7fd2, #4d4da0);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
-    text-align: center;
     color: white;
 }
+.navbar-section {
+    margin: 0;
+    display: inline;
+    padding: 0;
+}
+#navbarRight {
+    width: 100%;
+    text-align: right;
+}
+#navbarFade {
+    margin-top: 5px;
+    display: block;
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgb(127, 127, 210), transparent);
+}
+#navbarLogo {
+    height: 85%;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    margin-top: 5px;
+    left: 5px;
+    cursor: pointer;
+}
 
-.menu-button {
+/* NAVBAR BUTTON */
+.navbar-button {
     height: 100%;
     margin-top: -5px;
     border: none;
@@ -73,24 +106,30 @@ body::-webkit-scrollbar {
     font-size: 20px;
     font-family: 'Verdana', sans-serif;
     cursor: pointer;
-    transition: border-bottom 0.1s ease, padding-bottom 0.1s ease, border-radius 0.1s ease;
+    transition: border-bottom 0.1s ease, padding-bottom 0.1s ease;
+    display: inline;
 }
-.menu-button:hover {
+.navbar-button:hover {
     border-bottom: 2.5px solid #fff;
     padding-bottom: 5px;
-    border-radius: 5px;
 }
-
-.menu > div {
-    margin-top: 5px;
-    display: block;
-    height: 20px;
-    width: 100%;
-    background: linear-gradient(to bottom, rgb(127, 127, 210), transparent);
+.navbar-button:first-of-type {
+    margin-left: 60px;
 }
 
 /* LATEX LINE SPACE */
 .newline {
     display: block;
-    height: 15px;
+    height: 20px;
+}
+
+/* TEXT MODIFIERS */
+.light {
+    color: #aaa;
+}
+
+/* HR */
+hr {
+    margin-top: 40px;
+    margin-bottom: 40px;
 }

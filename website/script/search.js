@@ -1,80 +1,79 @@
+// CONNECT TO ELEMENTS
+const searchInput = document.getElementById('searchInput')
+const searchButton = document.getElementById("searchButton")
+const content = document.getElementById("content")
+
 // LISTEN TO CLICK OR ENTER AND EXECUTE SEARCH
-document.getElementById('searchButton').addEventListener('click', search);
-document.getElementById('searchId').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
+searchButton.addEventListener('click', search);
+searchInput.addEventListener('keydown', function(pressed) {
+    if (pressed.key === 'Enter') {
         search()
     }
 })
 
-// SEARCHID TO UPPERCASE
+// SEARCHINPUT ALWAYS UPPERCASE
 document.addEventListener('DOMContentLoaded', () => {
-    const searchIdInput = document.getElementById('searchId');
-    searchIdInput.addEventListener("input", () => {
-        searchIdInput.value = searchIdInput.value.toUpperCase()
+    searchInput.addEventListener("input", () => {
+        searchInput.value = searchInput.value.toUpperCase()
     })
 })
 
 // SEARCH FUNCTION
 function search() {
     // GET ID
-    const searchId = document.getElementById('searchId').value;
+    const id = searchInput.value;
     // ALERT IF IT IS NOT SIX DIGITS OR UPPERCASE LETTERS
-    if (!/^[A-Z0-9]{6}$/.test(searchId)) {
-        alert('Please enter a valid ID (6 -> A-Z, 0-9).');
+    if (!/^[A-Z0-9]{6}$/.test(id)) {
+        alert('Please enter a valid ID (6 => A-Z, 0-9).');
         return;
     }
-    // CALL QUERY.PHP AND PROCESS DATA
-    fetch(`../db/problem.php?id=${encodeURIComponent(searchId)}`)
+    // CALL SEARCH-ID.PHP AND PROCESS DATA
+    fetch(`../database/search-id.php?id=${encodeURIComponent(searchInput.value)}&lang=en`)
         .then(response => response.json())
         .then(data => {
-            // GET AND ERASE CONTENT DIV
-            const resultsDiv = document.getElementById('content');
-            resultsDiv.innerHTML = '';
-            // INSERT TEXTDESCRIPTION INTO H2
-            if (data.textDescription) {
-                resultsDiv.style.borderWidth = "5px"
-                const header = document.createElement('h2');
-                header.className = "content-title"
-                header.innerHTML = `<span class="content-title-light">(#${searchId})</span> ${data.textDescription}`;
-                resultsDiv.appendChild(header);
-            }
+            // ERASE CONTENT
+            content.innerHTML = '';
+            // ADD NAME
+            const header = document.createElement('h2');
+            header.id = "contentName"
+            header.innerHTML = `<span class="light">(#${searchInput.value})</span> ${data.name}`;
+            content.appendChild(header);
             // PARSE INSTRUCTIONS
-            if (data.latexInstructions) {
-                const instructionsHeader = document.createElement('h3');
-                instructionsHeader.textContent = "Instructions";
-                instructionsHeader.className = "content-institle"
-                resultsDiv.appendChild(instructionsHeader);
-                const instructionsDiv = document.createElement('div');
-                instructionsDiv.className = "content-instructions";
-                instructionsDiv.innerHTML = data.latexInstructions;
-                resultsDiv.appendChild(instructionsDiv);
-            }
-            // ALL SOLUTIONS DIV
-            if (data.latexSolution && data.latexProof) {
-                // SHOW SOLUTIONS BUTTON
-                const showSolutionButton = document.createElement('button')
-                showSolutionButton.className = "input-button"
-                showSolutionButton.id = "showSolution"
-                showSolutionButton.textContent = "Show Solution"
-                resultsDiv.append(showSolutionButton)
-                showSolutionButton.addEventListener('click', () => {
-                    showSolutionButton.remove()
-                    const solutionsContainer = document.createElement('div');
-                    solutionsContainer.className = "content-solutions";
-                    // SOLUTION SUBSECTION
-                    const solutionSection = document.createElement('div');
-                    solutionSection.className = "content-solutions-solution";
-                    solutionSection.innerHTML = `<h4>Solution</h4> <div>${data.latexSolution}</div>`;
-                    solutionsContainer.appendChild(solutionSection);
-                    // PROOF SUBSECTION
-                    const proofSection = document.createElement('div');
-                    proofSection.className = "content-solutions-proof";
-                    proofSection.innerHTML = `<h4>Proof</h4> <div>${data.latexProof}</div>`;
-                    solutionsContainer.appendChild(proofSection);
-                    // APPEND ALL DIV
-                    resultsDiv.appendChild(solutionsContainer);
-                })
-            }
+            const instructions = document.createElement('div');
+            instructions.id = "contentInstructions";
+            instructions.innerHTML = data.instructions;
+            content.appendChild(instructions);
+            // BUTTON
+            const contentButton = document.createElement('button')
+            contentButton.className = "input-button"
+            contentButton.id = "contentButton"
+            contentButton.textContent = "Show solution"
+            content.append(contentButton)
+            // ON BUTTON CLICKED
+            contentButton.addEventListener('click', () => {
+                // REMOVE BUTTON AND CREATE SOLUTION DIV
+                contentButton.remove()
+                const contentSolution = document.createElement('div');
+                contentSolution.id = "contentSolution";
+                content.appendChild(contentSolution);
+                // SOLUTION SECTION
+                const solutionSection = document.createElement('div');
+                solutionSection.id = "contentSolutionSolution";
+                solutionSection.innerHTML = `<div>${data.solution}</div>`;
+                contentSolution.appendChild(solutionSection);
+                // HR
+                const hr = document.createElement("hr");
+                contentSolution.appendChild(hr)
+                // PROOF SECTION
+                const proofSection = document.createElement('div');
+                proofSection.className = "contentSolutionProof";
+                proofSection.innerHTML = `<div>${data.proof}</div>`;
+                contentSolution.appendChild(proofSection);
+            })
+        })
+        .catch(error => {
+            alert(error);
+            return;
         });
 }
 

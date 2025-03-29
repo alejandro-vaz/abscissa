@@ -67,3 +67,25 @@
 - [X] (Patch) Added interactive `python` solver.
 
 - [X] (Patch) Migrated full database to cloud.
+
+#### *Abscissa* 0.2.23
+
+- [X] (Patch) Added margin to `#contentSolution` `<div>`.
+
+- [X] (Patch) Increased *LaTeX* block margin between each line.
+
+- [X] (Patch) Added multilanguage support to all `./website/database/*.php` files.
+
+- [X] (Minor) Created a *PHP* script to search problems by its content.
+
+- [X] (Patch) Added logo.
+
+- [X] (Patch) Remade navbar margins and structure.
+
+- [X] (Minor) Cleaned internal functions and processes to improve ease of maintenance.
+
+- [X] (Minor) Converted *HTML* files to *PHP* ones and modularized common resources.
+
+- [X] (Patch) Hidden database credentials.
+
+- [X] (Patch) Simplified problem template.

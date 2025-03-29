@@ -7,4 +7,4 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # REDIRECT TO MAIN PAGE
 RewriteCond %{HTTP_HOST} ^abscissa\.rf\.gd$ [NC]
-RewriteRule ^$ /html/search.html [L,R=302]
+RewriteRule ^$ /content/main.php [L,R=302]

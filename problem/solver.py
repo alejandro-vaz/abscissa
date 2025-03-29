@@ -1,7 +1,11 @@
-from scipy.special import lambertw
+# IMPORT COMMON MODULES
 import math
 import cmath
 
+# IMPORT THIRD-PARTY MODULES
+import scipy
+
+# MAIN LOOP
 while True:
     argument = input(">>> ")
     try:
