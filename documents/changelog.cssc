@@ -44,3 +44,9 @@
 /X (Minor) Converted ·HTML· files to ·PHP· ones and modularized common resources.
 /X (Patch) Hidden database credentials.
 /X (Patch) Simplified problem template.
+/h3 ·Abscissa· 0.3.1
+/X (Patch) Improved /_#main/_ size to take all screen.
+/X (Patch) Added a footer.
+/X (Patch) Converted all remaining ·HTML· files to ·PHP.·
+/X (Patch) Added version display in the footer.
+/X (Patch) Added /_environment.php/_ module for handling data.

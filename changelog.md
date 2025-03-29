@@ -89,3 +89,15 @@
 - [X] (Patch) Hidden database credentials.
 
 - [X] (Patch) Simplified problem template.
+
+### *Abscissa* 0.3.1
+
+- [X] (Patch) Improved `#main` size to take all screen.
+
+- [X] (Patch) Added a footer.
+
+- [X] (Patch) Converted all remaining *HTML* files to *PHP.*
+
+- [X] (Patch) Added version display in the footer.
+
+- [X] (Patch) Added `environment.php` module for handling data.

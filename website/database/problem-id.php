@@ -1,32 +1,17 @@
 <?php
+// IMPORTS
+include "../modules/environment.php";
+
 // RESPONSE SET TO JSON
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// Load .env file manually
-$envPath = __DIR__ . '/../.env';
-if (file_exists($envPath)) {
-    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        // Skip comments
-        if (strpos(trim($line), '#') === 0) {
-            continue;
-        }
-        // Parse key=value pairs
-        list($key, $value) = explode('=', $line, 2);
-        $key = trim($key);
-        $value = trim($value);
-        if (!empty($key) && !empty($value)) {
-            $$key = $value; // Dynamically define variables like $DB_HOST, $DB_USER, etc.
-        }
-    }
-}
-
-// DATABASE CONNECTION DETAILS
-$host = $DB_HOST ?? 'localhost';
-$user = $DB_USER ?? 'root';
-$password = $DB_PASSWORD ?? '';
-$database = $DB_NAME ?? '';
+// CONFIGURE VARIABLES
+$envVariables = loadEnvVariables(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
+$host = $envVariables["DB_HOST"];
+$user = $envVariables["DB_USER"];
+$password = $envVariables["DB_PASSWORD"];
+$database = $envVariables["DB_NAME"];
 
 // CONNECTS TO THE DATABASE
 $connection = new mysqli($host, $user, $password, $database);

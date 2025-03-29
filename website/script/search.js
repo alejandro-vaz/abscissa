@@ -28,7 +28,7 @@ function search() {
         return;
     }
     // CALL SEARCH-ID.PHP AND PROCESS DATA
-    fetch(`../database/search-id.php?id=${encodeURIComponent(searchInput.value)}&lang=en`)
+    fetch(`../database/problem-id.php?id=${encodeURIComponent(searchInput.value)}&lang=en`)
         .then(response => response.json())
         .then(data => {
             // ERASE CONTENT
