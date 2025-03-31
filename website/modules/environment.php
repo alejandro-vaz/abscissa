@@ -1,3 +1,6 @@
+
+// lo que hace es quita los espacios de la variable y de la clave tambien 
+// ignora los retornos de barra y las lineas vacias o llenas de espacios.
 <?php
 // LOAD ENVIRONMENT VARIABLES FUNCTION
 // TRANSCRIBE THIS PLEASE . MAYBE SHORTEN IT A BIT
@@ -21,3 +24,5 @@ function loadEnvVariables($keys) {
     return $variables;
 }
 ?>
+
+//lo que hace es quita los espacios de la variable y de la clave tambien ignora los retornos de barra y las lineas vacias o llenas de espacios.
