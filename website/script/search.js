@@ -36,7 +36,7 @@ function search() {
             // ADD NAME
             const header = document.createElement('h2');
             header.id = "contentName"
-            header.innerHTML = `<span class="light">(#${searchInput.value})</span> ${data.name}`;
+            header.innerHTML = `<span class="text-light">(#${searchInput.value})</span> ${data.name}`;
             content.appendChild(header);
             // PARSE INSTRUCTIONS
             const instructions = document.createElement('div');

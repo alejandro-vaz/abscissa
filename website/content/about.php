@@ -8,7 +8,7 @@
     <?php add("settings") ?>
     <!-- STYLE -->
     <link rel="stylesheet" href="../style/general.css">
-    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/about.css">
     <!-- WORKING MODULES -->
     <?php add("katex") ?>
 </head>
@@ -16,8 +16,9 @@
     <?php add("navbar") ?>
     <!-- MAIN -->
     <div id="main"></div>
+    <?php add("version") ?>
     <!-- SCRIPTS -->
-    <script src="../script/main.js"></script>
+    <script src="../script/about.js"></script>
     <script src="../script/general.js"></script>
 </body>
 </html>

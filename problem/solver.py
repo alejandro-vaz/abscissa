@@ -1,9 +1,15 @@
 # IMPORT COMMON MODULES
-import math
-import cmath
+from decimal import Decimal as d
+from decimal import getcontext
+import math as m
+import cmath as cm
 
 # IMPORT THIRD-PARTY MODULES
-import scipy
+import scipy as sp
+import numpy as np
+
+# SET 32 DIGIT PRECISSION
+getcontext().prec = 32
 
 # MAIN LOOP
 while True:

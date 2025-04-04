@@ -50,3 +50,11 @@
 /X (Patch) Converted all remaining ·HTML· files to ·PHP.·
 /X (Patch) Added version display in the footer.
 /X (Patch) Added /_environment.php/_ module for handling data.
+/h3 ·Abscissa· 0.4.24
+/X (Patch) Changed logos to /_.svg/_ format and added navbar logo transition.
+/X (Minor) Added ·About· page.
+/X (Patch) Refactored /_general.js/_.
+/X (Minor) Remade module logic and hierarchy.
+/X (Patch) Separated site files from module files.
+/X (Patch) Added module abbreviations for /_solver.py/_.
+/X (Patch) Increased precission in /_solver.py/_.

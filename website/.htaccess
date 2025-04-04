@@ -8,3 +8,9 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # REDIRECT TO MAIN PAGE
 RewriteCond %{HTTP_HOST} ^abscissa\.rf\.gd$ [NC]
 RewriteRule ^$ /content/main.php [L,R=302]
+
+# LIMIT CACHING TO 24H
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 day"
+</IfModule>

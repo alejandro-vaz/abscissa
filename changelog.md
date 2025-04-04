@@ -101,3 +101,19 @@
 - [X] (Patch) Added version display in the footer.
 
 - [X] (Patch) Added `environment.php` module for handling data.
+
+### *Abscissa* 0.4.24
+
+- [X] (Patch) Changed logos to `.svg` format and added navbar logo transition.
+
+- [X] (Minor) Added *About* page.
+
+- [X] (Patch) Refactored `general.js`.
+
+- [X] (Minor) Remade module logic and hierarchy.
+
+- [X] (Patch) Separated site files from module files.
+
+- [X] (Patch) Added module abbreviations for `solver.py`.
+
+- [X] (Patch) Increased precission in `solver.py`.

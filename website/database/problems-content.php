@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 // CONFIGURE VARIABLES
-$envVariables = loadEnvVariables(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
+$envVariables = load(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
 $host = $envVariables["DB_HOST"];
 $user = $envVariables["DB_USER"];
 $password = $envVariables["DB_PASSWORD"];
