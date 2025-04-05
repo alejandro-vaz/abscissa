@@ -58,3 +58,14 @@
 /X (Patch) Separated site files from module files.
 /X (Patch) Added module abbreviations for /_solver.py/_.
 /X (Patch) Increased precission in /_solver.py/_.
+/h4 ·Abscissa· 0.4.36
+/X (Patch) Integrated ·Google Analytics.·
+/X (Patch) Added comments to ·PHP· modules.
+/X (Patch) Transcribed database ·PHP· files.
+/X (Minor) Installed error system.
+/X (Patch) Added /_documents/ai_evaluation.cssc/_.
+/X (Patch) Added /_documents/ai_message.md/_.
+/X (Patch) Added custom exceptions.
+/X (Patch) Changed /_include/_ ·PHP· statements for /_require_once/_.
+/X (Patch) Moved /_redirect()/_ function from /_general.js/_ to navbar module ·JavaScript.·
+/X (Patch) Made the environment handling more robust.

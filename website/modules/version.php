@@ -4,8 +4,11 @@
     <div id="versionFade"></div>
     <p>Abscissa 
         <?php 
+        // HANDLER
+        require_once "../modules/handler.php";
+
         // IMPORTS
-        include "environment.php";
+        add("environment");
 
         // RETURN VERSION
         echo load(["SELF_VERSION"])["SELF_VERSION"];

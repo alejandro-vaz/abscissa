@@ -1,60 +1,64 @@
 <?php
-// IMPORTS
-include "../modules/environment.php";
+// HANDLER
+require_once "../modules/handler.php";
 
-// RESPONSE SET TO JSON
+// IMPORTS
+add("environment");
+add("exceptions");
+
+// RESPONSE SET TO JSON FROM ANYONE
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// CONFIGURE VARIABLES
-$envVariables = load(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
-$host = $envVariables["DB_HOST"];
-$user = $envVariables["DB_USER"];
-$password = $envVariables["DB_PASSWORD"];
-$database = $envVariables["DB_NAME"];
+// CONFIGURE ENVIRONMENT
+$env = load(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
+$DB_HOST = $env["DB_HOST"];
+$DB_USER = $env["DB_USER"];
+$DB_PASSWORD = $env["DB_PASSWORD"];
+$DB_NAME = $env["DB_NAME"];
 
-// CONNECTS TO THE DATABASE
-$connection = new mysqli($host, $user, $password, $database);
+// CONNECT TO THE DATABASE
+$database = new mysqli($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
 
 // CHECKS THE CONNECTION
-if ($connection->connect_error) {
-    echo json_encode(['error' => 'Connection failed: ' . $connection->connect_error]);
-    exit;
+if ($database->connect_error) {
+    throw new databaseConnectException("");
 }
 
 // GET ARGUMENTS
-$searchValue = $_GET['id'] ?? '';
-$searchLanguage = $_GET['lang'] ?? '';
+$searchId = $_GET['id'] ?? '';
+$searchLang = $_GET['lang'] ?? '';
 
-// PREPARES QUERY
+// CHECKS ARGUMENTS
+if (!preg_match('/^[A-Z0-9]{6}$/', $searchId)) {
+    throw new regexException("searchId");
+}
+if (!preg_match('^[a-z]{2}$', $searchLang)) {
+    throw new regexException("searchLang");
+}
+
+// MAKES QUERY REQUEST
 $searchQuery = 'SELECT * FROM problems WHERE id = ?';
-$stmt = $connection->prepare($searchQuery);
+$request = $database->prepare($searchQuery);
+$request->bind_param('s', $searchId);
+$request->execute();
+$result = $request->get_result();
 
-// BINDS STRING PARAMETER TO THE SEARCH VALUE
-$stmt->bind_param('s', $searchValue);
-
-// EXECUTES QUERY
-$stmt->execute();
-
-// GETS QUERY RESULTS
-$result = $stmt->get_result();
-
-// INITIALIZE DATA VARIABLE
+// RETURN FIRST FIELD
 $data = [];
-
-// ADD ROWS AND RETURN
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $data[] = $row;
     }
-    // EXTRACT FIRST DATA FIELD
-    $dataField = 'data_' . $searchLanguage;
-    if (isset($data[0][$dataField])) {
-        echo $data[0][$dataField];
+    // EXTRACT FIRST DATA FIELD AND RETURN IT AS JSON
+    $field = 'data_' . $searchLang;
+    if (isset($data[0][$field])) {
+        $decoded = json_decode($data[0][$field], true);
+        echo json_encode($decoded);
     }
 }
 
-// CLOSE CONNECTION AND END
-$stmt->close();
-$connection->close();
+// CLOSE CONNECTION
+$request->close();
+$database->close();
 ?>

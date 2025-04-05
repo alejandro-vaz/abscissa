@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php require "../modules/handler.php" ?>
-    <title>Search - Abscissa</title>
+    <?php require_once "../modules/handler.php" ?>
+    <?php add("analytics") ?>
+    <?php add("settings") ?>
+    <title>Search</title>
     <meta name="description" content="Search the Abscissa database.">
     <meta name="keywords" content="abscissa search">
-    <?php add("settings") ?>
     <!-- STYLE -->
     <link rel="stylesheet" href="../style/general.css">
     <link rel="stylesheet" href="../style/search.css">

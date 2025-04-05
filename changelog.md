@@ -117,3 +117,25 @@
 - [X] (Patch) Added module abbreviations for `solver.py`.
 
 - [X] (Patch) Increased precission in `solver.py`.
+
+#### *Abscissa* 0.4.36
+
+- [X] (Patch) Integrated *Google Analytics.*
+
+- [X] (Patch) Added comments to *PHP* modules.
+
+- [X] (Patch) Transcribed database *PHP* files.
+
+- [X] (Minor) Installed error system.
+
+- [X] (Patch) Added `documents/ai_evaluation.cssc`.
+
+- [X] (Patch) Added `documents/ai_message.md`.
+
+- [X] (Patch) Added custom exceptions.
+
+- [X] (Patch) Changed `include` *PHP* statements for `require_once`.
+
+- [X] (Patch) Moved `redirect()` function from `general.js` to navbar module *JavaScript.*
+
+- [X] (Patch) Made the environment handling more robust.

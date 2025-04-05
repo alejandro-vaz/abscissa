@@ -3,6 +3,11 @@ const navbarLogo = document.getElementById("navbarDefaultLogo")
 const navbarSearch = document.getElementById("navbarSearch")
 const navbarAbout = document.getElementById("navbarAbout")
 
+// REDIRECT FUNCTION
+function redirect(target) {
+    window.location.href = `./${target}.php`
+}
+
 // LOGO REDIRECTS TO MAIN
 navbarLogo.addEventListener("click", function() {
     redirect("main")
