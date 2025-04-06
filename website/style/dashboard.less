@@ -1,0 +1,103 @@
+// VARIABLES
+@navbar_width: 65px;
+@problem_height: 300px;
+@problem_color: #333333;
+@problem_vmargin: 60px;
+@problem_hmargin: 20px;
+@problem_radius: 10px;
+@problem_width: 1250px;
+@random_color: #71833e;
+@day_color: #3e5083;
+@fade_direction: to right top;
+@main_tpadding: 25px;
+@content_width: 90%;
+@soft_color: #33333355;
+@hard_color: #00000055;
+@content_margin: 5px;
+@content_padding: 20px;
+@tag_border: 2.5px;
+@tag_radius: 10px;
+@tag_padding: 5px;
+@options_radius: 10px;
+@options_margin: 5px;
+
+// MAIN SECTION TWEAKS
+#main {
+    width: calc(100% - @navbar_width);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: @main_tpadding 0 0 0;
+}
+
+// PROBLEMS
+.problem {
+    height: @problem_height;
+    background-color: @problem_color;
+    margin: @problem_vmargin auto;
+    border-radius: @problem_radius;
+    display: flex;
+    width: min(calc(100% - 2*@problem_hmargin), @problem_width); 
+}
+#random {
+    background: linear-gradient(@fade_direction, @problem_color, @random_color);
+}
+#day {
+    background: linear-gradient(@fade_direction, @problem_color, @day_color);
+}
+
+// PROBLEM CONTENT
+.content {
+    height: 100%;
+    width: @content_width;
+    align-items: center;
+    text-align: start;
+    display: flex;
+}
+
+// PROBLEM CONTENT DIVISIONS
+.content-1 {
+    width: calc(80% - @content_margin);
+    height: calc(100% - 2*@content_margin);
+    padding-left: @content_padding;
+    padding-right: @content_padding;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background-color: @soft_color;
+    margin: @content_margin 0 @content_margin @content_margin;
+}
+.content-2 {
+    flex-grow: 1;
+    background-color: @hard_color;
+    height: calc(100% - 2*@content_margin);
+    margin: @content_margin 0 @content_margin 0;
+    padding-left: @content_padding;
+    padding-right: @content_padding;
+    text-align: center;
+}
+
+// CONTENT-2 TWEAKS
+.content-course, .content-reward {
+    display: block;
+    border: @tag_border solid;
+    padding: @tag_padding;
+    border-radius: @tag_radius;
+}
+
+// PROBLEM OPTIONS
+.problem-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: @hard_color;
+    border-bottom-right-radius: @options_radius;
+    border-top-right-radius: @options_radius;
+    flex-grow: 1;
+    margin: @options_margin @options_margin @options_margin;
+}
+.problem-options > button {
+    margin-top: 0;
+    margin-bottom: 0;
+}

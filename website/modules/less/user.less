@@ -1,0 +1,45 @@
+// VARIABLES
+@section_height: 60px;
+@section_border: 5px;
+@section_color: #4d4da0;
+@section_radius: 10px;
+@font_size: 25px;
+@name_lmargin: 10px;
+@name_rmargin: 80px;
+@insight_border: 2.5px;
+@insight_margin: 5px;
+@insight_padding: 5px;
+@section-background: #000000;
+
+// MAIN CONTAINER
+#userData {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: @section_height;
+    width: fit-content;
+    border-left: @section_border solid @section_color;
+    border-bottom: @section_border solid @section_color;
+    border-bottom-left-radius: @section_radius;
+    align-items: center;
+    display: flex;
+    font-size: @font_size;
+    background-color: @section-background;
+}
+
+// NAME
+#userName {
+    display: inline;
+    font: bold;
+    margin-left: @name_lmargin;
+    margin-right: @name_rmargin;
+}
+
+// INSIGHT
+#userInsight {
+    display: inline;
+    border-radius: @section_radius;
+    border: @insight_border solid;
+    padding: @insight_padding;
+    margin-left: @insight_margin;
+}

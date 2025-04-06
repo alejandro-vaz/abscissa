@@ -1,7 +1,6 @@
 // CONNECT TO ELEMENTS
-const navbarLogo = document.getElementById("navbarDefaultLogo")
+const navbarLogo = document.getElementById("navbarLogo")
 const navbarSearch = document.getElementById("navbarSearch")
-const navbarAbout = document.getElementById("navbarAbout")
 
 // REDIRECT FUNCTION
 function redirect(target) {
@@ -10,15 +9,10 @@ function redirect(target) {
 
 // LOGO REDIRECTS TO MAIN
 navbarLogo.addEventListener("click", function() {
-    redirect("main")
+    redirect("dashboard")
 })
 
 // SEARCH REDIRECTS TO SEARCH
 navbarSearch.addEventListener("click", function() {
     redirect("search")
-})
-
-// ABOUT REDIRECTS TO ABOUT
-navbarAbout.addEventListener("click", function() {
-    redirect("about")
 })

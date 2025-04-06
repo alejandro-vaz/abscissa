@@ -139,3 +139,25 @@
 - [X] (Patch) Moved `redirect()` function from `general.js` to navbar module *JavaScript.*
 
 - [X] (Patch) Made the environment handling more robust.
+
+## *Abscissa* 1.0.83
+
+- [X] (Patch) Added *PHP* universal error handler.
+
+- [X] (Patch) Changed leaked database credentials.
+
+- [X] (Minor) Added all database tables and fields.
+
+- [X] (Patch) Experimented with *Perlin* noise.
+
+- [X] (Minor) Added error page.
+
+- [X] (Minor) Remade navbar.
+
+- [X] (Patch) Added all logos as *SVG* files.
+
+- [X] (Minor) Deleted all old pages.
+
+- [X] (Major) Made new dashboard with problem of the day and random scroll.
+
+- [X] (Major) Switched from *CSS* to *LESS.*

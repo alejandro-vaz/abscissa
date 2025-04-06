@@ -1,0 +1,89 @@
+// VARIABLES
+@body_background: #111111;
+@font: Arial;
+@font_color: #ffffff;
+@main_margin: 20px;
+@input_background: #00000055;
+@input_padding: 10px;
+@input_margin: 10px;
+@input_radius: 5px;
+@input_color: #ffffff;
+@input_border: 1px solid #ffffff;
+@input_invalid: #ff0000;
+@transition_time: 0.25s;
+@transition_curve: ease-in-out;
+@hover_color: #7f7fd255;
+@text_light: #aaaaaa;
+@hr_margin: 40px;
+@input_width: 100px;
+
+// DOCUMENT
+:where(body) {
+    background: @body_background;
+    font-family: @font;
+}
+:where(html) {
+    scrollbar-width: none;
+    overflow-y: scroll;
+    color: @font_color;
+    background-color: @body_background;
+}
+
+// MAIN SECTION
+:where(#main) {
+    margin: 0 auto;
+    max-width: calc(100vw - 2*@main_margin);
+    box-sizing: border-box;
+}
+
+// TEXT INPUT
+:where(.input-text) {
+    width: @input_width;
+    display: inline-block;
+    box-sizing: border-box;
+    background-color: @input_background;
+    padding: @input_padding;
+    margin: 0 @input_margin;
+    border: @input_border;
+    border-radius: @input_radius;
+    color: @input_color;
+}
+:where(.input-text:focus) {
+    outline: none;
+}
+:where(.input-text::placeholder) {
+    color: @input_color;
+    opacity: 0.5;
+}
+:where(.input-text:invalid) {
+    border-color: @input_invalid;
+}
+
+// BUTTON INPUT
+:where(.input-button) {
+    width: @input_width;
+    color: @input_color;
+    padding: @input_padding;
+    background: @input_background;
+    border: @input_border;
+    border-radius: @input_radius;
+    cursor: pointer;
+    transition: transform @transition_time @transition_curve, background-color @transition_time @transition_curve;
+}
+:where(.input-button:active) {
+    transform: scale(0.95);
+}
+:where(.input-button:hover) {
+    background-color: @hover_color;
+}
+
+// TEXT MODIFIERS
+:where(.text-light) {
+    color: @text_light;
+}
+
+// HR
+:where(hr) {
+    margin: @hr_margin 0;
+}
+

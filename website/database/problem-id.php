@@ -33,7 +33,7 @@ $searchLang = $_GET['lang'] ?? '';
 if (!preg_match('/^[A-Z0-9]{6}$/', $searchId)) {
     throw new regexException("searchId");
 }
-if (!preg_match('^[a-z]{2}$', $searchLang)) {
+if (!preg_match('/^[a-z]{2}$/', $searchLang)) {
     throw new regexException("searchLang");
 }
 

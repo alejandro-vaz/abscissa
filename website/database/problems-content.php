@@ -30,7 +30,7 @@ $searchContent = $_GET['content'] ?? '';
 $searchLang = $_GET['lang'] ?? '';
 
 // CHECKS ARGUMENTS
-if (!preg_match('/^[A-Z0-9]{4}$/', $searchContent)) {
+if (!preg_match('/^[A-Z0-9]{8}$/', $searchContent)) {
     throw new regexException("searchContent");
 }
 if (!preg_match('^[a-z]{2}$', $searchLang)) {

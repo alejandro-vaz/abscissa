@@ -1,0 +1,34 @@
+// VARIABLES
+@number_size: 150px;
+@number_radius: 10px;
+@number_padding: 20px;
+@text_size: 40px;
+@text_radius: 10px;
+@text_padding: 10px;
+@fill_color: #4d4da0;
+
+// MAIN
+#main {
+    text-align: center;
+}
+
+// ERROR CODE
+#main > h2 {
+    font-size: @number_size;
+    display: inline-block;
+    border-radius: @number_radius;
+    padding: @number_padding;
+    background-color: @fill_color;
+}
+#main > h2:empty {
+    display: empty;
+}
+
+// MESSAGE
+#main > p {
+    font-size: @text_size;
+    border-radius: @text_radius;
+    padding: @text_padding;
+    background-color: @fill_color;
+    display: inline-block;
+}
