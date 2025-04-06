@@ -3,7 +3,7 @@ const errorMessage = document.getElementById("mainError");
 const errorHeader = document.getElementById("mainHeader");
 
 // DEFINE VARIABLES
-const errorCode = gup("errorCode")
+const errorCode = getURLParameter("errorCode")
 
 // DECIDE CODE
 errorHeader.innerText = errorCode;

@@ -1,0 +1,72 @@
+/h2 Miembros
+/h3 Resumen de miembros actuales
+/X Alejo
+/X Beltrán
+/X Diego
+/X Dela
+/X Guzmán
+/X Jorge
+/X Juan
+/X Luis
+/X Marcos
+/X Paola
+/X Sergio
+/h3 Jerarquía de trabajo
+/code-mermaid¬
+flowchart LR
+    ABSCISSA((ABSCISSA)) 
+
+    alejo1([Alejo])
+    jorge1([Jorge])
+
+    alejo2(Alejo)
+    jorge2(Jorge)
+    diego(Diego)
+    paola(Paola)
+    marcos(Marcos)
+
+    beltrán/=\gt/=Beltrán]
+
+    guzmán[[Guzmán]]
+    juan[[Juan]]
+    sergio[[Sergio]]
+    luis[[Luis]]
+    dela[[Dela]]
+
+    BACKEND{{DPTO. BACKEND}}
+    FRONTEND{{DPTO. FRONTEND}}
+    FINANZAS{{DPTO. FINANZAS}}
+    ESCALABILIDAD{{DPTO. ESCALABILIDAD}}
+    MARKETING{{DPTO. MARKETING}}
+
+
+    ABSCISSA /=\lt/===/=\gt/= alejo1
+    ABSCISSA /=\lt/===/=\gt/= jorge1
+
+    alejo1 -.-/=\gt/= FRONTEND
+    alejo1 -.-/=\gt/= FINANZAS
+    alejo1 -.-/=\gt/= MARKETING
+    alejo1 -.-/=\gt/= BACKEND
+    alejo1 -.-/=\gt/= ESCALABILIDAD
+    jorge1 -.-/=\gt/= FRONTEND
+    jorge1 -.-/=\gt/= FINANZAS
+    jorge1 -.-/=\gt/= MARKETING
+    jorge1 -.-/=\gt/= BACKEND
+    jorge1 -.-/=\gt/= ESCALABILIDAD
+
+    FRONTEND /=\lt/===/=\gt/= alejo2
+    alejo2 --/=\gt/= guzmán
+    alejo2 --/=\gt/= juan
+
+    BACKEND /=\lt/===/=\gt/= jorge2
+    jorge2 --/=\gt/= beltrán
+    beltrán --/=\gt/= sergio
+
+    FINANZAS /=\lt/===/=\gt/= diego
+
+    MARKETING /=\lt/===/=\gt/= paola
+    paola --/=\gt/= luis
+
+    ESCALABILIDAD /=\lt/===/=\gt/= marcos
+    marcos --/=\gt/= dela
+/code

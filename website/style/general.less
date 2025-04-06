@@ -15,12 +15,14 @@
 @hover_color: #7f7fd255;
 @text_light: #aaaaaa;
 @hr_margin: 40px;
-@input_width: 100px;
+@input_width: 75px;
 
 // DOCUMENT
 :where(body) {
     background: @body_background;
     font-family: @font;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 :where(html) {
     scrollbar-width: none;
@@ -34,6 +36,8 @@
     margin: 0 auto;
     max-width: calc(100vw - 2*@main_margin);
     box-sizing: border-box;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 // TEXT INPUT

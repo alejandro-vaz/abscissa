@@ -80,3 +80,12 @@
 /X (Minor) Deleted all old pages.
 /X (Major) Made new dashboard with problem of the day and random scroll.
 /X (Major) Switched from ·CSS· to ·LESS.·
+/h4 ·Abscissa· 1.0.91
+/X (Patch) Added /_documents/abscissa.cssc/_ for team coordination.
+/X (Patch) Applied error pages.
+/X (Minor) Added video resources to dashboard.
+/X (Patch) Added preferences logo to user module.
+/X (Patch) Changed /_script/general.js/_ ·API· function names.
+/X (Patch) Refactored and improved /_user.php/_ module.
+/X (Patch) Changed logo.
+/X (Patch) Unified /_random()/_ and /_day()/_ functions in /_dashboard.js/_.

@@ -161,3 +161,21 @@
 - [X] (Major) Made new dashboard with problem of the day and random scroll.
 
 - [X] (Major) Switched from *CSS* to *LESS.*
+
+#### *Abscissa* 1.0.91
+
+- [X] (Patch) Added `documents/abscissa.cssc` for team coordination.
+
+- [X] (Patch) Applied error pages.
+
+- [X] (Minor) Added video resources to dashboard.
+
+- [X] (Patch) Added preferences logo to user module.
+
+- [X] (Patch) Changed `script/general.js` *API* function names.
+
+- [X] (Patch) Refactored and improved `user.php` module.
+
+- [X] (Patch) Changed logo.
+
+- [X] (Patch) Unified `random()` and `day()` functions in `dashboard.js`.

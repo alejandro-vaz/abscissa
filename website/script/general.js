@@ -1,40 +1,34 @@
 // FUNCTION TO GET PARAMETERS
-function gup(request) {
+function getURLParameter(request) {
     const parameters = new URLSearchParams(window.location.search);
     return parameters.get(request);
 }
 
 // FUNCTION TO GET COOKIES
-function gc(dictKey) {
-    cookieName = "cookie"
-    // Split document.cookie into individual cookies and find the one that starts with the cookieName
+function getCookie(dictKey, cookieName="cookie") {
     const cookieStr = document.cookie
         .split(";")
         .find(cookie => cookie.trim().startsWith(cookieName + "="));
-    
-    if (!cookieStr) {
-        return null;
-    }
-    
-    // Get the cookie value part
     const cookieValue = cookieStr.split("=")[1];
-    
-    try {
-      // Decode and parse the JSON string
-        const decoded = decodeURIComponent(cookieValue);
-        const jsonObj = JSON.parse(decoded);
-      // Return the requested dictionary value
-        return jsonObj[dictKey] !== undefined ? jsonObj[dictKey] : null;
-    } catch (e) {
-        console.error("Error decoding or parsing cookie:", e);
-        return null;
-    }
+    const decoded = decodeURIComponent(cookieValue);
+    const jsonObj = JSON.parse(decoded);
+    return jsonObj[dictKey] !== undefined ? jsonObj[dictKey] : null;
+}
+
+// FUNCTION TO PUSH COOKIE
+function pushCookie(dict, cookieName="cookie") {
+    const cookieRaw = encodeURIComponent(JSON.stringify(dict));
+    document.cookie = `${cookieName}=` + cookieRaw + "; path=/";
+}
+
+// FUNCTION TO FETCH FROM DATABASE API
+function fetchAPI(URL) {
+    return fetch(`../database/${URL}`, { cache: "no-store" }).then(response => response.json());
 }
 
 // COOKIES
-const cookieRaw = {
+const data = {
     userName: "John",
     userInsight: 300
 }
-const cookieValue = encodeURIComponent(JSON.stringify(cookieRaw));
-document.cookie = "cookie=" + cookieValue + "; path=/"
+pushCookie(data)

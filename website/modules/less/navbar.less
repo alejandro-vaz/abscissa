@@ -24,8 +24,12 @@
     background-color: @navbar_background;
 }
 
+.navbar-icon:first-of-type {
+    background-color: @navbar_color;
+}
+
 // ALL NAVBAR ICONS
-.navbarIcon {
+.navbar-icon {
     width: @icon_width;
     margin-left: calc(@navbar_width/2 - @icon_width/2);
     margin-top: @icon_separation;
@@ -33,6 +37,6 @@
     border-radius: @icon_radius;
     transition: background-color @transition_time @transition_curve;
 }
-.navbarIcon:hover {
+.navbar-icon:hover {
     background-color: @hover_color;
 }

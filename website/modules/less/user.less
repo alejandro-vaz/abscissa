@@ -10,6 +10,14 @@
 @insight_margin: 5px;
 @insight_padding: 5px;
 @section-background: #000000;
+@z_position: 100;
+@icon_height: 50px;
+@icon_separation: 10px;
+@icon_radius: 10px;
+@transition_time: 0.25s;
+@transition_curve: ease-in-out;
+@hover_color: #7f7fd2;
+@icon-height: 50px;
 
 // MAIN CONTAINER
 #userData {
@@ -25,6 +33,7 @@
     display: flex;
     font-size: @font_size;
     background-color: @section-background;
+    z-index: @z_position;
 }
 
 // NAME
@@ -42,4 +51,16 @@
     border: @insight_border solid;
     padding: @insight_padding;
     margin-left: @insight_margin;
+}
+
+// ICONS
+.user-icon {
+    height: @icon_height;
+    margin: calc(@section_height/2 - @icon_height/2) @icon_separation auto;
+    cursor: pointer;
+    border-radius: @icon_radius;
+    transition: background-color @transition_time @transition_curve;
+}
+.user-icon:hover {
+    background-color: @hover_color;
 }
