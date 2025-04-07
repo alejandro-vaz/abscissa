@@ -7,6 +7,9 @@ const randomSkip = document.getElementById("randomSkip");
 const dayContent = document.getElementById("dayContent");
 const dayTry = document.getElementById("dayTry");
 
+// CONNECT TO RESOURCES
+const resources = document.getElementById("resourcesLinks")
+
 // FUNCTION TO LOAD A PROBLEM IN A DIV
 function load(div, script) {
     fetchAPI(script).then(data => {
@@ -42,9 +45,24 @@ function load(div, script) {
     })
 }
 
+// FUNCTION TO LOAD RESOURCES
+function charge() {
+    fetchAPI("resource_random-type.php?lang=en").then(data => {
+        const video = document.createElement("iframe");
+        video.src = data;
+        video.frameBorder = "0";
+        video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        video.referrerPolicy = "strict-origin-when-cross-origin";
+        video.allowFullscreen = true;
+        resources.appendChild(video);
+    })
+}
+
 // INITIALIZE
 load(randomContent, "problem_random.php?lang=en")
 load(dayContent, "problem_of_day.php?lang=en")
+
+// SKIP RANDOM
 randomSkip.addEventListener("click", function() {
     load(randomContent, "problem_random.php?lang=en")
 })

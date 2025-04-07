@@ -133,10 +133,10 @@ flowchart LR
 
     paola --> luis
 
+    paola --> dela
+
 
 
     ESCALABILIDAD <==> marcos
-
-    marcos --> dela
 
 ```

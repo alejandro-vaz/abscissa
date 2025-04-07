@@ -89,3 +89,12 @@
 /X (Patch) Refactored and improved /_user.php/_ module.
 /X (Patch) Changed logo.
 /X (Patch) Unified /_random()/_ and /_day()/_ functions in /_dashboard.js/_.
+/h4 ·Abscissa· 1.0.105
+/X (Patch) Added ·PHP· database module.
+/X (Patch) Added ·PHP· test module.
+/X (Minor) Improved database interaction scripts.
+/X (Patch) Included exceptions in /_handler.php/_ entry module.
+/X (Patch) Created ·JS· /_dashboard.js/_ function to load videos to resources.
+/X (Patch) Removed cross-origin headers in content ·PHP· files.
+/X (Patch) Created resource-gathering database ·PHP· scripts.
+/X (Patch) Completed #8.

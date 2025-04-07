@@ -179,3 +179,21 @@
 - [X] (Patch) Changed logo.
 
 - [X] (Patch) Unified `random()` and `day()` functions in `dashboard.js`.
+
+#### *Abscissa* 1.0.105
+
+- [X] (Patch) Added *PHP* database module.
+
+- [X] (Patch) Added *PHP* test module.
+
+- [X] (Minor) Improved database interaction scripts.
+
+- [X] (Patch) Included exceptions in `handler.php` entry module.
+
+- [X] (Patch) Created *JS* `dashboard.js` function to load videos to resources.
+
+- [X] (Patch) Removed cross-origin headers in content *PHP* files.
+
+- [X] (Patch) Created resource-gathering database *PHP* scripts.
+
+- [X] (Patch) Completed #8.

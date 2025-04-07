@@ -4,65 +4,33 @@ require_once "../modules/handler.php";
 
 // IMPORTS
 add("environment");
-add("exceptions");
+add("database");
+add("test");
 
 // RESPONSE SET TO JSON FROM ANYONE
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 // CONFIGURE ENVIRONMENT
-$env = load(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
-$DB_HOST = $env["DB_HOST"];
-$DB_USER = $env["DB_USER"];
-$DB_PASSWORD = $env["DB_PASSWORD"];
-$DB_NAME = $env["DB_NAME"];
+$ENV = load(["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]);
 
 // CONNECT TO THE DATABASE
-$database = new mysqli($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_NAME);
+$database = connect($ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"], $ENV["DB_NAME"]);
 
-// CHECKS THE CONNECTION
-if ($database->connect_error) {
-    throw new databaseConnectException("");
-}
-
-// GET ARGUMENTS
-$searchContent = $_GET['content'] ?? '';
-$searchLang = $_GET['lang'] ?? '';
-
-// CHECKS ARGUMENTS
-if (!preg_match('/^[A-Z0-9]{8}$/', $searchContent)) {
-    throw new regexException("searchContent");
-}
-if (!preg_match('^[a-z]{2}$', $searchLang)) {
-    throw new regexException("searchLang");
-}
+// CHECK ARGUMENTS
+test('/^[A-Z0-9]{4}$/', $_GET["content"], "content");
+test('/^[a-z]{2}$/', $_GET['lang'], "lang");
 
 // MAKES QUERY REQUEST
-$searchQuery = 'SELECT * FROM problems WHERE content LIKE ?';
-$request = $database->prepare($searchQuery);
-$searchPattern = '%' . $searchContent . '%';
-$request->bind_param('s', $searchPattern);
-$request->execute();
-$result = $request->get_result();
+$result = request('SELECT * FROM problems WHERE content LIKE ?', $_GET['content'], true, $database);
 
-// RETURN MATCHING ROWS
+// DUMP AND PROCESS DATA
 $data = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $field = 'data_' . $searchLang;
-        if (isset($row[$field])) {
-            $decoded = json_decode($row[$field], true);
-            if ($decoded !== null) {
-                $data[$row['id']] = $decoded;
-            }
-        }
-    }
+while ($row = $result->fetch_assoc()) {
+    $data[] = json_decode($row["data_" . $_GET["lang"]], true);
 }
-
-// RETURN DATA AS JSON
 echo json_encode($data);
 
-// CLOSE CONNECTION AND END
-$request->close();
+// CLOSE CONNECTION
 $database->close();
 ?>

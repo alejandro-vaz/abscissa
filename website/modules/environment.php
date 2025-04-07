@@ -1,10 +1,4 @@
 <?php
-// HANDLER
-require_once "../modules/handler.php";
-
-// IMPORTS
-add("exceptions");
-
 function load($request) {
     // SETS DATA
     $path = __DIR__ . '/../.env';
