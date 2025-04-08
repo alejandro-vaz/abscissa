@@ -1,33 +1,25 @@
 <?php
-function load($request) {
-    // SETS DATA
-    $path = __DIR__ . '/../.env';
-    $variables = [];
-    // CHECK IF FILE EXISTS
-    if (!file_exists($path)) {
-        throw new environmentNotFoundException("");
+// INITIALIZE
+global $ENV;
+$ENV = [];
+$path = __DIR__ . '/../.env';
+
+// CHECK IF FILE EXISTS
+if (!file_exists($path)) {
+    throw new environmentNotFoundException("Environment file not found at: $path");
+}
+
+// GET CONTENT AND ITERATE ADDING TO ENV
+$content = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+foreach ($content as $line) {
+    // SKIP COMMENTS
+    if (strpos(trim($line), '#') === 0) {
+        continue;
     }
-    // GETS CONTENT
-    $content = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    // ITERATES OVER EACH LINE
-    foreach ($content as $line) {
-        // CONTINUE IF COMMENT
-        if (strpos(trim($line), '#') === 0) {
-            continue;
-        }
-        // GET DATA PAIR AND TRIM IT
-        list($key, $value) = explode('=', $line, 2);
-        $key = trim($key);
-        $value = trim($value);
-        // STORE VARIABLE
-        $variables[$key] = $value;
-    }
-    // CHECK IF REQUESTED VARIABLES ARE PRESENT
-    foreach ($request as $variable) {
-        if (!array_key_exists($variable, $variables)) {
-            throw new environmentVariableNotFoundException("$variable");
-        }
-    }
-    return array_intersect_key($variables, array_flip($request));
+    // SPLIT KEY, TRIM AND CONVERT TO UPPERCASE TO VARIABLES
+    list($key, $value) = explode('=', $line, 2);
+    $key = strtoupper(trim($key));
+    $value = trim($value);
+    $ENV[$key] = $value;
 }
 ?>

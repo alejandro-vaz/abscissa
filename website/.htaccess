@@ -16,9 +16,9 @@ RewriteRule ^$ /content/dashboard.php [L,R=302]
 </IfModule>
 
 # SET ERROR PAGES
-ErrorDocument 400 /content/error.php?errorCode=400
-ErrorDocument 401 /content/error.php?errorCode=401
-ErrorDocument 403 /content/error.php?errorCode=403
-ErrorDocument 404 /content/error.php?errorCode=404
-ErrorDocument 500 /content/error.php?errorCode=500
-ErrorDocument 503 /content/error.php?errorCode=503
+ErrorDocument 400 /content/error.php
+ErrorDocument 401 /content/error.php
+ErrorDocument 403 /content/error.php
+ErrorDocument 404 /content/error.php
+ErrorDocument 500 /content/error.php
+ErrorDocument 503 /content/error.php

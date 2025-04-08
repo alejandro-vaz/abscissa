@@ -46,21 +46,23 @@ function load(div, script) {
 }
 
 // FUNCTION TO LOAD RESOURCES
-function charge() {
-    fetchAPI("resource_random-type.php?lang=en").then(data => {
-        const video = document.createElement("iframe");
-        video.src = data;
-        video.frameBorder = "0";
-        video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        video.referrerPolicy = "strict-origin-when-cross-origin";
-        video.allowFullscreen = true;
-        resources.appendChild(video);
-    })
+function charge(times) {
+    for (let iteration = 0; iteration < times; iteration++) {
+        fetchAPI("resource_random-type.php?lang=en&type=video", "text").then(data => {
+            const video = document.createElement("iframe");
+            video.src = data;
+            video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            video.referrerPolicy = "strict-origin-when-cross-origin";
+            video.allowFullscreen = true;
+            resources.appendChild(video);
+        })
+    }
 }
 
 // INITIALIZE
 load(randomContent, "problem_random.php?lang=en")
 load(dayContent, "problem_of_day.php?lang=en")
+charge(5)
 
 // SKIP RANDOM
 randomSkip.addEventListener("click", function() {

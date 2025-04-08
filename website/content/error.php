@@ -19,11 +19,9 @@
     <?php add("user") ?>
     <!-- MAIN -->
     <div id="main">
-        <h2 id="mainHeader"></h2>
-        <br>
+        <h2>Error.</h2>
         <p>This doesn't look right at all.</p>
-        <br>
-        <p id="mainError"></p>
+        <p>Try going back.</p>
     </div>
     <!-- SCRIPT -->
     <script src="../script/error.js"></script>

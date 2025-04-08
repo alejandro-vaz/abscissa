@@ -23,26 +23,21 @@
         <div id="random" class="problem">
             <div id="randomContent" class="content"></div>
             <div class="problem-options">
-                <button class="input-button" id="randomTry">Try</button>
-                <button class="input-button" id="randomSkip">Skip</button>
+                <button class="input-button" id="randomTry">TRY</button>
+                <button class="input-button" id="randomSkip">SKIP</button>
             </div>
         </div>
         <div id="day" class="problem">
             <div id="dayContent" class="content"></div>
             <div class="problem-options">
-                <button class="input-button" id="dayTry">Try</button>
+                <button class="input-button" id="dayTry">TRY</button>
             </div>
         </div>
         <div class="problem" id="resources">
             <div class="content">
                 <div class="content-1">
                     <h2>Resources</h2>
-                    <div id="resourcesLinks">
-                        <iframe src="https://www.youtube.com/embed/mJwfpcXwYRU?si=VqFZVFNc7XKlKtS7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        <iframe src="https://www.youtube.com/embed/K8CQbSD9wis?si=fV0ASpKremmOlBIS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        <iframe src="https://www.youtube.com/embed/K8CQbSD9wis?si=fV0ASpKremmOlBIS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        <iframe src="https://www.youtube.com/embed/K8CQbSD9wis?si=fV0ASpKremmOlBIS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
+                    <div id="resourcesLinks"></div>
                 </div>
             </div>
         </div>

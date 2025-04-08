@@ -35,14 +35,13 @@
     top: 0;
     right: 0;
     height: 100%;
-    padding: @main_tpadding 0 0 0;
 }
 
 // PROBLEMS
 .problem {
     height: @problem_height;
     background-color: @problem_color;
-    margin: @problem_vmargin auto;
+    margin: 0 auto @problem_vmargin  auto;
     border-radius: @problem_radius;
     display: flex;
     width: min(calc(100% - 2*@problem_hmargin), @problem_width); 

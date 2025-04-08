@@ -22,9 +22,14 @@ function pushCookie(dict, cookieName="cookie") {
 }
 
 // FUNCTION TO FETCH FROM DATABASE API
-function fetchAPI(URL) {
-    return fetch(`../database/${URL}`, { cache: "no-store" }).then(response => response.json());
+function fetchAPI(URL, responseType = 'json') {
+    return fetch(`../database/${URL}`, { cache: "no-store" })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return responseType === 'json' ? response.json() : response.text();
+        });
 }
+
 
 // COOKIES
 const data = {

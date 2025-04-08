@@ -196,4 +196,22 @@
 
 - [X] (Patch) Created resource-gathering database *PHP* scripts.
 
-- [X] (Patch) Completed #8.
+- [X] (Patch) Completed [#8.](https://github.com/alejandro-vaz/Abscissa/issues/8)
+
+#### *Abscissa* 1.0.115
+
+- [X] (Patch) Completed [#14.](https://github.com/alejandro-vaz/Abscissa/issues/14)
+
+- [X] (Minor) Added dynamic resource loading in dashboard.
+
+- [X] (Minor) Completed [#15.](https://github.com/alejandro-vaz/Abscissa/issues/15)
+
+- [X] (Minor) Added automatic arguments and environment modules.
+
+- [X] (Patch) Remade database request function.
+
+- [X] (Patch) Renamed `problems-content.php` to `problems-node.php`.
+
+- [X] (Patch) Improved *PHP* exceptions.
+
+- [X] (Patch) Remade `fetchAPI()` *JS* frontend function to allow for *non-JSON* responses.

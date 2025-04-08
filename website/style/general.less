@@ -6,7 +6,7 @@
 @input_background: #00000055;
 @input_padding: 10px;
 @input_margin: 10px;
-@input_radius: 5px;
+@input_radius: 10px;
 @input_color: #ffffff;
 @input_border: 1px solid #ffffff;
 @input_invalid: #ff0000;
@@ -16,6 +16,14 @@
 @text_light: #aaaaaa;
 @hr_margin: 40px;
 @input_width: 75px;
+@main-tpadding: 80px;
+@input_sfont: 20px;
+@font_family: Times;
+
+// FONT
+:where(*:not(.katex-display, .katex-display *, .katex, .katex *)) {
+    font-family: @font_family;
+}
 
 // DOCUMENT
 :where(body) {
@@ -34,6 +42,7 @@
 // MAIN SECTION
 :where(#main) {
     margin: 0 auto;
+    padding-top: @main-tpadding;
     max-width: calc(100vw - 2*@main_margin);
     box-sizing: border-box;
     overflow-y: scroll;
@@ -73,6 +82,7 @@
     border-radius: @input_radius;
     cursor: pointer;
     transition: transform @transition_time @transition_curve, background-color @transition_time @transition_curve;
+    font-size: @input_sfont;
 }
 :where(.input-button:active) {
     transform: scale(0.95);

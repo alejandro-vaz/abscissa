@@ -15,13 +15,12 @@
 // ERROR CODE
 #main > h2 {
     font-size: @number_size;
-    display: inline-block;
+    display: block;
     border-radius: @number_radius;
     padding: @number_padding;
     background-color: @fill_color;
-}
-#main > h2:empty {
-    display: empty;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 // MESSAGE
@@ -30,5 +29,7 @@
     border-radius: @text_radius;
     padding: @text_padding;
     background-color: @fill_color;
-    display: inline-block;
+    width: fit-content;
+    margin: 50px auto 0 auto;
+    display: block;
 }

@@ -16,12 +16,16 @@ header('Access-Control-Allow-Origin: *');
 $database = database_connect($ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"], $ENV["DB_NAME"]);
 
 // CHECK ARGUMENTS
-test('/^[A-Z0-9]{6}$/', $ARG['ID'], "ID");
+test('/^[A-Z0-9]{4}$/', $ARG["NODE"], "NODE");
 test('/^[a-z]{2}$/', $ARG['LANG'], "LANG");
 
-// GET PROBLEM AND PRINT
-$result = database_request("SELECT * FROM problems WHERE id ='" . $ARG["ID"] . "'", $database); 
-echo json_encode(json_decode(($result->fetch_all(MYSQLI_ASSOC))[0]['data_' . $ARG['LANG']], true));
+// DUMP, PROCESS AND PRINT DATA
+$result = database_request('SELECT * FROM problems WHERE node LIKE "%' . $ARG["NODE"] . '%"', $database);
+$data = [];
+while ($row = $result->fetch_assoc()) {
+    $data[] = json_decode($row["data_" . $ARG["LANG"]], true);
+}
+echo json_encode($data);
 
 // CLOSE CONNECTION
 $database->close();
