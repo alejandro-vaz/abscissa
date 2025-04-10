@@ -13,6 +13,7 @@ const resources = document.getElementById("resourcesLinks")
 // FUNCTION TO LOAD A PROBLEM IN A DIV
 function load(div, script) {
     fetchAPI(script).then(data => {
+        let problem = JSON.parse(data.data_en)
         // ERASE PREVIOUS DATA
         div.innerHTML = "";
         // CREATE SECTIONS
@@ -25,47 +26,46 @@ function load(div, script) {
         // ADD NAME
         const contentHeader = document.createElement('h2');
         contentHeader.className = "content-title"
-        contentHeader.innerHTML = `<span class="text-light">(#${data.meta.id})</span> ${data.name}`;
+        contentHeader.innerHTML = `<span class="text-light">(#${data.id})</span> ${problem.name}`;
         content1.appendChild(contentHeader);
         // PARSE INSTRUCTIONS
         const contentInstructions = document.createElement('div');
         contentInstructions.className = "content-instructions";
-        contentInstructions.innerHTML = data.instructions;
+        contentInstructions.innerHTML = problem.instructions;
         content1.appendChild(contentInstructions);
         // COURSE EQUIVALENCY
         const contentCourse = document.createElement('p');
         contentCourse.className = "content-course";
-        contentCourse.innerHTML = data.course;
+        contentCourse.innerHTML = problem.course;
         content2.appendChild(contentCourse);
         // REWARD RATE
         const contentReward = document.createElement('p');
         contentReward.className = "content-reward";
-        contentReward.innerHTML = `Reward: ${Math.round(data.reward * 100)}%`;
+        contentReward.innerHTML = `Reward: ${Math.round(problem.reward * 100)}%`;
         content2.appendChild(contentReward);
     })
 }
 
 // FUNCTION TO LOAD RESOURCES
-function charge(times) {
+async function charge(times) {
+    const videos = await fetchAPI("resources.php?lang=en&type=video")
     for (let iteration = 0; iteration < times; iteration++) {
-        fetchAPI("resource_random-type.php?lang=en&type=video", "text").then(data => {
-            const video = document.createElement("iframe");
-            video.src = data;
-            video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-            video.referrerPolicy = "strict-origin-when-cross-origin";
-            video.allowFullscreen = true;
-            resources.appendChild(video);
-        })
+        const video = document.createElement("iframe");
+        video.src = videos[Math.floor(Math.random() * videos.length)].link;
+        video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        video.referrerPolicy = "strict-origin-when-cross-origin";
+        video.allowFullscreen = true;
+        resources.appendChild(video);
     }
 }
 
 // INITIALIZE
-load(randomContent, "problem_random.php?lang=en")
-load(dayContent, "problem_of_day.php?lang=en")
-charge(5)
+load(randomContent, "problems.php?lang=en&context=random");
+load(dayContent, "problems.php?lang=en&context=day");
+charge(5);
 
 // SKIP RANDOM
 randomSkip.addEventListener("click", function() {
-    load(randomContent, "problem_random.php?lang=en")
+    load(randomContent, "problems.php?lang=en&context=random")
 })
 

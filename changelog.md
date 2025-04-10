@@ -215,3 +215,15 @@
 - [X] (Patch) Improved *PHP* exceptions.
 
 - [X] (Patch) Remade `fetchAPI()` *JS* frontend function to allow for *non-JSON* responses.
+
+#### *Abscissa* 1.0.129
+
+- [X] (Minor) Completed [#24.](https://github.com/alejandro-vaz/Abscissa/issues/24)
+
+- [X] (Minor) Completed [#17.](https://github.com/alejandro-vaz/Abscissa/issues/17)
+
+- [X] (Patch) Completed [#11.](https://github.com/alejandro-vaz/Abscissa/issues/11)
+
+- [X] (Minor) Unified database access to table lookup files.
+
+- [X] (Patch) Remade fetch data handling in `dashboard.js`.

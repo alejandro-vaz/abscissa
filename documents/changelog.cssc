@@ -107,3 +107,9 @@
 /X (Patch) Renamed /_problems-content.php/_ to /_problems-node.php/_.
 /X (Patch) Improved ·PHP· exceptions.
 /X (Patch) Remade /_fetchAPI()/_ ·JS· frontend function to allow for ·non-JSON· responses.
+/h4 ·Abscissa· 1.0.129
+/X (Minor) Completed [#24.](https:://github.com/alejandro-vaz/Abscissa/issues/24)
+/X (Minor) Completed [#17.](https:://github.com/alejandro-vaz/Abscissa/issues/17)
+/X (Patch) Completed [#11.](https:://github.com/alejandro-vaz/Abscissa/issues/11)
+/X (Minor) Unified database access to table lookup files.
+/X (Patch) Remade fetch data handling in /_dashboard.js/_.

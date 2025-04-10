@@ -1,8 +1,4 @@
 {
-    "meta": {
-        "id": "000000",
-        "node": "0000"
-    },
     "name": "Example", // NAME
     "instructions": "Instructions which might include LaTeX code between dollar signs.", // INSTRUCTIONS FOR THE PROBLEM
     "svg": "SVG CONTENT HERE",
@@ -18,9 +14,7 @@
     "incorrect": [
         "no",
         "No"
-    ],
-    "reward": 1.12, // REWARD MULTIPLIER
-    "course": "Grade X" // COURSE EQUIVALENCY
+    ]
 }
 
 /*

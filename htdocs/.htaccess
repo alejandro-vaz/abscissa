@@ -6,7 +6,6 @@ RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # REDIRECT TO MAIN PAGE
-RewriteCond %{HTTP_HOST} ^abscissa\.rf\.gd$ [NC]
 RewriteRule ^$ /content/dashboard.php [L,R=302]
 
 # LIMIT CACHING TO 24H
