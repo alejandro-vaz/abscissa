@@ -28,7 +28,7 @@
             <textarea id="playground" class="input-textarea" placeholder="Your process might want to be here, in the playground."></textarea>
             <p id="visor">$$ $$</p>
             <div>
-                <input type="text" class="input-text" id="answer" placeholder="Write your answer here.">
+                <input type="text" class="input-text" id="answer" placeholder="Write down your answer here." autocomplete="off">
                 <p id="result"></p>
                 <button class="input-button" id="validate">VALIDATE</button>
             </div>

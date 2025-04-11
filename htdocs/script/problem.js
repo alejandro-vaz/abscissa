@@ -19,7 +19,7 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     result.dataset.post = problem.post;
     // CREATE TITLE
     const header = document.createElement("h2");
-    header.innerHTML = `<span class="text-light">(#${data.id})</span> ${problem.name}`;
+    header.innerHTML = `<span class="text-light">@${data.node}</span> ${problem.name}`;
     document.getElementById("info").appendChild(header);
     // INSTRUCTIONS TITLE
     const instructionsHeader = document.createElement("h3");
@@ -29,6 +29,10 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     const instructions = document.createElement("div");
     instructions.innerHTML = problem.instructions;
     document.getElementById("instructions").appendChild(instructions);
+    // SET UP PLAYGROUND
+    playground.value = problem.playgroundDefault;
+    visor.textContent = `$$ ${playground.value} $$`;
+    render(visor);
     // RUN RESULT
     result.textContent = problem.pre + problem.post;
     render(result);
@@ -41,7 +45,16 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
                 alert("X")
             }
         } else {
-            if (problem.answer.includes(answer.value.trim())) {
+            if (problem.answer.includes(
+                answer.value
+                .trim()
+                .replaceAll("\\right", "")
+                .replaceAll("\\left", "")
+                .replaceAll(" ", "")
+                .replaceAll("\\cdot", "")
+                .replaceAll("{", "")
+                .replaceAll("}", "") 
+            )) {
                 alert("OK")
             } else {
                 alert("X")
@@ -49,6 +62,7 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
         }
     })
 });
+
 
 // MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED
 playground.addEventListener("input", function() {

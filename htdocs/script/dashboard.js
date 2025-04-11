@@ -29,23 +29,18 @@ function load(div, script) {
         // ADD NAME
         const contentHeader = document.createElement('h2');
         contentHeader.className = "content-title"
-        contentHeader.innerHTML = `<span class="text-light">(#${data.id})</span> ${problem.name}`;
+        contentHeader.innerHTML = `<span class="text-light">@${data.node}</span> ${problem.name}`;
         content1.appendChild(contentHeader);
         // PARSE INSTRUCTIONS
         const contentInstructions = document.createElement('div');
         contentInstructions.className = "content-instructions";
         contentInstructions.innerHTML = problem.instructions;
         content1.appendChild(contentInstructions);
-        // COURSE EQUIVALENCY
-        const contentCourse = document.createElement('p');
-        contentCourse.className = "content-course";
-        contentCourse.innerHTML = problem.course;
-        content2.appendChild(contentCourse);
-        // REWARD RATE
-        const contentReward = document.createElement('p');
-        contentReward.className = "content-reward";
-        contentReward.innerHTML = `Reward: ${Math.round(problem.reward * 100)}%`;
-        content2.appendChild(contentReward);
+        // CONTENT 2 CARDS
+        const contentId = document.createElement("p");
+        contentId.className = "content-id";
+        contentId.innerHTML = `#${data.id}`;
+        content2.appendChild(contentId)
     })
 }
 
