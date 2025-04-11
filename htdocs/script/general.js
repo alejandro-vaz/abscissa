@@ -26,6 +26,9 @@ function fetchAPI(URL) {
     return fetch(`../database/${URL}`, { cache: "no-store" }).then(response => response.json());
 }
 
+function redirect(target) {
+    window.location.href = `./${target}`
+}
 
 // COOKIES
 const data = {

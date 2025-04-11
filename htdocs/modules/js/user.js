@@ -5,7 +5,7 @@ const preferencesLogo = document.getElementById("preferencesLogo");
 
 // PREFERENCES REDIRECTS TO PREFERENCES
 preferencesLogo.addEventListener("click", function() {
-    redirect("preferences")
+    redirect("preferences.php")
 })
 
 // MODIFY VALUES

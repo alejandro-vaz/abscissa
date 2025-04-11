@@ -36,7 +36,7 @@ if (!($ARG["CONTEXT"]) and !($ARG["ID"]) and !($ARG["NODE"])) {
 }
 
 // TYPES OF QUERIES
-if ($ARG["ID"]) {    
+if ($ARG["ID"]) {
     $result = database_request("SELECT * FROM problems WHERE id ='" . $ARG["ID"] . "' AND data_" . $ARG["LANG"] . " IS NOT NULL", $database);
     echo json_encode(($result->fetch_all(MYSQLI_ASSOC))[0]);
 } elseif ($ARG["NODE"]) {

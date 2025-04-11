@@ -13,6 +13,9 @@ const resources = document.getElementById("resourcesLinks")
 // FUNCTION TO LOAD A PROBLEM IN A DIV
 function load(div, script) {
     fetchAPI(script).then(data => {
+        // SAVE CODE AS ATTRIBUTE
+        div.dataset.id = data.id;
+        // GET PROBLEM DATA
         let problem = JSON.parse(data.data_en)
         // ERASE PREVIOUS DATA
         div.innerHTML = "";
@@ -47,16 +50,18 @@ function load(div, script) {
 }
 
 // FUNCTION TO LOAD RESOURCES
-async function charge(times) {
-    const videos = await fetchAPI("resources.php?lang=en&type=video")
-    for (let iteration = 0; iteration < times; iteration++) {
-        const video = document.createElement("iframe");
-        video.src = videos[Math.floor(Math.random() * videos.length)].link;
-        video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        video.referrerPolicy = "strict-origin-when-cross-origin";
-        video.allowFullscreen = true;
-        resources.appendChild(video);
-    }
+function charge(times) {
+    fetchAPI("resources.php?lang=en&type=video").then(videos => {
+        for (let iteration = 0; iteration < times; iteration++) {
+            const video = document.createElement("iframe");
+            video.src = videos[Math.floor(Math.random() * videos.length)].link;
+            video.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            video.referrerPolicy = "strict-origin-when-cross-origin";
+            video.allowFullscreen = true;
+            resources.appendChild(video);
+        }
+    })
+
 }
 
 // INITIALIZE
@@ -66,6 +71,13 @@ charge(5);
 
 // SKIP RANDOM
 randomSkip.addEventListener("click", function() {
-    load(randomContent, "problems.php?lang=en&context=random")
+    load(randomContent, "problems.php?lang=en&context=random");
 })
 
+// TRY BUTTONS
+randomTry.addEventListener("click", function() {
+    redirect(`problem.php?id=${randomContent.dataset.id}&lang=en`);
+})
+dayTry.addEventListener("click", function() {
+    redirect(`problem.php?id=${dayContent.dataset.id}&lang=en`);
+})

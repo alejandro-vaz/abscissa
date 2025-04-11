@@ -73,7 +73,7 @@ flowchart LR
 
     FINANZAS{{DPTO. FINANZAS}}
 
-    ESCALABILIDAD{{DPTO. ESCALABILIDAD}}
+    RRHH{{DPTO. RR.HH.}}
 
     MARKETING{{DPTO. MARKETING}}
 
@@ -95,7 +95,7 @@ flowchart LR
 
     alejo1 -.-> BACKEND
 
-    alejo1 -.-> ESCALABILIDAD
+    alejo1 -.-> RRHH
 
     jorge1 -.-> FRONTEND
 
@@ -105,7 +105,7 @@ flowchart LR
 
     jorge1 -.-> BACKEND
 
-    jorge1 -.-> ESCALABILIDAD
+    jorge1 -.-> RRHH
 
 
 
@@ -137,6 +137,6 @@ flowchart LR
 
 
 
-    ESCALABILIDAD <==> marcos
+    RRHH <==> marcos
 
 ```

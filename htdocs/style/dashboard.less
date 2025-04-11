@@ -28,15 +28,6 @@
 @video_size: 200px;
 @video_separation: 20px;
 
-// MAIN SECTION TWEAKS
-#main {
-    width: calc(100% - @navbar_width);
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-}
-
 // PROBLEMS
 .problem {
     height: @problem_height;
@@ -78,7 +69,7 @@
     scrollbar-width: none;
     background-color: @soft_color;
     margin: @content_margin 0 @content_margin @content_margin;
-    border-radius: @problem_radius 0 @problem_radius 0;
+    border-radius: @problem_radius 0 0 0;
 }
 .content-1 > h2 {
     font-size: @header_fsize;

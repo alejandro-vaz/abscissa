@@ -4,6 +4,8 @@
     "svg": "SVG CONTENT HERE",
     "solution": "Solution", // BETWEEN DOUBLE DOLLAR SIGNS
     "proof": "Proof", // BETWEEN DOUBLE DOLLAR SIGNS
+    "playgroundDefault": "INITIAL EQUATION MAYBE",
+    "calculator": true, // false OR "basic", "scientific", "graphing", "financial", "advanced" OR true for anything
     "pre": "$$v = ", // KEY BEFORE INPUT
     "post": " m/s$$", // KEY AFTER INPUT
     "numerical": false, // WHETHER OR NOT ANSWER IS NUMERICAL
@@ -22,7 +24,8 @@
     "answer": [ // NUMERICAL ANSWER TYPE WITH ERROR
         3.14, // RESULT
         0.01 // MAXIMUM RELATIVE ERROR
-    ]
+    ],
+    "incorrect": [] // EMPTY DICT
 */
 
 

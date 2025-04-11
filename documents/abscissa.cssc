@@ -36,7 +36,7 @@ flowchart LR
     BACKEND{{DPTO. BACKEND}}
     FRONTEND{{DPTO. FRONTEND}}
     FINANZAS{{DPTO. FINANZAS}}
-    ESCALABILIDAD{{DPTO. ESCALABILIDAD}}
+    RRHH{{DPTO. RR.HH.}}
     MARKETING{{DPTO. MARKETING}}
 
 
@@ -47,12 +47,12 @@ flowchart LR
     alejo1 -.-/=\gt/= FINANZAS
     alejo1 -.-/=\gt/= MARKETING
     alejo1 -.-/=\gt/= BACKEND
-    alejo1 -.-/=\gt/= ESCALABILIDAD
+    alejo1 -.-/=\gt/= RRHH
     jorge1 -.-/=\gt/= FRONTEND
     jorge1 -.-/=\gt/= FINANZAS
     jorge1 -.-/=\gt/= MARKETING
     jorge1 -.-/=\gt/= BACKEND
-    jorge1 -.-/=\gt/= ESCALABILIDAD
+    jorge1 -.-/=\gt/= RRHH
 
     FRONTEND /=\lt/===/=\gt/= alejo2
     alejo2 --/=\gt/= guzmán
@@ -68,5 +68,5 @@ flowchart LR
     paola --/=\gt/= luis
     paola --/=\gt/= dela
 
-    ESCALABILIDAD /=\lt/===/=\gt/= marcos
+    RRHH /=\lt/===/=\gt/= marcos
 /code

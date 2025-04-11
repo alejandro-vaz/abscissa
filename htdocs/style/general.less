@@ -19,6 +19,7 @@
 @main-tpadding: 80px;
 @input_sfont: 20px;
 @font_family: Times;
+@navbar_width: 65px;
 
 // FONT
 :where(*:not(.katex-display, .katex-display *, .katex, .katex *)) {
@@ -27,7 +28,6 @@
 
 // DOCUMENT
 :where(body) {
-    background: @body_background;
     font-family: @font;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -37,13 +37,17 @@
     overflow-y: scroll;
     color: @font_color;
     background-color: @body_background;
+    background-image: radial-gradient(circle, @body_background 20%, #000000 80%);
 }
 
 // MAIN SECTION
 :where(#main) {
-    margin: 0 auto;
     padding-top: @main-tpadding;
-    max-width: calc(100vw - 2*@main_margin);
+    width: calc(100% - @navbar_width);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
     box-sizing: border-box;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -60,6 +64,7 @@
     border: @input_border;
     border-radius: @input_radius;
     color: @input_color;
+    font-size: @input_sfont;
 }
 :where(.input-text:focus) {
     outline: none;
@@ -74,6 +79,7 @@
 
 // BUTTON INPUT
 :where(.input-button) {
+    box-sizing: border-box;
     width: @input_width;
     color: @input_color;
     padding: @input_padding;
@@ -81,7 +87,7 @@
     border: @input_border;
     border-radius: @input_radius;
     cursor: pointer;
-    transition: transform @transition_time @transition_curve, background-color @transition_time @transition_curve;
+    transition: transform calc(@transition_time / 3) @transition_curve, background-color calc(@transition_time / 3) @transition_curve;
     font-size: @input_sfont;
 }
 :where(.input-button:active) {
@@ -89,6 +95,27 @@
 }
 :where(.input-button:hover) {
     background-color: @hover_color;
+}
+
+// TEXTAREA INPUT
+:where(.input-textarea) {
+    box-sizing: border-box;
+    color: @input_color;
+    padding: @input_padding;
+    background: @input_background;
+    resize: none;
+    border-radius: @input_radius;
+    font-size: @input_sfont;
+    border: @input_border;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+:where(.input-textarea:focus) {
+    outline: none;
+}
+:where(.input-textarea::placeholder) {
+    color: @input_color;
+    opacity: 0.5;
 }
 
 // TEXT MODIFIERS

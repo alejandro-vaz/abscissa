@@ -227,3 +227,17 @@
 - [X] (Minor) Unified database access to table lookup files.
 
 - [X] (Patch) Remade fetch data handling in `dashboard.js`.
+
+### *Abscissa* 1.1.2
+
+- [X] (Major) Completed [#16.](https://github.com/alejandro-vaz/Abscissa/issues/16)
+
+- [X] (Patch) Moved `redirect()` *JS* function to `general.js`.
+
+- [X] (Patch) Modified problem template.
+
+- [X] (Patch) Try buttons on dashboard now work.
+
+- [X] (Patch) Removed explicit async behaviour from `dashboard.js`.
+
+- [X] (Patch) Added *LESS* `.input-textarea` class.
