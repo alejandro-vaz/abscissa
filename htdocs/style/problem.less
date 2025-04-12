@@ -59,21 +59,29 @@
 }
 
 // CONTROLS ELEMENTS
-#playground {
+.CodeMirror {
     margin: 0 @std_margin @std_margin @std_margin;
     width: calc(100% - 2*@std_margin);
+    max-width: calc(100% - 2*@std_margin);
     height: @playground_height;
+    font-family: monospace;
+    overflow-x: wrap;
+    word-wrap: break-word;
+}
+.CodeMirror * {
     font-family: monospace;
 }
 #visor {
     margin: 0 @std_margin @std_margin @std_margin;
     width: calc(100% - 2*@std_margin);
+    max-width: calc(100% - 2*@std_margin);
+    overflow-x: scroll;
     height: @visor_height;
     overflow-y: scroll;
     scrollbar-width: none;
     font-size: @math_fsize;
 }
-#controls > div {
+#controls > div:not(.CodeMirror) {
     position: fixed;
     display: flex;
     bottom: 0;
