@@ -120,3 +120,18 @@
 /X (Patch) Try buttons on dashboard now work.
 /X (Patch) Removed explicit async behaviour from /_dashboard.js/_.
 /X (Patch) Added ·LESS· /_.input-textarea/_ class.
+/h4 ·Abscissa· 1.1.23
+/X (Patch) Renamed /_handler.php/_ to /_.php/_ in order to signal entry point.
+/X (Patch) Renamed modules to specify their scope and reach by a letter.
+/X (Patch) /_add()/_ module from /_.php/_ now takes two arguments in order to differentiate between /_w/_, /_i/_, /_f/_ and /_h/_ modules.
+/X (Minor) Added ·CodeMirror· module, dynamic textarea and autocompletion.
+/X (Patch) Differentiated between ·PHP· critical /_PHPException/_ and non-critical /_PHPAlert/_ with variable /_$terminate/_.
+/X (Patch) Cleaned /_gtag()/_ function.
+/X (Patch) Refactored /_w-katex.js/_ and renamed /_render()/_ to /_renderLaTeX()/_.
+/X (Patch) Changed id show next to the problem name to node (followed by an @).
+/X (Patch) Changed content cards course and reward for id.
+/X (Patch) Added infinite scroll for resources in dashboard.
+/X (Patch) Deleted the whole /_error.js/_ file.
+/X (Patch) Input validation is now based on trimming and cleaning user input and comparing it to the correct one given by the ·API.·
+/X (Patch) Changed font style to ·Comic Sans.·
+/X (Patch) Especified header size on /_general.less/_.
