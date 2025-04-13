@@ -5,13 +5,13 @@
 @info_height: 15%;
 @div_1color: #333333;
 @playground_height: 40%;
-@visor_height: 40%;
+@visor_height: 45%;
 @math_fsize: 20px;
 @section_padding: 20px;
-@button_width: 125px;
-@answer_width: 450px;
+@button_width: 150px;
+@answer_width: 25%;
 
-// MAIN TWEAK
+// SET MAIN TO FLEX
 #main {
     display: flex;
 }
@@ -59,21 +59,24 @@
 }
 
 // CONTROLS ELEMENTS
-#playground {
+.CodeMirror {
     margin: 0 @std_margin @std_margin @std_margin;
     width: calc(100% - 2*@std_margin);
+    max-width: calc(100% - 2*@std_margin);
     height: @playground_height;
-    font-family: monospace;
+    padding: @section_padding;
 }
 #visor {
     margin: 0 @std_margin @std_margin @std_margin;
     width: calc(100% - 2*@std_margin);
+    max-width: calc(100% - 2*@std_margin);
+    overflow-x: scroll;
     height: @visor_height;
     overflow-y: scroll;
     scrollbar-width: none;
     font-size: @math_fsize;
 }
-#controls > div {
+#controls > div:not(.CodeMirror) {
     position: fixed;
     display: flex;
     bottom: 0;
@@ -82,7 +85,6 @@
     height: 10%;
     align-items: center;
 }
-
 #answer {
     display: inline-block;
     width: @answer_width;

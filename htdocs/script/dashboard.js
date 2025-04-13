@@ -29,23 +29,18 @@ function load(div, script) {
         // ADD NAME
         const contentHeader = document.createElement('h2');
         contentHeader.className = "content-title"
-        contentHeader.innerHTML = `<span class="text-light">(#${data.id})</span> ${problem.name}`;
+        contentHeader.innerHTML = `<span class="text-light">@${data.node}</span> ${problem.name}`;
         content1.appendChild(contentHeader);
         // PARSE INSTRUCTIONS
         const contentInstructions = document.createElement('div');
         contentInstructions.className = "content-instructions";
         contentInstructions.innerHTML = problem.instructions;
         content1.appendChild(contentInstructions);
-        // COURSE EQUIVALENCY
-        const contentCourse = document.createElement('p');
-        contentCourse.className = "content-course";
-        contentCourse.innerHTML = problem.course;
-        content2.appendChild(contentCourse);
-        // REWARD RATE
-        const contentReward = document.createElement('p');
-        contentReward.className = "content-reward";
-        contentReward.innerHTML = `Reward: ${Math.round(problem.reward * 100)}%`;
-        content2.appendChild(contentReward);
+        // CONTENT 2 CARDS
+        const contentId = document.createElement("p");
+        contentId.className = "content-id";
+        contentId.innerHTML = `#${data.id}`;
+        content2.appendChild(contentId)
     })
 }
 
@@ -80,4 +75,16 @@ randomTry.addEventListener("click", function() {
 })
 dayTry.addEventListener("click", function() {
     redirect(`problem.php?id=${dayContent.dataset.id}&lang=en`);
+})
+
+// INFINITE HORIZONTAL SCROLL FOR RESOURCES
+let loading = false;
+resources.addEventListener("scroll", function() {
+    if (resources.scrollLeft + resources.clientWidth >= resources.scrollWidth - 500 && !loading) {
+        loading = true;
+        charge(5);
+        setTimeout(() => {
+            loading = false;
+        }, 500);
+    }
 })

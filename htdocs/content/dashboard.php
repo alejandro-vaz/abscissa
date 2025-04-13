@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php require_once "../modules/handler.php" ?>
+    <?php require_once "../modules/.php" ?>
     <title>Dashboard | Abscissa</title>
     <meta name="description" content="Abscissa dashboard page.">
     <meta name="keywords" content="abscissa dashboard">
     <!-- HEAD MODULES -->
-    <?php add("analytics") ?>
-    <?php add("settings") ?>
+    <?php add("h", "analytics") ?>
+    <?php add("h", "settings") ?>
     <!-- STYLE -->
     <link rel="stylesheet/less" type="text/css" href="../style/dashboard.less">
 </head>
 <body>
     <!-- WORKING MODULES -->
-    <?php add("katex") ?>
-    <?php add("less") ?>
+    <?php add("w", "katex") ?>
+    <?php add("w", "less") ?>
     <!-- UI MODULES -->
-    <?php add("navbar") ?>
-    <?php add("user") ?>
+    <?php add("i", "navbar") ?>
+    <?php add("i", "user") ?>
     <!-- MAIN -->
     <div id="main">
         <div id="random" class="problem">

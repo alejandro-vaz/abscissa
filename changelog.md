@@ -241,3 +241,33 @@
 - [X] (Patch) Removed explicit async behaviour from `dashboard.js`.
 
 - [X] (Patch) Added *LESS* `.input-textarea` class.
+
+#### *Abscissa* 1.1.23
+
+- [X] (Patch) Renamed `handler.php` to `.php` in order to signal entry point.
+
+- [X] (Patch) Renamed modules to specify their scope and reach by a letter.
+
+- [X] (Patch) `add()` module from `.php` now takes two arguments in order to differentiate between `w`, `i`, `f` and `h` modules.
+
+- [X] (Minor) Added *CodeMirror* module, dynamic textarea and autocompletion.
+
+- [X] (Patch) Differentiated between *PHP* critical `PHPException` and non-critical `PHPAlert` with variable `$terminate`.
+
+- [X] (Patch) Cleaned `gtag()` function.
+
+- [X] (Patch) Refactored `w-katex.js` and renamed `render()` to `renderLaTeX()`.
+
+- [X] (Patch) Changed id show next to the problem name to node (followed by an @).
+
+- [X] (Patch) Changed content cards course and reward for id.
+
+- [X] (Patch) Added infinite scroll for resources in dashboard.
+
+- [X] (Patch) Deleted the whole `error.js` file.
+
+- [X] (Patch) Input validation is now based on trimming and cleaning user input and comparing it to the correct one given by the *API.*
+
+- [X] (Patch) Changed font style to *Comic Sans.*
+
+- [X] (Patch) Especified header size on `general.less`.

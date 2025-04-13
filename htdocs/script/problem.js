@@ -1,5 +1,5 @@
 // CONNECT TO ELEMENTS
-const playground = document.getElementById("playground");
+let playground = document.getElementById("playground");
 const visor = document.getElementById("visor");
 const answer = document.getElementById("answer");
 const result = document.getElementById("result");
@@ -10,6 +10,9 @@ const calculatorLinks = {
     }
 }
 
+// CONNECT PLAYGROUND TO CODEMIRROR AND REDEFINE IT
+playground = renderCodeMirror(playground);
+
 // LOAD PROBLEM
 fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     // GET PROBLEM DATA
@@ -19,7 +22,7 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     result.dataset.post = problem.post;
     // CREATE TITLE
     const header = document.createElement("h2");
-    header.innerHTML = `<span class="text-light">(#${data.id})</span> ${problem.name}`;
+    header.innerHTML = `<span class="text-light">@${data.node}</span> ${problem.name}`;
     document.getElementById("info").appendChild(header);
     // INSTRUCTIONS TITLE
     const instructionsHeader = document.createElement("h3");
@@ -29,9 +32,13 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     const instructions = document.createElement("div");
     instructions.innerHTML = problem.instructions;
     document.getElementById("instructions").appendChild(instructions);
+    // SET UP PLAYGROUND
+    playground.setValue("$$ " + problem.playgroundDefault + " $$");
+    visor.textContent = `$$ ${problem.playgroundDefault} $$`;
+    renderLaTeX(visor);
     // RUN RESULT
     result.textContent = problem.pre + problem.post;
-    render(result);
+    renderLaTeX(result);
     // VALIDATE RESULT
     validate.addEventListener("click", function() {
         if (problem.numerical) {
@@ -41,7 +48,17 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
                 alert("X")
             }
         } else {
-            if (problem.answer.includes(answer.value.trim())) {
+            if (problem.answer.includes(
+                answer.value
+                .replaceAll("\\right", "")
+                .replaceAll("\\left", "")
+                .replaceAll("\\cdot", "")
+                .replaceAll("{", "")
+                .replaceAll("}", "")
+                .replaceAll("\\\\", "")
+                .replaceAll(" ", "")
+                .trim()
+            )) {
                 alert("OK")
             } else {
                 alert("X")
@@ -50,37 +67,27 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     })
 });
 
-// MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED
-playground.addEventListener("input", function() {
-    visor.textContent = `$$ ${playground.value} $$`;
-    render(visor);
-});
+// MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED USING CODEMIRROR
+playground.on("change", function(instance, change) {
+    visor.textContent = instance.getValue();
+    renderLaTeX(visor);
+})
 
 // MIRROR ANSWER TO RESULT WITH KATEX ENABLED
 answer.addEventListener("input", function() {
     result.textContent = result.dataset.pre + answer.value + result.dataset.post;
-    render(result);
+    renderLaTeX(result);
 });
 
-// AUTOCOMPLETION
-const pairs = { '[': ']', '(': ')', '{': '}' };
-playground.addEventListener('keydown', function(pressed) {
-    if (pairs[pressed.key]) {
-        pressed.preventDefault();
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        const text = this.value;
-        this.value = text.slice(0, start) + pressed.key + pairs[pressed.key] + text.slice(end);
-        this.selectionStart = this.selectionEnd = start + 1;
-    }
-});
+// ANSWER AUTOCOMPLETION
+const brackets = { '[': ']', '(': ')', '{': '}' };
 answer.addEventListener('keydown', function(pressed) {
-    if (pairs[pressed.key]) {
+    if (brackets[pressed.key]) {
         pressed.preventDefault();
         const start = this.selectionStart;
         const end = this.selectionEnd;
         const text = this.value;
-        this.value = text.slice(0, start) + pressed.key + pairs[pressed.key] + text.slice(end);
+        this.value = text.slice(0, start) + pressed.key + brackets[pressed.key] + text.slice(end);
         this.selectionStart = this.selectionEnd = start + 1;
     }
 });

@@ -1,12 +1,12 @@
 <?php
 // HANDLER
-require_once "../modules/handler.php";
+require_once "../modules/.php";
 
 // IMPORTS
-add("arguments");
-add("environment");
-add("database");
-add("test");
+add("f", "arguments");
+add("f", "environment");
+add("f", "database");
+add("f", "test");
 
 // RESPONSE SET TO JSON FROM ANYONE
 header('Content-Type: application/json');

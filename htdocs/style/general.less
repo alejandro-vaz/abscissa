@@ -18,12 +18,17 @@
 @input_width: 75px;
 @main-tpadding: 80px;
 @input_sfont: 20px;
-@font_family: Times;
 @navbar_width: 65px;
+@font_family: "CSSMS";
 
 // FONT
-:where(*:not(.katex-display, .katex-display *, .katex, .katex *)) {
+@font-face {
+    font-family: "CSSMS";
+    src: url("../public/CSSMS.ttf") format('truetype');
+}
+:where(*:not(.katex-display, .katex-display *, .katex, .katex *, .CodeMirror, .CodeMirror *)) {
     font-family: @font_family;
+    font-size: @input_sfont;
 }
 
 // DOCUMENT
@@ -121,6 +126,7 @@
 // TEXT MODIFIERS
 :where(.text-light) {
     color: @text_light;
+    font-size: inherit;
 }
 
 // HR
@@ -128,3 +134,10 @@
     margin: @hr_margin 0;
 }
 
+// HEADER SIZE
+:where(h2) {
+    font-size: calc(1.25 * @input_sfont);
+}
+:where(h3) {
+    font-size: calc(1.125 * @input_sfont);
+}
