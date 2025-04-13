@@ -22,13 +22,13 @@
 @font_family: "CSSMS";
 
 // FONT
-:where(*:not(.katex-display, .katex-display *, .katex, .katex *)) {
-    font-family: @font_family;
-    font-size: @input_sfont;
-}
 @font-face {
     font-family: "CSSMS";
     src: url("../public/CSSMS.ttf") format('truetype');
+}
+:where(*:not(.katex-display, .katex-display *, .katex, .katex *, .CodeMirror, .CodeMirror *)) {
+    font-family: @font_family;
+    font-size: @input_sfont;
 }
 
 // DOCUMENT
@@ -123,11 +123,6 @@
     opacity: 0.5;
 }
 
-// CODEMIRROR
-:where(.CodeMirror) {
-    border-radius: @input_radius;
-}
-
 // TEXT MODIFIERS
 :where(.text-light) {
     color: @text_light;
@@ -139,7 +134,7 @@
     margin: @hr_margin 0;
 }
 
-// HEADERS
+// HEADER SIZE
 :where(h2) {
     font-size: calc(1.25 * @input_sfont);
 }

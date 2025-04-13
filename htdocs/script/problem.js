@@ -33,7 +33,7 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     instructions.innerHTML = problem.instructions;
     document.getElementById("instructions").appendChild(instructions);
     // SET UP PLAYGROUND
-    playground.setValue(problem.playgroundDefault);
+    playground.setValue("$$ " + problem.playgroundDefault + " $$");
     visor.textContent = `$$ ${problem.playgroundDefault} $$`;
     renderLaTeX(visor);
     // RUN RESULT
@@ -50,14 +50,14 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
         } else {
             if (problem.answer.includes(
                 answer.value
-                .trim()
                 .replaceAll("\\right", "")
                 .replaceAll("\\left", "")
-                .replaceAll(" ", "")
                 .replaceAll("\\cdot", "")
                 .replaceAll("{", "")
                 .replaceAll("}", "")
                 .replaceAll("\\\\", "")
+                .replaceAll(" ", "")
+                .trim()
             )) {
                 alert("OK")
             } else {
@@ -69,7 +69,7 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
 
 // MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED USING CODEMIRROR
 playground.on("change", function(instance, change) {
-    visor.textContent = `$$ ${instance.getValue()} $$`;
+    visor.textContent = instance.getValue();
     renderLaTeX(visor);
 })
 
@@ -79,15 +79,15 @@ answer.addEventListener("input", function() {
     renderLaTeX(result);
 });
 
-// BRACKET AUTOCOMPLETION
-const pairs = { '[': ']', '(': ')', '{': '}' };
+// ANSWER AUTOCOMPLETION
+const brackets = { '[': ']', '(': ')', '{': '}' };
 answer.addEventListener('keydown', function(pressed) {
-    if (pairs[pressed.key]) {
+    if (brackets[pressed.key]) {
         pressed.preventDefault();
         const start = this.selectionStart;
         const end = this.selectionEnd;
         const text = this.value;
-        this.value = text.slice(0, start) + pressed.key + pairs[pressed.key] + text.slice(end);
+        this.value = text.slice(0, start) + pressed.key + brackets[pressed.key] + text.slice(end);
         this.selectionStart = this.selectionEnd = start + 1;
     }
 });

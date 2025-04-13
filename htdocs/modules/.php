@@ -33,8 +33,8 @@ function exceptionHandler(Throwable $exception) {
 set_exception_handler("exceptionHandler");
 
 // ADD MODULE FUNCTION
-function add($module) {
-    $path = __DIR__ . "/../modules/$module.php";
+function add($type, $module) {
+    $path = __DIR__ . "/../modules/$type" . "-" . "$module.php";
     if (!file_exists($path)) {
         throw new moduleNotFoundException($module);
     } else {
