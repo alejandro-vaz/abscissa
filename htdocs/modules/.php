@@ -1,20 +1,25 @@
 <?php 
-// REGEX CHECK ERROR
-class regexException extends Exception {public $terminate = true;}
-// DATABASE CONNECTION ERROR
-class databaseConnectException extends Exception {public $terminate = true;}
-// ENVIRONMENT NOT FOUND ERROR
-class environmentNotFoundException extends Exception {public $terminate = true;}
-// MODULE NOT FOUND ERROR
-class moduleNotFoundException extends Exception {public $terminate = true;}
-// TOO MANY ARGUMENTS ERROR
-class tooManyArgumentsException extends Exception {public $terminate = true;}
-// NOT ENOUGH ARGUMENTS ERROR
-class notEnoughArgumentsException extends Exception {public $terminate = true;}
-// UNKNOWN ARGUMENT VALUE
-class unknownArgumentValueException extends Exception {public $terminate = true;}
+// EXCEPTIONS
+class PHPException extends Exception {public $terminate = true;}
+// REGEX CHECK EXCEPTION
+class regexException extends PHPException {}
+// DATABASE CONNECTION EXCEPTION
+class databaseConnectException extends PHPException {}
+// ENVIRONMENT NOT FOUND EXCEPTION
+class environmentNotFoundException extends PHPException {}
+// MODULE NOT FOUND EXCEPTION
+class moduleNotFoundException extends PHPException {}
+// TOO MANY ARGUMENTS EXCEPTION
+class tooManyArgumentsException extends PHPException {}
+// NOT ENOUGH ARGUMENTS EXCEPTION
+class notEnoughArgumentsException extends PHPException {}
+// UNKNOWN ARGUMENT EXCEPTION
+class unknownArgumentValueException extends PHPException {}
 
 // ALERTS
+class PHPAlert extends Exception {public $terminate = false;}
+
+// TO-DO CREATE ALERTS
 
 // EXCEPTION HANDLER
 function exceptionHandler(Throwable $exception) {
@@ -27,12 +32,18 @@ function exceptionHandler(Throwable $exception) {
         ]);
         exit;
     } else {
-        // LOG ALERT TO DATABASE
+        // TO-DO LOG ALERT TO DATABASE
     }
 }
 set_exception_handler("exceptionHandler");
 
 // ADD MODULE FUNCTION
+/* TYPES OF MODULES:
+f - PHP FRAMEWORKS
+h - HEAD MODULES
+w - WORKING MODULES
+i - UI
+*/
 function add($type, $module) {
     $path = __DIR__ . "/../modules/$type" . "-" . "$module.php";
     if (!file_exists($path)) {

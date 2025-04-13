@@ -2,6 +2,7 @@
 @std_radius: 10px;
 @highlight_cespecial: #666666;
 @highlight_ckeyword: #e4ba00;
+@codemirror_border: 1px solid #ffffff;
 
 // DIV SETTINGS
 .CodeMirror {
@@ -9,6 +10,8 @@
     font-family: monospace;
     overflow-x: wrap;
     word-wrap: break-word;
+    box-sizing: border-box;
+    border: @codemirror_border;
 }
 .CodeMirror * {
     font-family: monospace;
