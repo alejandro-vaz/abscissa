@@ -1,20 +1,24 @@
 // CODEMIRROR TEXTAREA
 function renderCodeMirror(element) {
     var editor = CodeMirror.fromTextArea(element, {
+        // OPTIONS
         mode: 'stex',
         lineNumbers: true,
         theme: 'monokai',
+        indentWithTabs: true,
         autocorrect: true,
+        spellcheck: false,
+        smartIndent: true,
         lineWrapping: true,
+        indentUnit: 4,
         lineWiseCopyCut: false,
+        // BREAK AUTOCOMPLETION
         extraKeys: {
             "Enter": function(cm) {
-                // BASIC STUFF
                 const doc = cm.getDoc();
                 const cursor = doc.getCursor();
                 const line = doc.getLine(cursor.line);
                 const ch = cursor.ch;
-                // BREAK AUTOCOMPLETION
                 if (line.slice(ch - 2, ch) !== "\\\\") {
                     cm.operation(function() {
                         cm.replaceSelection("\\\\");
@@ -24,11 +28,7 @@ function renderCodeMirror(element) {
                 cm.execCommand("newlineAndIndent");
                 return true;
             },
-        },
-        indentUnit: 4,
-        indentWithTabs: true,
-        smartIndent: true,
-        spellcheck: false
+        }
     });
     return editor;
 }

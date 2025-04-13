@@ -9,5 +9,5 @@ preferencesLogo.addEventListener("click", function() {
 })
 
 // MODIFY VALUES
-userName.innerText = getCookie("userName")
-userInsight.innerText = getCookie("userInsight")
+userName.innerText = getCookie("userName");
+userInsight.innerText = getCookie("userInsight");

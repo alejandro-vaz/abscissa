@@ -8,7 +8,7 @@ function renderLaTeX(element, source) {
         strict: false,
         throwOnError: false,
         errorCallback: function(error) {
-            // TO-DO, RELATED TO SOURCE
+            // TO-DO, RELATED TO SOURCE . MAYBE DO BORDER-COLOR: RED;
         }
     });
 }
@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // INITIAL RENDERING
     renderLaTeX(document.body);
     // OBSERVER FOR DYNAMIC CHANGES RENDERING
-    const observer = new MutationObserver(function(mutationsList) {
-        for (const mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                mutation.addedNodes.forEach(node => {
+    const observer = new MutationObserver(function(changeList) {
+        for (const change of changeList) {
+            if (change.type === 'childList') {
+                change.addedNodes.forEach(node => {
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         renderLaTeX(node);
                     }

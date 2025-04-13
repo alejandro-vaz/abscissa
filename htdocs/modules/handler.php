@@ -1,28 +1,34 @@
 <?php 
 // REGEX CHECK ERROR
-class regexException extends Exception {}
+class regexException extends Exception {public $terminate = true;}
 // DATABASE CONNECTION ERROR
-class databaseConnectException extends Exception {}
+class databaseConnectException extends Exception {public $terminate = true;}
 // ENVIRONMENT NOT FOUND ERROR
-class environmentNotFoundException extends Exception {}
+class environmentNotFoundException extends Exception {public $terminate = true;}
 // MODULE NOT FOUND ERROR
-class moduleNotFoundException extends Exception {}
+class moduleNotFoundException extends Exception {public $terminate = true;}
 // TOO MANY ARGUMENTS ERROR
-class tooManyArgumentsException extends Exception {}
+class tooManyArgumentsException extends Exception {public $terminate = true;}
 // NOT ENOUGH ARGUMENTS ERROR
-class notEnoughArgumentsException extends Exception {}
+class notEnoughArgumentsException extends Exception {public $terminate = true;}
 // UNKNOWN ARGUMENT VALUE
-class unknownArgumentValueException extends Exception {}
+class unknownArgumentValueException extends Exception {public $terminate = true;}
+
+// ALERTS
 
 // EXCEPTION HANDLER
 function exceptionHandler(Throwable $exception) {
-    echo json_encode([
-        "Error" => get_class($exception), 
-        "File" => $exception->getFile(), 
-        "Line" => $exception->getLine(),
-        "Message" => $exception->getMessage()
-    ]);
-    exit;
+    if ($exception->terminate) {
+        echo json_encode([
+            "Error" => get_class($exception), 
+            "File" => $exception->getFile(), 
+            "Line" => $exception->getLine(),
+            "Message" => $exception->getMessage()
+        ]);
+        exit;
+    } else {
+        // LOG ALERT TO DATABASE
+    }
 }
 set_exception_handler("exceptionHandler");
 
