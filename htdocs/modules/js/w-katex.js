@@ -1,5 +1,5 @@
 // RENDER MATH FUNCTION
-function renderLaTeX(element, source) {
+function renderLaTeX(element) {
     renderMathInElement(element, {
         delimiters: [
             {left: "$$", right: "$$", display: true},
@@ -7,9 +7,6 @@ function renderLaTeX(element, source) {
         ],
         strict: false,
         throwOnError: false,
-        errorCallback: function(error) {
-            // TO-DO, RELATED TO SOURCE . MAYBE DO BORDER-COLOR: RED;
-        }
     });
 }
 
