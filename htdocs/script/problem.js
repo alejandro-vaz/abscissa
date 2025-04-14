@@ -33,8 +33,8 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
     instructions.innerHTML = problem.instructions;
     document.getElementById("instructions").appendChild(instructions);
     // SET UP PLAYGROUND
-    playground.setValue("$$ " + problem.playgroundDefault + " $$");
-    visor.textContent = `$$ ${problem.playgroundDefault} $$`;
+    playground.setValue(problem.playgroundDefault);
+    visor.textContent = problem.playgroundDefault;
     renderLaTeX(visor);
     // RUN RESULT
     result.textContent = problem.pre + problem.post;
@@ -48,27 +48,20 @@ fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
                 alert("X")
             }
         } else {
-            if (problem.answer.includes(
-                answer.value
-                .replaceAll("\\right", "")
-                .replaceAll("\\left", "")
-                .replaceAll("\\cdot", "")
-                .replaceAll("{", "")
-                .replaceAll("}", "")
-                .replaceAll("\\\\", "")
-                .replaceAll(" ", "")
-                .trim()
-            )) {
-                alert("OK")
+            const index = problem.answer.findIndex(
+                element => rawLaTeX(element) === rawLaTeX(answer.value)
+            );
+            if (index !== -1) {
+                alert("OK");
             } else {
-                alert("X")
+                alert("BAD");
             }
         }
     })
 });
 
 // MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED USING CODEMIRROR
-playground.on("change", function(instance, change) {
+playground.on("change", function(instance) {
     visor.textContent = instance.getValue();
     renderLaTeX(visor);
 })

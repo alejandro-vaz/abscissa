@@ -26,8 +26,24 @@ function fetchAPI(URL) {
     return fetch(`../database/${URL}`, { cache: "no-store" }).then(response => response.json());
 }
 
+// FUNCTION TO REDIRECT
 function redirect(target) {
     window.location.href = `./${target}`
+}
+
+// FUNCTION TO GET RAW LATEX
+function rawLaTeX(latex) {
+    return latex
+    .replaceAll("\\\\", "\\")
+    .replaceAll("\\right", "")
+    .replaceAll("\\left", "")
+    .replaceAll("\\cdot", "")
+    .replaceAll("{", "")
+    .replaceAll("}", "")
+    .replaceAll("*", "")
+    .replaceAll("\\\\", "")
+    .replaceAll(" ", "")
+    .trim()
 }
 
 // COOKIES
