@@ -10,8 +10,8 @@ const dayTry = document.getElementById("dayTry");
 // CONNECT TO RESOURCES
 const resources = document.getElementById("resourcesLinks")
 
-// FUNCTION TO LOAD A PROBLEM IN A DIV
-function load(div, script) {
+// FUNCTION TO loadProblem A PROBLEM IN A DIV
+function loadProblem(div, script) {
     fetchAPI(script).then(data => {
         // SAVE CODE AS ATTRIBUTE
         div.dataset.id = data.id;
@@ -44,8 +44,8 @@ function load(div, script) {
     })
 }
 
-// FUNCTION TO LOAD RESOURCES
-function charge(times) {
+// FUNCTION TO loadProblem RESOURCES
+function loadResources(times) {
     fetchAPI("resources.php?lang=en&type=video").then(videos => {
         for (let iteration = 0; iteration < times; iteration++) {
             const video = document.createElement("iframe");
@@ -60,13 +60,13 @@ function charge(times) {
 }
 
 // INITIALIZE
-load(randomContent, "problems.php?lang=en&context=random");
-load(dayContent, "problems.php?lang=en&context=day");
-charge(5);
+loadProblem(randomContent, "problems.php?lang=en&context=random");
+loadProblem(dayContent, "problems.php?lang=en&context=day");
+loadResources(5);
 
 // SKIP RANDOM
 randomSkip.addEventListener("click", function() {
-    load(randomContent, "problems.php?lang=en&context=random");
+    loadProblem(randomContent, "problems.php?lang=en&context=random");
 })
 
 // TRY BUTTONS
@@ -82,7 +82,7 @@ let loading = false;
 resources.addEventListener("scroll", function() {
     if (resources.scrollLeft + resources.clientWidth >= resources.scrollWidth - 500 && !loading) {
         loading = true;
-        charge(5);
+        loadResources(5);
         setTimeout(() => {
             loading = false;
         }, 500);
