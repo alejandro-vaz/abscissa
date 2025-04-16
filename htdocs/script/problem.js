@@ -1,6 +1,7 @@
 // CONNECT TO ELEMENTS
 let playground = document.getElementById("playground");
 const visor = document.getElementById("visor");
+const instructions = document.getElementById("instructions");
 const answer = document.getElementById("answer");
 const result = document.getElementById("result");
 const validate = document.getElementById("validate");
@@ -15,55 +16,58 @@ playground = renderCodeMirror(playground);
 
 // LOAD PROBLEM
 fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
-    // GET PROBLEM DATA
-    let problem = JSON.parse(data.data_en);
-    // SAVE ATTRIBUTES
-    result.dataset.pre = problem.pre;
-    result.dataset.post = problem.post;
-    // CREATE TITLE
-    const header = document.createElement("h2");
-    header.innerHTML = `<span class="text-light">@${data.node}</span> ${problem.name}`;
-    document.getElementById("info").appendChild(header);
-    // INSTRUCTIONS TITLE
-    const instructionsHeader = document.createElement("h3");
-    instructionsHeader.textContent = "Instructions";
-    document.getElementById("instructions").appendChild(instructionsHeader);
-    // PARSE INSTRUCTIONS
-    const instructions = document.createElement("div");
-    instructions.innerHTML = problem.instructions;
-    document.getElementById("instructions").appendChild(instructions);
-    // SET UP PLAYGROUND
-    playground.setValue(problem.playgroundDefault);
-    visor.textContent = problem.playgroundDefault;
-    renderLaTeX(visor);
-    // RUN RESULT
-    result.textContent = problem.pre + problem.post;
-    renderLaTeX(result);
-    // VALIDATE RESULT
-    validate.addEventListener("click", function() {
-        if (problem.numerical) {
-            if (((problem.answer[0] * (1 - problem.answer[1]) <= +answer.value) && (problem.answer[0] * (1 + problem.answer[1]) >= +answer.value) && (problem.answer[0] >= 0)) || ((problem.answer[0] * (1 - problem.answer[1]) >= +answer.value) && (problem.answer[0] * (1 + problem.answer[1]) <= +answer.value) && (problem.answer[0] <= 0))) {
-                alert("OK")
+    fetchAPI(`location.php?lang=en&id=${getURLParameter("id")}`).then(location => {
+        // GET PROBLEM DATA
+        let problem = JSON.parse(data.data_en);
+        // SAVE ATTRIBUTES
+        result.dataset.pre = problem.pre;
+        result.dataset.post = problem.post;
+        // CREATE TITLE
+        const header = document.createElement("h2");
+        header.innerHTML = data["name_" + "en"];
+        document.getElementById("info").appendChild(header);
+        // INSTRUCTIONS TITLE
+        const instructionsHeader = document.createElement("h3");
+        instructionsHeader.textContent = "Instructions";
+        instructions.appendChild(instructionsHeader);
+        // PARSE INSTRUCTIONS
+        const instructionsText = document.createElement("div");
+        instructionsText.innerHTML = problem.instructions;
+        instructions.appendChild(instructionsText);
+        // SET UP PLAYGROUND
+        playground.setValue(problem.playgroundDefault);
+        visor.textContent = problem.playgroundDefault;
+        renderLaTeX(visor);
+        // RUN RESULT
+        result.textContent = problem.pre + problem.post;
+        renderLaTeX(result);
+        // VALIDATE RESULT
+        validate.addEventListener("click", function() {
+            if (problem.numerical) {
+                if (((problem.answer[0] * (1 - problem.answer[1]) <= +answer.value) && (problem.answer[0] * (1 + problem.answer[1]) >= +answer.value) && (problem.answer[0] >= 0)) || ((problem.answer[0] * (1 - problem.answer[1]) >= +answer.value) && (problem.answer[0] * (1 + problem.answer[1]) <= +answer.value) && (problem.answer[0] <= 0))) {
+                    alert("OK")
+                } else {
+                    alert("X")
+                }
             } else {
-                alert("X")
+                const index = problem.answer.findIndex(
+                    element => rawLaTeX(element) === rawLaTeX(answer.value)
+                );
+                if (index !== -1) {
+                    alert("OK");
+                } else {
+                    alert("BAD");
+                }
             }
-        } else {
-            const index = problem.answer.findIndex(
-                element => rawLaTeX(element) === rawLaTeX(answer.value)
-            );
-            if (index !== -1) {
-                alert("OK");
-            } else {
-                alert("BAD");
-            }
-        }
+        })
     })
 });
 
-// MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED USING CODEMIRROR
+// MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED USING CODEMIRROR AND SCROLL DOWN
 playground.on("change", function(instance) {
     visor.textContent = instance.getValue();
     renderLaTeX(visor);
+    visor.scrollTop = visor.scrollHeight;
 })
 
 // MIRROR ANSWER TO RESULT WITH KATEX ENABLED

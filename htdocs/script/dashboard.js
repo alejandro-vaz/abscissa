@@ -1,46 +1,55 @@
 // CONNECT TO RANDOM ELEMENTS
 const randomContent = document.getElementById("randomContent");
-const randomTry = document.getElementById("randomTry");
-const randomSkip = document.getElementById("randomSkip");
+const randomTry = document.getElementById("random-try");
+const randomSkip = document.getElementById("random-skip");
 
 // CONNECT TO DAY ELEMENTS
 const dayContent = document.getElementById("dayContent");
-const dayTry = document.getElementById("dayTry");
+const dayTry = document.getElementById("day-try");
 
 // CONNECT TO RESOURCES
-const resources = document.getElementById("resourcesLinks")
+const resources = document.getElementById("resources-links")
 
 // FUNCTION TO loadProblem A PROBLEM IN A DIV
 function loadProblem(div, script) {
     fetchAPI(script).then(data => {
-        // SAVE CODE AS ATTRIBUTE
-        div.dataset.id = data.id;
+        fetchAPI(`location.php?lang=en&id=${data.id}`).then(location => {
         // GET PROBLEM DATA
         let problem = JSON.parse(data.data_en)
+        // ADD ATTRIBUTES
+        div.location = location;
         // ERASE PREVIOUS DATA
         div.innerHTML = "";
         // CREATE SECTIONS
         const content1 = document.createElement("div")
         const content2 = document.createElement('div')
-        content1.className = "content-1"
-        content2.className = "content-2"
+        content1.className = "content1"
+        content2.className = "content2"
         div.appendChild(content1)
         div.appendChild(content2)
         // ADD NAME
         const contentHeader = document.createElement('h2');
-        contentHeader.className = "content-title"
-        contentHeader.innerHTML = `<span class="text-light">@${data.node}</span> ${problem.name}`;
+        contentHeader.className = "contentTitle"
+        contentHeader.innerHTML = data["name_" + "en"];
         content1.appendChild(contentHeader);
         // PARSE INSTRUCTIONS
         const contentInstructions = document.createElement('div');
-        contentInstructions.className = "content-instructions";
+        contentInstructions.className = "contentInstructions";
         contentInstructions.innerHTML = problem.instructions;
         content1.appendChild(contentInstructions);
-        // CONTENT 2 CARDS
+        // CONTENT 2 CARD: LOCATION
+        const contentLocation = document.createElement("p");
+        contentLocation.className = "contentCard";
+        contentLocation.id = "content-location"
+        contentLocation.innerHTML = `${location.tree.value}${location.cluster.value}@${location.node.value}`;
+        content2.appendChild(contentLocation);
+        // CONTENT 2 CARD: ID
         const contentId = document.createElement("p");
-        contentId.className = "content-id";
-        contentId.innerHTML = `#${data.id}`;
+        contentId.className = "contentCard";
+        contentLocation.id = "content-id"
+        contentId.innerHTML = "#" + data.id;
         content2.appendChild(contentId)
+        })
     })
 }
 
@@ -71,10 +80,10 @@ randomSkip.addEventListener("click", function() {
 
 // TRY BUTTONS
 randomTry.addEventListener("click", function() {
-    redirect(`problem.php?id=${randomContent.dataset.id}&lang=en`);
+    redirect(`problem.php?id=${randomContent.location.id.value}&lang=en`);
 })
 dayTry.addEventListener("click", function() {
-    redirect(`problem.php?id=${dayContent.dataset.id}&lang=en`);
+    redirect(`problem.php?id=${dayContent.location.id.value}&lang=en`);
 })
 
 // INFINITE HORIZONTAL SCROLL FOR RESOURCES

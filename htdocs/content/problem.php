@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- MODULES -->
     <?php require_once "../modules/.php" ?>
+    <?php module("head", "analytics") ?>
+    <?php module("head", "settings") ?>
+    <?php module("working", "katex") ?>
+    <?php module("working", "less") ?>
+    <?php module("interface", "codemirror") ?>
+    <?php module("interface", "navbar") ?>
+    <?php module("interface", "user") ?>
+    <!-- SETTINGS -->
     <title>Problem | Abscissa</title>
     <meta name="description" content="Abscissa dashboard page.">
     <meta name="keywords" content="abscissa dashboard">
     <!-- HEAD MODULES -->
-    <?php add("h", "analytics") ?>
-    <?php add("h", "settings") ?>
+    <?php signal("head") ?>
     <!-- STYLE -->
-    <link rel="stylesheet/less" type="text/css" href="../style/problem.less">
+    <link rel="stylesheet/less" type="text/css" href="../style/problem.css">
 </head>
 <body>
     <!-- WORKING MODULES -->
-    <?php add("w", "katex") ?>
-    <?php add("w", "less") ?>
+    <?php signal("working") ?>
     <!-- UI MODULES -->
-    <?php add("i", "codemirror") ?>
-    <?php add("i", "navbar") ?>
-    <?php add("i", "user") ?>
+    <?php signal("interface") ?>
     <!-- MAIN -->
     <div id="main">
         <div id="data">

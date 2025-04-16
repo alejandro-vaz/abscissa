@@ -21,6 +21,7 @@ function renderCodeMirror(textarea) {
         '{': '}'
     };
     editor.on("keydown", function(code, pressed) {
+        // BRACKET AUTOCOMPLETION
         if (brackets[pressed.key]) {
             pressed.preventDefault();
             const selection = code.getSelection();
@@ -39,11 +40,12 @@ function renderCodeMirror(textarea) {
             }
             return true;
         }
-        if (pressed.key === 'F2') {
+        // REPLICATE LINE ABOVE
+        if (pressed.key === 'Tab') {
             pressed.preventDefault();
             const cursor = code.getCursor();
             if (cursor.line > 0) {
-                const lineText = code.getLine(cursor.line - 1).replaceAll("$$", "").trim();
+                const lineText = code.getLine(cursor.line - 1).replaceAll("$", "").trim();
                 const from = { line: cursor.line, ch: 0 };
                 const to = { line: cursor.line, ch: code.getLine(cursor.line).length };
                 code.replaceRange(lineText, from, to);
@@ -51,6 +53,7 @@ function renderCodeMirror(textarea) {
             }
             return true;
         }
+        // NEXT LINE WITH LINE BREAK
         if (pressed.key === "Enter" && !pressed.shiftKey) {
             pressed.preventDefault();
             const cursor = code.getCursor();
@@ -64,6 +67,34 @@ function renderCodeMirror(textarea) {
             );
             code.setCursor({ line: cursor.line + 1, ch: 0 });
             return true;
+        }
+        // CHANGE AUTOMATICALLY * FOR CDOT
+        if (pressed.key === "*") {
+            pressed.preventDefault();
+            const cursor =  code.getCursor();
+            const line = code.getLine(cursor.line);
+            let insert = "*"
+            if (cursor.ch > 0) {
+                const lastCh = line.charAt(cursor.ch - 1);
+                if (!/[a-zA-Z]/.test(lastCh)) {
+                    insert = "\\cdot"
+                }
+            } else {
+                insert = "\\cdot"
+            }
+            code.replaceRange(insert, cursor);
+            code.setCursor({ line: cursor.line, ch: cursor.ch + insert.length })
+        }
+        // AUTOCOMPLETE WITH CHARACTER FROM THE LAST LINE
+        if (pressed.key === "º") {
+            pressed.preventDefault();
+            const cursor = code.getCursor();
+            if (cursor.line > 0) {
+                const line = code.getLine(cursor.line - 1).replaceAll("$", "").trim();
+                const newCh = line.charAt(cursor.ch) || '';
+                code.replaceRange(newCh, cursor);
+                code.setCursor({ line: cursor.line, ch: cursor.ch + newCh.length });
+            }
         }
     })
     return editor;

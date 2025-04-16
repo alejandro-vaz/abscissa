@@ -3,10 +3,13 @@
 require_once "../modules/.php";
 
 // IMPORTS
-add("f", "arguments");
-add("f", "environment");
-add("f", "database");
-add("f", "test");
+module("functional", "arguments");
+module("functional", "environment");
+module("functional", "database");
+module("functional", "check");
+
+// SIGNAL
+signal("functional");
 
 // RESPONSE SET TO JSON FROM ANYONE
 header('Content-Type: application/json');
@@ -16,34 +19,30 @@ header('Access-Control-Allow-Origin: *');
 $database = database_connect($ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"], $ENV["DB_NAME"]);
 
 // CHECK ARGUMENTS
-test('/^[a-z]{2}$/', $ARG["LANG"], "LANG");
-if ($ARG["RESOURCE"]) {
-    test('/^(?:[1-9][0-9]{0,7})$/', $ARG['RESOURCE'], "RESOURCE");
-}
-if ($ARG["NODE"]) {
-    test('/^[A-Z0-9]{4}$/', $ARG["NODE"], "NODE");
-}
+check('/^[a-z]{2}$/', $ARG["LANG"], "LANG");
+check('/^(?:[1-9][0-9]{0,7})$/', $ARG['RESOURCE'], "RESOURCE");
+check('/^[A-Z0-9]{4}$/', $ARG["NODE"], "NODE");
 
 // CHECK ARGUMENT RELATIONSHIPS
-if ($ARG["RESOURCE"] and ($ARG["NODE"] or $ARG["TYPE"])) {
-    throw new tooManyArgumentsException();
+if (array_key_exists("RESOURCE", $ARG) and (array_key_exists("NODE", $ARG) or array_key_exists("TYPE", $ARG))) {
+    throw new tooManyArgumentsError();
 }
-if (!($ARG["RESOURCE"]) and !($ARG["NODE"]) and !($ARG["TYPE"])) {
-    throw new notEnoughArgumentsException();
+if (!(array_key_exists("RESOURCE", $ARG)) and !(array_key_exists("NODE", $ARG)) and !(array_key_exists("TYPE", $ARG))) {
+    throw new notEnoughArgumentsError();
 }
 
 // TYPES OF QUERIES
-if ($ARG["RESOURCE"]) {
+if (array_key_exists("RESOURCE", $ARG)) {
     $result = database_request("SELECT * FROM resources WHERE resource = '" . $ARG["RESOURCE"] . "' AND lang LIKE '%" . $ARG["LANG"] . "%'", $database);
-    echo json_encode(($result->fetch_all(MYSQLI_ASSOC))[0]);
+    echo json_encode($result->fetch_assoc());
 } else {
-    if (($ARG["NODE"]) and ($ARG["TYPE"])) {
+    if ((array_key_exists("NODE", $ARG)) and (array_key_exists("TYPE", $ARG))) {
         $result = database_request("SELECT * FROM resources WHERE node = '" . $ARG["NODE"] . "' AND lang LIKE '%" . $ARG["LANG"] . "%' AND type = '" . $ARG["TYPE"] . "'", $database);
     }
-    if (($ARG["NODE"]) and !($ARG["TYPE"])) {
+    if ((array_key_exists("NODE", $ARG)) and !(array_key_exists("TYPE", $ARG))) {
         $result = database_request("SELECT * FROM resources WHERE node = '" . $ARG["NODE"] . "' AND lang LIKE '%" . $ARG["LANG"] . "%'", $database);
     }
-    if (!($ARG["NODE"]) and ($ARG["TYPE"])) {
+    if (!(array_key_exists("NODE", $ARG)) and (array_key_exists("TYPE", $ARG))) {
         $result = database_request("SELECT * FROM resources WHERE type = '" . $ARG["TYPE"] . "' AND lang LIKE '%" . $ARG["LANG"] . "%'", $database);
     }
     echo json_encode($result->fetch_all(MYSQLI_ASSOC));

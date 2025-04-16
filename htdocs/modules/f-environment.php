@@ -6,7 +6,7 @@ $path = __DIR__ . '/../.env';
 
 // CHECK IF FILE EXISTS
 if (!file_exists($path)) {
-    throw new environmentNotFoundException("Environment file not found at: $path");
+    throw new environmentNotFoundError("Environment file not found at: $path");
 }
 
 // GET CONTENT AND ITERATE ADDING TO ENV

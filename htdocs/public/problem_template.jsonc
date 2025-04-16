@@ -1,5 +1,4 @@
 {
-    "name": "Example", // NAME
     "instructions": "Instructions which might include LaTeX code between dollar signs.", // INSTRUCTIONS FOR THE PROBLEM
     "svg": "SVG CONTENT HERE",
     "solution": "Solution", // BETWEEN DOUBLE DOLLAR SIGNS

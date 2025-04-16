@@ -5,7 +5,7 @@ function database_connect($host, $user, $password, $name) {
     $db = new mysqli($host, $user, $password, $name);
     // CHECK CONNECTION
     if ($db->connect_error) {
-        throw new databaseConnectException();
+        throw new databaseConnectionError();
     }
     // RETURN DATABASE
     return $db;

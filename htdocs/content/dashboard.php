@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- MODULES -->
     <?php require_once "../modules/.php" ?>
+    <?php module("head", "analytics") ?>
+    <?php module("head", "settings") ?>
+    <?php module("working", "katex") ?>
+    <?php module("working", "less") ?>
+    <?php module("interface", "navbar") ?>
+    <?php module("interface", "user") ?>
+    <!-- SETTINGS -->
     <title>Dashboard | Abscissa</title>
     <meta name="description" content="Abscissa dashboard page.">
     <meta name="keywords" content="abscissa dashboard">
     <!-- HEAD MODULES -->
-    <?php add("h", "analytics") ?>
-    <?php add("h", "settings") ?>
+    <?php signal("head") ?>
     <!-- STYLE -->
-    <link rel="stylesheet/less" type="text/css" href="../style/dashboard.less">
+    <link rel="stylesheet" type="text/css" href="../style/dashboard.css">
 </head>
 <body>
     <!-- WORKING MODULES -->
-    <?php add("w", "katex") ?>
-    <?php add("w", "less") ?>
+    <?php signal("working") ?>
     <!-- UI MODULES -->
-    <?php add("i", "navbar") ?>
-    <?php add("i", "user") ?>
+    <?php signal("interface") ?>
     <!-- MAIN -->
     <div id="main">
-        <div id="random" class="problem">
+        <div id="random" class="section">
             <div id="randomContent" class="content"></div>
-            <div class="problem-options">
-                <button class="input-button" id="randomTry">TRY</button>
-                <button class="input-button" id="randomSkip">SKIP</button>
+            <div class="problemOptions">
+                <button class="inputButton" id="random-try">TRY</button>
+                <button class="inputButton" id="random-skip">SKIP</button>
             </div>
         </div>
-        <div id="day" class="problem">
+        <div id="day" class="section">
             <div id="dayContent" class="content"></div>
-            <div class="problem-options">
-                <button class="input-button" id="dayTry">TRY</button>
+            <div class="problemOptions">
+                <button class="inputButton" id="day-try">TRY</button>
             </div>
         </div>
-        <div class="problem" id="resources">
+        <div class="section" id="resources">
             <div class="content">
-                <div class="content-1">
+                <div class="content1">
                     <h2>Resources</h2>
-                    <div id="resourcesLinks"></div>
+                    <div id="resources-links"></div>
                 </div>
             </div>
         </div>

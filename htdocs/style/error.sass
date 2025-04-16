@@ -1,0 +1,29 @@
+/*                                                                           */
+/* HEAD                                                                      */
+/*                                                                           */
+
+// GENERAL MODULE
+@use "general" 
+
+
+/*                                                                           */
+/* STYLES                                                                    */
+/*                                                                           */
+
+// STYLES -> MAIN
+$main-h2-margin-tb: 0
+$main-h2-margin-lr: auto
+$main-p-margin-top: 3rem
+$main-p-margin-right: auto
+$main-p-margin-bottom: 0
+$main-p-margin-left: auto
+
+#main
+    +general.section(true, true)
+    > h2
+        display: block
+        background-color: general.$DARKABSCISSER
+        margin: $main-h2-margin-tb $main-h2-margin-lr
+    > p
+        display: block
+        margin: $main-p-margin-top $main-p-margin-right $main-p-margin-bottom $main-p-margin-left

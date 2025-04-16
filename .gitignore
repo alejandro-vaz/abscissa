@@ -1,3 +1,5 @@
 .crossnote/
 htdocs/.env
 problem/temp.json
+*.css
+*.map
