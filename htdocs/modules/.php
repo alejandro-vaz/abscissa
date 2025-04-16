@@ -60,7 +60,8 @@ function module($type, $module) {
         "interface" => "i",
         "functional" => "f",
         "head" => "h",
-        "working" => "w"
+        "working" => "w",
+        "experience" => ","
     };
     $MOD[] = $module;
     if (!file_exists(__DIR__ . "/../modules/$char" . "-$module.php")) {
@@ -75,20 +76,22 @@ function signal($signal) {
         "interface" => "i",
         "functional" => "f",
         "head" => "h",
-        "working" => "w"
+        "working" => "w",
+        "experience" => "x"
     };
+    $localDir = __DIR__ . "/../modules/";
+    $prefixes = ['i', "f", "h", "w", "x"];
     foreach ($MOD as $module) {
-        $path1 = __DIR__ . "/../modules/i-$module.php";
-        $path2 = __DIR__ . "/../modules/f-$module.php";
-        $path3 = __DIR__ . "/../modules/h-$module.php";
-        $path4 = __DIR__ . "/../modules/w-$module.php";
-        $correctPath = __DIR__ . "/../modules/$char" . "-$module.php";
-        if (!file_exists($path1) and !file_exists($path2) and !file_exists($path3) and !file_exists($path4)) {
+        $paths = [];
+        $correctPath = "{$localDir}{$char}-$module.php";
+        foreach ($prefixes as $prefix) {
+            $paths[] = "{$localDir}{$prefix}-$module.php";
+        }
+        if (empty(array_filter($paths, 'file_exists'))) {
             throw new moduleNotFoundError($correctPath);
-        } else {
-            if (file_exists($correctPath)) {
-                require_once $correctPath;
-            }
+        } 
+        if (file_exists($correctPath)) {
+            require_once $correctPath;
         }
     }
 }

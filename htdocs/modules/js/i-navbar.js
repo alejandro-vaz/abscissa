@@ -1,6 +1,6 @@
 // CONNECT TO ELEMENTS
-const navbarLogo = document.getElementById("navbarLogo");
-const navbarSearch = document.getElementById("navbarSearch");
+const navbarLogo = document.getElementById("navbar-logo");
+const navbarSearch = document.getElementById("navbar-search");
 
 // LOGO REDIRECTS TO MAIN
 navbarLogo.addEventListener("click", function() {

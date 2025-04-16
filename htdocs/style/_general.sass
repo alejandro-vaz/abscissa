@@ -6,17 +6,18 @@
 @use "sass:color"
 @use "sass:math"
 @use "sass:string"
+@use "root"
 
 
 // SUPERVARIABLES
-$FONTSIZER: 1.125rem !default
-$PADDER: 0.6 * 1rem !default
-$COLORER: #FFFFFF !default
-$RADIUSER: 0.5 * 1rem !default
-$DARKABSCISSER: #4d4da0 !default
-$LIGHTABSCISSER: #7f7fd2 !default
-$TIMER: string.unquote(math.div(0.25, 3) + "s")
-$CURVER: ease-in-out
+$FONTSIZER: root.$FONTSIZER
+$PADDER: root.$PADDER
+$COLORER: root.$COLORER
+$RADIUSER: root.$RADIUSER
+$DARKABSCISSER: root.$DARKABSCISSER
+$LIGHTABSCISSER: root.$LIGHTABSCISSER
+$TIMER: root.$TIMER
+$CURVER: root.$CURVER
 
 
 /*                                                                           */
@@ -59,7 +60,7 @@ $CURVER: ease-in-out
 
 // FUNCTIONS -> INPUT
 =input($type)
-    padding: math.div($PADDER, 2)
+    padding: math.div($PADDER, 2) $PADDER
     border-radius: $RADIUSER
     box-sizing: border-box
     border: 0.1rem solid $COLORER
@@ -69,7 +70,8 @@ $CURVER: ease-in-out
         cursor: pointer
         display: inline-block
         background-color: #00000055
-        width: 4rem
+        width: fit-content
+        min-width: 4rem
         height: 2.75rem
         transition: transform $TIMER $CURVER, background-color $TIMER $CURVER
         &:hover
@@ -77,15 +79,21 @@ $CURVER: ease-in-out
         &:active
             transform: scale(0.95)
     @if $type == textarea
+        background-color: #000000
         display: block
         resize: none
         &::placeholder
             color: $COLORER
             opacity: 0.5
     @if $type == text
+        background-color: #000000
+        font-family: monospace
         display: inline-block
-        width: 15rem
+        width: 40%
         height: 2.75rem
+        &::placeholder
+            color: $COLORER
+            opacity: 0.5
 
 
 // FUNCTIONS -> SCROLLBAR
@@ -128,7 +136,7 @@ $document-radius-share: 100% - $document-center-share
 
 
 // DEFAULTS -> MAIN
-$_main-navbar-width: math.div(65, 18) * 1rem
+$_main-navbar-width: 3.8rem
 $main-padding: 4.5rem 0 0 0
 
 $main-width: calc(100% - $_main-navbar-width)
@@ -159,31 +167,45 @@ $main-width: calc(100% - $_main-navbar-width)
 /* HEADERS                                                                   */
 /*                                                                           */
 
+// HEADERS -> H4
+$h4-scale-coefficient: 1.06125
+$h4-margin: 0.7rem 0 0.7rem 0
+
+$h4-font-size: $h4-scale-coefficient * $FONTSIZER
+
+:where(h4)
+    font-size: $h4-font-size
+    margin: $h4-margin
+
+
 // HEADERS -> H3
 $h3-scale-coefficient: 1.125
+$h3-margin: 0.8rem 0 0.8rem 0
 
 $h3-font-size: $h3-scale-coefficient * $FONTSIZER
 
 :where(h3)
     font-size: $h3-font-size
-    margin: $PADDER 0
+    margin: $h3-margin
 
 
 // HEADERS -> H2
 $h2-scale-coefficient: 1.25
+$h2-margin: 0.9rem 0 0.9rem 0
 
 $h2-font-size: $h2-scale-coefficient * $FONTSIZER
 
 :where(h2)
     font-size: $h2-font-size
-    margin: $PADDER 0
+    margin: $h2-margin
 
 
 // HEADERS -> H1
 $h1-scale-coefficient: 1.5
+$h1-margin: 1rem 0 1rem 0
 
 $h1-font-size: $h1-scale-coefficient * $FONTSIZER
 
 :where(h1)
     font-size: $h1-font-size
-    margin: $PADDER 0
+    margin: $h1-margin

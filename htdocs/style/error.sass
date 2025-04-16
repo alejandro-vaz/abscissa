@@ -4,6 +4,7 @@
 
 // GENERAL MODULE
 @use "general" 
+@use "sass:math" 
 
 
 /*                                                                           */
@@ -11,19 +12,20 @@
 /*                                                                           */
 
 // STYLES -> MAIN
-$main-h2-margin-tb: 0
-$main-h2-margin-lr: auto
-$main-p-margin-top: 3rem
-$main-p-margin-right: auto
-$main-p-margin-bottom: 0
-$main-p-margin-left: auto
+$_main-navbar-width: 3.8rem
+$main-h1-margin: 0 auto
+$main-p-margin: 3rem auto 0 auto
+
+$main-width: calc(100% - $_main-navbar-width)
 
 #main
-    +general.section(true, true)
-    > h2
+    +general.section(true, true, $width: $main-width)
+    > h1
+        +general.element(false)
         display: block
+        padding: general.$PADDER
         background-color: general.$DARKABSCISSER
-        margin: $main-h2-margin-tb $main-h2-margin-lr
+        margin: $main-h1-margin
     > p
         display: block
-        margin: $main-p-margin-top $main-p-margin-right $main-p-margin-bottom $main-p-margin-left
+        margin: $main-p-margin

@@ -6,7 +6,6 @@
     <?php module("head", "analytics") ?>
     <?php module("head", "settings") ?>
     <?php module("working", "katex") ?>
-    <?php module("working", "less") ?>
     <?php module("interface", "navbar") ?>
     <?php module("interface", "user") ?>
     <!-- SETTINGS -->
@@ -47,6 +46,8 @@
             </div>
         </div>
     </div>
+    <!-- UX MODULES -->
+    <?php signal("experience") ?>
     <!-- SCRIPT -->
     <script src="../script/dashboard.js"></script>
 </body>

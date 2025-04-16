@@ -6,7 +6,7 @@ RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # REDIRECT TO MAIN PAGE
-RewriteRule ^$ /content/dashboard.php [L,R=302]
+RewriteRule ^$ /content/dashboard.php [L,R=301]
 
 # LIMIT CACHING TO 24H
 <IfModule mod_expires.c>

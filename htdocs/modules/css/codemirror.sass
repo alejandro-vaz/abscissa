@@ -1,0 +1,48 @@
+/*                                                                           */
+/* HEAD                                                                      */
+/*                                                                           */
+
+// MODULES
+@use "../../style/root"
+
+
+/*                                                                           */
+/* CODEMIRROR                                                                */
+/*                                                                           */
+
+// CODEMIRROR -> DIV
+$div-border: 0.1rem solid root.$COLORER
+$div-font: monospace
+$div-x-overflow: wrap
+$div-wrap: break-word
+
+.CodeMirror
+    font-family: $div-font
+    overflow-x: $div-x-overflow
+    word-wrap: $div-wrap
+    border: $div-border
+    *
+        font-family: $div-font
+
+
+// CODEMIRROR -> SYNTAX
+$syntax-error-background: transparent
+$syntax-error-color: #666666
+$syntax-keyword-color: #E4BA00
+$syntax-keyword-weight: bold
+
+.CodeMirror div span
+    .cm-keyword
+        font-weight: $syntax-keyword-weight
+        color: $syntax-keyword-color
+    .cm-error
+        background: $syntax-error-background
+        color: $syntax-error-color
+
+
+// CODEMIRROR -> SCROLLBAR
+$scrollbar-display: none
+
+.CodeMirror-vscrollbar
+    +root.scrollbar()
+    display: $scrollbar-display

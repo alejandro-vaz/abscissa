@@ -5,7 +5,6 @@
     <?php require_once "../modules/.php" ?>
     <?php module("head", "analytics") ?>
     <?php module("head", "settings") ?>
-    <?php module("working", "less") ?>
     <?php module("interface", "navbar") ?>
     <?php module("interface", "user") ?>
     <!-- SETTINGS -->
@@ -15,7 +14,7 @@
     <!-- HEAD MODULES -->
     <?php signal("head") ?>
     <!-- STYLE -->
-    <link rel="stylesheet/less" type="text/css" href="../style/error.css">
+    <link rel="stylesheet" type="text/css" href="../style/error.css">
 </head>
 <body>
     <!-- WORKING MODULES -->
@@ -24,7 +23,7 @@
     <?php signal("interface") ?>
     <!-- MAIN -->
     <div id="main">
-        <h2>Error.</h2>
+        <h1>Error.</h1>
         <p>This doesn't look right at all.</p>
         <p>Try going back.</p>
     </div>

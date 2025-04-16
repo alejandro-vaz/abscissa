@@ -1,0 +1,98 @@
+/*                                                                           */
+/* HEAD                                                                      */
+/*                                                                           */
+
+// SUPERVARIABLES
+$FONTSIZER: 1.125rem !default
+$PADDER: 0.6 * 1rem !default
+$COLORER: #FFFFFF !default
+$RADIUSER: 0.5 * 1rem !default
+$DARKABSCISSER: #4d4da0 !default
+$LIGHTABSCISSER: #7f7fd2 !default
+$TIMER: 0.08333333333s !default
+$CURVER: ease-in-out !default
+
+
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+
+// FUNCTIONS -> CONTAINER
+=section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
+    box-sizing: border-box
+    @if $grow
+        flex: 1 0 auto
+    @else
+        flex: 0 1 auto
+    display: $display
+    height: $height
+    width: $width
+    @if $display == flex
+        flex-direction: $direction
+        @if $align-horizontally
+            align-items: center
+        @else
+            align-items: stretch
+        @if $align-vertically
+            justify-content: center
+        @else
+            justify-content: flex-start
+
+
+// FUNCTIONS -> ELEMENT
+=element($inline)
+    box-sizing: border-box
+    margin: calc($PADDER / 2)
+    padding: calc($PADDER / 2)
+    border-radius: $RADIUSER
+    @if $inline
+        display: inline-block
+    @else
+        display: block
+
+
+// FUNCTIONS -> INPUT
+=input($type)
+    padding: math.div($PADDER, 2) $PADDER
+    border-radius: $RADIUSER
+    box-sizing: border-box
+    border: 0.1rem solid $COLORER
+    &:focus
+        outline: none
+    @if $type == button
+        cursor: pointer
+        display: inline-block
+        background-color: #00000055
+        width: fit-content
+        min-width: 4rem
+        height: 2.75rem
+        transition: transform $TIMER $CURVER, background-color $TIMER $CURVER
+        &:hover
+            background-color: string.unquote($LIGHTABSCISSER + "55")
+        &:active
+            transform: scale(0.95)
+    @if $type == textarea
+        background-color: #000000
+        display: block
+        resize: none
+        &::placeholder
+            color: $COLORER
+            opacity: 0.5
+    @if $type == text
+        background-color: #000000
+        font-family: monospace
+        display: inline-block
+        width: 40%
+        height: 2.75rem
+        &::placeholder
+            color: $COLORER
+            opacity: 0.5
+
+
+// FUNCTIONS -> SCROLLBAR
+=scrollbar() 
+    overflow: 
+        x: scroll
+        y: scroll
+    scrollbar:
+        width: none

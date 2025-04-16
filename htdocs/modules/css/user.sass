@@ -1,0 +1,72 @@
+/*                                                                           */
+/* HEAD                                                                      */
+/*                                                                           */
+
+// MODULES
+@use "../../style/root"
+
+
+/*                                                                           */
+/* USER                                                                      */
+/*                                                                           */
+
+// USER -> DIV
+$div-height: 3.8rem
+$div-border: 0.3rem solid root.$DARKABSCISSER
+$div-background: #000000
+$div-z-index: 1000
+$div-direction: row
+$div-width: fit-content
+
+#user
+    +root.section(true, true, $height: $div-height, $direction: $div-direction, $width: $div-width)
+    position: fixed
+    top: 0
+    right: 0
+    z-index: $div-z-index
+    background: $div-background
+    border-bottom-left-radius: root.$RADIUSER
+    border:
+        left: $div-border
+        bottom: $div-border
+
+
+// USER -> INSIGHT
+$insight-border: 0.1rem solid root.$COLORER
+
+#user-insight
+    +root.element(true)
+    border: $insight-border
+
+
+// USER -> NAME
+$name-font-weight: bold
+
+$name-margin: calc(6*root.$PADDER)
+
+#user-name
+    +root.element(true)
+    margin-right: $name-margin
+    font-weight: $name-font-weight
+
+
+// USER -> ICON
+$icon-height: 2.75rem
+$icon-separation: 1rem
+$icon-cursor: pointer
+$icon-default-background: transparent
+
+$icon-fist-separation: calc($icon-separation/2)
+
+.userIcon
+    border-radius: root.$RADIUSER
+    height: $icon-height
+    flex: 1 0 auto
+    margin-right: $icon-separation
+    cursor: $icon-cursor
+    background: $icon-default-background
+    transition: background-color root.$TIMER root.$CURVER
+    &:hover
+        background-color: root.$LIGHTABSCISSER
+    &:last-of-type
+        margin-right: $icon-fist-separation

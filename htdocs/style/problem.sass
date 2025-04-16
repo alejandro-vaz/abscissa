@@ -1,0 +1,123 @@
+/*                                                                           */
+/* HEAD                                                                      */
+/*                                                                           */
+
+// MODULES
+@use "general"
+@use "sass:math"
+
+
+/*                                                                           */
+/* STYLES                                                                    */
+/*                                                                           */
+
+// STYLES -> MAIN
+$_main-navbar-width: 3.8rem
+$main-direction: row
+
+$main-width: calc(100% - $_main-navbar-width)
+
+#main
+    +general.section(false, false, $width: $main-width, $direction: $main-direction)
+
+
+// STYLES -> DATA
+$data-width: 40%
+
+#data
+    +general.section(false, false, $width: $data-width)
+
+
+// STYLES -> CONTROLS
+$controls-width: 60%
+
+#controls
+    +general.section(false, false, $width: $controls-width)
+
+
+/*                                                                           */
+/* DATA SUBSECTIONS                                                          */
+/*                                                                           */
+
+// DATA SUBSECTIONS -> INFO
+$info-default-width: 100%
+$info-default-height: 15%
+$info-background: #333333
+$info-grow: false
+
+$info-width: calc($info-default-width - 2 * general.$PADDER)
+$info-height: calc($info-default-height - general.$PADDER)
+
+#info
+    +general.section(false, false, $width: $info-width, $height: $info-default-height, $grow: $info-grow)
+    margin: 0 general.$PADDER general.$PADDER general.$PADDER
+    padding: 0 2*general.$PADDER
+    border-radius: general.$RADIUSER
+    background: $info-background
+
+
+// DATA SUBSECTIONS -> INSTRUCTIONS
+$instructions-default-width: 100%
+$instructions-default-height: 85%
+$instructions-background: #444444
+
+$instructions-width: calc($instructions-default-width - 2 * general.$PADDER)
+$instructions-height: calc($instructions-default-height - general.$PADDER)
+
+#instructions 
+    +general.section(false, false, $width: $instructions-width, $height: $instructions-height)
+    margin: 0 general.$PADDER general.$PADDER general.$PADDER
+    padding: 0 2*general.$PADDER
+    border-radius: general.$RADIUSER
+    background: $instructions-background
+    > h3
+        margin-bottom: general.$PADDER
+
+
+/*                                                                           */
+/* CONTROLS SUBSECTIONS                                                      */
+/*                                                                           */
+
+// CONTROLS SUBSECTIONS -> CODEMIRROR
+$codemirror-default-width: 100%
+$codemirror-default-height: 40%
+
+$codemirror-width: calc($codemirror-default-width - 2*general.$PADDER)
+$codemirror-height: calc($codemirror-default-height - general.$PADDER)
+
+.CodeMirror
+    +general.element(false)
+    margin: 0 general.$PADDER general.$PADDER general.$PADDER
+    width: $codemirror-width
+    height: $codemirror-default-height
+
+
+// CONTROLS SUBSECTIONS -> VISOR
+$visor-default-width: 100%
+$visor-default-height: 45%
+
+$visor-width: calc($visor-default-width - 2*general.$PADDER)
+$visor-height: calc($visor-default-height - general.$PADDER)
+
+#visor
+    +general.element(false)
+    margin: 0 general.$PADDER general.$PADDER general.$PADDER
+    width: $visor-width
+    height: $visor-height
+
+
+// CONTROLS SUBSECTIONS -> MASTER
+$master-default-width: 100%
+$master-default-height: 15%
+$master-direction: row
+
+$master-width: calc($master-default-width - 2*general.$PADDER)
+$master-height: calc($master-default-height - general.$PADDER)
+
+#controls > div:not(.CodeMirror)
+    +general.section(true, false, $width: $master-width, $height: $master-height, $direction: $master-direction)
+    margin: 0 general.$PADDER general.$PADDER general.$PADDER
+    > p
+        flex-grow: 1
+    > *
+        margin: general.$PADDER

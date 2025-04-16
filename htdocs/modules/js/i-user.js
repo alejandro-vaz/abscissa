@@ -1,7 +1,7 @@
 // CONNECT TO ELEMENTS
-const userName = document.getElementById("userName");
-const userInsight = document.getElementById("userInsight");
-const preferencesLogo = document.getElementById("preferencesLogo");
+const userName = document.getElementById("user-name");
+const userInsight = document.getElementById("user-insight");
+const preferencesLogo = document.getElementById("preferences-logo");
 
 // PREFERENCES REDIRECTS TO PREFERENCES
 preferencesLogo.addEventListener("click", function() {
