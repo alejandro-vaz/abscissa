@@ -97,3 +97,15 @@ resources.addEventListener("scroll", function() {
         }, 500);
     }
 })
+
+// INFINITE HORIZONTAL SCROLL FOR RESOURCES
+let loading = false;
+resources.addEventListener("scroll", function() {
+    if (resources.scrollLeft + resources.clientWidth >= resources.scrollWidth - 500 && !loading) {
+        loading = true;
+        charge(5);
+        setTimeout(() => {
+            loading = false;
+        }, 500);
+    }
+})
