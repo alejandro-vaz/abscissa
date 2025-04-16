@@ -1,7 +1,6 @@
 <?php
 // HANDLER
 require_once "../modules/.php";
-require_once "../modules/.php";
 
 // IMPORTS
 module("functional", "arguments");

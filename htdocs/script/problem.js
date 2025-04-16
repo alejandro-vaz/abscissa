@@ -1,6 +1,5 @@
 // CONNECT TO ELEMENTS
 let playground = document.getElementById("playground");
-let playground = document.getElementById("playground");
 const visor = document.getElementById("visor");
 const instructions = document.getElementById("instructions");
 const answer = document.getElementById("answer");
@@ -11,9 +10,6 @@ const calculatorLinks = {
         "ClassCalc": '<iframe src="https://app.classcalc.com/prod/embed?linkId=PL7HJaN2jPopAEjE9&hide#/basic" width="450px" height="600px" frameborder=0 \\>'
     }
 }
-
-// CONNECT PLAYGROUND TO CODEMIRROR AND REDEFINE IT
-playground = renderCodeMirror(playground);
 
 // CONNECT PLAYGROUND TO CODEMIRROR AND REDEFINE IT
 playground = renderCodeMirror(playground);
@@ -82,10 +78,7 @@ answer.addEventListener("input", function() {
 
 // ANSWER AUTOCOMPLETION
 const brackets = { '[': ']', '(': ')', '{': '}' };
-// ANSWER AUTOCOMPLETION
-const brackets = { '[': ']', '(': ')', '{': '}' };
 answer.addEventListener('keydown', function(pressed) {
-    if (brackets[pressed.key]) {
     if (brackets[pressed.key]) {
         pressed.preventDefault();
         const start = this.selectionStart;
@@ -96,4 +89,3 @@ answer.addEventListener('keydown', function(pressed) {
         this.selectionStart = this.selectionEnd = start + 1;
     }
 });
-
