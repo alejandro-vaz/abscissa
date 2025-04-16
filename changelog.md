@@ -1,12 +1,12 @@
 # *Abscissa* changelog
 
-## *Abscissa* 0.0.1
+## *Abscissa* 0.0.1 `1-0-0`
 
 ---
 
 - [X] (Major) Initial release.
 
-### *Abscissa* 0.1.9
+### *Abscissa* 0.1.9 `0-2-6`
 
 - [X] (Patch) Changed problems *JSON* structure.
 
@@ -24,7 +24,7 @@
 
 - [X] (Minor) Remade `website/style.less`.
 
-### *Abscissa* 0.2.0
+### *Abscissa* 0.2.0 `0-0-8`
 
 - [X] (Patch) Increase `.main` `#content` size to `1000px`.
 
@@ -42,7 +42,7 @@
 
 - [X] (Patch) Switched main theme to black.
 
-#### *Abscissa* 0.2.7
+#### *Abscissa* 0.2.7 `0-1-5`
 
 - [X] (Patch) Unified style.
 
@@ -56,7 +56,7 @@
 
 - [X] (Patch) Added numerical approximations for problem answers.
 
-#### *Abscissa* 0.2.12
+#### *Abscissa* 0.2.12 `0-0-5`
 
 - [X] (Patch) Remade `problems` table and included `content` as a row.
 
@@ -68,7 +68,7 @@
 
 - [X] (Patch) Migrated full database to cloud.
 
-#### *Abscissa* 0.2.23
+#### *Abscissa* 0.2.23 `0-3-7`
 
 - [X] (Patch) Added margin to `#contentSolution` `<div>`.
 
@@ -90,7 +90,7 @@
 
 - [X] (Patch) Simplified problem template.
 
-### *Abscissa* 0.3.1
+### *Abscissa* 0.3.1 `0-0-5`
 
 - [X] (Patch) Improved `#main` size to take all screen.
 
@@ -102,7 +102,7 @@
 
 - [X] (Patch) Added `environment.php` module for handling data.
 
-### *Abscissa* 0.4.24
+### *Abscissa* 0.4.24 `0-2-5`
 
 - [X] (Patch) Changed logos to `.svg` format and added navbar logo transition.
 
@@ -118,7 +118,7 @@
 
 - [X] (Patch) Increased precission in `solver.py`.
 
-#### *Abscissa* 0.4.36
+#### *Abscissa* 0.4.36 `0-1-9`
 
 - [X] (Patch) Integrated *Google Analytics.*
 
@@ -140,7 +140,7 @@
 
 - [X] (Patch) Made the environment handling more robust.
 
-## *Abscissa* 1.0.83
+## *Abscissa* 1.0.83 `2-4-4`
 
 - [X] (Patch) Added *PHP* universal error handler.
 
@@ -162,7 +162,7 @@
 
 - [X] (Major) Switched from *CSS* to *LESS.*
 
-#### *Abscissa* 1.0.91
+#### *Abscissa* 1.0.91 `0-1-7`
 
 - [X] (Patch) Added `documents/abscissa.cssc` for team coordination.
 
@@ -180,7 +180,7 @@
 
 - [X] (Patch) Unified `random()` and `day()` functions in `dashboard.js`.
 
-#### *Abscissa* 1.0.105
+#### *Abscissa* 1.0.105 `0-1-7`
 
 - [X] (Patch) Added *PHP* database module.
 
@@ -198,7 +198,7 @@
 
 - [X] (Patch) Completed [#8.](https://github.com/alejandro-vaz/Abscissa/issues/8)
 
-#### *Abscissa* 1.0.115
+#### *Abscissa* 1.0.115 `0-3-5`
 
 - [X] (Patch) Completed [#14.](https://github.com/alejandro-vaz/Abscissa/issues/14)
 
@@ -216,7 +216,7 @@
 
 - [X] (Patch) Remade `fetchAPI()` *JS* frontend function to allow for *non-JSON* responses.
 
-#### *Abscissa* 1.0.129
+#### *Abscissa* 1.0.129 `0-3-2`
 
 - [X] (Minor) Completed [#24.](https://github.com/alejandro-vaz/Abscissa/issues/24)
 
@@ -228,7 +228,7 @@
 
 - [X] (Patch) Remade fetch data handling in `dashboard.js`.
 
-### *Abscissa* 1.1.2
+### *Abscissa* 1.1.2 `1-0-5`
 
 - [X] (Major) Completed [#16.](https://github.com/alejandro-vaz/Abscissa/issues/16)
 
@@ -242,7 +242,7 @@
 
 - [X] (Patch) Added *LESS* `.input-textarea` class.
 
-#### *Abscissa* 1.1.23
+#### *Abscissa* 1.1.23 `0-1-13`
 
 - [X] (Patch) Renamed `handler.php` to `.php` in order to signal entry point.
 
@@ -271,3 +271,33 @@
 - [X] (Patch) Changed font style to *Comic Sans.*
 
 - [X] (Patch) Especified header size on `general.less`.
+
+### *Abscissa* 1.3.0 `2-1-11`
+
+- [X] (Patch) Flagged *CSS* and `*.map` files on `.gitignore`.
+
+- [X] (Patch) Set redirect to `/content/dashboard.php` as permanent.
+
+- [X] (Minor) Changed module system so that now modules are imported at the beginning of the file but not loaded until the signal is due.
+
+- [X] (Patch) Inverted `camelCase` and `kebab-case` use for *HTML* IDs and classes.
+
+- [X] (Major) Changed *LESS* on-the-fly compiling for *SASS* indented-syntax precompiling. It is now faster and much better organized.
+
+- [X] (Patch) Changed *h2* header on error page for an *h1.*
+
+- [X] (Major) Completed [#32.](https://github.com/alejandro-vaz/Abscissa/issues/32)
+
+- [X] (Patch) Renamed `f-test.php` module to `f-check.php` and now it also takes care of checking if the variable exists.
+
+- [X] (Patch) Added more *CodeMirror* keybinds, though documentation is required.
+
+- [X] (Patch) Separeted problem name from the data field in the database, allowing future searches by name.
+
+- [X] (Patch) Every problem is now context-aware, meaning that they now where they are exactly in the *ID-NODE-CLUSTER-TREE* hierarchy.
+
+- [X] (Patch) Refactored `problem.js` and renamed `load()` to `loadProblem()`.
+
+- [X] (Patch) Added *JS* function on `general.js` `rawLaTeX()` which strips a *LaTeX* string out of it's contents in order to get a meaning-encapsulating one that can be compared in order to determine if two expressions are equivalent.
+
+- [X] (Patch) Visor now automatically scrolls down when writing formulas in a problem.

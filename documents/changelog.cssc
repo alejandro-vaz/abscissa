@@ -1,8 +1,8 @@
 /h1 ·Abscissa· changelog
-/h2 ·Abscissa· 0.0.1
+/h2 ·Abscissa· 0.0.1 /_1-0-0/_
 ---
 /X (Major) Initial release.
-/h3 ·Abscissa· 0.1.9
+/h3 ·Abscissa· 0.1.9 /_0-2-6/_
 /X (Patch) Changed problems ·JSON· structure.
 /X (Minor) Improved ·content· element ·ID· inside elements structure.
 /X (Patch) Changed codes for classification to ·base-·/=36/=.
@@ -11,7 +11,7 @@
 /X (Patch) Improved ·LaTeX· math parsing via /_website/render.js/_.
 /X (Patch) Added comments to all code.
 /X (Minor) Remade /_website/¬style.less/_.
-/h3 ·Abscissa· 0.2.0
+/h3 ·Abscissa· 0.2.0 /_0-0-8/_
 /X (Patch) Increase /_.main/_ /_#content/_ size to /_1000px/_.
 /X (Patch) Remove /_#content/_ border if empty.
 /X (Patch) Remade margin handling.
@@ -20,20 +20,20 @@
 /X (Patch) Improved filetree structure.
 /X (Patch) Enter now leads to field execution.
 /X (Patch) Switched main theme to black.
-/h4 ·Abscissa· 0.2.7
+/h4 ·Abscissa· 0.2.7 /_0-1-5/_
 /X (Patch) Unified style.
 /X (Patch) Simplified problem structure.
 /X (Patch) Added input checking in search.
 /X (Minor) Added a /_Show solution/_ button.
 /X (Patch) Added /=2/= problems.
 /X (Patch) Added numerical approximations for problem answers.
-/h4 ·Abscissa· 0.2.12
+/h4 ·Abscissa· 0.2.12 /_0-0-5/_
 /X (Patch) Remade /_problems/_ table and included /_content/_ as a row.
 /X (Patch) Added multilanguage support on /_problems/_ table.
 /X (Patch) Made minor style adjustments.
 /X (Patch) Added interactive /_python/_ solver.
 /X (Patch) Migrated full database to cloud.
-/h4 ·Abscissa· 0.2.23
+/h4 ·Abscissa· 0.2.23 /_0-3-7/_
 /X (Patch) Added margin to /_#contentSolution/_ /_<div>/_.
 /X (Patch) Increased ·LaTeX· block margin between each line.
 /X (Patch) Added multilanguage support to all /_./website/database/*.php/_ files.
@@ -44,13 +44,13 @@
 /X (Minor) Converted ·HTML· files to ·PHP· ones and modularized common resources.
 /X (Patch) Hidden database credentials.
 /X (Patch) Simplified problem template.
-/h3 ·Abscissa· 0.3.1
+/h3 ·Abscissa· 0.3.1 /_0-0-5/_
 /X (Patch) Improved /_#main/_ size to take all screen.
 /X (Patch) Added a footer.
 /X (Patch) Converted all remaining ·HTML· files to ·PHP.·
 /X (Patch) Added version display in the footer.
 /X (Patch) Added /_environment.php/_ module for handling data.
-/h3 ·Abscissa· 0.4.24
+/h3 ·Abscissa· 0.4.24 /_0-2-5/_
 /X (Patch) Changed logos to /_.svg/_ format and added navbar logo transition.
 /X (Minor) Added ·About· page.
 /X (Patch) Refactored /_general.js/_.
@@ -58,7 +58,7 @@
 /X (Patch) Separated site files from module files.
 /X (Patch) Added module abbreviations for /_solver.py/_.
 /X (Patch) Increased precission in /_solver.py/_.
-/h4 ·Abscissa· 0.4.36
+/h4 ·Abscissa· 0.4.36 /_0-1-9/_
 /X (Patch) Integrated ·Google Analytics.·
 /X (Patch) Added comments to ·PHP· modules.
 /X (Patch) Transcribed database ·PHP· files.
@@ -69,7 +69,7 @@
 /X (Patch) Changed /_include/_ ·PHP· statements for /_require_once/_.
 /X (Patch) Moved /_redirect()/_ function from /_general.js/_ to navbar module ·JavaScript.·
 /X (Patch) Made the environment handling more robust.
-/h2 ·Abscissa· 1.0.83
+/h2 ·Abscissa· 1.0.83 /_2-4-4/_
 /X (Patch) Added ·PHP· universal error handler.
 /X (Patch) Changed leaked database credentials.
 /X (Minor) Added all database tables and fields.
@@ -80,7 +80,7 @@
 /X (Minor) Deleted all old pages.
 /X (Major) Made new dashboard with problem of the day and random scroll.
 /X (Major) Switched from ·CSS· to ·LESS.·
-/h4 ·Abscissa· 1.0.91
+/h4 ·Abscissa· 1.0.91 /_0-1-7/_
 /X (Patch) Added /_documents/abscissa.cssc/_ for team coordination.
 /X (Patch) Applied error pages.
 /X (Minor) Added video resources to dashboard.
@@ -89,7 +89,7 @@
 /X (Patch) Refactored and improved /_user.php/_ module.
 /X (Patch) Changed logo.
 /X (Patch) Unified /_random()/_ and /_day()/_ functions in /_dashboard.js/_.
-/h4 ·Abscissa· 1.0.105
+/h4 ·Abscissa· 1.0.105 /_0-1-7/_
 /X (Patch) Added ·PHP· database module.
 /X (Patch) Added ·PHP· test module.
 /X (Minor) Improved database interaction scripts.
@@ -98,7 +98,7 @@
 /X (Patch) Removed cross-origin headers in content ·PHP· files.
 /X (Patch) Created resource-gathering database ·PHP· scripts.
 /X (Patch) Completed [#8.](https:://github.com/alejandro-vaz/Abscissa/issues/8)
-/h4 ·Abscissa· 1.0.115
+/h4 ·Abscissa· 1.0.115 /_0-3-5/_
 /X (Patch) Completed [#14.](https:://github.com/alejandro-vaz/Abscissa/issues/14)
 /X (Minor) Added dynamic resource loading in dashboard.
 /X (Minor) Completed [#15.](https:://github.com/alejandro-vaz/Abscissa/issues/15)
@@ -107,20 +107,20 @@
 /X (Patch) Renamed /_problems-content.php/_ to /_problems-node.php/_.
 /X (Patch) Improved ·PHP· exceptions.
 /X (Patch) Remade /_fetchAPI()/_ ·JS· frontend function to allow for ·non-JSON· responses.
-/h4 ·Abscissa· 1.0.129
+/h4 ·Abscissa· 1.0.129 /_0-3-2/_
 /X (Minor) Completed [#24.](https:://github.com/alejandro-vaz/Abscissa/issues/24)
 /X (Minor) Completed [#17.](https:://github.com/alejandro-vaz/Abscissa/issues/17)
 /X (Patch) Completed [#11.](https:://github.com/alejandro-vaz/Abscissa/issues/11)
 /X (Minor) Unified database access to table lookup files.
 /X (Patch) Remade fetch data handling in /_dashboard.js/_.
-/h3 ·Abscissa· 1.1.2
+/h3 ·Abscissa· 1.1.2 /_1-0-5/_
 /X (Major) Completed [#16.](https:://github.com/alejandro-vaz/Abscissa/issues/16)
 /X (Patch) Moved /_redirect()/_ ·JS· function to /_general.js/_.
 /X (Patch) Modified problem template.
 /X (Patch) Try buttons on dashboard now work.
 /X (Patch) Removed explicit async behaviour from /_dashboard.js/_.
 /X (Patch) Added ·LESS· /_.input-textarea/_ class.
-/h4 ·Abscissa· 1.1.23
+/h4 ·Abscissa· 1.1.23 /_0-1-13/_
 /X (Patch) Renamed /_handler.php/_ to /_.php/_ in order to signal entry point.
 /X (Patch) Renamed modules to specify their scope and reach by a letter.
 /X (Patch) /_add()/_ module from /_.php/_ now takes two arguments in order to differentiate between /_w/_, /_i/_, /_f/_ and /_h/_ modules.
@@ -135,3 +135,18 @@
 /X (Patch) Input validation is now based on trimming and cleaning user input and comparing it to the correct one given by the ·API.·
 /X (Patch) Changed font style to ·Comic Sans.·
 /X (Patch) Especified header size on /_general.less/_.
+/h3 ·Abscissa· 1.3.0 /_2-1-11/_
+/X (Patch) Flagged ·CSS· and /_*.map/_ files on /_.gitignore/_.
+/X (Patch) Set redirect to /_/content/dashboard.php/_ as permanent.
+/X (Minor) Changed module system so that now modules are imported at the beginning of the file but not loaded until the signal is due.
+/X (Patch) Inverted /_camelCase/_ and /_kebab-case/_ use for ·HTML· IDs and classes.
+/X (Major) Changed ·LESS· on-the-fly compiling for ·SASS· indented-syntax precompiling. It is now faster and much better organized.
+/X (Patch) Changed ·h2· header on error page for an ·h1.·
+/X (Major) Completed [#32.](https:://github.com/alejandro-vaz/Abscissa/issues/32)
+/X (Patch) Renamed /_f-test.php/_ module to /_f-check.php/_ and now it also takes care of checking if the variable exists.
+/X (Patch) Added more ·CodeMirror· keybinds, though documentation is required.
+/X (Patch) Separeted problem name from the data field in the database, allowing future searches by name.
+/X (Patch) Every problem is now context-aware, meaning that they now where they are exactly in the ·ID-NODE-CLUSTER-TREE· hierarchy.
+/X (Patch) Refactored /_problem.js/_ and renamed /_load()/_ to /_loadProblem()/_.
+/X (Patch) Added ·JS· function on /_general.js/_ /_rawLaTeX()/_ which strips a ·LaTeX· string out of it's contents in order to get a meaning-encapsulating one that can be compared in order to determine if two expressions are equivalent.
+/X (Patch) Visor now automatically scrolls down when writing formulas in a problem.
