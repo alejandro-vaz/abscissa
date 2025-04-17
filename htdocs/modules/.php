@@ -33,18 +33,17 @@ function exceptionHandler(Throwable $exception) {
                 "Line" => $exception->getLine(),
                 "Message" => $exception->getMessage()
             ]);
-            exit;
         } else {
-            // TO-DO LOG ALERT TO DATABASE
+            // TO-DO LOG ALERT TO DATABASE AND CONTINUE EXECUTION
         }
     } else {
+        header('Content-Type: application/json');
         echo json_encode([
             "Error" => get_class($exception), 
             "File" => $exception->getFile(), 
             "Line" => $exception->getLine(),
             "Message" => $exception->getMessage()
         ]);
-        exit;
     }
 }
 set_exception_handler("exceptionHandler");
@@ -60,8 +59,7 @@ function module($type, $module) {
         "interface" => "i",
         "functional" => "f",
         "head" => "h",
-        "working" => "w",
-        "experience" => ","
+        "working" => "w"
     };
     $MOD[] = $module;
     if (!file_exists(__DIR__ . "/../modules/$char" . "-$module.php")) {
@@ -76,11 +74,10 @@ function signal($signal) {
         "interface" => "i",
         "functional" => "f",
         "head" => "h",
-        "working" => "w",
-        "experience" => "x"
+        "working" => "w"
     };
     $localDir = __DIR__ . "/../modules/";
-    $prefixes = ['i', "f", "h", "w", "x"];
+    $prefixes = ['i', "f", "h", "w"];
     foreach ($MOD as $module) {
         $paths = [];
         $correctPath = "{$localDir}{$char}-$module.php";

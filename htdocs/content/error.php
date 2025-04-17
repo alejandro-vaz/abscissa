@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- MODULES -->
+    <!-- HANDLER -->
     <?php require_once "../modules/.php" ?>
+    <!-- MODULES -->
     <?php module("head", "analytics") ?>
     <?php module("head", "settings") ?>
     <?php module("interface", "navbar") ?>
