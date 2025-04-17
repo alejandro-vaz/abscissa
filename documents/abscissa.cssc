@@ -13,60 +13,95 @@
 /X Sergio
 /h3 Jerarquía de trabajo
 /code-mermaid¬
-flowchart LR
-    ABSCISSA((ABSCISSA)) 
+flowchart TD
+    classDef 0 fill::#700
+    classDef 1 fill::#770
+    classDef 2 fill::#070
+    classDef 3 fill::#077
+    classDef dept fill::#3332
+
+    ABSCISSA((ABSCISSA/_\lt/_br/_\gt/_1.3.0))
+    class null 0
+    class ABSCISSA 1
+    class null 2
+    class null 3
 
     alejo1([Alejo])
-    jorge1([Jorge])
+    diego1([Diego])
+    class null 0
+    class diego1 1
+    class alejo1 2
+    class null 3
 
+    BACKEND{{DEPT. BACKEND/_\lt/_br/_\gt/_Control}}
+    FRONTEND{{DEPT. FRONTEND/_\lt/_br/_\gt/_Entry}}
+    MARKETING{{DEPT. MARKETING/_\lt/_br/_\gt/_Need}}
+    FINANZAS{{DEPT. FINANZAS/_\lt/_br/_\gt/_Time}}
+    RRHH{{DEPT. RR.HH./_\lt/_br/_\gt/_Scale}}
+    class MARKETING,RRHH 0
+    class null 1
+    class FRONTEND 2
+    class BACKEND,FINANZAS 3
+
+    jorge(Jorge)
     alejo2(Alejo)
-    jorge2(Jorge)
-    diego(Diego)
-    paola(Paola)
+    diego2(Diego)
+    dela(Dela)
     marcos(Marcos)
+    class dela,marcos 0
+    class jorge 1
+    class null 2
+    class alejo2,diego2 3
 
-    beltrán/=\gt/=Beltrán]
+    beltrán/_\gt/_Beltrán]
+    class null 0
+    class null 1
+    class beltrán 2
+    class null 3
 
+    sergio[[Sergio]]
     guzmán[[Guzmán]]
     juan[[Juan]]
-    sergio[[Sergio]]
     luis[[Luis]]
-    dela[[Dela]]
-
-    BACKEND{{DPTO. BACKEND}}
-    FRONTEND{{DPTO. FRONTEND}}
-    FINANZAS{{DPTO. FINANZAS}}
-    RRHH{{DPTO. RR.HH.}}
-    MARKETING{{DPTO. MARKETING}}
+    class sergio,luis 0
+    class guzmán,juan 1
+    class null 2
+    class null 3
 
 
-    ABSCISSA /=\lt/===/=\gt/= alejo1
-    ABSCISSA /=\lt/===/=\gt/= jorge1
+    ABSCISSA ==/_\gt/_ alejo1
+    alejo1 -.-/_\gt/_ BACKEND
+    alejo1 -.-/_\gt/_ FRONTEND
 
-    alejo1 -.-/=\gt/= FRONTEND
-    alejo1 -.-/=\gt/= FINANZAS
-    alejo1 -.-/=\gt/= MARKETING
-    alejo1 -.-/=\gt/= BACKEND
-    alejo1 -.-/=\gt/= RRHH
-    jorge1 -.-/=\gt/= FRONTEND
-    jorge1 -.-/=\gt/= FINANZAS
-    jorge1 -.-/=\gt/= MARKETING
-    jorge1 -.-/=\gt/= BACKEND
-    jorge1 -.-/=\gt/= RRHH
+    ABSCISSA ==/_\gt/_ diego1
+    diego1 -.-/_\gt/_ MARKETING
+    diego1 -.-/_\gt/_ FINANZAS
+    diego1 -.-/_\gt/_ RRHH
 
-    FRONTEND /=\lt/===/=\gt/= alejo2
-    alejo2 --/=\gt/= guzmán
-    alejo2 --/=\gt/= juan
+    subgraph 1[" "]
+        BACKEND ==/_\gt/_|-2| jorge
+        jorge --/_\gt/_|0| beltrán
+        beltrán --/_\gt/_|-3| sergio
+    end
 
-    BACKEND /=\lt/===/=\gt/= jorge2
-    jorge2 --/=\gt/= beltrán
-    beltrán --/=\gt/= sergio
+    subgraph 2[" "]
+        FRONTEND ==/_\gt/_|X| alejo2
+        alejo2 --/_\gt/_|-3| guzmán
+        alejo2 --/_\gt/_|-3| juan
+    end
 
-    FINANZAS /=\lt/===/=\gt/= diego
+    subgraph 3[" "]
+        MARKETING ==/_\gt/_|-2| dela
+        dela --/_\gt/_|-1| luis
+    end
 
-    MARKETING /=\lt/===/=\gt/= paola
-    paola --/=\gt/= luis
-    paola --/=\gt/= dela
+    subgraph 4[" "]
+        FINANZAS ==/_\gt/_|X| diego2
+    end
 
-    RRHH /=\lt/===/=\gt/= marcos
+    subgraph 5[" "]
+        RRHH ==/_\gt/_|-2| marcos
+    end
+
+    class 1,2,3,4,5 dept
 /code

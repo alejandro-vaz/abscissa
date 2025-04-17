@@ -77,7 +77,14 @@ function exceptionHandler(Throwable $exception) {
         exit;
     }
 }
+
+// SET AS DEFAULT EXCEPTION HANDLER
 set_exception_handler("exceptionHandler");
+
+
+/*                                                                           */
+/* MODULE HANDLING                                                           */
+/*                                                                           */
 
 // MODULE SET UP
 global $MOD;
