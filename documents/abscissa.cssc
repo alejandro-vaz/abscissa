@@ -20,7 +20,7 @@ flowchart TD
     classDef 3 fill::#077
     classDef dept fill::#3332
 
-    ABSCISSA((ABSCISSA/_\lt/_br/_\gt/_1.3.0))
+    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=1.3.0))
     class null 0
     class ABSCISSA 1
     class null 2
@@ -33,11 +33,11 @@ flowchart TD
     class alejo1 2
     class null 3
 
-    BACKEND{{DEPT. BACKEND/_\lt/_br/_\gt/_Control}}
-    FRONTEND{{DEPT. FRONTEND/_\lt/_br/_\gt/_Entry}}
-    MARKETING{{DEPT. MARKETING/_\lt/_br/_\gt/_Need}}
-    FINANZAS{{DEPT. FINANZAS/_\lt/_br/_\gt/_Time}}
-    RRHH{{DEPT. RR.HH./_\lt/_br/_\gt/_Scale}}
+    BACKEND{{DEPT. BACKEND/=\lt/=br/=\gt/=Control}}
+    FRONTEND{{DEPT. FRONTEND/=\lt/=br/=\gt/=Entry}}
+    MARKETING{{DEPT. MARKETING/=\lt/=br/=\gt/=Need}}
+    FINANZAS{{DEPT. FINANZAS/=\lt/=br/=\gt/=Time}}
+    RRHH{{DEPT. RR.HH./=\lt/=br/=\gt/=Scale}}
     class MARKETING,RRHH 0
     class null 1
     class FRONTEND 2
@@ -53,7 +53,7 @@ flowchart TD
     class null 2
     class alejo2,diego2 3
 
-    beltrán/_\gt/_Beltrán]
+    beltrán/=\gt/=Beltrán]
     class null 0
     class null 1
     class beltrán 2
@@ -69,38 +69,38 @@ flowchart TD
     class null 3
 
 
-    ABSCISSA ==/_\gt/_ alejo1
-    alejo1 -.-/_\gt/_ BACKEND
-    alejo1 -.-/_\gt/_ FRONTEND
+    ABSCISSA ==/=\gt/= alejo1
+    alejo1 -.-/=\gt/= BACKEND
+    alejo1 -.-/=\gt/= FRONTEND
 
-    ABSCISSA ==/_\gt/_ diego1
-    diego1 -.-/_\gt/_ MARKETING
-    diego1 -.-/_\gt/_ FINANZAS
-    diego1 -.-/_\gt/_ RRHH
+    ABSCISSA ==/=\gt/= diego1
+    diego1 -.-/=\gt/= MARKETING
+    diego1 -.-/=\gt/= FINANZAS
+    diego1 -.-/=\gt/= RRHH
 
     subgraph 1[" "]
-        BACKEND ==/_\gt/_|-2| jorge
-        jorge --/_\gt/_|0| beltrán
-        beltrán --/_\gt/_|-3| sergio
+        BACKEND ==/=\gt/=|-2| jorge
+        jorge --/=\gt/=|0| beltrán
+        beltrán --/=\gt/=|-3| sergio
     end
 
     subgraph 2[" "]
-        FRONTEND ==/_\gt/_|X| alejo2
-        alejo2 --/_\gt/_|-3| guzmán
-        alejo2 --/_\gt/_|-3| juan
+        FRONTEND ==/=\gt/=|X| alejo2
+        alejo2 --/=\gt/=|-3| guzmán
+        alejo2 --/=\gt/=|-3| juan
     end
 
     subgraph 3[" "]
-        MARKETING ==/_\gt/_|-2| dela
-        dela --/_\gt/_|-1| luis
+        MARKETING ==/=\gt/=|-2| dela
+        dela --/=\gt/=|-1| luis
     end
 
     subgraph 4[" "]
-        FINANZAS ==/_\gt/_|X| diego2
+        FINANZAS ==/=\gt/=|X| diego2
     end
 
     subgraph 5[" "]
-        RRHH ==/_\gt/_|-2| marcos
+        RRHH ==/=\gt/=|-2| marcos
     end
 
     class 1,2,3,4,5 dept

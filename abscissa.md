@@ -41,7 +41,7 @@ flowchart TD
 
 
 
-    ABSCISSA((ABSCISSA`\lt`br`\gt`1.3.0))
+    ABSCISSA((ABSCISSA<br>1.3.0))
 
     class null 0
 
@@ -67,15 +67,15 @@ flowchart TD
 
 
 
-    BACKEND{{DEPT. BACKEND`\lt`br`\gt`Control}}
+    BACKEND{{DEPT. BACKEND<br>Control}}
 
-    FRONTEND{{DEPT. FRONTEND`\lt`br`\gt`Entry}}
+    FRONTEND{{DEPT. FRONTEND<br>Entry}}
 
-    MARKETING{{DEPT. MARKETING`\lt`br`\gt`Need}}
+    MARKETING{{DEPT. MARKETING<br>Need}}
 
-    FINANZAS{{DEPT. FINANZAS`\lt`br`\gt`Time}}
+    FINANZAS{{DEPT. FINANZAS<br>Time}}
 
-    RRHH{{DEPT. RR.HH.`\lt`br`\gt`Scale}}
+    RRHH{{DEPT. RR.HH.<br>Scale}}
 
     class MARKETING,RRHH 0
 
@@ -107,7 +107,7 @@ flowchart TD
 
 
 
-    beltrán`\gt`Beltrán]
+    beltrán>Beltrán]
 
     class null 0
 
@@ -139,31 +139,31 @@ flowchart TD
 
 
 
-    ABSCISSA ==`\gt` alejo1
+    ABSCISSA ==> alejo1
 
-    alejo1 -.-`\gt` BACKEND
+    alejo1 -.-> BACKEND
 
-    alejo1 -.-`\gt` FRONTEND
+    alejo1 -.-> FRONTEND
 
 
 
-    ABSCISSA ==`\gt` diego1
+    ABSCISSA ==> diego1
 
-    diego1 -.-`\gt` MARKETING
+    diego1 -.-> MARKETING
 
-    diego1 -.-`\gt` FINANZAS
+    diego1 -.-> FINANZAS
 
-    diego1 -.-`\gt` RRHH
+    diego1 -.-> RRHH
 
 
 
     subgraph 1[" "]
 
-        BACKEND ==`\gt`|-2| jorge
+        BACKEND ==>|-2| jorge
 
-        jorge --`\gt`|0| beltrán
+        jorge -->|0| beltrán
 
-        beltrán --`\gt`|-3| sergio
+        beltrán -->|-3| sergio
 
     end
 
@@ -171,11 +171,11 @@ flowchart TD
 
     subgraph 2[" "]
 
-        FRONTEND ==`\gt`|X| alejo2
+        FRONTEND ==>|X| alejo2
 
-        alejo2 --`\gt`|-3| guzmán
+        alejo2 -->|-3| guzmán
 
-        alejo2 --`\gt`|-3| juan
+        alejo2 -->|-3| juan
 
     end
 
@@ -183,9 +183,9 @@ flowchart TD
 
     subgraph 3[" "]
 
-        MARKETING ==`\gt`|-2| dela
+        MARKETING ==>|-2| dela
 
-        dela --`\gt`|-1| luis
+        dela -->|-1| luis
 
     end
 
@@ -193,7 +193,7 @@ flowchart TD
 
     subgraph 4[" "]
 
-        FINANZAS ==`\gt`|X| diego2
+        FINANZAS ==>|X| diego2
 
     end
 
@@ -201,7 +201,7 @@ flowchart TD
 
     subgraph 5[" "]
 
-        RRHH ==`\gt`|-2| marcos
+        RRHH ==>|-2| marcos
 
     end
 
