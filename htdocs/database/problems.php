@@ -4,9 +4,9 @@ require_once "../modules/.php";
 
 // IMPORTS
 module("functional", "arguments");
-module("functional", "environment");
-module("functional", "database");
 module("functional", "check");
+module("functional", "database");
+module("functional", "environment");
 
 // SIGNAL
 signal("functional");
@@ -45,7 +45,7 @@ if (array_key_exists("ID", $ARG)) {
     $result = match (strtolower($ARG["CONTEXT"])) {
         "day" => database_request("SELECT * FROM problems WHERE data_" . $ARG["LANG"] . " IS NOT NULL LIMIT " . crc32(date('Y-m-d')) % intval((database_request("SELECT COUNT(*) AS total FROM problems WHERE data_" . $ARG["LANG"] . " IS NOT NULL", $database)->fetch_assoc())['total']) . ', 1', $database),
         "random" => database_request("SELECT * FROM problems WHERE data_" . $ARG["LANG"] . " IS NOT NULL LIMIT " . rand(0, intval((database_request("SELECT COUNT(*) as total FROM problems WHERE data_" . $ARG["LANG"] . " IS NOT NULL", $database)->fetch_assoc())['total']) - 1) . ", 1", $database),
-        default => throw new unknownArgumentValueError(),
+        default => throw new unknownArgumentValueError("CONTEXT"),
     };
     echo json_encode($result->fetch_assoc());
 }

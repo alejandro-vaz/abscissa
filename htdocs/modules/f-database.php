@@ -1,6 +1,6 @@
 <?php 
 // FUNCTION TO CONNECT TO DATABASE
-function database_connect($host, $user, $password, $name) {
+function database_connect(string $host, string $user, string $password, string $name): object {
     // CONNECT TO DATABASE
     $db = new mysqli($host, $user, $password, $name);
     // CHECK CONNECTION
@@ -12,7 +12,7 @@ function database_connect($host, $user, $password, $name) {
 }
 
 // FUNCTION TO REQUEST DATA
-function database_request($query, $db) {
+function database_request(string $query, object $db) {
     // PREPARE QUERY
     $request = $db->prepare($query);
     // EXECUTE, GET AND RETURN RESULT

@@ -27,116 +27,186 @@
 ### Jerarquía de trabajo
 
 ```mermaid
-flowchart LR
+flowchart TD
 
-    ABSCISSA((ABSCISSA)) 
+    classDef 0 fill:#700
+
+    classDef 1 fill:#770
+
+    classDef 2 fill:#070
+
+    classDef 3 fill:#077
+
+    classDef dept fill:#3332
+
+
+
+    ABSCISSA((ABSCISSA<br>1.1))
+
+    class null 0
+
+    class ABSCISSA 1
+
+    class null 2
+
+    class null 3
 
 
 
     alejo1([Alejo])
 
-    jorge1([Jorge])
+    diego1([Diego])
+
+    class null 0
+
+    class diego1 1
+
+    class alejo1 2
+
+    class null 3
 
 
+
+    BACKEND{{DEPT. BACKEND<br>Control}}
+
+    FRONTEND{{DEPT. FRONTEND<br>Entry}}
+
+    MARKETING{{DEPT. MARKETING<br>Need}}
+
+    FINANZAS{{DEPT. FINANZAS<br>Time}}
+
+    RRHH{{DEPT. RR.HH.<br>Scale}}
+
+    class MARKETING,RRHH 0
+
+    class null 1
+
+    class FRONTEND 2
+
+    class BACKEND,FINANZAS 3
+
+
+
+    jorge(Jorge)
 
     alejo2(Alejo)
 
-    jorge2(Jorge)
+    diego2(Diego)
 
-    diego(Diego)
-
-    paola(Paola)
+    dela(Dela)
 
     marcos(Marcos)
+
+    class dela,marcos 0
+
+    class jorge 1
+
+    class null 2
+
+    class alejo2,diego2 3
 
 
 
     beltrán>Beltrán]
 
+    class null 0
 
+    class null 1
+
+    class beltrán 2
+
+    class null 3
+
+
+
+    sergio[[Sergio]]
 
     guzmán[[Guzmán]]
 
     juan[[Juan]]
 
-    sergio[[Sergio]]
-
     luis[[Luis]]
 
-    dela[[Dela]]
+    class sergio,luis 0
 
+    class guzmán,juan 1
 
+    class null 2
 
-    BACKEND{{DPTO. BACKEND}}
-
-    FRONTEND{{DPTO. FRONTEND}}
-
-    FINANZAS{{DPTO. FINANZAS}}
-
-    RRHH{{DPTO. RR.HH.}}
-
-    MARKETING{{DPTO. MARKETING}}
+    class null 3
 
 
 
 
 
-    ABSCISSA <==> alejo1
-
-    ABSCISSA <==> jorge1
-
-
-
-    alejo1 -.-> FRONTEND
-
-    alejo1 -.-> FINANZAS
-
-    alejo1 -.-> MARKETING
+    ABSCISSA ==> alejo1
 
     alejo1 -.-> BACKEND
 
-    alejo1 -.-> RRHH
-
-    jorge1 -.-> FRONTEND
-
-    jorge1 -.-> FINANZAS
-
-    jorge1 -.-> MARKETING
-
-    jorge1 -.-> BACKEND
-
-    jorge1 -.-> RRHH
+    alejo1 -.-> FRONTEND
 
 
 
-    FRONTEND <==> alejo2
+    ABSCISSA ==> diego1
 
-    alejo2 --> guzmán
+    diego1 -.-> MARKETING
 
-    alejo2 --> juan
+    diego1 -.-> FINANZAS
 
-
-
-    BACKEND <==> jorge2
-
-    jorge2 --> beltrán
-
-    beltrán --> sergio
+    diego1 -.-> RRHH
 
 
 
-    FINANZAS <==> diego
+    subgraph 1[" "]
+
+        BACKEND ==>|-2/8| jorge
+
+        jorge -->|0/4| beltrán
+
+        beltrán -->|-3/2| sergio
+
+    end
 
 
 
-    MARKETING <==> paola
+    subgraph 2[" "]
 
-    paola --> luis
+        FRONTEND ==>|X/8| alejo2
 
-    paola --> dela
+        alejo2 -->|-3/4| guzmán
+
+        alejo2 -->|-3/4| juan
+
+    end
 
 
 
-    RRHH <==> marcos
+    subgraph 3[" "]
+
+        MARKETING ==>|-2/8| dela
+
+        dela -->|-1/4| luis
+
+    end
+
+
+
+    subgraph 4[" "]
+
+        FINANZAS ==>|X/8| diego2
+
+    end
+
+
+
+    subgraph 5[" "]
+
+        RRHH ==>|-2/8| marcos
+
+    end
+
+
+
+    class 1,2,3,4,5 dept
 
 ```

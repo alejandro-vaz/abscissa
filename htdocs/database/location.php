@@ -4,9 +4,9 @@ require_once "../modules/.php";
 
 // IMPORTS
 module("functional", "arguments");
-module("functional", "environment");
-module("functional", "database");
 module("functional", "check");
+module("functional", "database");
+module("functional", "environment");
 
 // SIGNAL
 signal("functional");

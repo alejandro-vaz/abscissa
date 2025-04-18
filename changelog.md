@@ -301,3 +301,13 @@
 - [X] (Patch) Added *JS* function on `general.js` `rawLaTeX()` which strips a *LaTeX* string out of it's contents in order to get a meaning-encapsulating one that can be compared in order to determine if two expressions are equivalent.
 
 - [X] (Patch) Visor now automatically scrolls down when writing formulas in a problem.
+
+#### *Abscissa* 1.3.5
+
+- [X] (Minor) Completed [#31.](https://github.com/alejandro-vaz/Abscissa/issues/31)
+
+- [X] (Patch) Made team graphs better, there's also a new promotion system.
+
+- [X] (Patch) Cleaned `.php` handler and added *cURL* with `POST`.
+
+- [X] (Patch) Added `f-post.php` module for accessing incoming `POST` data with variable `$PST`.

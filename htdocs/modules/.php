@@ -1,53 +1,90 @@
 <?php 
-// EXCEPTIONS
+/*                                                                           */
+/* ERROR AND ALERT DEFINITIONS                                               */
+/*                                                                           */
+
+// ERRORS
 class PHPError extends Exception {public $terminate = true;}
-// REGEX CHECK EXCEPTION
+// REGEX CHECK ERROR
 class regexError extends PHPError {}
-// DATABASE CONNECTION EXCEPTION
+// DATABASE CONNECTION ERROR
 class databaseConnectionError extends PHPError {}
-// ENVIRONMENT NOT FOUND EXCEPTION
+// ENVIRONMENT NOT FOUND ERROR
 class environmentNotFoundError extends PHPError {}
-// MODULE NOT FOUND EXCEPTION
+// MODULE NOT FOUND ERROR
 class moduleNotFoundError extends PHPError {}
-// TOO MANY ARGUMENTS EXCEPTION
+// TOO MANY ARGUMENTS ERROR
 class tooManyArgumentsError extends PHPError {}
-// NOT ENOUGH ARGUMENTS EXCEPTION
+// NOT ENOUGH ARGUMENTS ERROR
 class notEnoughArgumentsError extends PHPError {}
-// UNKNOWN ARGUMENT EXCEPTION
+// UNKNOWN ARGUMENT ERROR
 class unknownArgumentValueError extends PHPError {}
+// CURL ERROR
+class curlError extends PHPError {}
 
 // ALERTS
 class PHPAlert extends Exception {public $terminate = false;}
-
-// INCORRECT MODULE LABELING
+// INCORRECT MODULE LABELING ALERT
 class incorrectModuleLabelAlert extends PHPAlert {}
+
+
+/*                                                                           */
+/* CURL HANDLING                                                             */
+/*                                                                           */
+
+// CALL ANOTHER PHP SCRIPT VIA CURL
+function curl(string $relativePath, array $data): string {
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $scriptDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+    $url = $scheme . '://' . $host . $scriptDir . '/' . ltrim($relativePath, '/');
+    $request = curl_init($url);
+    curl_setopt($request, CURLOPT_POST, true);
+    curl_setopt($request, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($request, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($request, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    $response = curl_exec($request);
+    if ($response === false) {
+        $error = curl_error($request);
+        curl_close($request);
+        throw new curlError($error);
+    }
+    curl_close($request);
+    return $response;
+}
+
+
+/*                                                                           */
+/* EXCEPTION HANDLING                                                        */
+/*                                                                           */
 
 // EXCEPTION HANDLER
 function exceptionHandler(Throwable $exception) {
+    $log = [
+        "ERROR" => get_class($exception), 
+        "FILE" => $exception->getFile(), 
+        "LINE" => $exception->getLine(),
+        "MESSAGE" => $exception->getMessage()
+    ];
+    curl("../database/logs.php", $log);
     if (property_exists($exception, "terminate")) {
         if ($exception->terminate) {
-            header('Content-Type: application/json');
-            echo json_encode([
-                "Error" => get_class($exception), 
-                "File" => $exception->getFile(), 
-                "Line" => $exception->getLine(),
-                "Message" => $exception->getMessage()
-            ]);
             exit;
-        } else {
-            // TO-DO LOG ALERT TO DATABASE
         }
     } else {
-        echo json_encode([
-            "Error" => get_class($exception), 
-            "File" => $exception->getFile(), 
-            "Line" => $exception->getLine(),
-            "Message" => $exception->getMessage()
-        ]);
         exit;
     }
 }
+
+// SET AS DEFAULT EXCEPTION HANDLER
 set_exception_handler("exceptionHandler");
+
+
+/*                                                                           */
+/* MODULE HANDLING                                                           */
+/*                                                                           */
 
 // MODULE SET UP
 global $MOD;
@@ -60,8 +97,7 @@ function module($type, $module) {
         "interface" => "i",
         "functional" => "f",
         "head" => "h",
-        "working" => "w",
-        "experience" => ","
+        "working" => "w"
     };
     $MOD[] = $module;
     if (!file_exists(__DIR__ . "/../modules/$char" . "-$module.php")) {
@@ -76,11 +112,10 @@ function signal($signal) {
         "interface" => "i",
         "functional" => "f",
         "head" => "h",
-        "working" => "w",
-        "experience" => "x"
+        "working" => "w"
     };
     $localDir = __DIR__ . "/../modules/";
-    $prefixes = ['i', "f", "h", "w", "x"];
+    $prefixes = ['i', "f", "h", "w"];
     foreach ($MOD as $module) {
         $paths = [];
         $correctPath = "{$localDir}{$char}-$module.php";

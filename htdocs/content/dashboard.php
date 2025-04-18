@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- MODULES -->
+    <!-- HANDLER -->
     <?php require_once "../modules/.php" ?>
+    <!-- MODULES -->
     <?php module("head", "analytics") ?>
     <?php module("head", "settings") ?>
     <?php module("working", "katex") ?>
@@ -46,8 +47,6 @@
             </div>
         </div>
     </div>
-    <!-- UX MODULES -->
-    <?php signal("experience") ?>
     <!-- SCRIPT -->
     <script src="../script/dashboard.js"></script>
 </body>
