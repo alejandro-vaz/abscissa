@@ -79,28 +79,28 @@ flowchart TD
     diego1 -.-/=\gt/= RRHH
 
     subgraph 1[" "]
-        BACKEND ==/=\gt/=|-2| jorge
-        jorge --/=\gt/=|0| beltrán
-        beltrán --/=\gt/=|-3| sergio
+        BACKEND ==/=\gt/=|-2/8| jorge
+        jorge --/=\gt/=|0/4| beltrán
+        beltrán --/=\gt/=|-3/2| sergio
     end
 
     subgraph 2[" "]
-        FRONTEND ==/=\gt/=|X| alejo2
-        alejo2 --/=\gt/=|-3| guzmán
-        alejo2 --/=\gt/=|-3| juan
+        FRONTEND ==/=\gt/=|X/8| alejo2
+        alejo2 --/=\gt/=|-3/4| guzmán
+        alejo2 --/=\gt/=|-3/4| juan
     end
 
     subgraph 3[" "]
-        MARKETING ==/=\gt/=|-2| dela
-        dela --/=\gt/=|-1| luis
+        MARKETING ==/=\gt/=|-2/8| dela
+        dela --/=\gt/=|-1/4| luis
     end
 
     subgraph 4[" "]
-        FINANZAS ==/=\gt/=|X| diego2
+        FINANZAS ==/=\gt/=|X/8| diego2
     end
 
     subgraph 5[" "]
-        RRHH ==/=\gt/=|-2| marcos
+        RRHH ==/=\gt/=|-2/8| marcos
     end
 
     class 1,2,3,4,5 dept
