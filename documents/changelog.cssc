@@ -150,3 +150,6 @@
 /X (Patch) Refactored /_problem.js/_ and renamed /_load()/_ to /_loadProblem()/_.
 /X (Patch) Added ·JS· function on /_general.js/_ /_rawLaTeX()/_ which strips a ·LaTeX· string out of it's contents in order to get a meaning-encapsulating one that can be compared in order to determine if two expressions are equivalent.
 /X (Patch) Visor now automatically scrolls down when writing formulas in a problem.
+
+/X (Minor) Completed [#31.](https:://github.com/alejandro-vaz/Abscissa/issues/31)
+/X (Patch) Made team graphs better, there's also a new promotion system.
