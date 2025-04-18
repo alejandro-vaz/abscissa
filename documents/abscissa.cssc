@@ -20,7 +20,7 @@ flowchart TD
     classDef 3 fill::#077
     classDef dept fill::#3332
 
-    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=1.3.0))
+    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=1.1))
     class null 0
     class ABSCISSA 1
     class null 2

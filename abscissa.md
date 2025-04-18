@@ -41,7 +41,7 @@ flowchart TD
 
 
 
-    ABSCISSA((ABSCISSA<br>1.3.0))
+    ABSCISSA((ABSCISSA<br>1.1))
 
     class null 0
 
@@ -159,11 +159,11 @@ flowchart TD
 
     subgraph 1[" "]
 
-        BACKEND ==>|-2| jorge
+        BACKEND ==>|-2/8| jorge
 
-        jorge -->|0| beltrán
+        jorge -->|0/4| beltrán
 
-        beltrán -->|-3| sergio
+        beltrán -->|-3/2| sergio
 
     end
 
@@ -171,11 +171,11 @@ flowchart TD
 
     subgraph 2[" "]
 
-        FRONTEND ==>|X| alejo2
+        FRONTEND ==>|X/8| alejo2
 
-        alejo2 -->|-3| guzmán
+        alejo2 -->|-3/4| guzmán
 
-        alejo2 -->|-3| juan
+        alejo2 -->|-3/4| juan
 
     end
 
@@ -183,9 +183,9 @@ flowchart TD
 
     subgraph 3[" "]
 
-        MARKETING ==>|-2| dela
+        MARKETING ==>|-2/8| dela
 
-        dela -->|-1| luis
+        dela -->|-1/4| luis
 
     end
 
@@ -193,7 +193,7 @@ flowchart TD
 
     subgraph 4[" "]
 
-        FINANZAS ==>|X| diego2
+        FINANZAS ==>|X/8| diego2
 
     end
 
@@ -201,7 +201,7 @@ flowchart TD
 
     subgraph 5[" "]
 
-        RRHH ==>|-2| marcos
+        RRHH ==>|-2/8| marcos
 
     end
 
