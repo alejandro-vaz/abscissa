@@ -3,10 +3,10 @@
 require_once "../modules/.php";
 
 // IMPORTS
-module("functional", "arguments");
 module("functional", "check");
 module("functional", "database");
 module("functional", "environment");
+module("functional", "post");
 
 // SIGNAL
 signal("functional");
@@ -19,68 +19,68 @@ header('Access-Control-Allow-Origin: *');
 $database = database_connect($ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"], $ENV["DB_NAME"]);
 
 // CHECK ARGUMENTS
-check('/^[a-z]{2}$/', $ARG["LANG"], "LANG");
-check('/^[A-Z0-9]{6}$/', $ARG['ID'], "ID");
-check('/^[A-Z0-9]{4}$/', $ARG["NODE"], "NODE");
-check('/^[A-Z0-9]{2}$/', $ARG["CLUSTER"], "CLUSTER");
+check('/^[a-z]{2}$/', $PST["LANG"], "LANG");
+check('/^[A-Z0-9]{6}$/', $PST['ID'], "ID");
+check('/^[A-Z0-9]{4}$/', $PST["NODE"], "NODE");
+check('/^[A-Z0-9]{2}$/', $PST["CLUSTER"], "CLUSTER");
 
 // CHECK ARGUMENT RELATIONSHIPS
-if (count($ARG) > 2) {
+if (count($PST) > 2) {
     throw new tooManyArgumentsError();
 } 
-if (count($ARG) < 2) {
+if (count($PST) < 2) {
     throw new notEnoughArgumentsError();
 }
 
 // TYPES OF QUERIES
-if (array_key_exists("ID", $ARG)) {
-    $problemsQuery = database_request("SELECT node, name_" . $ARG["LANG"] . " FROM problems WHERE id = '" . $ARG["ID"] . "'", $database)->fetch_assoc();
-    $nodesQuery = database_request("SELECT cluster, name_" . $ARG["LANG"] . " FROM nodes WHERE node = '" . $problemsQuery["node"] . "'", $database)->fetch_assoc();
-    $clustersQuery = database_request("SELECT tree, name_" . $ARG["LANG"] . " FROM clusters WHERE cluster = '" . $nodesQuery["cluster"] . "'", $database)->fetch_assoc();
-    $treesQuery = database_request("SELECT name_" . $ARG["LANG"] . " FROM trees WHERE tree = '" . $clustersQuery["tree"] . "'", $database)->fetch_assoc();
+if (array_key_exists("ID", $PST)) {
+    $problemsQuery = database_request("SELECT node, name_" . $PST["LANG"] . " FROM problems WHERE id = '" . $PST["ID"] . "'", $database)->fetch_assoc();
+    $nodesQuery = database_request("SELECT cluster, name_" . $PST["LANG"] . " FROM nodes WHERE node = '" . $problemsQuery["node"] . "'", $database)->fetch_assoc();
+    $clustersQuery = database_request("SELECT tree, name_" . $PST["LANG"] . " FROM clusters WHERE cluster = '" . $nodesQuery["cluster"] . "'", $database)->fetch_assoc();
+    $treesQuery = database_request("SELECT name_" . $PST["LANG"] . " FROM trees WHERE tree = '" . $clustersQuery["tree"] . "'", $database)->fetch_assoc();
     echo json_encode([
         "id" => [
-            "value" => $ARG["ID"],
-            "name" => $problemsQuery["name_" . $ARG["LANG"]]
+            "value" => $PST["ID"],
+            "name" => $problemsQuery["name_" . $PST["LANG"]]
         ],
         "node" => [
             "value" => $problemsQuery["node"],
-            "name" => $nodesQuery["name_" . $ARG["LANG"]]
+            "name" => $nodesQuery["name_" . $PST["LANG"]]
         ],
         "cluster" => [
             "value" => $nodesQuery["cluster"],
-            "name" => $clustersQuery["name_" . $ARG["LANG"]]
+            "name" => $clustersQuery["name_" . $PST["LANG"]]
         ],
         "tree" => [
             "value" => $clustersQuery["tree"],
-            "name" => $treesQuery["name_" . $ARG["LANG"]]
+            "name" => $treesQuery["name_" . $PST["LANG"]]
         ]
     ]);
-} elseif (array_key_exists("NODE", $ARG)) {
-    $nodesQuery = database_request("SELECT cluster, name_" . $ARG["LANG"] . " FROM nodes WHERE node = '" . $ARG["NODE"] . "'", $database)->fetch_assoc();
-    $clustersQuery = database_request("SELECT tree, name_" . $ARG["LANG"] . " FROM clusters WHERE cluster = '" . $nodesQuery["cluster"] . "'", $database)->fetch_assoc();
-    $treesQuery = database_request("SELECT name_" . $ARG["LANG"] . " FROM trees WHERE tree = '" . $clustersQuery["tree"] . "'", $database)->fetch_assoc();
+} elseif (array_key_exists("NODE", $PST)) {
+    $nodesQuery = database_request("SELECT cluster, name_" . $PST["LANG"] . " FROM nodes WHERE node = '" . $PST["NODE"] . "'", $database)->fetch_assoc();
+    $clustersQuery = database_request("SELECT tree, name_" . $PST["LANG"] . " FROM clusters WHERE cluster = '" . $nodesQuery["cluster"] . "'", $database)->fetch_assoc();
+    $treesQuery = database_request("SELECT name_" . $PST["LANG"] . " FROM trees WHERE tree = '" . $clustersQuery["tree"] . "'", $database)->fetch_assoc();
     echo json_encode([
         "id" => [
             "value" => null,
             "name" => null
         ],
         "node" => [
-            "value" => $ARG["NODE"],
-            "name" => $nodesQuery["name_" . $ARG["LANG"]]
+            "value" => $PST["NODE"],
+            "name" => $nodesQuery["name_" . $PST["LANG"]]
         ],
         "cluster" => [
             "value" => $nodesQuery["cluster"],
-            "name" => $clustersQuery["name_" . $ARG["LANG"]]
+            "name" => $clustersQuery["name_" . $PST["LANG"]]
         ],
         "tree" => [
             "value" => $clustersQuery["tree"],
-            "name" => $treesQuery["name_" . $ARG["LANG"]]
+            "name" => $treesQuery["name_" . $PST["LANG"]]
         ]
     ]);
 } else {
-    $clustersQuery = database_request("SELECT tree, name_" . $ARG["LANG"] . " FROM clusters WHERE cluster = '" . $ARG["CLUSTER"] . "'", $database)->fetch_assoc();
-    $treesQuery = database_request("SELECT name_" . $ARG["LANG"] . " FROM trees WHERE tree = '" . $clustersQuery["tree"] . "'", $database)->fetch_assoc();
+    $clustersQuery = database_request("SELECT tree, name_" . $PST["LANG"] . " FROM clusters WHERE cluster = '" . $PST["CLUSTER"] . "'", $database)->fetch_assoc();
+    $treesQuery = database_request("SELECT name_" . $PST["LANG"] . " FROM trees WHERE tree = '" . $clustersQuery["tree"] . "'", $database)->fetch_assoc();
     echo json_encode([
         "id" => [
             "value" => null,
@@ -91,12 +91,12 @@ if (array_key_exists("ID", $ARG)) {
             "name" => null
         ],
         "cluster" => [
-            "value" => $ARG["CLUSTER"],
-            "name" => $clustersQuery["name_" . $ARG["LANG"]]
+            "value" => $PST["CLUSTER"],
+            "name" => $clustersQuery["name_" . $PST["LANG"]]
         ],
         "tree" => [
             "value" => $clustersQuery["tree"],
-            "name" => $treesQuery["name_" . $ARG["LANG"]]
+            "name" => $treesQuery["name_" . $PST["LANG"]]
         ]
     ]);
 }

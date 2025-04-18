@@ -15,8 +15,8 @@ const calculatorLinks = {
 playground = renderCodeMirror(playground);
 
 // LOAD PROBLEM
-fetchAPI(`problems.php?lang=en&id=${getURLParameter("id")}`).then(data => {
-    fetchAPI(`location.php?lang=en&id=${getURLParameter("id")}`).then(location => {
+curl("problems.php", { "ID": getURLParameter("id"), "LANG": "en" }).then(data => {
+    curl("location.php", { "ID": getURLParameter("id"), "LANG": "en" }).then(location => {
         // GET PROBLEM DATA
         let problem = JSON.parse(data.data_en);
         // SAVE ATTRIBUTES

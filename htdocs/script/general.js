@@ -22,8 +22,25 @@ function pushCookie(dict, cookieName="cookie") {
 }
 
 // FUNCTION TO FETCH FROM DATABASE API
-function fetchAPI(URL) {
-    return fetch(`../database/${URL}`, { cache: "no-store" }).then(response => response.json());
+function curl(script, data) {
+    path = `../database/${script}`
+    const scheme = window.location.protocol === "https:" ? 'https' : 'http';
+    const host = window.location.host;
+    const scriptDir = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+    const url = `${scheme}://${host}${scriptDir}/${path.replace(/^\/+/, '')}`;
+    return fetch(url, {
+        cache: "no-store",
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    });
 }
 
 // FUNCTION TO REDIRECT
@@ -44,6 +61,11 @@ function rawLaTeX(latex) {
     .replaceAll("\\\\", "")
     .replaceAll(" ", "")
     .trim()
+}
+
+// CURL FUNCTION
+function curl() {
+
 }
 
 // COOKIES
