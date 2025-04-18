@@ -13,7 +13,7 @@ const resources = document.getElementById("resources-links")
 // FUNCTION TO LOAD A PROBLEM IN A DIV
 function loadProblem(div, post) {
     curl("problems.php", post).then(data => {
-        curl("location.php", post).then(location => {
+        curl("location.php", { "LANG": "en", "ID": data.id }).then(location => {
             // GET PROBLEM DATA
             let problem = JSON.parse(data.data_en)
             // ADD ATTRIBUTES
@@ -70,7 +70,7 @@ function loadResources(times) {
 
 // INITIALIZE
 loadProblem(randomContent, { "LANG": "en", "CONTEXT": "random" });
-loadProblem(randomContent, { "LANG": "en", "CONTEXT": "day" });
+loadProblem(dayContent, { "LANG": "en", "CONTEXT": "day" });
 loadResources(5);
 
 // SKIP RANDOM

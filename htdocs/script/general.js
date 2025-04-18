@@ -63,11 +63,6 @@ function rawLaTeX(latex) {
     .trim()
 }
 
-// CURL FUNCTION
-function curl() {
-
-}
-
 // COOKIES
 const data = {
     userName: "John",

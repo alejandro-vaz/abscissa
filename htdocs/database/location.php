@@ -31,6 +31,9 @@ if (count($PST) > 2) {
 if (count($PST) < 2) {
     throw new notEnoughArgumentsError();
 }
+if (!array_key_exists("ID", $PST) and !array_key_exists("NODE", $PST) and !array_key_exists("CLUSTER", $PST)) {
+    throw new unknownArgumentsError();
+}
 
 // TYPES OF QUERIES
 if (array_key_exists("ID", $PST)) {
