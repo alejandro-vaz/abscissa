@@ -37,17 +37,20 @@ $insight-border: 0.1* root.$U solid root.$COLORER
 #user-insight
     +root.element(true)
     border: $insight-border
+    &:empty
+        display: none
 
 
 // USER -> NAME
 $name-font-weight: bold
-
-$name-margin: calc(6*root.$PADDER)
+$name-margin: 6*root.$PADDER
 
 #user-name
     +root.element(true)
     margin-right: $name-margin
     font-weight: $name-font-weight
+    &:empty
+        display: none
 
 
 // USER -> ICON
@@ -66,3 +69,5 @@ $icon-default-background: transparent
     transition: background-color root.$TIMER root.$CURVER
     &:hover
         background-color: root.$LIGHTABSCISSER
+    &:first-of-type
+        margin-left: $icon-separation

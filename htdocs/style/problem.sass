@@ -110,6 +110,7 @@ $visor-height: calc($visor-default-height - general.$PADDER)
 $master-default-width: 100%
 $master-default-height: 15%
 $master-direction: row
+$master-answer-width: 35%
 
 $master-width: calc($master-default-width - 2*general.$PADDER)
 $master-height: calc($master-default-height - general.$PADDER)
@@ -125,4 +126,4 @@ $master-height: calc($master-default-height - general.$PADDER)
         +general.input(button, $inline: false)
     > input
         +general.input(text, $inline: false)
-        width: 40%
+        width: $master-answer-width

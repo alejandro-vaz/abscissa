@@ -5,21 +5,39 @@ function getURLParameter(request) {
 }
 
 // FUNCTION TO GET COOKIES
-function getCookie(dictKey, cookieName="cookie") {
-    const cookieStr = document.cookie
-        .split(";")
-        .find(cookie => cookie.trim().startsWith(cookieName + "="));
-    const cookieValue = cookieStr.split("=")[1];
-    const decoded = decodeURIComponent(cookieValue);
-    const jsonObj = JSON.parse(decoded);
-    return jsonObj[dictKey] !== undefined ? jsonObj[dictKey] : null;
+function getCookie(name) {
+    try {
+        const cookie = JSON.parse(decodeURIComponent(document.cookie.split(";").find(data => data.trim().startsWith(name + "=")).split("=")[1]));
+    } catch (exception) {
+        return false;
+        // COOKIE NOT FOUND
+    }
+    let fields;
+    switch (name) {
+        case "user": {
+            fields = ["user", "insight"];
+            break;
+        }
+        default:{
+            return false;
+            // THROW EXCEPTION, COOKIE DOESN'T HAVE TEMPLATE
+        }
+    }
+    const keys = Object.keys(cookie);
+    const matches = keys.length === fields.length && keys.sort().every((key, index) => key === fields.sort()[index]);
+    if (matches) {
+        return cookie
+    } else {
+        return false;
+        // THROW ANOTHER ERROR, FIELDS AND COOKIE DON'T MATCH
+    }
 }
 
-// FUNCTION TO PUSH COOKIE
-function pushCookie(dict, cookieName="cookie") {
-    const cookieRaw = encodeURIComponent(JSON.stringify(dict));
-    document.cookie = `${cookieName}=` + cookieRaw + "; path=/";
-}
+// // FUNCTION TO PUSH COOKIE
+// function pushCookie(dict, cookieName="cookie") {
+//     const cookieRaw = encodeURIComponent(JSON.stringify(dict));
+//     document.cookie = `${cookieName}=` + cookieRaw + "; path=/";
+// }
 
 // FUNCTION TO FETCH FROM DATABASE API
 function curl(script, data) {
@@ -62,13 +80,6 @@ function rawLaTeX(latex) {
     .replaceAll(" ", "")
     .trim()
 }
-
-// COOKIES
-const data = {
-    userName: undefined,
-    userInsight: undefined
-}
-pushCookie(data)
 
 // DO NOT ALLOW VERTICAL SCREENS NOR SQUARES
 window.addEventListener("resize", function() {
