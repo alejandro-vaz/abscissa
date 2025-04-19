@@ -52,11 +52,9 @@ $name-margin: calc(6*root.$PADDER)
 
 // USER -> ICON
 $icon-height: 2.75* root.$U
-$icon-separation: 1* root.$U
+$icon-separation: 0.5* root.$U
 $icon-cursor: pointer
 $icon-default-background: transparent
-
-$icon-fist-separation: calc($icon-separation/2)
 
 .userIcon
     border-radius: root.$RADIUSER
@@ -68,5 +66,3 @@ $icon-fist-separation: calc($icon-separation/2)
     transition: background-color root.$TIMER root.$CURVER
     &:hover
         background-color: root.$LIGHTABSCISSER
-    &:last-of-type
-        margin-right: $icon-fist-separation

@@ -65,8 +65,8 @@ function rawLaTeX(latex) {
 
 // COOKIES
 const data = {
-    userName: "John",
-    userInsight: 300
+    userName: undefined,
+    userInsight: undefined
 }
 pushCookie(data)
 

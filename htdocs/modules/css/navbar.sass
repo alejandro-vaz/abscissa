@@ -28,11 +28,9 @@ $div-z-index: 1000
 
 // NAVBAR -> ICON
 $icon-width: 2.75* root.$U
-$icon-separation: 1* root.$U
+$icon-separation: 0.5 * root.$U
 $icon-default-background: transparent
 $icon-cursor: pointer
-
-$icon-first-separation: calc($icon-separation / 2)
 
 .navbarIcon
     width: $icon-width
@@ -43,6 +41,5 @@ $icon-first-separation: calc($icon-separation / 2)
     transition: background-color root.$TIMER root.$CURVER
     &:first-of-type
         background-color: root.$DARKABSCISSER
-        margin-top: $icon-first-separation
     &:hover
         background-color: root.$LIGHTABSCISSER

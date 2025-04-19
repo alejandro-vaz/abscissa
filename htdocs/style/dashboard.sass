@@ -27,12 +27,12 @@ $sections-base-color: #333333
 $sections-random-color: #71833e
 $sections-day-color: #3e5083
 $sections-resources-color: #5f2659
+$sections-grow: false
 
 $sections-width: min($sections-total-width - 2 * $sections-minimum-margin, $sections-max-width)
 
 .section
-    +general.section(false, false, $width: $sections-width, $height: $sections-height, $direction: $sections-direction)
-    flex: 0 0 auto
+    +general.section(false, false, $width: $sections-width, $height: $sections-height, $direction: $sections-direction, $grow: $sections-grow)
     padding: $sections-padding
     border-radius: general.$RADIUSER
     margin: $sections-margin
