@@ -1,13 +1,15 @@
-// CONNECT TO FORM
-const form = document.getElementById("form");
+/*                                                                           */
+/* INITIALIZATION                                                            */
+/*                                                                           */
 
-// CONNECT TO CHANGE
+// INITIALIZATION -> CONNECTIONS
+const form = document.getElementById("form");
 const change = document.getElementById("change");
 
-// INITIALIZE STATE
+// INITIALIZATION -> STATE
 let login = true;
 
-// SET FORM DEFAULT CONTENT
+// INITIALIZATION -> CONTENT
 const loginForm = `<h1>Log in</h1>
 <input type="text" name="unique" id="form-unique" placeholder="username or email" required>
 <input type="password" name="password" id="form-password" placeholder="password" required>
@@ -19,12 +21,17 @@ const registerForm = `<h1>Register</h1>
 <input type="submit" value="Sign up">`;
 form.innerHTML = loginForm;
 
-// PATTERNS
+// INITIALIZATION -> REGEX PATTERNS
 const emailPattern = /^[A-Za-z0-9._%\\-]+@gmail.com$/;
 const usernamePattern = /^[A-Za-z0-9_\\-]{4,32}$/
 const passwordPattern = /^[A-Za-z0-9_!@#$%^&*()\-=+.]{8,32}$/;
 
-// INTERCEPT FORM SUBMISSION
+
+/*                                                                           */
+/* FORM                                                                      */
+/*                                                                           */
+
+// FORM -> INTERCEPTION
 form.addEventListener("submit", function(event) {
     event.preventDefault();
     const data = new FormData(form);
@@ -32,7 +39,25 @@ form.addEventListener("submit", function(event) {
         const unique = data.get("unique");
         const password = data.get("password");
         if ((usernamePattern.test(unique) || emailPattern.test(unique)) && passwordPattern.test(password)) {
-            // DO SOMETHING
+            if (usernamePattern.test(unique)) {
+                curl("login", {
+                    "USERNAME": unique,
+                    "PASSWORD": password
+                }).then(response => {
+                    if (response) {
+                        redirect("dashboard.php");
+                    }
+                })
+            } else {
+                curl("login", {
+                    "EMAIL": unique,
+                    "PASSWORD": password
+                }).then(response => {
+                    if (response) {
+                        redirect("dashboard.php");
+                    }
+                })
+            } 
         } else {
             // DISPLAY ERROR
         }
@@ -41,14 +66,13 @@ form.addEventListener("submit", function(event) {
         const email = data.get("email");
         const password = data.get("password");
         if (usernamePattern.test(username) && emailPattern.test(email) && passwordPattern.test(password)) {
-            const post = {
-                "USERNAME": data.get("username"),
-                "EMAIL": data.get("email"),
-                "PASSWORD": data.get("password")
-            }
-            curl("register", post).then(response => {
+            curl("register", {
+                "USERNAME": username,
+                "EMAIL": email,
+                "PASSWORD": password
+            }).then(response => {
                 if (response) {
-                    // SUCCESSFUL OPERATION, AUTOLOGIN
+                    console.log("YESSSSS");
                 }
             });
         } else {
@@ -57,7 +81,7 @@ form.addEventListener("submit", function(event) {
     }
 })
 
-// ALTERNATE BETWEEN LOGIN AND REGISTER
+// FORM -> SWITCH FORM TYPE
 change.addEventListener("click", function() {
     // ERASE FORM CONTENT
     form.innerHTML = '';
@@ -66,11 +90,11 @@ change.addEventListener("click", function() {
     // REMAKE CONTENT
     if (login) {
         form.innerHTML = loginForm;
-        window.name = "Log in | Abscissa";
+        document.title = "Log in | Abscissa";
         change.innerHTML = "Don't have an account?";
     } else {
         form.innerHTML = registerForm;
-        window.name = "Register | Abscissa";
+        document.title = "Register | Abscissa";
         change.innerHTML = "Already have an account?";
     }
 })

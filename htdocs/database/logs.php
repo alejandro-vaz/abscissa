@@ -26,7 +26,7 @@ check("/^.*$/", $PST["MESSAGE"], "MESSAGE");
 
 // CHECK ARGUMENT RELATIONSHIPS
 if (!(array_key_exists("ERROR", $PST) and array_key_exists("FILE", $PST) and array_key_exists("LINE", $PST) and array_key_exists("MESSAGE", $PST))) {
-    throw new notEnoughArgumentsError();
+    throw new incorrectArgumentsError();
 }
 
 // TYPES OF QUERIES

@@ -26,7 +26,7 @@ check('/^[a-zA-Z0-9_-]{4,32}$/', $PST["USERNAME"], "USERNAME");
 
 // CHECK ARGUMENT RELATIONSHIPS
 if (!(array_key_exists("EMAIL", $PST) and array_key_exists("PASSWORD", $PST) and array_key_exists("USERNAME", $PST))) {
-    throw new notEnoughArgumentsError();
+    throw new incorrectArgumentsError();
 }
 
 // TYPES OF QUERIES

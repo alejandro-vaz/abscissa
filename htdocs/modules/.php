@@ -14,9 +14,7 @@ class environmentNotFoundError extends PHPError {}
 // MODULE NOT FOUND ERROR
 class moduleNotFoundError extends PHPError {}
 // TOO MANY ARGUMENTS ERROR
-class tooManyArgumentsError extends PHPError {}
-// NOT ENOUGH ARGUMENTS ERROR
-class notEnoughArgumentsError extends PHPError {}
+class incorrectArgumentsError extends PHPError {}
 // UNKNOWN ARGUMENT ERROR
 class unknownArgumentValueError extends PHPError {}
 // CURL ERROR

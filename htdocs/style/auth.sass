@@ -2,21 +2,29 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // MODULES
 @use "general" 
+
 
 
 /*                                                                           */
 /* FORM                                                                      */
 /*                                                                           */
 
+
 // FORM -> MAIN
+$_main-navbar-width: 3.8* general.$U
+$main-default-width: 100%
+
+$main-width: calc($main-default-width - $_main-navbar-width)
+
 #main 
-    +general.section(true, false)
+    +general.section(true, false, $width: $main-width)
 
 
 // FORM -> FORM
-$form-width: 20 * general.$U
+$form-width: 25 * general.$U
 $form-height: fit-content
 $form-grow: false
 $form-margin: 0 0 2 * general.$U 0
@@ -27,6 +35,9 @@ $form-margin: 0 0 2 * general.$U 0
 
 
 // FORM -> CHANGE
+$change-style: underline
+$change-cursor: pointer
+
 #change
-    text-decoration: underline
-    cursor: pointer
+    text-decoration: $change-style
+    cursor: $change-cursor

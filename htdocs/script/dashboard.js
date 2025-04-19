@@ -1,16 +1,25 @@
-// CONNECT TO RANDOM ELEMENTS
+/*                                                                           */
+/* CONNECTIONS                                                               */
+/*                                                                           */
+
+// CONNECTIONS -> RANDOM ELEMENTS
 const randomContent = document.getElementById("randomContent");
 const randomTry = document.getElementById("random-try");
 const randomSkip = document.getElementById("random-skip");
 
-// CONNECT TO DAY ELEMENTS
+// CONNECTIONS -> DAY ELEMENTS
 const dayContent = document.getElementById("dayContent");
 const dayTry = document.getElementById("day-try");
 
-// CONNECT TO RESOURCES
+// CONNECTIONS -> RESOURCES
 const resources = document.getElementById("resources-links")
 
-// FUNCTION TO LOAD A PROBLEM IN A DIV
+
+/*                                                                           */
+/* LOADING DEFINITIONS                                                       */
+/*                                                                           */
+
+// LOADING DEFINITIONS -> PROBLEM
 function loadProblem(div, post) {
     curl("problems", post).then(data => {
         curl("location", { "LANG": post.LANG, "ID": data.id }).then(location => {
@@ -53,7 +62,7 @@ function loadProblem(div, post) {
     })
 }
 
-// FUNCTION TO LOAD RESOURCES
+// LOADING DEFINITIONS -> RESOURCES
 function loadResources(times) {
     curl("resources", { "LANG": "en", "TYPE": "video" }).then(videos => {
         for (let iteration = 0; iteration < times; iteration++) {
@@ -65,20 +74,24 @@ function loadResources(times) {
             resources.appendChild(video);
         }
     })
-
 }
 
-// INITIALIZE
+
+/*                                                                           */
+/* RENDER                                                                    */
+/*                                                                           */
+
+// RENDER -> STARTING CONTENT
 loadProblem(randomContent, { "LANG": "en", "CONTEXT": "random" });
 loadProblem(dayContent, { "LANG": "en", "CONTEXT": "day" });
 loadResources(5);
 
-// SKIP RANDOM
+// RENDER -> SKIPPING RANDOM
 randomSkip.addEventListener("click", function() {
     loadProblem(randomContent, { "LANG": "en", "CONTEXT": "random" });
 })
 
-// TRY BUTTONS
+// RENDER -> TRYING PROBLEMS
 randomTry.addEventListener("click", function() {
     redirect(`problem.php?id=${randomContent.location.id.value}&lang=en`);
 })
@@ -86,7 +99,7 @@ dayTry.addEventListener("click", function() {
     redirect(`problem.php?id=${dayContent.location.id.value}&lang=en`);
 })
 
-// INFINITE HORIZONTAL SCROLL FOR RESOURCES
+// RENDER -> INFINITE SCROLL FOR RESOURCES
 let loading = false;
 resources.addEventListener("scroll", function() {
     if (resources.scrollLeft + resources.clientWidth >= resources.scrollWidth - 500 && !loading) {

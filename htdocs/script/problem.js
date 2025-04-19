@@ -1,4 +1,8 @@
-// CONNECT TO ELEMENTS
+/*                                                                           */
+/* RENDER                                                                    */
+/*                                                                           */
+
+// RENDER -> CONNECT TO ELEMENTS
 let playground = document.getElementById("playground");
 const visor = document.getElementById("visor");
 const instructions = document.getElementById("instructions");
@@ -11,10 +15,10 @@ const calculatorLinks = {
     }
 }
 
-// CONNECT PLAYGROUND TO CODEMIRROR AND REDEFINE IT
+// RENDER -> CONNECT TO CODEMIRROR
 playground = renderCodeMirror(playground);
 
-// LOAD PROBLEM
+// RENDER -> LOAD PROBLEM
 curl("problems", { "ID": getURLParameter("id"), "LANG": "en" }).then(data => {
     curl("location", { "ID": getURLParameter("id"), "LANG": "en" }).then(location => {
         // GET PROBLEM DATA
@@ -63,20 +67,12 @@ curl("problems", { "ID": getURLParameter("id"), "LANG": "en" }).then(data => {
     })
 });
 
-// MIRROR PLAYGROUND TO VISOR WITH KATEX ENABLED USING CODEMIRROR AND SCROLL DOWN
-playground.on("change", function(instance) {
-    visor.textContent = instance.getValue();
-    renderLaTeX(visor);
-    visor.scrollTop = visor.scrollHeight;
-})
 
-// MIRROR ANSWER TO RESULT WITH KATEX ENABLED
-answer.addEventListener("input", function() {
-    result.textContent = result.dataset.pre + answer.value + result.dataset.post;
-    renderLaTeX(result);
-});
+/*                                                                           */
+/* DYNAMIC                                                                   */
+/*                                                                           */
 
-// ANSWER AUTOCOMPLETION
+// DYNAMIC -> ANSWER AUTOCOMPLETION
 const brackets = { '[': ']', '(': ')', '{': '}' };
 answer.addEventListener('keydown', function(pressed) {
     if (brackets[pressed.key]) {
@@ -88,4 +84,17 @@ answer.addEventListener('keydown', function(pressed) {
         this.value = text.slice(0, start) + pressed.key + brackets[pressed.key] + text.slice(end);
         this.selectionStart = this.selectionEnd = start + 1;
     }
+});
+
+// DYNAMIC -> RENDER VISOR ON CHANGE
+playground.on("change", function(instance) {
+    visor.textContent = instance.getValue();
+    renderLaTeX(visor);
+    visor.scrollTop = visor.scrollHeight;
+})
+
+// DYNAMIC -> RENDER ANSWER ON CHANGE
+answer.addEventListener("input", function() {
+    result.textContent = result.dataset.pre + answer.value + result.dataset.post;
+    renderLaTeX(result);
 });

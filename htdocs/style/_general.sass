@@ -2,6 +2,7 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // MODULES
 @use "sass:color"
 @use "sass:math"
@@ -21,9 +22,11 @@ $TIMER: root.$TIMER
 $CURVER: root.$CURVER
 
 
+
 /*                                                                           */
 /* FUNCTIONS                                                                 */
 /*                                                                           */
+
 
 // FUNCTIONS -> CONTAINER
 =section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
@@ -106,9 +109,11 @@ $CURVER: root.$CURVER
         width: none
 
 
+
 /*                                                                           */
 /* DEFAULTS                                                                  */
 /*                                                                           */
+
 
 // DEFAULTS -> FONT
 $font-name: "CSSMS"
@@ -128,9 +133,9 @@ $font-format: "truetype"
 // DEFAULTS -> DOCUMENT
 $document-background-center: #111111
 $document-center-share: 20%
+$document-radius-share: 80%
 
 $document-background-radius: color.invert($COLORER)
-$document-radius-share: 100% - $document-center-share
 
 :where(html)
     background: radial-gradient(circle, $document-background-center $document-center-share, $document-background-radius $document-radius-share)
@@ -139,8 +144,9 @@ $document-radius-share: 100% - $document-center-share
 // DEFAULTS -> MAIN
 $_main-navbar-width: 3.8* $U
 $main-padding: 4.5* $U 0 0 0
+$main-default-width: 100%
 
-$main-width: calc(100% - $_main-navbar-width)
+$main-width: calc($main-default-width - $_main-navbar-width)
 
 :where(#main)
     +section(false, false, $width: $main-width)
@@ -150,9 +156,11 @@ $main-width: calc(100% - $_main-navbar-width)
     right: 0
 
 
+
 /*                                                                           */
 /* INPUTS                                                                    */
 /*                                                                           */
+
 
 // INPUTS -> AUTOFORMATTER
 :where(input)
@@ -170,9 +178,11 @@ $main-width: calc(100% - $_main-navbar-width)
     +input(button)
 
 
+
 /*                                                                           */
 /* FORMS                                                                     */
 /*                                                                           */
+
 
 // FORMS -> FORM
 form 
@@ -189,9 +199,11 @@ form
         border-top-right-radius: 0
 
 
+
 /*                                                                           */
 /* HEADERS                                                                   */
 /*                                                                           */
+
 
 // HEADERS -> H4
 $h4-scale-coefficient: 1.06125

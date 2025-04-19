@@ -25,10 +25,10 @@ check('/^[A-Z0-9]{4}$/', $PST["NODE"], "NODE");
 
 // CHECK ARGUMENT RELATIONSHIPS
 if (array_key_exists("RESOURCE", $PST) and (array_key_exists("NODE", $PST) or array_key_exists("TYPE", $PST))) {
-    throw new tooManyArgumentsError();
+    throw new incorrectArgumentsError();
 }
 if (!(array_key_exists("RESOURCE", $PST)) and !(array_key_exists("NODE", $PST)) and !(array_key_exists("TYPE", $PST))) {
-    throw new notEnoughArgumentsError();
+    throw new incorrectArgumentsError();
 }
 
 // TYPES OF QUERIES

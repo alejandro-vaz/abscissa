@@ -6,6 +6,7 @@
     <!-- MODULES -->
     <?php module("head", "analytics") ?>
     <?php module("head", "settings") ?>
+    <?php module("interface", "navbar") ?>
     <!-- SETTINGS -->
     <title>Log in | Abscissa</title>
     <meta name="description" content="Abscissa log in and register page.">

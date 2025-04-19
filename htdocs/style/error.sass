@@ -2,21 +2,25 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // GENERAL MODULE
 @use "general" 
 @use "sass:math" 
+
 
 
 /*                                                                           */
 /* STYLES                                                                    */
 /*                                                                           */
 
+
 // STYLES -> MAIN
 $_main-navbar-width: 3.8* general.$U
 $main-h1-margin: 0 auto
 $main-p-margin: 3* general.$U auto 0 auto
+$main-default-width: 100%
 
-$main-width: calc(100% - $_main-navbar-width)
+$main-width: calc($main-default-width - $_main-navbar-width)
 
 #main
     +general.section(true, true, $width: $main-width)

@@ -2,6 +2,7 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // MODULES
 @use "general" 
 @use "sass:math"
@@ -10,11 +11,13 @@
 @use "sass:meta"
 
 
+
 /*                                                                           */
-/* STYLES                                                                    */
+/* PROBLEMS                                                                  */
 /*                                                                           */
 
-// STYLES -> SECTION
+
+// PROBLEMS -> SECTION
 $sections-max-width: 69.5* general.$U
 $sections-total-width: 100%
 $sections-height: 17* general.$U
@@ -44,7 +47,7 @@ $sections-width: min($sections-total-width - 2 * $sections-minimum-margin, $sect
         background: linear-gradient($sections-fade, $sections-base-color, $sections-resources-color)
 
 
-// STYLES -> CONTENT
+// PROBLEMS -> CONTENT
 $content-width: 90%
 $content-direction: row
 
@@ -52,7 +55,7 @@ $content-direction: row
     +general.section(false, false, $direction: $content-direction, $width: $content-width)
 
 
-// STYLES -> PROBLEMOPTIONS
+// PROBLEMS -> PROBLEMOPTIONS
 $problemOptions-width: fit-content
 $problemOptions-allocation: space-evenly
 $problemOptions-background: #00000055
@@ -67,23 +70,24 @@ $problemOptions-radius: 0 general.$RADIUSER general.$RADIUSER 0
         +general.input(button, $inline: false)
 
 
-// STYLES -> CONTENT1
+// PROBLEMS -> CONTENT1
 $_content1-background: #33333355
 $content1-border-default: general.$RADIUSER 0 0 general.$RADIUSER
 $content1-padding: 0 2*general.$PADDER
 $content1-min-width: 50%
+$content1-display: block
 
 .content1
     background: $_content1-background
     padding: $content1-padding
-    +general.section(false, false, $display: block, $width: $content1-min-width)
+    +general.section(false, false, $display: $content1-display, $width: $content1-min-width)
     &:not(.content1:has(#resources-links))
         border-radius: $content1-border-default
     &:has(#resources-links)
         border-radius: general.$RADIUSER
 
 
-// STYLES -> CONTENT2
+// PROBLEMS -> CONTENT2
 $_content2-background: #00000055
 $content2-padding: math.div(general.$PADDER, 2)
 $content2-margin: 0 math.div(general.$PADDER, 2)
@@ -91,9 +95,10 @@ $content2-card-width: 7.5* general.$U
 $content2-card-border: 0.1* general.$U solid general.$COLORER
 $content2-text-align: center
 $content2-width: fit-content
+$content2-grow: false
 
 .content2
-    +general.section(true, false, $width: $content2-width, $grow: false)
+    +general.section(true, false, $width: $content2-width, $grow: $content2-grow)
     background: $_content2-background
     margin: $content2-margin
     padding: $content2-padding
@@ -103,9 +108,15 @@ $content2-width: fit-content
         border: $content2-card-border
         width: $content2-card-width
         margin: $content2-padding
-    
 
-// STYLES -> VIDEOS
+
+
+/*                                                                           */
+/* VIDEOS                                                                    */
+/*                                                                           */
+
+
+// VIDEOS -> VIDEOS
 $resources-links-video-size: 11.5* general.$U
 $resources-links-aspect-ratio: math.div(16, 9)
 $resources-links-white-space: nowrap
