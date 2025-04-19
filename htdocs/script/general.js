@@ -69,3 +69,12 @@ const data = {
     userInsight: 300
 }
 pushCookie(data)
+
+// DO NOT ALLOW VERTICAL SCREENS NOR SQUARES
+window.addEventListener("resize", function() {
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    const currentPage = window.location.pathname.split("/").pop();
+    if (aspectRatio < 3 / 2 && currentPage !== "error.php") {
+        window.location.href = "error.php";
+    }
+});

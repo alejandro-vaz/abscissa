@@ -10,6 +10,7 @@
 
 
 // SUPERVARIABLES
+$U: root.$U
 $FONTSIZER: root.$FONTSIZER
 $PADDER: root.$PADDER
 $COLORER: root.$COLORER
@@ -63,7 +64,7 @@ $CURVER: root.$CURVER
     padding: math.div($PADDER, 2) $PADDER
     border-radius: $RADIUSER
     box-sizing: border-box
-    border: 0.1rem solid $COLORER
+    border: 0.1* $U solid $COLORER
     &:focus
         outline: none
     @if $type == button
@@ -71,8 +72,8 @@ $CURVER: root.$CURVER
         display: inline-block
         background-color: #00000055
         width: fit-content
-        min-width: 4rem
-        height: 2.75rem
+        min-width: 4* $U
+        height: 2.75* $U
         transition: transform $TIMER $CURVER, background-color $TIMER $CURVER
         &:hover
             background-color: string.unquote($LIGHTABSCISSER + "55")
@@ -90,7 +91,7 @@ $CURVER: root.$CURVER
         font-family: monospace
         display: inline-block
         width: 40%
-        height: 2.75rem
+        height: 2.75* $U
         &::placeholder
             color: $COLORER
             opacity: 0.5
@@ -136,8 +137,8 @@ $document-radius-share: 100% - $document-center-share
 
 
 // DEFAULTS -> MAIN
-$_main-navbar-width: 3.8rem
-$main-padding: 4.5rem 0 0 0
+$_main-navbar-width: 3.8* $U
+$main-padding: 4.5* $U 0 0 0
 
 $main-width: calc(100% - $_main-navbar-width)
 
@@ -169,7 +170,7 @@ $main-width: calc(100% - $_main-navbar-width)
 
 // HEADERS -> H4
 $h4-scale-coefficient: 1.06125
-$h4-margin: 0.7rem 0 0.7rem 0
+$h4-margin: 0.7* $U 0 0.7* $U 0
 
 $h4-font-size: $h4-scale-coefficient * $FONTSIZER
 
@@ -180,7 +181,7 @@ $h4-font-size: $h4-scale-coefficient * $FONTSIZER
 
 // HEADERS -> H3
 $h3-scale-coefficient: 1.125
-$h3-margin: 0.8rem 0 0.8rem 0
+$h3-margin: 0.8* $U 0 0.8* $U 0
 
 $h3-font-size: $h3-scale-coefficient * $FONTSIZER
 
@@ -191,7 +192,7 @@ $h3-font-size: $h3-scale-coefficient * $FONTSIZER
 
 // HEADERS -> H2
 $h2-scale-coefficient: 1.25
-$h2-margin: 0.9rem 0 0.9rem 0
+$h2-margin: 0.9* $U 0 0.9* $U 0
 
 $h2-font-size: $h2-scale-coefficient * $FONTSIZER
 
@@ -202,7 +203,7 @@ $h2-font-size: $h2-scale-coefficient * $FONTSIZER
 
 // HEADERS -> H1
 $h1-scale-coefficient: 1.5
-$h1-margin: 1rem 0 1rem 0
+$h1-margin: 1* $U 0 1* $U 0
 
 $h1-font-size: $h1-scale-coefficient * $FONTSIZER
 

@@ -3,10 +3,11 @@
 /*                                                                           */
 
 // SUPERVARIABLES
-$FONTSIZER: 1.125rem !default
-$PADDER: 0.6 * 1rem !default
+$U: 1vw
+$FONTSIZER: 1.125 * $U !default
+$PADDER: 0.6* $U !default
 $COLORER: #FFFFFF !default
-$RADIUSER: 0.5 * 1rem !default
+$RADIUSER: 0.5* $U !default
 $DARKABSCISSER: #4d4da0 !default
 $LIGHTABSCISSER: #7f7fd2 !default
 $TIMER: 0.08333333333s !default
@@ -56,7 +57,7 @@ $CURVER: ease-in-out !default
     padding: math.div($PADDER, 2) $PADDER
     border-radius: $RADIUSER
     box-sizing: border-box
-    border: 0.1rem solid $COLORER
+    border: 0.1* $U solid $COLORER
     &:focus
         outline: none
     @if $type == button
@@ -64,8 +65,8 @@ $CURVER: ease-in-out !default
         display: inline-block
         background-color: #00000055
         width: fit-content
-        min-width: 4rem
-        height: 2.75rem
+        min-width: 4* $U
+        height: 2.75* $U
         transition: transform $TIMER $CURVER, background-color $TIMER $CURVER
         &:hover
             background-color: string.unquote($LIGHTABSCISSER + "55")
@@ -83,7 +84,7 @@ $CURVER: ease-in-out !default
         font-family: monospace
         display: inline-block
         width: 40%
-        height: 2.75rem
+        height: 2.75* $U
         &::placeholder
             color: $COLORER
             opacity: 0.5

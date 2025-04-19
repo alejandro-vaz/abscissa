@@ -15,13 +15,13 @@
 /*                                                                           */
 
 // STYLES -> SECTION
-$sections-max-width: 69.5rem
+$sections-max-width: 69.5* general.$U
 $sections-total-width: 100%
-$sections-height: 17rem
+$sections-height: 17* general.$U
 $sections-direction: row
 $sections-padding: math.div(general.$PADDER, 2)
-$sections-margin: 0 auto 3rem auto
-$sections-minimum-margin: 1rem
+$sections-margin: 0 auto 3* general.$U auto
+$sections-minimum-margin: 1* general.$U
 $sections-fade: to top right
 $sections-base-color: #333333
 $sections-random-color: #71833e
@@ -32,6 +32,7 @@ $sections-width: min($sections-total-width - 2 * $sections-minimum-margin, $sect
 
 .section
     +general.section(false, false, $width: $sections-width, $height: $sections-height, $direction: $sections-direction)
+    flex: 0 0 auto
     padding: $sections-padding
     border-radius: general.$RADIUSER
     margin: $sections-margin
@@ -84,8 +85,8 @@ $content1-min-width: 50%
 $_content2-background: #00000055
 $content2-padding: math.div(general.$PADDER, 2)
 $content2-margin: 0 math.div(general.$PADDER, 2)
-$content2-card-width: 7.5rem
-$content2-card-border: 0.1rem solid general.$COLORER
+$content2-card-width: 7.5* general.$U
+$content2-card-border: 0.1* general.$U solid general.$COLORER
 $content2-text-align: center
 $content2-width: fit-content
 
@@ -103,7 +104,7 @@ $content2-width: fit-content
     
 
 // STYLES -> VIDEOS
-$resources-links-video-size: 11.5rem
+$resources-links-video-size: 11.5* general.$U
 $resources-links-aspect-ratio: math.div(16, 9)
 $resources-links-white-space: nowrap
 
