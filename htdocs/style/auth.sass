@@ -7,5 +7,26 @@
 
 
 /*                                                                           */
-/* STYLES                                                                    */
+/* FORM                                                                      */
 /*                                                                           */
+
+// FORM -> MAIN
+#main 
+    +general.section(true, false)
+
+
+// FORM -> FORM
+$form-width: 20 * general.$U
+$form-height: fit-content
+$form-grow: false
+$form-margin: 0 0 2 * general.$U 0
+
+#form 
+    +general.section(true, true, $width: $form-width, $height: $form-height, $grow: $form-grow)
+    margin: $form-margin
+
+
+// FORM -> CHANGE
+#change
+    text-decoration: underline
+    cursor: pointer

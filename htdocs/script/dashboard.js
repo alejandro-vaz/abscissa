@@ -12,8 +12,8 @@ const resources = document.getElementById("resources-links")
 
 // FUNCTION TO LOAD A PROBLEM IN A DIV
 function loadProblem(div, post) {
-    curl("problems.php", post).then(data => {
-        curl("location.php", { "LANG": "en", "ID": data.id }).then(location => {
+    curl("problems", post).then(data => {
+        curl("location", { "LANG": post.LANG, "ID": data.id }).then(location => {
             // GET PROBLEM DATA
             let problem = JSON.parse(data.data_en)
             // ADD ATTRIBUTES
@@ -55,7 +55,7 @@ function loadProblem(div, post) {
 
 // FUNCTION TO LOAD RESOURCES
 function loadResources(times) {
-    curl("resources.php", { "LANG": "en", "TYPE": "video" }).then(videos => {
+    curl("resources", { "LANG": "en", "TYPE": "video" }).then(videos => {
         for (let iteration = 0; iteration < times; iteration++) {
             const video = document.createElement("iframe");
             video.src = videos[Math.floor(Math.random() * videos.length)].link;

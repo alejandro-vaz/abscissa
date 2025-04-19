@@ -19,8 +19,6 @@ class tooManyArgumentsError extends PHPError {}
 class notEnoughArgumentsError extends PHPError {}
 // UNKNOWN ARGUMENT ERROR
 class unknownArgumentValueError extends PHPError {}
-// UNKNOWN ARGUMENTS ERROR
-class unknownArgumentsError extends PHPError {}
 // CURL ERROR
 class curlError extends PHPError {}
 

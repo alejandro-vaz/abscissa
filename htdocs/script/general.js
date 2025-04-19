@@ -23,7 +23,7 @@ function pushCookie(dict, cookieName="cookie") {
 
 // FUNCTION TO FETCH FROM DATABASE API
 function curl(script, data) {
-    path = `../database/${script}`
+    const path = `../database/${script}.php`;
     const scheme = window.location.protocol === "https:" ? 'https' : 'http';
     const host = window.location.host;
     const scriptDir = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));

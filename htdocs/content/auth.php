@@ -21,7 +21,10 @@
     <!-- UI MODULES -->
     <?php signal("interface") ?>
     <!-- MAIN -->
-    <div id="main"></div>
+    <div id="main">
+        <form id="form" autocomplete="off"></form>
+        <a id="change">Don't have an account?</a>
+    </div>
     <!-- SCRIPT -->
     <script src="../script/auth.js"></script>
 </body>

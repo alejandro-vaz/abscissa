@@ -25,14 +25,8 @@ check('/^[A-Z0-9]{4}$/', $PST["NODE"], "NODE");
 check('/^[A-Z0-9]{2}$/', $PST["CLUSTER"], "CLUSTER");
 
 // CHECK ARGUMENT RELATIONSHIPS
-if (count($PST) > 2) {
-    throw new tooManyArgumentsError();
-} 
-if (count($PST) < 2) {
+if (!(array_key_exists("LANG", $PST) and (array_key_exists("ID", $PST) xor array_key_exists("NODE", $PST) xor array_key_exists("CLUSTER", $PST)))) {
     throw new notEnoughArgumentsError();
-}
-if (!array_key_exists("ID", $PST) and !array_key_exists("NODE", $PST) and !array_key_exists("CLUSTER", $PST)) {
-    throw new unknownArgumentsError();
 }
 
 // TYPES OF QUERIES

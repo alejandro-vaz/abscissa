@@ -11,14 +11,26 @@ function database_connect(string $host, string $user, string $password, string $
     return $db;
 }
 
-// FUNCTION TO REQUEST DATA
+// FUNCTION TO MAKE A QUERY
 function database_request(string $query, object $db) {
-    // PREPARE QUERY
     $request = $db->prepare($query);
-    // EXECUTE, GET AND RETURN RESULT
-    $request->execute();
-    $result = $request->get_result();
-    $request->close();
-    return $result;
+    if (!$request) {
+        // HANDLE PREPARATION ERROR
+        return false;
+    }
+    if (!$request->execute()) {
+        // HANDLE EXECUTION ERROR
+        $request->close();
+        return false;
+    }
+    $result = null;
+    $meta = $request->result_metadata();
+    if ($meta) {
+        $result = $request->get_result();
+        $request->close();
+        return $result;
+    } else {
+        return true;
+    }
 }
 ?>
