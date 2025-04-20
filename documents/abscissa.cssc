@@ -9,9 +9,8 @@
 /X Juan
 /X Luis
 /X Marcos
-/X Paola
 /X Sergio
-/h3 Jerarquía de trabajo
+/h3 Equipo
 /code-mermaid¬
 flowchart TD
     classDef 0 fill::#700
@@ -20,10 +19,10 @@ flowchart TD
     classDef 3 fill::#077
     classDef dept fill::#3332
 
-    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=1.1))
+    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=2.0))
     class null 0
-    class ABSCISSA 1
-    class null 2
+    class null 1
+    class ABSCISSA 2
     class null 3
 
     alejo1([Alejo])
@@ -40,8 +39,8 @@ flowchart TD
     RRHH{{DEPT. RR.HH./=\lt/=br/=\gt/=Scale}}
     class MARKETING,RRHH 0
     class null 1
-    class FRONTEND 2
-    class BACKEND,FINANZAS 3
+    class null 2
+    class BACKEND,FRONTEND,FINANZAS 3
 
     jorge(Jorge)
     alejo2(Alejo)
@@ -50,8 +49,8 @@ flowchart TD
     marcos(Marcos)
     class dela,marcos 0
     class jorge 1
-    class null 2
-    class alejo2,diego2 3
+    class diego2 2
+    class alejo2 3
 
     beltrán/=\gt/=Beltrán]
     class null 0
@@ -79,20 +78,20 @@ flowchart TD
     diego1 -.-/=\gt/= RRHH
 
     subgraph 1[" "]
-        BACKEND ==/=\gt/=|-2/8| jorge
+        BACKEND ==/=\gt/=|-4/8| jorge
         jorge --/=\gt/=|0/4| beltrán
-        beltrán --/=\gt/=|-3/2| sergio
+        beltrán --/=\gt/=|-4/2| sergio
     end
 
     subgraph 2[" "]
         FRONTEND ==/=\gt/=|X/8| alejo2
-        alejo2 --/=\gt/=|-3/4| guzmán
-        alejo2 --/=\gt/=|-3/4| juan
+        alejo2 --/=\gt/=|-4/2| guzmán
+        alejo2 --/=\gt/=|-4/2| juan
     end
 
     subgraph 3[" "]
-        MARKETING ==/=\gt/=|-2/8| dela
-        dela --/=\gt/=|-1/4| luis
+        MARKETING ==/=\gt/=|-4/8| dela
+        dela --/=\gt/=|-2/4| luis
     end
 
     subgraph 4[" "]
@@ -100,7 +99,7 @@ flowchart TD
     end
 
     subgraph 5[" "]
-        RRHH ==/=\gt/=|-2/8| marcos
+        RRHH ==/=\gt/=|-4/8| marcos
     end
 
     class 1,2,3,4,5 dept

@@ -20,11 +20,9 @@
 
 - [X] Marcos
 
-- [X] Paola
-
 - [X] Sergio
 
-### Jerarquía de trabajo
+### Equipo
 
 ```mermaid
 flowchart TD
@@ -41,13 +39,13 @@ flowchart TD
 
 
 
-    ABSCISSA((ABSCISSA<br>1.1))
+    ABSCISSA((ABSCISSA<br>2.0))
 
     class null 0
 
-    class ABSCISSA 1
+    class null 1
 
-    class null 2
+    class ABSCISSA 2
 
     class null 3
 
@@ -81,9 +79,9 @@ flowchart TD
 
     class null 1
 
-    class FRONTEND 2
+    class null 2
 
-    class BACKEND,FINANZAS 3
+    class BACKEND,FRONTEND,FINANZAS 3
 
 
 
@@ -101,9 +99,9 @@ flowchart TD
 
     class jorge 1
 
-    class null 2
+    class diego2 2
 
-    class alejo2,diego2 3
+    class alejo2 3
 
 
 
@@ -159,11 +157,11 @@ flowchart TD
 
     subgraph 1[" "]
 
-        BACKEND ==>|-2/8| jorge
+        BACKEND ==>|-4/8| jorge
 
         jorge -->|0/4| beltrán
 
-        beltrán -->|-3/2| sergio
+        beltrán -->|-4/2| sergio
 
     end
 
@@ -173,9 +171,9 @@ flowchart TD
 
         FRONTEND ==>|X/8| alejo2
 
-        alejo2 -->|-3/4| guzmán
+        alejo2 -->|-4/2| guzmán
 
-        alejo2 -->|-3/4| juan
+        alejo2 -->|-4/2| juan
 
     end
 
@@ -183,9 +181,9 @@ flowchart TD
 
     subgraph 3[" "]
 
-        MARKETING ==>|-2/8| dela
+        MARKETING ==>|-4/8| dela
 
-        dela -->|-1/4| luis
+        dela -->|-2/4| luis
 
     end
 
@@ -201,7 +199,7 @@ flowchart TD
 
     subgraph 5[" "]
 
-        RRHH ==>|-2/8| marcos
+        RRHH ==>|-4/8| marcos
 
     end
 
