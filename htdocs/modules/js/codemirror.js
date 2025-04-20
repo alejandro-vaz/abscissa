@@ -1,4 +1,8 @@
-// CODEMIRROR
+/*                                                                           */
+/* CODEMIRROR                                                                */
+/*                                                                           */
+
+// CODEMIRROR -> RENDERING
 function renderCodeMirror(textarea) {
     // OPTIONS
     var editor = CodeMirror.fromTextArea(textarea, {

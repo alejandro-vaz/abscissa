@@ -2,8 +2,10 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // MODULES
 @use "../../style/root"
+
 
 
 /*                                                                           */
@@ -11,8 +13,8 @@
 /*                                                                           */
 
 // USER -> DIV
-$div-height: 3.8rem
-$div-border: 0.3rem solid root.$DARKABSCISSER
+$div-height: 3.8* root.$U
+$div-border: 0.3* root.$U solid root.$DARKABSCISSER
 $div-background: #000000
 $div-z-index: 1000
 $div-direction: row
@@ -32,31 +34,32 @@ $div-width: fit-content
 
 
 // USER -> INSIGHT
-$insight-border: 0.1rem solid root.$COLORER
+$insight-border: 0.1* root.$U solid root.$COLORER
 
 #user-insight
     +root.element(true)
     border: $insight-border
+    &:empty
+        display: none
 
 
 // USER -> NAME
 $name-font-weight: bold
-
-$name-margin: calc(6*root.$PADDER)
+$name-margin: 4*root.$PADDER
 
 #user-name
     +root.element(true)
     margin-right: $name-margin
     font-weight: $name-font-weight
+    &:empty
+        display: none
 
 
 // USER -> ICON
-$icon-height: 2.75rem
-$icon-separation: 1rem
+$icon-height: 2.75* root.$U
+$icon-separation: 0.5* root.$U
 $icon-cursor: pointer
 $icon-default-background: transparent
-
-$icon-fist-separation: calc($icon-separation/2)
 
 .userIcon
     border-radius: root.$RADIUSER
@@ -68,5 +71,5 @@ $icon-fist-separation: calc($icon-separation/2)
     transition: background-color root.$TIMER root.$CURVER
     &:hover
         background-color: root.$LIGHTABSCISSER
-    &:last-of-type
-        margin-right: $icon-fist-separation
+    &:first-of-type
+        margin-left: $icon-separation

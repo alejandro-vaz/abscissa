@@ -12,7 +12,7 @@
 /*                                                                           */
 
 // STYLES -> MAIN
-$_main-navbar-width: 3.8rem
+$_main-navbar-width: 3.8* general.$U
 $main-direction: row
 
 $main-width: calc(100% - $_main-navbar-width)
@@ -62,7 +62,7 @@ $instructions-default-height: 85%
 $instructions-background: #444444
 
 $instructions-width: calc($instructions-default-width - 2 * general.$PADDER)
-$instructions-height: calc($instructions-default-height - general.$PADDER)
+$instructions-height: calc($instructions-default-height - 2 * general.$PADDER)
 
 #instructions 
     +general.section(false, false, $width: $instructions-width, $height: $instructions-height)
@@ -110,6 +110,7 @@ $visor-height: calc($visor-default-height - general.$PADDER)
 $master-default-width: 100%
 $master-default-height: 15%
 $master-direction: row
+$master-answer-width: 35%
 
 $master-width: calc($master-default-width - 2*general.$PADDER)
 $master-height: calc($master-default-height - general.$PADDER)
@@ -121,3 +122,8 @@ $master-height: calc($master-default-height - general.$PADDER)
         flex-grow: 1
     > *
         margin: general.$PADDER
+    > button
+        +general.input(button, $inline: false)
+    > input
+        +general.input(text, $inline: false)
+        width: $master-answer-width

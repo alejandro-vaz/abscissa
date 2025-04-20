@@ -2,6 +2,7 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // MODULES
 @use "sass:color"
 @use "sass:math"
@@ -10,6 +11,7 @@
 
 
 // SUPERVARIABLES
+$U: root.$U
 $FONTSIZER: root.$FONTSIZER
 $PADDER: root.$PADDER
 $COLORER: root.$COLORER
@@ -20,9 +22,11 @@ $TIMER: root.$TIMER
 $CURVER: root.$CURVER
 
 
+
 /*                                                                           */
 /* FUNCTIONS                                                                 */
 /*                                                                           */
+
 
 // FUNCTIONS -> CONTAINER
 =section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
@@ -30,7 +34,7 @@ $CURVER: root.$CURVER
     @if $grow
         flex: 1 0 auto
     @else
-        flex: 0 1 auto
+        flex: 0 0 auto
     display: $display
     height: $height
     width: $width
@@ -59,38 +63,38 @@ $CURVER: root.$CURVER
 
 
 // FUNCTIONS -> INPUT
-=input($type)
+=input($type, $inline: true)
     padding: math.div($PADDER, 2) $PADDER
     border-radius: $RADIUSER
     box-sizing: border-box
-    border: 0.1rem solid $COLORER
+    border: 0.1* $U solid $COLORER
+    @if $inline
+        display: inline-block
+    @else
+        display: block
     &:focus
         outline: none
     @if $type == button
         cursor: pointer
-        display: inline-block
         background-color: #00000055
-        width: fit-content
-        min-width: 4rem
-        height: 2.75rem
-        transition: transform $TIMER $CURVER, background-color $TIMER $CURVER
+        min-width: fit-content
+        height: 2.75* $U
+        transition: border-color $TIMER $CURVER, background-color $TIMER $CURVER, color $TIMER $CURVER
         &:hover
             background-color: string.unquote($LIGHTABSCISSER + "55")
         &:active
-            transform: scale(0.95)
+            border-color: $LIGHTABSCISSER
+            color: $LIGHTABSCISSER
     @if $type == textarea
         background-color: #000000
-        display: block
         resize: none
         &::placeholder
             color: $COLORER
             opacity: 0.5
-    @if $type == text
+    @if $type == text or $type == password or $type == email
         background-color: #000000
         font-family: monospace
-        display: inline-block
-        width: 40%
-        height: 2.75rem
+        height: 2.75* $U
         &::placeholder
             color: $COLORER
             opacity: 0.5
@@ -105,9 +109,11 @@ $CURVER: root.$CURVER
         width: none
 
 
+
 /*                                                                           */
 /* DEFAULTS                                                                  */
 /*                                                                           */
+
 
 // DEFAULTS -> FONT
 $font-name: "CSSMS"
@@ -127,19 +133,20 @@ $font-format: "truetype"
 // DEFAULTS -> DOCUMENT
 $document-background-center: #111111
 $document-center-share: 20%
+$document-radius-share: 80%
 
 $document-background-radius: color.invert($COLORER)
-$document-radius-share: 100% - $document-center-share
 
 :where(html)
     background: radial-gradient(circle, $document-background-center $document-center-share, $document-background-radius $document-radius-share)
 
 
 // DEFAULTS -> MAIN
-$_main-navbar-width: 3.8rem
-$main-padding: 4.5rem 0 0 0
+$_main-navbar-width: 3.8* $U
+$main-padding: 4.5* $U 0 0 0
+$main-default-width: 100%
 
-$main-width: calc(100% - $_main-navbar-width)
+$main-width: calc($main-default-width - $_main-navbar-width)
 
 :where(#main)
     +section(false, false, $width: $main-width)
@@ -149,9 +156,11 @@ $main-width: calc(100% - $_main-navbar-width)
     right: 0
 
 
+
 /*                                                                           */
 /* INPUTS                                                                    */
 /*                                                                           */
+
 
 // INPUTS -> AUTOFORMATTER
 :where(input)
@@ -159,17 +168,46 @@ $main-width: calc(100% - $_main-navbar-width)
         +input(text)
     &[type="textarea"]
         +input(textarea)
+    &[type="password"]
+        +input(password)
+    &[type="submit"]
+        +input(button)
+    &[type="email"]
+        +input(email)
 :where(.inputButton)
     +input(button)
+
+
+
+/*                                                                           */
+/* FORMS                                                                     */
+/*                                                                           */
+
+
+// FORMS -> FORM
+form 
+    +section(true, true)
+    input
+        width: 100%
+    input:not(:first-of-type, :last-of-type)
+        border-radius: 0
+    input:first-of-type
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+    input:last-of-type
+        border-top-left-radius: 0
+        border-top-right-radius: 0
+
 
 
 /*                                                                           */
 /* HEADERS                                                                   */
 /*                                                                           */
 
+
 // HEADERS -> H4
 $h4-scale-coefficient: 1.06125
-$h4-margin: 0.7rem 0 0.7rem 0
+$h4-margin: 0.7* $U 0 0.7* $U 0
 
 $h4-font-size: $h4-scale-coefficient * $FONTSIZER
 
@@ -180,7 +218,7 @@ $h4-font-size: $h4-scale-coefficient * $FONTSIZER
 
 // HEADERS -> H3
 $h3-scale-coefficient: 1.125
-$h3-margin: 0.8rem 0 0.8rem 0
+$h3-margin: 0.8* $U 0 0.8* $U 0
 
 $h3-font-size: $h3-scale-coefficient * $FONTSIZER
 
@@ -191,7 +229,7 @@ $h3-font-size: $h3-scale-coefficient * $FONTSIZER
 
 // HEADERS -> H2
 $h2-scale-coefficient: 1.25
-$h2-margin: 0.9rem 0 0.9rem 0
+$h2-margin: 0.9* $U 0 0.9* $U 0
 
 $h2-font-size: $h2-scale-coefficient * $FONTSIZER
 
@@ -202,7 +240,7 @@ $h2-font-size: $h2-scale-coefficient * $FONTSIZER
 
 // HEADERS -> H1
 $h1-scale-coefficient: 1.5
-$h1-margin: 1rem 0 1rem 0
+$h1-margin: 1* $U 0 1* $U 0
 
 $h1-font-size: $h1-scale-coefficient * $FONTSIZER
 

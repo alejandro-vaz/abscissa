@@ -302,7 +302,7 @@
 
 - [X] (Patch) Visor now automatically scrolls down when writing formulas in a problem.
 
-#### *Abscissa* 1.3.5
+#### *Abscissa* 1.3.5 `0-1-3`
 
 - [X] (Minor) Completed [#31.](https://github.com/alejandro-vaz/Abscissa/issues/31)
 
@@ -311,3 +311,31 @@
 - [X] (Patch) Cleaned `.php` handler and added *cURL* with `POST`.
 
 - [X] (Patch) Added `f-post.php` module for accessing incoming `POST` data with variable `$PST`.
+
+## Abscissa 2.0.0 `2-1-10`
+
+- [X] (Patch) Added `documents/.cmd` for storing commands.
+
+- [X] (Major) Completed [#35.](https://github.com/alejandro-vaz/Abscissa/issues/35)
+
+- [X] (Minor) Completed [#36.](https://github.com/alejandro-vaz/Abscissa/issues/36)
+
+- [X] (Patch) Added argument checking for `database/logs.php`.
+
+- [X] (Patch) Added cryptography module.
+
+- [X] (Patch) Added `css/katex.sass`.
+
+- [X] (Patch) Changed from `rem` units in *CSS* to custom unit `$U` based on viewport width.
+
+- [X] (Patch) Made different `i-user.php` layouts for users registered and not registered.
+
+- [X] (Patch) Made animations slower.
+
+- [X] (Patch) Remade input and button styles.
+
+- [X] (Major) Added login and register page.
+
+- [X] (Patch) Readded infinite resource scroll.
+
+- [X] (Patch) Refactored most files.

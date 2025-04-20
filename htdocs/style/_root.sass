@@ -2,20 +2,24 @@
 /* HEAD                                                                      */
 /*                                                                           */
 
+
 // SUPERVARIABLES
-$FONTSIZER: 1.125rem !default
-$PADDER: 0.6 * 1rem !default
+$U: 1vw
+$FONTSIZER: 1.125 * $U !default
+$PADDER: 0.6* $U !default
 $COLORER: #FFFFFF !default
-$RADIUSER: 0.5 * 1rem !default
+$RADIUSER: 0.5* $U !default
 $DARKABSCISSER: #4d4da0 !default
 $LIGHTABSCISSER: #7f7fd2 !default
-$TIMER: 0.08333333333s !default
+$TIMER: 0.15s !default
 $CURVER: ease-in-out !default
+
 
 
 /*                                                                           */
 /* FUNCTIONS                                                                 */
 /*                                                                           */
+
 
 // FUNCTIONS -> CONTAINER
 =section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
@@ -23,7 +27,7 @@ $CURVER: ease-in-out !default
     @if $grow
         flex: 1 0 auto
     @else
-        flex: 0 1 auto
+        flex: 0 0 auto
     display: $display
     height: $height
     width: $width
@@ -52,38 +56,38 @@ $CURVER: ease-in-out !default
 
 
 // FUNCTIONS -> INPUT
-=input($type)
+=input($type, $inline: true)
     padding: math.div($PADDER, 2) $PADDER
     border-radius: $RADIUSER
     box-sizing: border-box
-    border: 0.1rem solid $COLORER
+    border: 0.1* $U solid $COLORER
+    @if $inline
+        display: inline-block
+    @else
+        display: block
     &:focus
         outline: none
     @if $type == button
         cursor: pointer
-        display: inline-block
         background-color: #00000055
-        width: fit-content
-        min-width: 4rem
-        height: 2.75rem
-        transition: transform $TIMER $CURVER, background-color $TIMER $CURVER
+        min-width: fit-content
+        height: 2.75* $U
+        transition: border-color $TIMER $CURVER, background-color $TIMER $CURVER, color $TIMER $CURVER
         &:hover
             background-color: string.unquote($LIGHTABSCISSER + "55")
         &:active
-            transform: scale(0.95)
+            border-color: $LIGHTABSCISSER
+            color: $LIGHTABSCISSER
     @if $type == textarea
         background-color: #000000
-        display: block
         resize: none
         &::placeholder
             color: $COLORER
             opacity: 0.5
-    @if $type == text
+    @if $type == text or $type == password or $type == email
         background-color: #000000
         font-family: monospace
-        display: inline-block
-        width: 40%
-        height: 2.75rem
+        height: 2.75* $U
         &::placeholder
             color: $COLORER
             opacity: 0.5

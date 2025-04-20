@@ -150,8 +150,22 @@
 /X (Patch) Refactored /_problem.js/_ and renamed /_load()/_ to /_loadProblem()/_.
 /X (Patch) Added ·JS· function on /_general.js/_ /_rawLaTeX()/_ which strips a ·LaTeX· string out of it's contents in order to get a meaning-encapsulating one that can be compared in order to determine if two expressions are equivalent.
 /X (Patch) Visor now automatically scrolls down when writing formulas in a problem.
-/h4 ·Abscissa· 1.3.5
+/h4 ·Abscissa· 1.3.5 /_0-1-3/_
 /X (Minor) Completed [#31.](https:://github.com/alejandro-vaz/Abscissa/issues/31)
 /X (Patch) Made team graphs better, there's also a new promotion system.
 /X (Patch) Cleaned /_.php/_ handler and added ·cURL· with /_POST/_.
 /X (Patch) Added /_f-post.php/_ module for accessing incoming /_POST/_ data with variable /_$PST/_.
+/h2 Abscissa 2.0.0 /_2-1-10/_
+/X (Patch) Added /_documents/.cmd/_ for storing commands.
+/X (Major) Completed [#35.](https:://github.com/alejandro-vaz/Abscissa/issues/35)
+/X (Minor) Completed [#36.](https:://github.com/alejandro-vaz/Abscissa/issues/36)
+/X (Patch) Added argument checking for /_database/logs.php/_.
+/X (Patch) Added cryptography module.
+/X (Patch) Added /_css/katex.sass/_.
+/X (Patch) Changed from /_rem/_ units in ·CSS· to custom unit /_$U/_ based on viewport width.
+/X (Patch) Made different /_i-user.php/_ layouts for users registered and not registered.
+/X (Patch) Made animations slower.
+/X (Patch) Remade input and button styles.
+/X (Major) Added login and register page.
+/X (Patch) Readded infinite resource scroll.
+/X (Patch) Refactored most files.
