@@ -155,7 +155,7 @@
 /X (Patch) Made team graphs better, there's also a new promotion system.
 /X (Patch) Cleaned /_.php/_ handler and added ·cURL· with /_POST/_.
 /X (Patch) Added /_f-post.php/_ module for accessing incoming /_POST/_ data with variable /_$PST/_.
-/h2 Abscissa 2.0.0 /_2-1-10/_
+/h2 ·Abscissa· 2.0.0 /_2-1-10/_
 /X (Patch) Added /_documents/.cmd/_ for storing commands.
 /X (Major) Completed [#35.](https:://github.com/alejandro-vaz/Abscissa/issues/35)
 /X (Minor) Completed [#36.](https:://github.com/alejandro-vaz/Abscissa/issues/36)
@@ -169,3 +169,6 @@
 /X (Major) Added login and register page.
 /X (Patch) Readded infinite resource scroll.
 /X (Patch) Refactored most files.
+/h4 ·Abscissa· 2.0.2 /_0-0-2/_
+/X (Patch) Added error messages to /_auth.php/_ screen.
+/X (Patch) Merged database /_login.php/_ and /_register.php/_ in /_auth.php/_.

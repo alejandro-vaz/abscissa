@@ -312,7 +312,7 @@
 
 - [X] (Patch) Added `f-post.php` module for accessing incoming `POST` data with variable `$PST`.
 
-## Abscissa 2.0.0 `2-1-10`
+## *Abscissa* 2.0.0 `2-1-10`
 
 - [X] (Patch) Added `documents/.cmd` for storing commands.
 
@@ -339,3 +339,9 @@
 - [X] (Patch) Readded infinite resource scroll.
 
 - [X] (Patch) Refactored most files.
+
+#### *Abscissa* 2.0.2 `0-0-2`
+
+- [X] (Patch) Added error messages to `auth.php` screen.
+
+- [X] (Patch) Merged database `login.php` and `register.php` in `auth.php`.
