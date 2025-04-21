@@ -35,12 +35,28 @@ awk '
             }
         }
 
-        # Compute delta and ratio
+        # Compute delta and log-based ratio
         delta = ins - del
-        ratio = (ins > 0 ? del/ins : 0)
+        if (ins > 0 && del > 0) {
+            ratio = log(ins / del) / log(2)
+            rstr = sprintf("%.3f", ratio)
+        } else if (ins == 0 && del > 0) {
+            ratio = -1
+            rstr = "-∞"
+        } else if (del == 0 && ins > 0) {
+            ratio = 1
+            rstr = "∞"
+        } else {
+            rstr = "0.000"
+        }
+
+        # Compute score as ratio * delta
+        abs_ratio = (ratio < 0) ? -ratio : ratio
+        score = abs_ratio * (ins + del)
+        score_str = sprintf("%.0f", score)
 
         # Print colored block
-        printf("%s=====================%s\n", CYAN_BOLD, RESET)
+        printf("%s=============================================================%s\n", CYAN_BOLD, RESET)
         printf("%s%s%s authored by %s%s%s (%s%s%s)\n\n",
             CYAN_BOLD, version, RESET,
             GREEN_BOLD, author, RESET,
@@ -51,7 +67,7 @@ awk '
         printf("%sAdditions: %s%d%s\n",  GREEN_BOLD, YELLOW_BOLD, ins, RESET)
         printf("%sDeletions: %s%d%s\n",  GREEN_BOLD, YELLOW_BOLD, del, RESET)
         printf("%sDelta:     %s%d%s\n",  GREEN_BOLD, YELLOW_BOLD, delta, RESET)
-        printf("%sRatio:     %s%.3f%s\n\n\n",
-            GREEN_BOLD, YELLOW_BOLD, ratio, RESET)
+        printf("%sRatio:     %s%s%s\n",  GREEN_BOLD, YELLOW_BOLD, rstr, RESET)
+        printf("%sScore:     %s%s%s\n\n\n", GREEN_BOLD, YELLOW_BOLD, score_str, RESET)
     }
 '
