@@ -6,7 +6,6 @@ require_once "../modules/.php";
 module("functional", "check");
 module("functional", "cryptography");
 module("functional", "database");
-module("functional", "environment");
 module("functional", "post");
 
 // SIGNAL
@@ -16,24 +15,23 @@ signal("functional");
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// CONNECT TO THE DATABASE
-$database = database_connect($ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"], $ENV["DB_NAME"]);
-
 // CHECK ARGUMENTS
-check('/^[A-Za-z0-9._%\-]+@gmail.com$/', $PST["EMAIL"], "EMAIL");
-check('/^[a-zA-Z0-9_!@#$%^&*()\-+=.]{8,32}$/', $PST["PASSWORD"], "PASSWORD");
-check('/^[a-zA-Z0-9_-]{4,32}$/', $PST["USERNAME"], "USERNAME");
+check($PST, "EMAIL");
+check($PST, "PASSWORD");
+check($PST, "USERNAME");
 
 // CHECK ARGUMENT RELATIONSHIPS
-if (array_key_exists("CONTEXT", $PST)) {
+if (isx($PST, "CONTEXT")) {
     if ($PST["CONTEXT"] == "login") {
-        if (!(array_key_exists("PASSWORD", $PST) and (array_key_exists("EMAIL", $PST) xor array_key_exists("USERNAME", $PST)))) {
+        if (!(isx($PST, "PASSWORD") and (isx($PST, "EMAIL") xor isx($PST, "USERNAME")))) {
             throw new incorrectArgumentsError();
         }
     } elseif ($PST["CONTEXT"] == "register") {
-        if (!(array_key_exists("EMAIL", $PST) and array_key_exists("PASSWORD", $PST) and array_key_exists("USERNAME", $PST))) {
+        if (!(isx($PST, "EMAIL") and isx($PST, "PASSWORD") and isx($PST, "USERNAME"))) {
             throw new incorrectArgumentsError();
         }
+    } elseif ($PST["CONTEXT"] == "validate") {
+        null;
     } else {
         throw new unknownArgumentValueError("CONTEXT");
     }
@@ -43,8 +41,13 @@ if (array_key_exists("CONTEXT", $PST)) {
 
 // TYPES OF QUERIES
 if ($PST["CONTEXT"] == "login") {
-    if (array_key_exists("EMAIL", $PST)) {
-        $data = database_request("SELECT hashpass, username FROM users WHERE email = '" . $PST["EMAIL"] . "'", $database)->fetch_assoc();
+    if (isx($PST, "EMAIL")) {
+        $data = database_request(
+            "SELECT hashpass, username FROM users WHERE email = ?",
+            [
+                $PST["EMAIL"]
+            ]
+        )->fetch_assoc();
         $hashpass = $data["hashpass"];
         $username = $data["username"];
         if (decrypt($hashpass, $PST["PASSWORD"]) == $username) {
@@ -53,21 +56,53 @@ if ($PST["CONTEXT"] == "login") {
             // SET THE SESSION FOR THE USER
             setsession($session);
             // CREATE SESSION
-            echo database_request("INSERT INTO sessions (session, username, expires, ip) VALUES ('" . $session . "', '" . $username . "', '" . (new DateTime('+20 hour'))->format('Y-m-d H:i:s') . "', '" . $_SERVER['REMOTE_ADDR'] . "')", $database);
+            echo database_request(
+                "INSERT INTO sessions (session, username, expires, ip) VALUES (?, ?, ?, ?)",
+                [
+                    $session,
+                    $username,
+                    (new DateTime('+20 hour'))->format('Y-m-d H:i:s'),
+                    $_SERVER['REMOTE_ADDR']
+                ]
+            );
         }
     } else {
-        $hashpass = database_request("SELECT hashpass FROM users WHERE username = '" . $PST["USERNAME"] . "'", $database)->fetch_assoc()["hashpass"];
-        $crypt = decrypt($hashpass, $PST["PASSWORD"]);
-        if ($crypt == $PST["USERNAME"]) {
+        $data = database_request(
+            "SELECT hashpass FROM users WHERE username = ?",
+            [
+                $PST["USERNAME"]
+            ]
+        )->fetch_assoc();
+        $hashpass = $data["hashpass"];
+        if (decrypt($hashpass, $PST["PASSWORD"]) == $PST["USERNAME"]) {
             // GENERATE SESSION
             $session = gensession();
             // SET THE SESSION FOR THE USER
             setsession($session);
             // CREATE SESSION
-            echo database_request("INSERT INTO sessions (session, username, expires, ip) VALUES ('" . $session . "', '" . $PST["USERNAME"] . "', '" . (new DateTime('+20 hour'))->format('Y-m-d H:i:s') . "', '" . $_SERVER['REMOTE_ADDR'] . "')", $database);
+            echo database_request(
+                "INSERT INTO sessions (session, username, expires, ip) VALUES (?, ?, ?, ?)",
+                [
+                    $session,
+                    $PST["USERNAME"],
+                    (new DateTime('+20 hour'))->format('Y-m-d H:i:s'),
+                    $_SERVER['REMOTE_ADDR']
+                ]
+            );
         }
     }
+} elseif ($PST["CONTEXT"] == "register") {
+    echo json_encode(database_request(
+        "INSERT INTO users (username, joined, email, hashpass, preferences, role) VALUES (?, ?, ?, ?, ?)",
+        [
+            $PST["USERNAME"],
+            date('Y-m-d H:i:s'),
+            $PST["EMAIL"],
+            encrypt($PST["USERNAME"], $PST["PASSWORD"]),
+            json_encode([])
+        ]
+    ));
 } else {
-    echo json_encode(database_request("INSERT INTO users (username, joined, email, hashpass, preferences, role) VALUES ('" . $PST["USERNAME"] . "', '" . date('Y-m-d H:i:s') . "', '" . $PST["EMAIL"] . "', '" . encrypt($PST["USERNAME"], $PST["PASSWORD"]) . "', '" . json_encode([]) . "', " . 0 . ")", $database));
+    echo json_encode(database_validate());
 }
 ?>

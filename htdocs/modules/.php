@@ -1,28 +1,32 @@
 <?php 
 /*                                                                           */
+/* GLOBALS                                                                   */
+/*                                                                           */
+
+// GLOBALS -> DECLARATIONS
+global $DB;
+global $ENV;
+global $MOD;
+global $PST;
+
+
+/*                                                                           */
 /* ERROR AND ALERT DEFINITIONS                                               */
 /*                                                                           */
 
-// ERRORS
+// ERROR AND ALERT DEFINITIONS -> ERRORS
 class PHPError extends Exception {public $terminate = true;}
-// REGEX CHECK ERROR
 class regexError extends PHPError {}
-// DATABASE CONNECTION ERROR
 class databaseConnectionError extends PHPError {}
-// ENVIRONMENT NOT FOUND ERROR
+class databaseQueryError extends PHPError {}
 class environmentNotFoundError extends PHPError {}
-// MODULE NOT FOUND ERROR
 class moduleNotFoundError extends PHPError {}
-// TOO MANY ARGUMENTS ERROR
 class incorrectArgumentsError extends PHPError {}
-// UNKNOWN ARGUMENT ERROR
 class unknownArgumentValueError extends PHPError {}
-// CURL ERROR
 class curlError extends PHPError {}
 
-// ALERTS
+// ERROR AND ALERT DEFINITIONS -> ALERTS
 class PHPAlert extends Exception {public $terminate = false;}
-// INCORRECT MODULE LABELING ALERT
 class incorrectModuleLabelAlert extends PHPAlert {}
 
 
@@ -30,7 +34,7 @@ class incorrectModuleLabelAlert extends PHPAlert {}
 /* CURL HANDLING                                                             */
 /*                                                                           */
 
-// CALL ANOTHER PHP SCRIPT VIA CURL
+// CURL HANDLING -> FUNCTION
 function curl(string $relativePath, array $data): string {
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'];
@@ -58,7 +62,7 @@ function curl(string $relativePath, array $data): string {
 /* EXCEPTION HANDLING                                                        */
 /*                                                                           */
 
-// EXCEPTION HANDLER
+// EXCEPTION HANDLING -> FUNCTION
 function exceptionHandler(Throwable $exception) {
     $log = [
         "ERROR" => get_class($exception), 
@@ -76,7 +80,7 @@ function exceptionHandler(Throwable $exception) {
     }
 }
 
-// SET AS DEFAULT EXCEPTION HANDLER
+// EXCEPTION HANDLING -> SET DEFAULT HANDLER
 set_exception_handler("exceptionHandler");
 
 
@@ -84,11 +88,10 @@ set_exception_handler("exceptionHandler");
 /* MODULE HANDLING                                                           */
 /*                                                                           */
 
-// MODULE SET UP
-global $MOD;
+// MODULE HANDLING -> DEFINITION
 $MOD = [];
 
-// FUNCTION TO ADD MODULES
+// MODULE HANDLING -> IMPROT MODULE
 function module($type, $module) {
     global $MOD;
     $char = match ($type) {
@@ -103,7 +106,7 @@ function module($type, $module) {
     }
 }
 
-// FUNCTION TO ACTIVATE MODULES
+// MODULE HANDLING -> ACTIVATE MODULES
 function signal($signal) {
     global $MOD;
     $char = match ($signal) {
@@ -127,5 +130,31 @@ function signal($signal) {
             require_once $correctPath;
         }
     }
+}
+
+
+/*                                                                           */
+/* ENVIRONMENT                                                               */
+/*                                                                           */
+
+// ENVIRONMENT --> INITIALIZE
+$ENV = [];
+$path = __DIR__ . '/../.env';
+
+// ENVIRONMENT -> CHECK
+if (!file_exists($path)) {
+    throw new environmentNotFoundError("Environment file not found at: $path");
+}
+
+// ENVIRONMENT -> CONTENT
+$content = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+foreach ($content as $line) {
+    if (strpos(trim($line), '#') === 0) {
+        continue;
+    }
+    list($key, $value) = explode('=', $line, 2);
+    $key = strtoupper(trim($key));
+    $value = trim($value);
+    $ENV[$key] = $value;
 }
 ?>

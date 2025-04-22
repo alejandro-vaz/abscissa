@@ -345,3 +345,21 @@
 - [X] (Patch) Added error messages to `auth.php` screen.
 
 - [X] (Patch) Merged database `login.php` and `register.php` in `auth.php`.
+
+#### *Abscissa* 2.0.27 `0-0-8`
+
+- [X] (Patch) Removed *Qodana.*
+
+- [X] (Patch) Integrated the module `f-environment.php` in the handler.
+
+- [X] (Patch) Remade post checking function and increased its simplicity.
+
+- [X] (Patch) Completed [#50.](https://github.com/alejandro-vaz/Abscissa/issues/50)
+
+- [X] (Patch) Moved session validation fully server-side to reduce session *ID* leakage chance.
+
+- [X] (Patch) Refactored the handler and some *PHP* modules.
+
+- [X] (Patch) Changed database module to use on-activation connection.
+
+- [X] (Patch) Completed [#51.](https://github.com/alejandro-vaz/Abscissa/issues/51)

@@ -1,46 +1,70 @@
 <?php 
-// FUNCTION TO CONNECT TO DATABASE
-function database_connect(string $host, string $user, string $password, string $name): object {
-    // CONNECT TO DATABASE
-    $db = new mysqli($host, $user, $password, $name);
-    // CHECK CONNECTION
-    if ($db->connect_error) {
-        throw new databaseConnectionError();
-    }
-    // RETURN DATABASE
-    return $db;
-}
+/*                                                                           */
+/* GLOBAL IMPORTS                                                            */
+/*                                                                           */
 
-// FUNCTION TO MAKE A QUERY
-function database_request(string $query, object $db): mixed {
-    $request = $db->prepare($query);
-    if (!$request) {
-        // HANDLE PREPARATION ERROR
+// GLOBAL IMPORTS -> VARIABLES
+global $ENV;
+
+
+/*                                                                           */
+/* CONNECTION                                                                */
+/*                                                                           */
+
+// CONNECTION -> SET UP
+global $DB;
+$DB = new mysqli($ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"], $ENV["DB_NAME"]);
+if ($DB->connect_error) {
+    throw new databaseConnectionError();
+};
+
+
+/*                                                                           */
+/* FUNCTIONS                                                                 */
+/*                                                                           */
+
+// FUNCTIONS -> QUERY
+function database_request(string $query, array $values = []) {
+    global $DB;
+    $request = $DB->prepare($query);
+    if ($request === false) {
         return false;
     }
+    if (!empty($values)) {
+        $types = '';
+        foreach ($values as $val) {
+            if      (is_int($val))    { $types .= 'i'; }
+            elseif  (is_float($val))  { $types .= 'd'; }
+            elseif  (is_string($val)) { $types .= 's'; }
+            else                      { $types .= 'b'; }
+        }
+        $refs = [];
+        foreach ($values as $key => $val) {
+            $refs[$key] = &$values[$key];
+        }
+        array_unshift($refs, $types);
+        call_user_func_array([$request, 'bind_param'], $refs);
+    }
     if (!$request->execute()) {
-        // HANDLE EXECUTION ERROR
         $request->close();
         return false;
     }
-    $result = null;
-    $meta = $request->result_metadata();
-    if ($meta) {
+    if ($request->result_metadata()) {
         $result = $request->get_result();
         $request->close();
         return $result;
-    } else {
-        return true;
     }
+    $request->close();
+    return true;
 }
 
-// GENERATE SESSION ID
+// FUNCTIONS -> GENERATE SESSION
 function gensession(): string {
     return bin2hex(openssl_random_pseudo_bytes(16));
 }
 
-// FUNCTION TO SET A SESSION
-function setsession($id) {
+// FUNCTIONS -> SET SESSION
+function setsession($id): void {
     setcookie(
         'session',
         $id,
@@ -48,12 +72,13 @@ function setsession($id) {
             'expires' => time() + 72000,
             'path' => '/',
             'secure' => true,
-            'samesite' => 'lax'
+            'samesite' => 'lax',
+            "httponly" => true
         ]
     );
 }
 
-// FUNCTION TO DELETE THE SESSION
+// FUNCTIONS -> DELETE SESSION
 function delsession(): void {
     setcookie(
         'session', 
@@ -62,13 +87,14 @@ function delsession(): void {
             "expires" => time() - 72000,
             'path' => '/',
             'secure' => true,
-            'samesite' => 'lax'
+            'samesite' => 'lax',
+            "httponly" => true
         ]
     );
 }
 
-// FUNCTION TO VALIDATE THE SESSION
-function database_validate(object $db): bool {
+// FUNCTIONS -> VALIDATE SESSION
+function database_validate(): bool {
     // COOKIE VARIABLE
     $id = $_COOKIE['session'];
     // CHECK IF THERE'S NO COOKIE STORED IN BROWSER
@@ -76,7 +102,12 @@ function database_validate(object $db): bool {
         return false;
     }
     // RETRIEVE COOKIE FROM DATABASE
-    $data = database_request("SELECT session, username, expires, ip FROM sessions WHERE session = '$id'", $db)->fetch_assoc();
+    $data = database_request(
+        "SELECT session, username, expires, ip FROM sessions WHERE session = ?",
+        [
+            $id
+        ]
+    )->fetch_assoc();
     // CHECK IF THERE'S NO COOKIE NAMED LIKE THAT IN THE DATABASE
     if (!$data) {
         delsession();

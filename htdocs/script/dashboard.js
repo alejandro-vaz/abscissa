@@ -64,7 +64,7 @@ function loadProblem(div, post) {
 
 // LOADING DEFINITIONS -> RESOURCES
 function loadResources(times) {
-    curl("resources", { "LANG": "en", "TYPE": "video" }).then(videos => {
+    curl("resources", { "LANG": "en", "CONTEXT": "video" }).then(videos => {
         for (let iteration = 0; iteration < times; iteration++) {
             const video = document.createElement("iframe");
             video.src = videos[Math.floor(Math.random() * videos.length)].link;

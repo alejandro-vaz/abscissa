@@ -35,15 +35,11 @@ function curl(script, data) {
     });
 }
 
-// API -> VERIFICATION
-function verify() {
-    const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
-        if (cookie.trim().split('=')[0] === 'session') {
-            return true;
-        }
-    }
-    return false;
+// API -> SESSION VALIDATION
+function validate() {
+    return curl("auth", {
+        "CONTEXT": "validate"
+    })
 }
 
 
