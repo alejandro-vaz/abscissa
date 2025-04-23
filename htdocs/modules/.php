@@ -71,7 +71,7 @@ function exceptionHandler(Throwable $exception) {
         "MESSAGE" => $exception->getMessage()
     ];
     curl("../database/logs.php", $log);
-    echo $log;
+    echo json_encode($log);
     if (property_exists($exception, "terminate")) {
         if ($exception->terminate) {
             exit;

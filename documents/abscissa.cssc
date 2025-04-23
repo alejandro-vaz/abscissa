@@ -13,59 +13,70 @@
 /h3 Equipo
 /code-mermaid¬
 flowchart TD
-    classDef 0 fill::#700
-    classDef 1 fill::#770
-    classDef 2 fill::#070
-    classDef 3 fill::#077
+    classDef X fill::#000000
+    classDef 0 fill::#770000
+    classDef 1 fill::#772800
+    classDef 2 fill::#774f00
+    classDef 3 fill::#777700
+    classDef 4 fill::#597700
+    classDef 5 fill::#3c7700
+    classDef 6 fill::#1e7700
+    classDef 7 fill::#007700
+    classDef 8 fill::#007728
+    classDef 9 fill::#00774f
+    classDef 10 fill::#007777
     classDef dept fill::#3332
 
     ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=2.0))
-    class null 0
-    class null 1
-    class ABSCISSA 2
-    class null 3
+    class ABSCISSA 6
 
-    alejo1([Alejo])
-    diego1([Diego])
-    class null 0
-    class diego1 1
-    class alejo1 2
-    class null 3
+    alejo1([68 Alejo])
+    diego1([66 Diego])
+    class alejo1 7
+    class diego1 6
 
     BACKEND{{DEPT. BACKEND/=\lt/=br/=\gt/=Control}}
     FRONTEND{{DEPT. FRONTEND/=\lt/=br/=\gt/=Entry}}
     MARKETING{{DEPT. MARKETING/=\lt/=br/=\gt/=Need}}
     FINANZAS{{DEPT. FINANZAS/=\lt/=br/=\gt/=Time}}
     RRHH{{DEPT. RR.HH./=\lt/=br/=\gt/=Scale}}
-    class MARKETING,RRHH 0
-    class null 1
-    class null 2
-    class BACKEND,FRONTEND,FINANZAS 3
+    class BACKEND 8
+    class FRONTEND 7
+    class MARKETING 0
+    class FINANZAS 8
+    class RRHH 0
 
-    jorge(Jorge)
-    alejo2(Alejo)
-    diego2(Diego)
-    dela(Dela)
-    marcos(Marcos)
-    class dela,marcos 0
-    class jorge 1
-    class diego2 2
-    class alejo2 3
+    alejo2(68 Alejo)
+    alejo3(68 Alejo)
+    diego2(66 Diego)
+    diego3(66 Diego)
+    diego4(66 Diego)
+    class alejo2 9
+    class alejo3 7
+    class diego2 5
+    class diego3 10
+    class diego4 7
 
-    beltrán/=\gt/=Beltrán]
-    class null 0
-    class null 1
-    class beltrán 2
-    class null 3
+    beltran/=\gt/=51 Beltrán]
+    jorge/=\gt/=47 Jorge]
+    class beltran 5
+    class jorge 3
 
-    sergio[[Sergio]]
-    guzmán[[Guzmán]]
-    juan[[Juan]]
-    luis[[Luis]]
-    class sergio,luis 0
-    class guzmán,juan 1
-    class null 2
-    class null 3
+    sergio[[36 Sergio]]
+    class sergio 2
+
+    guzman[/29 Guzmán\]
+    dela[/17 Dela\]
+    class guzman 4
+    class dela 0
+
+
+    juan[\9 Juan\]
+    luis[\9 Luis\]
+    marcos[\8 Marcos\]
+    class juan 3
+    class luis 2
+    class marcos 0
 
 
     ABSCISSA ==/=\gt/= alejo1
@@ -78,28 +89,31 @@ flowchart TD
     diego1 -.-/=\gt/= RRHH
 
     subgraph 1[" "]
-        BACKEND ==/=\gt/=|-4/8| jorge
-        jorge --/=\gt/=|0/4| beltrán
-        beltrán --/=\gt/=|-4/2| sergio
+        BACKEND ==/=\gt/= alejo2
+        alejo2 --/=\gt/= beltran
+        alejo2 --/=\gt/= jorge
+        beltran --/=\gt/= sergio
     end
 
     subgraph 2[" "]
-        FRONTEND ==/=\gt/=|X/8| alejo2
-        alejo2 --/=\gt/=|-4/2| guzmán
-        alejo2 --/=\gt/=|-4/2| juan
+        FRONTEND ==/=\gt/= alejo3
+        alejo3 --/=\gt/= guzman
+        guzman --/=\gt/= juan
     end
 
     subgraph 3[" "]
-        MARKETING ==/=\gt/=|-4/8| dela
-        dela --/=\gt/=|-2/4| luis
+        MARKETING ==/=\gt/= diego2
+        diego2 --/=\gt/= dela
+        dela --/=\gt/= luis
     end
 
     subgraph 4[" "]
-        FINANZAS ==/=\gt/=|X/8| diego2
+        FINANZAS ==/=\gt/= diego3
     end
 
     subgraph 5[" "]
-        RRHH ==/=\gt/=|-4/8| marcos
+        RRHH ==/=\gt/= diego4
+        diego4 --/=\gt/= marcos
     end
 
     class 1,2,3,4,5 dept
