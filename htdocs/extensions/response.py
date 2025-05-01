@@ -4,9 +4,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
-# SUPERGLOBALS
-import SUG
-
 def craftResponse(jsonData):
     response = HTTP.JsonResponse(jsonData, status=200, safe=False)
     response['Content-Type'] = 'application/json; charset=utf-8'

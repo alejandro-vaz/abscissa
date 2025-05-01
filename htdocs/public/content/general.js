@@ -14,7 +14,7 @@ function getURLParameter(request) {
 /*                                                                           */
 
 // API -> REQUEST
-function curl(script, data, timeout = 2500) {
+function curl(script, data, timeout = 5000) {
     const path = `api/${script}`;
     const scheme = window.location.protocol === "https:" ? 'https' : 'http';
     const host = window.location.host;

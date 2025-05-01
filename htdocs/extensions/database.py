@@ -4,9 +4,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
-# SUPERGLOBALS
-import SUG
-
 def database_request(query: str, params: list = []):
     """
     Extended database_request supporting two placeholder types:
@@ -66,8 +63,6 @@ def database_request(query: str, params: list = []):
     cursor.close()
     return True
 
-
-
 def gensession() -> str:
     return token_hex(16)  # 16 bytes → 32-char hex :contentReference[oaicite:9]{index=9}
 
@@ -88,34 +83,24 @@ def setsession(response, session: str, un) -> None:
             path='/',
             secure=True,
             httponly=True,
-            samesite='Lax'    # same as PHP 'lax'
-        )  # Django set_cookie docs :contentReference[oaicite:10]{index=10}
-
-def delsession(response) -> None:
-    response.delete_cookie(
-        'session',
-        path='/',
-        secure=True,
-        httponly=True,
-        samesite='Lax'
-    )
+            samesite='Lax'
+        )
 
 def database_validate() -> bool:
-    session_id = SUG.THR.REQ.COOKIES.get('session')
-    if not session_id:
+    if not SUG.THR.SID:
         return False
 
     rows = database_request(
         "SELECT session, username, expires, ip FROM sessions WHERE session = ?",
         [
-            session_id
+            SUG.THR.SID
         ]
     )
     if rows:
         return True
     return False
 
-def database_init():
+def database_init() -> None:
     SUG.THR.DBS = connect(
         host = SUG.DBS["HOST"],
         user = SUG.DBS["USER"],

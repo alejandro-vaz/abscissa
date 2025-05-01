@@ -18,6 +18,7 @@ import json
 import zlib
 import base64
 import threading
+import SUG
 from random import randint
 from secrets import token_hex
 from re import compile, match

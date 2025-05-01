@@ -4,9 +4,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
-# SUPERGLOBALS
-import SUG
-
 def _derive_key(key_str: str) -> bytes:
     """
     Derive a 32-byte key from an arbitrary string using SHA-256.

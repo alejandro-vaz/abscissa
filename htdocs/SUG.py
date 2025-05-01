@@ -9,6 +9,7 @@ THR = threading.local()
 THR.REQ = None
 THR.PST = None
 THR.DBS = None
+THR.SID = None
 
 # MASTER SUPERGLOBALS (ARE NOT MODIFIED BY CODE)
 DBS = {

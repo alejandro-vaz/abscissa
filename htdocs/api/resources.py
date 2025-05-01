@@ -4,9 +4,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# SUPERGLOBALS
-import SUG
-
 # IMPORTS
 from extensions.database import *
 from extensions.post import *
@@ -16,6 +13,7 @@ from extensions.response import *
 def response(request):
     # REQUEST DEFINITION
     SUG.THR.REQ = request
+    SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
     # LOAD EXTENSIONS
     database_init()

@@ -4,9 +4,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
-# SUPERGLOBALS
-import SUG
-
 def compileView(content, name, module=[False, ""]):
     # 1) find all <py>…</py> blocks
     pattern = compile(r"<py>(.*?)</py>", dotall)
