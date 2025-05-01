@@ -7,21 +7,7 @@ from handler import *
 # SUPERGLOBALS
 import SUG
 
-def database_connect(host: str, user: str, password: str, database: str) -> MySQLConnection:
-    db = connect(
-        host=host,
-        user=user,
-        password=password,
-        database=database
-    )
-    db.autocommit = True
-    return db
-
-import re
-from mysql.connector import MySQLConnection
-
-
-def database_request(conn: MySQLConnection, query: str, params: list = []):
+def database_request(query: str, params: list = []):
     """
     Extended database_request supporting two placeholder types:
       - `!` marks an identifier placeholder (column or table name). Its param
@@ -38,7 +24,7 @@ def database_request(conn: MySQLConnection, query: str, params: list = []):
     """
     # Validate and split placeholders
     placeholders = []  # list of (type, start, end)
-    pattern = re.compile(r"(!|\?)")
+    pattern = compile(r"(!|\?)")
     for m in pattern.finditer(query):
         placeholders.append((m.group(1), m.start(), m.end()))
 
@@ -55,7 +41,7 @@ def database_request(conn: MySQLConnection, query: str, params: list = []):
             # Inline identifier, whitelist check
             ident = params[p_index]
             p_index += 1
-            if not re.match(r"^[A-Za-z0-9_]+$", ident):
+            if not match(r"^[A-Za-z0-9_]+$", ident):
                 raise ValueError(f"Invalid identifier: {ident}")
             new_query_parts.append(f"`{ident}`")
         else:  # ph_type == '?'
@@ -68,7 +54,7 @@ def database_request(conn: MySQLConnection, query: str, params: list = []):
     final_query = ''.join(new_query_parts)
 
     # Execute with prepared cursor (qmark style)
-    cursor = conn.cursor(prepared=True)
+    cursor = SUG.THR.DBS.cursor(prepared=True)
     cursor.execute(final_query, val_params)
 
     # Return rows or True
@@ -85,15 +71,14 @@ def database_request(conn: MySQLConnection, query: str, params: list = []):
 def gensession() -> str:
     return token_hex(16)  # 16 bytes → 32-char hex :contentReference[oaicite:9]{index=9}
 
-def setsession(request, response, session: str, conn, un) -> None:
+def setsession(response, session: str, un) -> None:
     if database_request(
-        conn,
         "INSERT INTO sessions (session, username, expires, ip) VALUES (?, ?, ?, ?)",
         [
             session,
             un,
             (datetime.now() + timedelta(hours=20)).strftime("%Y-%m-%d %H:%M:%S"),
-            request.META.get('REMOTE_ADDR')
+            SUG.THR.REQ.META.get('REMOTE_ADDR')
         ]
     ):
         response.set_cookie(
@@ -115,13 +100,12 @@ def delsession(response) -> None:
         samesite='Lax'
     )
 
-def database_validate(request, conn) -> bool:
-    session_id = request.COOKIES.get('session')
+def database_validate() -> bool:
+    session_id = SUG.THR.REQ.COOKIES.get('session')
     if not session_id:
         return False
 
     rows = database_request(
-        conn,
         "SELECT session, username, expires, ip FROM sessions WHERE session = ?",
         [
             session_id
@@ -132,4 +116,10 @@ def database_validate(request, conn) -> bool:
     return False
 
 def database_init():
-    pass
+    SUG.THR.DBS = connect(
+        host = SUG.DBS["HOST"],
+        user = SUG.DBS["USER"],
+        password = SUG.DBS["PASSWORD"],
+        database = SUG.DBS["DATABASE"]
+    )
+    SUG.THR.DBS.autocommit = True

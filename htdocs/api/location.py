@@ -31,14 +31,10 @@ def response(request):
     # CHECK ARGUMENT RELATIONSHIPS
     if not (isx("LANG") and (isx("PROBLEM") ^ isx("NODE") ^ isx("CLUSTER"))):
         raise Error()
-    
-    # CONNECT TO DATABASE
-    database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
 
     # TYPES OF QUERIES
     if isx("PROBLEM"):
         problemsQuery = database_request(
-            database,
             "SELECT node, ! FROM problems WHERE problem = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -46,7 +42,6 @@ def response(request):
             ]
         )[0]
         nodesQuery = database_request(
-            database,
             "SELECT cluster, ! FROM nodes WHERE node = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -54,7 +49,6 @@ def response(request):
             ]
         )[0]
         clustersQuery = database_request(
-            database,
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -62,7 +56,6 @@ def response(request):
             ]
         )[0]
         treesQuery = database_request(
-            database,
             "SELECT ! FROM trees WHERE tree = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -79,7 +72,6 @@ def response(request):
         treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
     elif isx("NODE"):
         nodesQuery = database_request(
-            database,
             "SELECT cluster, ! FROM nodes WHERE node = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -87,7 +79,6 @@ def response(request):
             ]
         )[0]
         clustersQuery = database_request(
-            database,
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -95,7 +86,6 @@ def response(request):
             ]
         )[0]
         treesQuery = database_request(
-            database,
             "SELECT ! FROM trees WHERE tree = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -112,7 +102,6 @@ def response(request):
         treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
     elif isx("CLUSTER"):
         clustersQuery = database_request(
-            database,
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],
@@ -120,7 +109,6 @@ def response(request):
             ]
         )[0]
         treesQuery = database_request(
-            database,
             "SELECT ! FROM trees WHERE tree = ?",
             [
                 "name_" + SUG.THR.PST["LANG"],

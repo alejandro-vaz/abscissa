@@ -39,13 +39,9 @@ def response(request):
     if not isx("CONTEXT") and not isx("PROBLEM") and  not isx("NODE"):
         raise TabError()
     
-    # CONNECT TO DATABASE
-    database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
-    
     # TYPES OF QUERIES
     if isx("PROBLEM"):
         result = database_request(
-            database,
             "SELECT * FROM problems WHERE problem = ? AND ? IS NOT NULL",
             [
                 SUG.THR.PST["PROBLEM"],
@@ -54,7 +50,6 @@ def response(request):
         )[0]
     elif isx("NODE"):
         result = database_request(
-            database,
             "SELECT * FROM problems WHERE node = ? AND ? IS NOT NULL",
             [
                 SUG.THR.PST["NODE"],
@@ -64,12 +59,10 @@ def response(request):
     elif isx("CONTEXT"):
         if SUG.THR.PST["CONTEXT"] == "day":
             result = database_request(
-                database,
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
                     "data_" + SUG.THR.PST["LANG"],
                     crc32date() % int(database_request(
-                        database,
                         "SELECT COUNT(*) AS total FROM problems WHERE ? IS NOT NULL",
                         [
                             "data_" + SUG.THR.PST["LANG"]
@@ -79,12 +72,10 @@ def response(request):
             )[0]
         elif SUG.THR.PST["CONTEXT"] == "random":
             result = database_request(
-                database,
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
                     "data_" + SUG.THR.PST["LANG"],
                     randint(0, int(database_request(
-                        database,
                         "SELECT COUNT(*) AS total FROM problems WHERE ? IS NOT NULL",
                         [
                             "data_" + SUG.THR.PST["LANG"]
@@ -93,7 +84,7 @@ def response(request):
                 ]
             )[0]
         else:
-            raise TabError(SUG.THR.PST)
+            raise TabError()
     else:
         raise TabError()
         

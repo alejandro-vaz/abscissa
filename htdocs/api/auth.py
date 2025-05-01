@@ -45,14 +45,10 @@ def response(request):
     else:
         raise Error()
     
-    # CONNECT TO DATABASE
-    database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
-    
     # TYPES OF QUERIES
     if SUG.THR.PST["CONTEXT"] == 'login':
         if isx("EMAIL"):
             hashpass, username = database_request(
-                database,
                 "SELECT hashpass, username FROM users WHERE email = ?",
                 [
                     SUG.THR.PST["EMAIL"]
@@ -63,7 +59,7 @@ def response(request):
                 # CRAFT RESPONSE
                 response = craftResponse(result)
                 session = gensession()
-                setsession(request, response, session, database, username)
+                setsession(response, session, username)
             else:
                 result = False
                 # CRAFT RESPONSE
@@ -71,7 +67,6 @@ def response(request):
             return response
         else:
             hashpass = database_request(
-                database,
                 "SELECT hashpass FROM users WHERE username = ?",
                 [
                     SUG.THR.PST["USERNAME"]
@@ -82,7 +77,7 @@ def response(request):
                 # CRAFT RESPONSE
                 response = craftResponse(result)
                 session = gensession()
-                setsession(request, response, session, database, SUG.THR.PST["USERNAME"])
+                setsession(response, session, SUG.THR.PST["USERNAME"])
             else:
                 result = False
                 # CRAFT RESPONSE
@@ -90,7 +85,6 @@ def response(request):
             return response
     if SUG.THR.PST["CONTEXT"] == "register":
         result = database_request(
-            database,
             "INSERT INTO users (username, joined, email, hashpass, preferences, role) VALUES (?, ?, ?, ?, ?, ?)",
             [
                 SUG.THR.PST["USERNAME"],
@@ -104,6 +98,6 @@ def response(request):
         response = craftResponse(result)
         return response
     else:
-        result = database_validate(request, database)
+        result = database_validate()
         response = craftResponse(result)
         return response

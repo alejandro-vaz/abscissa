@@ -35,13 +35,9 @@ def response(request):
     if not isx("RESOURCE") and not isx("NODE") and not isx("CONTEXT"):
         raise Error()
     
-    # CONNECT TO DATABASE
-    database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
-    
     # TYPES OF QUERIES
     if isx("RESOURCE"):
         result = database_request(
-            database,
             "SELECT * FROM resources WHERE resource = ? AND lang = ?",
             [
                 SUG.THR.PST["RESOURCE"],
@@ -50,7 +46,6 @@ def response(request):
         )[0]
     elif isx("NODE") and isx("CONTEXT"):
         result = database_request(
-            database,
             "SELECT * FROM resources WHERE node = ? AND lang = ? AND type = ?",
             [
                 SUG.THR.PST["NODE"],
@@ -60,7 +55,6 @@ def response(request):
         )
     elif isx("NODE") and not isx("CONTEXT"):
         result = database_request(
-            database,
             "SELECT * FROM resources WHERE node = ? AND lang = ?",
             [
                 SUG.THR.PST["NODE"],
@@ -69,7 +63,6 @@ def response(request):
         )
     elif isx("CONTEXT") and not isx("NODE"):
         result = database_request(
-            database,
             "SELECT * FROM resources WHERE type = ? AND lang = ?",
             [
                 SUG.THR.PST["CONTEXT"],

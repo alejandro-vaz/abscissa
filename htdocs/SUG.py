@@ -8,5 +8,12 @@ from handler import *
 THR = threading.local()
 THR.REQ = None
 THR.PST = None
+THR.DBS = None
 
-# MASTER SUPERGLOBALS
+# MASTER SUPERGLOBALS (ARE NOT MODIFIED BY CODE)
+DBS = {
+    "HOST": "localhost",
+    "USER": "phpmyadmin",
+    "PASSWORD": "orangepi",
+    "DATABASE": "abscissa"
+}

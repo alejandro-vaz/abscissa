@@ -19,22 +19,17 @@ def response(request):
     # LOAD EXTENSIONS
     database_init()
     response_init()
-
-    # CONNECT TO DATABASE
-    database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
     
     # VALIDATE ACCESS
-    if not database_validate(request, database):
+    if not database_validate():
         raise Error()
     
     # TYPES OF QUERIES
     if True:
         result = database_request(
-            database,
             "SELECT * FROM users WHERE username = ?",
             [
                 database_request(
-                    database,
                     "SELECT username FROM sessions WHERE session = ?",
                     [
                         request.COOKIES.get('session')
