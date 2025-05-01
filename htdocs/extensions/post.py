@@ -4,6 +4,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 def regex(type: str) -> pattern:
     match (type):
         case "PROBLEM": return compile(r'^[A-Z0-9]{6}$')
@@ -17,11 +20,14 @@ def regex(type: str) -> pattern:
         case "RESOURCE": return compile(r'^(?:[1-9][0-9]{0,7})$')
         case _: raise TabError()
 
-def isx(array: dict, key: str) -> bool:
-    return key in array
+def isx(key: str) -> bool:
+    return key in SUG.THR.PST
 
-def check(array: dict, key: str) -> None:
-    if isx(array, key):
-        value = str(array[key])
+def check(key: str) -> None:
+    if isx(key):
+        value = str(SUG.THR.PST[key])
         if not regex(key).fullmatch(value):
             raise TabError()
+
+def post_init():
+    SUG.THR.PST = json.loads(SUG.THR.REQ.body)

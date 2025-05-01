@@ -4,44 +4,52 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 # IMPORTS
-from extensions.check import *
 from extensions.database import *
+from extensions.post import *
 from extensions.response import *
 
 @csrf_exempt
 def response(request):
-    # GET THE INPUT
-    PST = getPOST(request)
+    # REQUEST DEFINITION
+    SUG.THR.REQ = request
+    
+    # LOAD EXTENSIONS
+    database_init()
+    post_init()
+    response_init()
     
     # CHECK ARGUMENTS
-    check(PST, "LANG")
-    check(PST, "PROBLEM")
-    check(PST, "NODE")
-    check(PST, "CLUSTER")
+    check("LANG")
+    check("PROBLEM")
+    check("NODE")
+    check("CLUSTER")
     
     # CHECK ARGUMENT RELATIONSHIPS
-    if not (isx(PST, "LANG") and (isx(PST, "PROBLEM") ^ isx(PST, "NODE") ^ isx(PST, "CLUSTER"))):
+    if not (isx("LANG") and (isx("PROBLEM") ^ isx("NODE") ^ isx("CLUSTER"))):
         raise Error()
     
     # CONNECT TO DATABASE
     database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
 
     # TYPES OF QUERIES
-    if isx(PST, "PROBLEM"):
+    if isx("PROBLEM"):
         problemsQuery = database_request(
             database,
             "SELECT node, ! FROM problems WHERE problem = ?",
             [
-                "name_" + PST["LANG"],
-                PST["PROBLEM"]
+                "name_" + SUG.THR.PST["LANG"],
+                SUG.THR.PST["PROBLEM"]
             ]
         )[0]
         nodesQuery = database_request(
             database,
             "SELECT cluster, ! FROM nodes WHERE node = ?",
             [
-                "name_" + PST["LANG"],
+                "name_" + SUG.THR.PST["LANG"],
                 problemsQuery['node']
             ]
         )[0]
@@ -49,7 +57,7 @@ def response(request):
             database,
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
-                "name_" + PST["LANG"],
+                "name_" + SUG.THR.PST["LANG"],
                 nodesQuery['cluster']
             ]
         )[0]
@@ -57,32 +65,32 @@ def response(request):
             database,
             "SELECT ! FROM trees WHERE tree = ?",
             [
-                "name_" + PST["LANG"],
+                "name_" + SUG.THR.PST["LANG"],
                 clustersQuery['tree']
             ]
         )[0]
-        problemValue = PST["PROBLEM"]
-        problemName = problemsQuery["name_" + PST["LANG"]]
+        problemValue = SUG.THR.PST["PROBLEM"]
+        problemName = problemsQuery["name_" + SUG.THR.PST["LANG"]]
         nodeValue = problemsQuery['node']
-        nodeName = nodesQuery["name_" + PST["LANG"]]
+        nodeName = nodesQuery["name_" + SUG.THR.PST["LANG"]]
         clusterValue = nodesQuery['cluster']
-        clusterName = clustersQuery["name_" + PST["LANG"]]
+        clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
-        treeName = treesQuery["name_" + PST["LANG"]]
-    elif isx(PST, "NODE"):
+        treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
+    elif isx("NODE"):
         nodesQuery = database_request(
             database,
             "SELECT cluster, ! FROM nodes WHERE node = ?",
             [
-                "name_" + PST["LANG"],
-                PST["NODE"]
+                "name_" + SUG.THR.PST["LANG"],
+                SUG.THR.PST["NODE"]
             ]
         )[0]
         clustersQuery = database_request(
             database,
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
-                "name_" + PST["LANG"],
+                "name_" + SUG.THR.PST["LANG"],
                 nodesQuery['cluster']
             ]
         )[0]
@@ -90,32 +98,32 @@ def response(request):
             database,
             "SELECT ! FROM trees WHERE tree = ?",
             [
-                "name_" + PST["LANG"],
+                "name_" + SUG.THR.PST["LANG"],
                 clustersQuery['tree']
             ]
         )[0]
         problemValue = None
         problemName = None
-        nodeValue = PST["NODE"]
-        nodeName = nodesQuery["name_" + PST["LANG"]]
+        nodeValue = SUG.THR.PST["NODE"]
+        nodeName = nodesQuery["name_" + SUG.THR.PST["LANG"]]
         clusterValue = nodesQuery['cluster']
-        clusterName = clustersQuery["name_" + PST["LANG"]]
+        clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
-        treeName = treesQuery["name_" + PST["LANG"]]
-    elif isx(PST, "CLUSTER"):
+        treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
+    elif isx("CLUSTER"):
         clustersQuery = database_request(
             database,
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
-                "name_" + PST["LANG"],
-                PST["CLUSTER"]
+                "name_" + SUG.THR.PST["LANG"],
+                SUG.THR.PST["CLUSTER"]
             ]
         )[0]
         treesQuery = database_request(
             database,
             "SELECT ! FROM trees WHERE tree = ?",
             [
-                "name_" + PST["LANG"],
+                "name_" + SUG.THR.PST["LANG"],
                 clustersQuery['tree']
             ]
         )[0]
@@ -123,10 +131,10 @@ def response(request):
         problemName = None
         nodeValue = None
         nodeName = None
-        clusterValue = PST["CLUSTER"]
-        clusterName = clustersQuery["name_" + PST["LANG"]]
+        clusterValue = SUG.THR.PST["CLUSTER"]
+        clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
-        treeName = treesQuery["name_" + PST["LANG"]]
+        treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
     else:
         raise Error()
     result = {

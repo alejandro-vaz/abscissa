@@ -4,6 +4,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 def compileView(content, name, module=[False, ""]):
     # 1) find all <py>…</py> blocks
     pattern = compile(r"<py>(.*?)</py>", dotall)
@@ -48,3 +51,6 @@ def loadView(name: str, module=[False, "name"]) -> str:
         result = compileView(content, name)
         return HTTP.HttpResponse(result)
     return _view
+
+def view_init():
+    pass

@@ -4,6 +4,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 def _derive_key(key_str: str) -> bytes:
     """
     Derive a 32-byte key from an arbitrary string using SHA-256.
@@ -45,3 +48,6 @@ def crc32date():
     crc_signed = zlib.crc32(date_str.encode())          # may be signed on some Python versions :contentReference[oaicite:0]{index=0}
     crc_unsigned = crc_signed & 0xFFFFFFFF               # mask to unsigned 32-bit :contentReference[oaicite:1]{index=1}
     return crc_unsigned
+
+def cryptography_init():
+    pass

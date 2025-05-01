@@ -4,15 +4,21 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 # IMPORTS
-from extensions.check import *
 from extensions.database import *
 from extensions.response import *
 
 @csrf_exempt
 def response(request):
-    # GET THE INPUT
-    PST = getPOST(request)
+    # REQUEST DEFINITION
+    SUG.THR.REQ = request
+    
+    # LOAD EXTENSIONS
+    database_init()
+    response_init()
 
     # CONNECT TO DATABASE
     database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')

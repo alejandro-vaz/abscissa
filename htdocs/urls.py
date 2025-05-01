@@ -7,6 +7,9 @@ from handler import *
 # IMPORT VIEW
 from extensions.view import *
 
+# LOAD EXTENSIONS
+view_init()
+
 # INITIALIZE PATTERNS
 urlpatterns = []
 

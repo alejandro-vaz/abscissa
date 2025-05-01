@@ -4,87 +4,96 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 # IMPORTS
-from extensions.check import *
 from extensions.cryptography import *
 from extensions.database import *
+from extensions.post import *
 from extensions.response import *
 
 @csrf_exempt
 def response(request):
-    # GET THE INPUT
-    PST = getPOST(request)
+    # REQUEST DEFINITION
+    SUG.THR.REQ = request
+    
+    # LOAD EXTENSIONS
+    cryptography_init()
+    database_init()
+    post_init()
+    response_init()
     
     # CHECK ARGUMENTS
-    check(PST, "LANG")
-    check(PST, "PROBLEM")
-    check(PST, "NODE")
+    check("LANG")
+    check("PROBLEM")
+    check("NODE")
     
     # CHECK ARGUMENT RELATIONSHIPS
-    if not isx(PST, "LANG"):
+    if not isx("LANG"):
         raise TabError()
-    if isx(PST, "NODE") and isx(PST, "PROBLEM"):
+    if isx("NODE") and isx("PROBLEM"):
         raise TabError()
-    if isx(PST, "CONTEXT") and (isx(PST, "PROBLEM") or isx(PST, "NODE")):
+    if isx("CONTEXT") and (isx("PROBLEM") or isx("NODE")):
         raise TabError()
-    if not isx(PST, "CONTEXT") and not isx(PST, "PROBLEM") and  not isx(PST, "NODE"):
+    if not isx("CONTEXT") and not isx("PROBLEM") and  not isx("NODE"):
         raise TabError()
     
     # CONNECT TO DATABASE
     database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
     
     # TYPES OF QUERIES
-    if isx(PST, "PROBLEM"):
+    if isx("PROBLEM"):
         result = database_request(
             database,
             "SELECT * FROM problems WHERE problem = ? AND ? IS NOT NULL",
             [
-                PST["PROBLEM"],
-                "data_" + PST["LANG"]
+                SUG.THR.PST["PROBLEM"],
+                "data_" + SUG.THR.PST["LANG"]
             ]
         )[0]
-    elif isx(PST, "NODE"):
+    elif isx("NODE"):
         result = database_request(
             database,
             "SELECT * FROM problems WHERE node = ? AND ? IS NOT NULL",
             [
-                PST["NODE"],
-                "data_" + PST["LANG"]
+                SUG.THR.PST["NODE"],
+                "data_" + SUG.THR.PST["LANG"]
             ]
         )
-    elif isx(PST, "CONTEXT"):
-        if PST["CONTEXT"] == "day":
+    elif isx("CONTEXT"):
+        if SUG.THR.PST["CONTEXT"] == "day":
             result = database_request(
                 database,
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
-                    "data_" + PST["LANG"],
+                    "data_" + SUG.THR.PST["LANG"],
                     crc32date() % int(database_request(
                         database,
                         "SELECT COUNT(*) AS total FROM problems WHERE ? IS NOT NULL",
                         [
-                            "data_" + PST["LANG"]
+                            "data_" + SUG.THR.PST["LANG"]
                         ]
                     )[0]["total"])
                 ]
             )[0]
-        elif PST["CONTEXT"] == "random":
+        elif SUG.THR.PST["CONTEXT"] == "random":
             result = database_request(
                 database,
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
-                    "data_" + PST["LANG"],
+                    "data_" + SUG.THR.PST["LANG"],
                     randint(0, int(database_request(
                         database,
                         "SELECT COUNT(*) AS total FROM problems WHERE ? IS NOT NULL",
                         [
-                            "data_" + PST["LANG"]
+                            "data_" + SUG.THR.PST["LANG"]
                         ]
                     )[0]['total']) - 1)
                 ]
             )[0]
         else:
-            raise TabError()
+            raise TabError(SUG.THR.PST)
     else:
         raise TabError()
         

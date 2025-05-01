@@ -4,68 +4,76 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 # IMPORTS
-from extensions.check import *
 from extensions.database import *
+from extensions.post import *
 from extensions.response import *
 
 @csrf_exempt
 def response(request):
-    # GET THE INPUT
-    PST = getPOST(request)
+    # REQUEST DEFINITION
+    SUG.THR.REQ = request
+    
+    # LOAD EXTENSIONS
+    database_init()
+    post_init()
+    response_init()
     
     # CHECK ARGUMENTS
-    check(PST, "LANG")
-    check(PST, "RESOURCE")
-    check(PST, "NODE")
+    check("LANG")
+    check("RESOURCE")
+    check("NODE")
     
     # CHECK ARGUMENT RELATIONSHIPS
-    if not isx(PST, "LANG"):
+    if not isx("LANG"):
         raise Error()
-    if isx(PST, "RESOURCE") and (isx(PST, "NODE") or isx(PST, "CONTEXT")):
+    if isx("RESOURCE") and (isx("NODE") or isx("CONTEXT")):
         raise Error()
-    if not isx(PST, "RESOURCE") and not isx(PST, "NODE") and not isx(PST, "CONTEXT"):
+    if not isx("RESOURCE") and not isx("NODE") and not isx("CONTEXT"):
         raise Error()
     
     # CONNECT TO DATABASE
     database = database_connect('localhost', 'phpmyadmin', 'orangepi', 'abscissa')
     
     # TYPES OF QUERIES
-    if isx(PST, "RESOURCE"):
+    if isx("RESOURCE"):
         result = database_request(
             database,
             "SELECT * FROM resources WHERE resource = ? AND lang = ?",
             [
-                PST["RESOURCE"],
-                PST["LANG"]
+                SUG.THR.PST["RESOURCE"],
+                SUG.THR.PST["LANG"]
             ]
         )[0]
-    elif isx(PST, "NODE") and isx(PST, "CONTEXT"):
+    elif isx("NODE") and isx("CONTEXT"):
         result = database_request(
             database,
             "SELECT * FROM resources WHERE node = ? AND lang = ? AND type = ?",
             [
-                PST["NODE"],
-                PST["LANG"],
-                PST["CONTEXT"]
+                SUG.THR.PST["NODE"],
+                SUG.THR.PST["LANG"],
+                SUG.THR.PST["CONTEXT"]
             ]
         )
-    elif isx(PST, "NODE") and not isx(PST, "CONTEXT"):
+    elif isx("NODE") and not isx("CONTEXT"):
         result = database_request(
             database,
             "SELECT * FROM resources WHERE node = ? AND lang = ?",
             [
-                PST["NODE"],
-                PST["LANG"]
+                SUG.THR.PST["NODE"],
+                SUG.THR.PST["LANG"]
             ]
         )
-    elif isx(PST, "CONTEXT") and not isx(PST, "NODE"):
+    elif isx("CONTEXT") and not isx("NODE"):
         result = database_request(
             database,
             "SELECT * FROM resources WHERE type = ? AND lang = ?",
             [
-                PST["CONTEXT"],
-                PST["LANG"]
+                SUG.THR.PST["CONTEXT"],
+                SUG.THR.PST["LANG"]
             ]
         )
     else:

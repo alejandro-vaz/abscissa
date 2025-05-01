@@ -4,6 +4,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from handler import *
 
+# SUPERGLOBALS
+import SUG
+
 def database_connect(host: str, user: str, password: str, database: str) -> MySQLConnection:
     db = connect(
         host=host,
@@ -127,3 +130,6 @@ def database_validate(request, conn) -> bool:
     if rows:
         return True
     return False
+
+def database_init():
+    pass
