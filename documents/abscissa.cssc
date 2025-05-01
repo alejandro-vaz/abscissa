@@ -27,56 +27,56 @@ flowchart TD
     classDef 10 fill::#007777
     classDef dept fill::#3332
 
-    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=2.0))
-    class ABSCISSA 6
+    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=2.1))
+    class ABSCISSA 4
 
-    alejo1([68 Alejo])
-    diego1([66 Diego])
-    class alejo1 7
-    class diego1 6
+    alejo1([77 Alejo])
+    diego1([68 Diego])
+    class alejo1 6
+    class diego1 3
 
     BACKEND{{DEPT. BACKEND/=\lt/=br/=\gt/=Control}}
     FRONTEND{{DEPT. FRONTEND/=\lt/=br/=\gt/=Entry}}
     MARKETING{{DEPT. MARKETING/=\lt/=br/=\gt/=Need}}
-    FINANZAS{{DEPT. FINANZAS/=\lt/=br/=\gt/=Time}}
-    RRHH{{DEPT. RR.HH./=\lt/=br/=\gt/=Scale}}
+    FINANZAS{{DEPT. FINANCES/=\lt/=br/=\gt/=Time}}
+    RRHH{{DEPT. HR./=\lt/=br/=\gt/=Scale}}
     class BACKEND 8
-    class FRONTEND 7
+    class FRONTEND 5
     class MARKETING 0
-    class FINANZAS 8
+    class FINANZAS 5
     class RRHH 0
 
-    alejo2(68 Alejo)
-    alejo3(68 Alejo)
-    diego2(66 Diego)
-    diego3(66 Diego)
-    diego4(66 Diego)
-    class alejo2 9
-    class alejo3 7
-    class diego2 5
-    class diego3 10
-    class diego4 7
+    alejo2(77 Alejo)
+    alejo3(77 Alejo)
+    diego2(68 Diego)
+    diego3(68 Diego)
+    diego4(68 Diego)
+    class alejo2 7
+    class alejo3 5
+    class diego2 3
+    class diego3 6
+    class diego4 5
 
-    beltran/=\gt/=51 Beltrán]
-    jorge/=\gt/=47 Jorge]
-    class beltran 5
-    class jorge 3
+    beltran/=\gt/=52 Beltrán]
+    jorge/=\gt/=39 Jorge]
+    class beltran 4
+    class jorge 0
 
-    sergio[[36 Sergio]]
+    sergio[[33 Sergio]]
     class sergio 2
 
-    guzman[/29 Guzmán\]
-    dela[/17 Dela\]
-    class guzman 4
+    guzman[/25 Guzmán\]
+    dela[/14 Dela\]
+    class guzman 1
     class dela 0
 
+    luis[/10 Luis/]
+    class luis 5
 
-    juan[\9 Juan\]
-    luis[\9 Luis\]
-    marcos[\8 Marcos\]
-    class juan 3
-    class luis 2
-    class marcos 0
+    juan[\8 Juan\]
+    marcos[\7 Marcos\]
+    class juan 1
+    class marcos 2
 
 
     ABSCISSA ==/=\gt/= alejo1
