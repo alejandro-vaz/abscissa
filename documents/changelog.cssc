@@ -181,3 +181,7 @@
 /X (Patch) Refactored the handler and some ·PHP· modules.
 /X (Patch) Changed database module to use on-activation connection.
 /X (Patch) Completed [#51.](https:://github.com/alejandro-vaz/Abscissa/issues/51)
+/h3 ·Abscissa· 2.1.1 /_1-1-1/_
+/X (Patch) Updated team organisation.
+/X (Minor) Changed file classification.
+/X (Major) Transpiled everything to ·Python.·

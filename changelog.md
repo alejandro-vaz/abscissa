@@ -363,3 +363,11 @@
 - [X] (Patch) Changed database module to use on-activation connection.
 
 - [X] (Patch) Completed [#51.](https://github.com/alejandro-vaz/Abscissa/issues/51)
+
+### *Abscissa* 2.1.1 `1-1-1`
+
+- [X] (Patch) Updated team organisation.
+
+- [X] (Minor) Changed file classification.
+
+- [X] (Major) Transpiled everything to *Python.*

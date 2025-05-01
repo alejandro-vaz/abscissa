@@ -27,41 +27,47 @@
 ```mermaid
 flowchart TD
 
-    classDef 0 fill:#700
+    classDef X fill:#000000
 
-    classDef 1 fill:#770
+    classDef 0 fill:#770000
 
-    classDef 2 fill:#070
+    classDef 1 fill:#772800
 
-    classDef 3 fill:#077
+    classDef 2 fill:#774f00
+
+    classDef 3 fill:#777700
+
+    classDef 4 fill:#597700
+
+    classDef 5 fill:#3c7700
+
+    classDef 6 fill:#1e7700
+
+    classDef 7 fill:#007700
+
+    classDef 8 fill:#007728
+
+    classDef 9 fill:#00774f
+
+    classDef 10 fill:#007777
 
     classDef dept fill:#3332
 
 
 
-    ABSCISSA((ABSCISSA<br>2.0))
+    ABSCISSA((ABSCISSA<br>2.1))
 
-    class null 0
-
-    class null 1
-
-    class ABSCISSA 2
-
-    class null 3
+    class ABSCISSA 4
 
 
 
-    alejo1([Alejo])
+    alejo1([77 Alejo])
 
-    diego1([Diego])
+    diego1([68 Diego])
 
-    class null 0
+    class alejo1 6
 
-    class diego1 1
-
-    class alejo1 2
-
-    class null 3
+    class diego1 3
 
 
 
@@ -71,67 +77,83 @@ flowchart TD
 
     MARKETING{{DEPT. MARKETING<br>Need}}
 
-    FINANZAS{{DEPT. FINANZAS<br>Time}}
+    FINANZAS{{DEPT. FINANCES<br>Time}}
 
-    RRHH{{DEPT. RR.HH.<br>Scale}}
+    RRHH{{DEPT. HR.<br>Scale}}
 
-    class MARKETING,RRHH 0
+    class BACKEND 8
 
-    class null 1
+    class FRONTEND 5
 
-    class null 2
+    class MARKETING 0
 
-    class BACKEND,FRONTEND,FINANZAS 3
+    class FINANZAS 5
 
-
-
-    jorge(Jorge)
-
-    alejo2(Alejo)
-
-    diego2(Diego)
-
-    dela(Dela)
-
-    marcos(Marcos)
-
-    class dela,marcos 0
-
-    class jorge 1
-
-    class diego2 2
-
-    class alejo2 3
+    class RRHH 0
 
 
 
-    beltrán>Beltrán]
+    alejo2(77 Alejo)
 
-    class null 0
+    alejo3(77 Alejo)
 
-    class null 1
+    diego2(68 Diego)
 
-    class beltrán 2
+    diego3(68 Diego)
 
-    class null 3
+    diego4(68 Diego)
+
+    class alejo2 7
+
+    class alejo3 5
+
+    class diego2 3
+
+    class diego3 6
+
+    class diego4 5
 
 
 
-    sergio[[Sergio]]
+    beltran>52 Beltrán]
 
-    guzmán[[Guzmán]]
+    jorge>39 Jorge]
 
-    juan[[Juan]]
+    class beltran 4
 
-    luis[[Luis]]
+    class jorge 0
 
-    class sergio,luis 0
 
-    class guzmán,juan 1
 
-    class null 2
+    sergio[[33 Sergio]]
 
-    class null 3
+    class sergio 2
+
+
+
+    guzman[/25 Guzmán\]
+
+    dela[/14 Dela\]
+
+    class guzman 1
+
+    class dela 0
+
+
+
+    luis[/10 Luis/]
+
+    class luis 5
+
+
+
+    juan[\8 Juan\]
+
+    marcos[\7 Marcos\]
+
+    class juan 1
+
+    class marcos 2
 
 
 
@@ -157,11 +179,13 @@ flowchart TD
 
     subgraph 1[" "]
 
-        BACKEND ==>|-4/8| jorge
+        BACKEND ==> alejo2
 
-        jorge -->|0/4| beltrán
+        alejo2 --> beltran
 
-        beltrán -->|-4/2| sergio
+        alejo2 --> jorge
+
+        beltran --> sergio
 
     end
 
@@ -169,11 +193,11 @@ flowchart TD
 
     subgraph 2[" "]
 
-        FRONTEND ==>|X/8| alejo2
+        FRONTEND ==> alejo3
 
-        alejo2 -->|-4/2| guzmán
+        alejo3 --> guzman
 
-        alejo2 -->|-4/2| juan
+        guzman --> juan
 
     end
 
@@ -181,9 +205,11 @@ flowchart TD
 
     subgraph 3[" "]
 
-        MARKETING ==>|-4/8| dela
+        MARKETING ==> diego2
 
-        dela -->|-2/4| luis
+        diego2 --> dela
+
+        dela --> luis
 
     end
 
@@ -191,7 +217,7 @@ flowchart TD
 
     subgraph 4[" "]
 
-        FINANZAS ==>|X/8| diego2
+        FINANZAS ==> diego3
 
     end
 
@@ -199,7 +225,9 @@ flowchart TD
 
     subgraph 5[" "]
 
-        RRHH ==>|-4/8| marcos
+        RRHH ==> diego4
+
+        diego4 --> marcos
 
     end
 
