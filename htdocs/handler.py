@@ -3,7 +3,6 @@
 #
 
 # INITIALIZATION -> DJANGO
-
 from django import conf as CONF
 from django.core import management as CORE_MANAGEMENT
 from django.core import wsgi as CORE_WSGI
@@ -18,7 +17,6 @@ import json
 import zlib
 import base64
 import threading
-import SUG
 from random import randint
 from secrets import token_hex
 from re import compile, match
@@ -33,6 +31,8 @@ from Cryptodome.Util.Padding import pad, unpad
 from mysql.connector import MySQLConnection, Error, connect
 from importlib.util import module_from_spec, spec_from_file_location
 
+# INITIALIZATION -> SUPERGLOBALS
+import SUG
 
 # INITIALIZATION -> DIRECTORY
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,7 +42,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 #   MANAGER
 #
 
-def include(name):
+# MANAGER -> INCLUDE PYTHON FILE
+def include(name: str) -> object:
     rel = os.path.join("api", f"{name}.py")
 
     # Turn the relative path into an absolute one

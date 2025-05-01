@@ -1,10 +1,20 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-def regex(type: str) -> pattern:
+
+#
+#   HELPERS
+#
+
+# HELPERS -> REGEX PATTERN
+def regex(type: str) -> object:
     match (type):
         case "PROBLEM": return compile(r'^[A-Z0-9]{6}$')
         case "NODE": return compile(r'^[A-Z0-9]{4}$')
@@ -17,14 +27,27 @@ def regex(type: str) -> pattern:
         case "RESOURCE": return compile(r'^(?:[1-9][0-9]{0,7})$')
         case _: raise TabError()
 
+
+#
+#   PST
+#
+
+# PST -> KEY EXISTS
 def isx(key: str) -> bool:
     return key in SUG.THR.PST
 
+# PST -> KEY MATCHES PATTERN
 def check(key: str) -> None:
     if isx(key):
         value = str(SUG.THR.PST[key])
         if not regex(key).fullmatch(value):
             raise TabError()
 
-def post_init():
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def post_init() -> None:
     SUG.THR.PST = json.loads(SUG.THR.REQ.body)

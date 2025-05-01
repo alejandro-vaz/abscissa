@@ -1,33 +1,43 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORTS
+# INIT -> EXTENSIONS
 from extensions.cryptography import *
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def response(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
     cryptography_init()
     database_init()
     post_init()
     response_init()
     
-    # CHECK ARGUMENTS
+    # FUNCTION -> ARGUMENT CHECKS
     check("LANG")
     check("PROBLEM")
     check("NODE")
     
-    # CHECK ARGUMENT RELATIONSHIPS
+    # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
         raise TabError()
     if isx("NODE") and isx("PROBLEM"):
@@ -37,7 +47,7 @@ def response(request):
     if not isx("CONTEXT") and not isx("PROBLEM") and  not isx("NODE"):
         raise TabError()
     
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
         result = database_request(
             "SELECT * FROM problems WHERE problem = ? AND ? IS NOT NULL",
@@ -85,9 +95,5 @@ def response(request):
             raise TabError()
     else:
         raise TabError()
-        
-    # CRAFT RESPONSE
     response = craftResponse(result)
-    
-    # RETURN RESPONSE
     return response

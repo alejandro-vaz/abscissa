@@ -1,36 +1,46 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORTS
+# INIT -> EXTENSIONS
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def response(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
     database_init()
     post_init()
     response_init()
     
-    # CHECK ARGUMENTS
+    # FUNCTION -> ARGUMENT CHECKS
     check("LANG")
     check("PROBLEM")
     check("NODE")
     check("CLUSTER")
     
-    # CHECK ARGUMENT RELATIONSHIPS
+    # FUNCTION -> ARGUMENT RELATIONSHIP
     if not (isx("LANG") and (isx("PROBLEM") ^ isx("NODE") ^ isx("CLUSTER"))):
         raise Error()
 
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
         problemsQuery = database_request(
             "SELECT node, ! FROM problems WHERE problem = ?",
@@ -141,9 +151,5 @@ def response(request):
             "name": treeName
         }
     }
-    
-    # CRAFT RESPONSE
     response = craftResponse(result)
-    
-    # RETURN RESPONSE
     return response

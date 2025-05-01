@@ -1,28 +1,38 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORTS
+# INIT -> EXTENSIONS
 from extensions.database import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def response(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
     database_init()
     response_init()
     
-    # VALIDATE ACCESS
+    # FUNCTION -> VALIDATE
     if not database_validate():
         raise Error()
     
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if True:
         result = database_request(
             "SELECT * FROM users WHERE username = ?",
@@ -35,6 +45,5 @@ def response(request):
                 )[0]['username']
             ]
         )[0]
-        
     response = craftResponse(result)
     return response

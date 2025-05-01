@@ -1,33 +1,43 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# EXTENSIONS
+# INIT -> EXTENSIONS
 from extensions.cryptography import *
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def response(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
     cryptography_init()
     database_init()
     post_init()
     response_init()
     
-    # CHECK ARGUMENTS
+    # FUNCTION -> ARGUMENT CHECKS
     check("EMAIL")
     check("PASSWORD")
     check("USERNAME")
     
-    # CHECK ARGUMENT RELATIONSHIPS
+    # FUNCTION -> ARGUMENT RELATIONSHIP
     if isx("CONTEXT"):
         if SUG.THR.PST["CONTEXT"] == "login":
             if not (isx("PASSWORD") and (isx("EMAIL") ^ isx("USERNAME"))):
@@ -43,7 +53,7 @@ def response(request):
     else:
         raise Error()
     
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if SUG.THR.PST["CONTEXT"] == 'login':
         if isx("EMAIL"):
             hashpass, username = database_request(
@@ -54,13 +64,11 @@ def response(request):
             )[0]
             if decrypt(hashpass, SUG.THR.PST["PASSWORD"]) == username:
                 result = True
-                # CRAFT RESPONSE
                 response = craftResponse(result)
                 session = gensession()
                 setsession(response, session, username)
             else:
                 result = False
-                # CRAFT RESPONSE
                 response = craftResponse(result)
             return response
         else:
@@ -72,13 +80,11 @@ def response(request):
             )[0]["hashpass"]
             if decrypt(hashpass, SUG.THR.PST["PASSWORD"])  == SUG.THR.PST["USERNAME"]:
                 result = True
-                # CRAFT RESPONSE
                 response = craftResponse(result)
                 session = gensession()
                 setsession(response, session, SUG.THR.PST["USERNAME"])
             else:
                 result = False
-                # CRAFT RESPONSE
                 response = craftResponse(result)
             return response
     if SUG.THR.PST["CONTEXT"] == "register":

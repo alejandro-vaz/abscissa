@@ -1,60 +1,45 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-def database_request(query: str, params: list = []):
-    """
-    Extended database_request supporting two placeholder types:
-      - `!` marks an identifier placeholder (column or table name). Its param
-        will be inlined (without quotes) after whitelist validation.
-      - `?` marks a data-value placeholder, bound safely by the prepared cursor.
 
-    Placeholders must appear in the SQL string as literal `!` or `?` characters.
-    Example:
-      database_request(
-          conn,
-          "SELECT * FROM problems WHERE ! IS NOT NULL LIMIT ?, 1",
-          ["data_en", offset]
-      )
-    """
-    # Validate and split placeholders
-    placeholders = []  # list of (type, start, end)
+#
+#   ACCESS
+#
+
+# ACCESS -> FUNCTION
+def database_request(query: str, params: list = []) -> object:
+    placeholders = []
     pattern = compile(r"(!|\?)")
     for m in pattern.finditer(query):
         placeholders.append((m.group(1), m.start(), m.end()))
-
-    # Rebuild query with identifiers inlined, collect only value params
     new_query_parts = []
     last = 0
     val_params = []
     p_index = 0
-    # Process in order of appearance
     for ph_type, start, end in sorted(placeholders, key=lambda x: x[1]):
-        # append SQL between placeholders
         new_query_parts.append(query[last:start])
         if ph_type == "!":
-            # Inline identifier, whitelist check
             ident = params[p_index]
             p_index += 1
             if not match(r"^[A-Za-z0-9_]+$", ident):
                 raise ValueError(f"Invalid identifier: {ident}")
             new_query_parts.append(f"`{ident}`")
-        else:  # ph_type == '?'
-            # Keep ? for prepared binding
+        else:
             new_query_parts.append("?")
             val_params.append(params[p_index])
             p_index += 1
         last = end
     new_query_parts.append(query[last:])
     final_query = ''.join(new_query_parts)
-
-    # Execute with prepared cursor (qmark style)
     cursor = SUG.THR.DBS.cursor(prepared=True)
     cursor.execute(final_query, val_params)
-
-    # Return rows or True
     if cursor.with_rows:
         cols = [col[0] for col in cursor.description]
         rows = [dict(zip(cols, row)) for row in cursor.fetchall()]
@@ -63,10 +48,29 @@ def database_request(query: str, params: list = []):
     cursor.close()
     return True
 
-def gensession() -> str:
-    return token_hex(16)  # 16 bytes → 32-char hex :contentReference[oaicite:9]{index=9}
+# ACCESS -> VALIDATION
+def database_validate() -> bool:
+    if database_request(
+        "SELECT session, username, expires, ip FROM sessions WHERE session = ?",
+        [
+            SUG.THR.SID
+        ]
+    ):
+        return True
+    else:
+        return False
 
-def setsession(response, session: str, un) -> None:
+
+#
+#   SESSIONS
+#
+
+# SESSIONS -> GENERATE
+def gensession() -> str:
+    return token_hex(16)
+
+# SESSIONS -> SET
+def setsession(response: object, session: str, un: str) -> None:
     if database_request(
         "INSERT INTO sessions (session, username, expires, ip) VALUES (?, ?, ?, ?)",
         [
@@ -86,20 +90,12 @@ def setsession(response, session: str, un) -> None:
             samesite='Lax'
         )
 
-def database_validate() -> bool:
-    if not SUG.THR.SID:
-        return False
 
-    rows = database_request(
-        "SELECT session, username, expires, ip FROM sessions WHERE session = ?",
-        [
-            SUG.THR.SID
-        ]
-    )
-    if rows:
-        return True
-    return False
+#
+#   INITIALIZATION
+#
 
+# INITIALIZATION -> FUNCTION
 def database_init() -> None:
     SUG.THR.DBS = connect(
         host = SUG.DBS["HOST"],
