@@ -44,11 +44,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # MANAGER -> INCLUDE PYTHON FILE
 def include(name: str) -> object:
-    rel = os.path.join("api", f"{name}.py")
-
-    # Turn the relative path into an absolute one
-    path = os.path.join(BASE_DIR, rel)
-
+    path = os.path.join(BASE_DIR, os.path.join("api", f"{name}.py"))
     spec = spec_from_file_location(name, path)
     module = module_from_spec(spec)
     sys.modules[name] = module
@@ -57,5 +53,4 @@ def include(name: str) -> object:
 
 # MANAGER -> FILE READER
 def read(path: str) -> str:
-    full_path = os.path.join(BASE_DIR, path)
-    return create_path(full_path).read_text(encoding='utf-8')
+    return create_path(os.path.join(BASE_DIR, path)).read_text(encoding='utf-8')
