@@ -31,6 +31,6 @@ CACHES = {
 # SETTINGS -> DATABASE
 DATABASES = {
     'default': {
-        'CONN_MAX_AGE': 3600
+        'CONN_MAX_AGE': 72000
     }
 }
