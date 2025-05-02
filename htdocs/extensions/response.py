@@ -14,11 +14,21 @@ from handler import *
 #
 
 # CRAFT RESPONSE -> FUNCTION
-def craftResponse(jsonData: object) -> object:
+def set_response(jsonData: object, session: str = None) -> object:
     response = HTTP.JsonResponse(jsonData, status=200, safe=False)
     response['Content-Type'] = 'application/json; charset=utf-8'
     response['Access-Control-Allow-Origin'] = '*'
     response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    if session:
+        response.set_cookie(
+            'session',
+            session,
+            max_age=72000,
+            path='/',
+            secure=True,
+            httponly=True,
+            samesite='Lax'
+        )
     return response
 
 

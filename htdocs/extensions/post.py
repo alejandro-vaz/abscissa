@@ -14,8 +14,8 @@ from handler import *
 #
 
 # HELPERS -> REGEX PATTERN
-def regex(type: str) -> object:
-    match (type):
+def regex(datatype: str) -> object:
+    match (datatype):
         case "PROBLEM": return compile(r'^[A-Z0-9]{6}$')
         case "NODE": return compile(r'^[A-Z0-9]{4}$')
         case "CLUSTER": return compile(r'^[A-Z0-9]{2}$')
@@ -37,11 +37,20 @@ def isx(key: str) -> bool:
     return key in SUG.THR.PST
 
 # PST -> KEY MATCHES PATTERN
-def check(key: str) -> None:
+def check(key: str, strict: bool = True) -> object:
     if isx(key):
         value = str(SUG.THR.PST[key])
         if not regex(key).fullmatch(value):
-            raise TabError()
+            if strict:
+                raise TabError()
+            else:
+                return False
+        else:
+            if not strict:
+                return True
+    else:
+        if not strict:
+            return True
 
 
 #

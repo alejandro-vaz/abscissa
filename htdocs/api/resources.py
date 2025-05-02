@@ -20,7 +20,7 @@ from extensions.response import *
 
 # FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request: object) -> object:
+def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
@@ -79,5 +79,4 @@ def response(request: object) -> object:
         )
     else:
         raise Error()
-    response = craftResponse(result)
-    return response
+    return set_response(result)

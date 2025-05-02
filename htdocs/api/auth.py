@@ -21,7 +21,7 @@ from extensions.response import *
 
 # FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request: object) -> object:
+def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
@@ -64,13 +64,12 @@ def response(request: object) -> object:
             )[0]
             if decrypt(hashpass, SUG.THR.PST["PASSWORD"]) == username:
                 result = True
-                response = craftResponse(result)
                 session = gensession()
-                setsession(response, session, username)
+                setsession(session, username)
+                return set_response(result, session = session)
             else:
                 result = False
-                response = craftResponse(result)
-            return response
+                return set_response(result)
         else:
             hashpass = database_request(
                 "SELECT hashpass FROM users WHERE username = ?",
@@ -80,13 +79,12 @@ def response(request: object) -> object:
             )[0]["hashpass"]
             if decrypt(hashpass, SUG.THR.PST["PASSWORD"])  == SUG.THR.PST["USERNAME"]:
                 result = True
-                response = craftResponse(result)
                 session = gensession()
-                setsession(response, session, SUG.THR.PST["USERNAME"])
+                setsession(session, SUG.THR.PST["USERNAME"])
+                return set_response(result, session = session)
             else:
                 result = False
-                response = craftResponse(result)
-            return response
+                return set_response(result)
     if SUG.THR.PST["CONTEXT"] == "register":
         result = database_request(
             "INSERT INTO users (username, joined, email, hashpass, preferences, role) VALUES (?, ?, ?, ?, ?, ?)",
@@ -99,9 +97,7 @@ def response(request: object) -> object:
                 0
             ]
         )
-        response = craftResponse(result)
-        return response
+        return set_response(result)
     else:
         result = database_validate()
-        response = craftResponse(result)
-        return response
+        return set_response(result)

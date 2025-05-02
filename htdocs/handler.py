@@ -54,3 +54,9 @@ def include(name: str) -> object:
 # MANAGER -> FILE READER
 def read(path: str) -> str:
     return create_path(os.path.join(BASE_DIR, path)).read_text(encoding='utf-8')
+
+
+#
+#   EXCEPTIONS
+#
+

@@ -39,6 +39,6 @@ scripts = [
 
 # URL PATTERNS -> ADD PATTERNS
 for view in views:
-    urlpatterns.append(URLS.path(view, loadView(view)))
+    urlpatterns.append(URLS.path(view, create_view(view)))
 for script in scripts:
-    urlpatterns.append(URLS.path(f'api/{script}', include(script).response))
+    urlpatterns.append(URLS.path(f'api/{script}', include(script).output))
