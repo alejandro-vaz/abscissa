@@ -1,11 +1,21 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-def regex(type: str) -> pattern:
-    match (type):
+
+#
+#   HELPERS
+#
+
+# HELPERS -> REGEX PATTERN
+def regex(datatype: str) -> object:
+    match (datatype):
         case "PROBLEM": return compile(r'^[A-Z0-9]{6}$')
         case "NODE": return compile(r'^[A-Z0-9]{4}$')
         case "CLUSTER": return compile(r'^[A-Z0-9]{2}$')
@@ -15,16 +25,48 @@ def regex(type: str) -> pattern:
         case "USERNAME": return compile(r'^[a-zA-Z0-9_-]{4,32}$')
         case "LANG": return compile(r'^[a-z]{2}$')
         case "RESOURCE": return compile(r'^(?:[1-9][0-9]{0,7})$')
-        case _: raise TabError()
+        case "CONTEXT": return compile(r'.*')
+        case _: raise RegexMatchError(datatype)
 
+
+#
+#   PST
+#
+
+# PST -> KEY EXISTS
 def isx(key: str) -> bool:
-    return key in SUG.THR.PST
+    if type(SUG.THR.PST) == dict:
+        return key in SUG.THR.PST
+    return False
 
-def check(key: str) -> None:
+# PST -> KEY MATCHES PATTERN
+def check(key: str, values: list = [], strict: bool = True) -> object:
     if isx(key):
         value = str(SUG.THR.PST[key])
         if not regex(key).fullmatch(value):
-            raise TabError()
+            if strict:
+                raise CheckError(key, regex(key), values, SUG.THR.PST[key])
+            else:
+                return False
+        else:
+            if len(values) > 0:
+                if strict:
+                    if not SUG.THR.PST[key] in values:
+                        raise UnknownArgumentValueError(key, SUG.THR.PST[key])
+                else:
+                    return SUG.THR.PST[key] in values
+            else:
+                if not strict:
+                    return True
+    else:
+        if not strict:
+            return True
 
-def post_init():
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def post_init() -> None:
     SUG.THR.PST = json.loads(SUG.THR.REQ.body)

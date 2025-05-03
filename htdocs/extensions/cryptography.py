@@ -1,50 +1,78 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-def _derive_key(key_str: str) -> bytes:
-    """
-    Derive a 32-byte key from an arbitrary string using SHA-256.
-    This matches PHP if you pass any-length $key into openssl_encrypt.
-    """
-    h = sha256.new()                # create SHA-256 hash object :contentReference[oaicite:4]{index=4}
-    h.update(key_str.encode('utf-8'))
-    return h.digest()                # 32-byte digest
 
+#
+#   HELPERS
+#
+
+# HELPERS -> KEY TO BYTES
+def key2bytes(key: str) -> bytes:
+    crypt = sha256.new()
+    crypt.update(key.encode('utf-8'))
+    return crypt.digest()
+
+# HELPERS -> CRC32 DATE
+def crc32date() -> int:
+    return zlib.crc32(datetime.now().strftime('%Y-%m-%d').encode()) & 0xFFFFFFFF
+
+
+#
+#   CODIFICATION
+#
+
+# CODIFICATION -> ENCRYPT
 def encrypt(data: str, key: str) -> str:
-    """
-    Encrypts `data` with aes-256-CBC, random IV, and returns
-    Base64-encoded (iv + ciphertext).
-    """
-    key_bytes = _derive_key(key)
-    iv = get_random_bytes(aes.block_size)               # 16-byte IV :contentReference[oaicite:5]{index=5}
-    cipher = aes.new(key_bytes, aes.MODE_CBC, iv)       # aes-CBC mode :contentReference[oaicite:6]{index=6}
-    padded = pad(data.encode('utf-8'), aes.block_size)  # PKCS#7 padding :contentReference[oaicite:7]{index=7}
-    ct = cipher.encrypt(padded)
-    # Prepend IV and Base64-encode
-    return base64.b64encode(iv + ct).decode('utf-8')    # match PHP base64_encode :contentReference[oaicite:8]{index=8}
+    vector = get_random_bytes(aes.block_size)
+    return base64.b64encode(
+        vector + aes.new(
+            key2bytes(key), aes.MODE_CBC, vector
+        ).encrypt(pad(data.encode('utf-8'), aes.block_size))
+    ).decode('utf-8')
 
-def decrypt(enc: str, key: str) -> str:
-    """
-    Reverses `encrypt`: Base64-decode, split IV, decrypt aes-CBC,
-    unpad, and return plaintext string.
-    """
-    key_bytes = _derive_key(key)
-    raw = base64.b64decode(enc)                       # reverse base64_encode :contentReference[oaicite:9]{index=9}
-    iv = raw[:aes.block_size]                         # extract IV :contentReference[oaicite:10]{index=10}
-    ct = raw[aes.block_size:]
-    cipher = aes.new(key_bytes, aes.MODE_CBC, iv)     # aes-CBC mode :contentReference[oaicite:11]{index=11}
-    pt = unpad(cipher.decrypt(ct), aes.block_size)    # remove PKCS#7 padding :contentReference[oaicite:12]{index=12}
-    return pt.decode('utf-8')
+# CODIFICATION -> DECRYPT
+def decrypt(cipher: str, key: str) -> str:
+    raw = base64.b64decode(cipher)
+    return unpad(
+        aes.new(
+            key2bytes(key), aes.MODE_CBC, raw[:aes.block_size]
+        ).decrypt(raw[aes.block_size:]), aes.block_size
+    ).decode('utf-8')
 
 
-def crc32date():
-    date_str = datetime.now().strftime('%Y-%m-%d')      # e.g. "2025-04-27"
-    crc_signed = zlib.crc32(date_str.encode())          # may be signed on some Python versions :contentReference[oaicite:0]{index=0}
-    crc_unsigned = crc_signed & 0xFFFFFFFF               # mask to unsigned 32-bit :contentReference[oaicite:1]{index=1}
-    return crc_unsigned
+#
+#   BASE 36
+#
 
-def cryptography_init():
+# BASE 36 -> ENCODE
+def b36encode(num: int) -> str:
+    alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if num < 0:
+        return '-' + b36encode(-num)
+    if num == 0:
+        return '0'
+    digits = []
+    while num:
+        num, rem = divmod(num, 36)
+        digits.append(alphabet[rem])
+    return ''.join(digits[::-1])
+
+# BASE 36 -> DECODE
+def b36decode(string: str) -> int:
+    return int(string, 36)
+
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def cryptography_init() -> None:
     pass

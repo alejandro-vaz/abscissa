@@ -1,9 +1,47 @@
 #
+#   EXCEPTIONS
+#
+    
+# EXCEPTIONS -> ERROR DEFINITION
+class PyError(Exception):
+    terminate = True
+    message = "An error was raised."
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
+        display = self.message.format(**kwargs)
+        super().__init__(display)
+    
+# EXCEPTIONS -> ERRORS
+class CheckError(PyError):
+    message = "PST {field} field did not match {pattern} or {values}, the provided value was: {value}"
+class RegexMatchError(PyError):
+    message = "Datatype {datatype} does not match to any known pattern"
+class DatabaseConnectionError(PyError):
+    message = "An error ocurred whilst trying to access database {name} with {user}@{host} with password: {password}"
+class DatabaseQueryError(PyError):
+    message = "An error ocurred whilst processing the arguments in the following query: {query}"
+class EnvironmentVariableNotFoundError(PyError):
+    message = "The environment variable {name} was not found."
+class CurlError(PyError):
+    message = "cURL faced an error."
+class APIScriptNotFoundError(PyError):
+    message = "API Script {name}.py was not found."
+class ModuleNotFoundError(PyError):
+    message = "Module of type {area} named {name} not found"
+class IncorrectArgumentInputError(PyError):
+    message = "The PST array provided does not match any valid relationship: {PST}"
+class UnknownArgumentValueError(PyError):
+    message = "The argument {argument} has an unknown value: {value}"
+class FileNotReadableError(PyError):
+    message = "The file {path} is not readable."
+class UnknownHTMLpyCommandError(PyError):
+    message = "Encountered unknown command: {command}"
+
+#
 #   INITIALIZATION
 #
 
 # INITIALIZATION -> DJANGO
-
 from django import conf as CONF
 from django.core import management as CORE_MANAGEMENT
 from django.core import wsgi as CORE_WSGI
@@ -18,7 +56,6 @@ import json
 import zlib
 import base64
 import threading
-import SUG
 from random import randint
 from secrets import token_hex
 from re import compile, match
@@ -33,6 +70,8 @@ from Cryptodome.Util.Padding import pad, unpad
 from mysql.connector import MySQLConnection, Error, connect
 from importlib.util import module_from_spec, spec_from_file_location
 
+# INITIALIZATION -> SUPERGLOBALS
+import SUG
 
 # INITIALIZATION -> DIRECTORY
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,13 +81,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 #   MANAGER
 #
 
-def include(name):
-    rel = os.path.join("api", f"{name}.py")
-
-    # Turn the relative path into an absolute one
-    path = os.path.join(BASE_DIR, rel)
-
-    spec = spec_from_file_location(name, path)
+# MANAGER -> INCLUDE PYTHON FILE
+def include(name: str) -> object:
+    path = os.path.join(BASE_DIR, os.path.join("api", f"{name}.py"))
+    try:
+        spec = spec_from_file_location(name, path)
+    except:
+        raise APIScriptNotFoundError(name)
     module = module_from_spec(spec)
     sys.modules[name] = module
     spec.loader.exec_module(module)
@@ -56,5 +95,7 @@ def include(name):
 
 # MANAGER -> FILE READER
 def read(path: str) -> str:
-    full_path = os.path.join(BASE_DIR, path)
-    return create_path(full_path).read_text(encoding='utf-8')
+    try:
+        return create_path(os.path.join(BASE_DIR, path)).read_text(encoding='utf-8')
+    except:
+        raise FileNotReadableError(path)

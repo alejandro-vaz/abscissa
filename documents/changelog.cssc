@@ -185,3 +185,15 @@
 /X (Patch) Updated team organisation.
 /X (Minor) Changed file classification.
 /X (Major) Transpiled everything to ·Python.·
+/h4 ·Abscissa· 2.1.14 /_0-0-11/_
+/X (Patch) Added database validation thread superglobal and removed /_database_validate()/_ function.
+/X (Patch) Added available languages master superglobal.
+/X (Patch) Added value especific checking for ·POST.·
+/X (Patch) Implemented custom exceptions.
+/X (Patch) Remade auth script logic, meaning validation now does not require any input at all.
+/X (Patch) Refactored all functions and added input and output types.
+/X (Patch) Renamed functions, sticking to /_camelCase/_ for variables and /_snake_case/_ for functions.
+/X (Patch) Implemented strict mode for check (default:: /_True/_).
+/X (Patch) Added ·PayPal· integration.
+/X (Patch) Added /_b36encode()/_ and /_b36decode()/_ functions.
+/X (Patch) Changed ·Abscissa· logo.

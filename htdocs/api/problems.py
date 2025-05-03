@@ -1,43 +1,52 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORTS
+# INIT -> EXTENSIONS
+from extensions.bool import *
 from extensions.cryptography import *
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def output(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
+    bool_init()
     cryptography_init()
     database_init()
     post_init()
     response_init()
     
-    # CHECK ARGUMENTS
-    check("LANG")
-    check("PROBLEM")
+    # FUNCTION -> ARGUMENT CHECKS
+    check("CONTEXT", values = ["day", "random"])
+    check("LANG", values = SUG.LAN)
     check("NODE")
+    check("PROBLEM")
     
-    # CHECK ARGUMENT RELATIONSHIPS
+    # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
-        raise TabError()
-    if isx("NODE") and isx("PROBLEM"):
-        raise TabError()
-    if isx("CONTEXT") and (isx("PROBLEM") or isx("NODE")):
-        raise TabError()
-    if not isx("CONTEXT") and not isx("PROBLEM") and  not isx("NODE"):
-        raise TabError()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
+    if not bool_1true(isx("CONTEXT"), isx("PROBLEM"), isx("NODE")):
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
         result = database_request(
             "SELECT * FROM problems WHERE problem = ? AND ? IS NOT NULL",
@@ -54,7 +63,7 @@ def response(request):
                 "data_" + SUG.THR.PST["LANG"]
             ]
         )
-    elif isx("CONTEXT"):
+    else:
         if SUG.THR.PST["CONTEXT"] == "day":
             result = database_request(
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
@@ -68,7 +77,7 @@ def response(request):
                     )[0]["total"])
                 ]
             )[0]
-        elif SUG.THR.PST["CONTEXT"] == "random":
+        else:
             result = database_request(
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
@@ -81,13 +90,4 @@ def response(request):
                     )[0]['total']) - 1)
                 ]
             )[0]
-        else:
-            raise TabError()
-    else:
-        raise TabError()
-        
-    # CRAFT RESPONSE
-    response = craftResponse(result)
-    
-    # RETURN RESPONSE
-    return response
+    return set_response(result)

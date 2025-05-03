@@ -1,36 +1,44 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORT VIEW
+# INIT -> EXTENSIONS
 from extensions.view import *
 
-# LOAD EXTENSIONS
+# INIT -> ACTIVATION
 view_init()
 
-# INITIALIZE PATTERNS
+
+#
+#   URL PATTERNS
+#
+
+# URL PATTERNS -> INITIALIZATION
 urlpatterns = []
 
-# VIEWS
+# URL PATTERNS -> DECLARATIONS
 views = [
     "auth",
     "dashboard",
     "error",
     "problem"
 ]
-for viewName in views:
-    urlpatterns.append(URLS.path(viewName, loadView(viewName)))
-
-
-# API
-api = [
+scripts = [
     "auth",
     "location",
     "problems",
     "resources",
     "users"
 ]
-for apiName in api:
-    urlpatterns.append(URLS.path(f'api/{apiName}', include(apiName).response))
+
+# URL PATTERNS -> ADD PATTERNS
+for view in views:
+    urlpatterns.append(URLS.path(view, create_view(view)))
+for script in scripts:
+    urlpatterns.append(URLS.path(f'api/{script}', include(script).output))

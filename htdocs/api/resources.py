@@ -1,39 +1,50 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORTS
+# INIT -> EXTENSIONS
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def output(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
     database_init()
     post_init()
     response_init()
     
-    # CHECK ARGUMENTS
-    check("LANG")
-    check("RESOURCE")
+    # FUNCTION -> ARGUMENT CHECKS
+    check("CONTEXT", values = ["video"])
+    check("LANG", values = SUG.LAN)
     check("NODE")
+    check("RESOURCE")
     
-    # CHECK ARGUMENT RELATIONSHIPS
+    # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
-        raise Error()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     if isx("RESOURCE") and (isx("NODE") or isx("CONTEXT")):
-        raise Error()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     if not isx("RESOURCE") and not isx("NODE") and not isx("CONTEXT"):
-        raise Error()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if isx("RESOURCE"):
         result = database_request(
             "SELECT * FROM resources WHERE resource = ? AND lang = ?",
@@ -59,7 +70,7 @@ def response(request):
                 SUG.THR.PST["LANG"]
             ]
         )
-    elif isx("CONTEXT") and not isx("NODE"):
+    else:
         result = database_request(
             "SELECT * FROM resources WHERE type = ? AND lang = ?",
             [
@@ -67,11 +78,4 @@ def response(request):
                 SUG.THR.PST["LANG"]
             ]
         )
-    else:
-        raise Error()
-    
-    # CRAFT RESPONSE
-    response = craftResponse(result)
-    
-    # RETURN RESPONSE
-    return response
+    return set_response(result)

@@ -1,36 +1,48 @@
-# HANDLER
+#
+#   INIT
+#
+
+# INIT -> HANDLER
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# IMPORTS
+# INIT -> EXTENSIONS
+from extensions.bool import *
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
 
+
+#
+#   FUNCTION
+#
+
+# FUNCTION -> DECLARATION
 @csrf_exempt
-def response(request):
-    # REQUEST DEFINITION
+def output(request: object) -> object:
+    # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
-    # LOAD EXTENSIONS
+    # FUNCTION -> ACTIVATION
+    bool_init()
     database_init()
     post_init()
     response_init()
     
-    # CHECK ARGUMENTS
-    check("LANG")
-    check("PROBLEM")
-    check("NODE")
+    # FUNCTION -> ARGUMENT CHECKS
     check("CLUSTER")
+    check("LANG", values = SUG.LAN)
+    check("NODE")
+    check("PROBLEM")
     
-    # CHECK ARGUMENT RELATIONSHIPS
-    if not (isx("LANG") and (isx("PROBLEM") ^ isx("NODE") ^ isx("CLUSTER"))):
-        raise Error()
+    # FUNCTION -> ARGUMENT RELATIONSHIP
+    if not (isx("LANG") and bool_1true(isx("PROBLEM"), isx("NODE"), isx("CLUSTER"))):
+        raise IncorrectArgumentInputError(SUG.THR.PST)
 
-    # TYPES OF QUERIES
+    # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
         problemsQuery = database_request(
             "SELECT node, ! FROM problems WHERE problem = ?",
@@ -98,7 +110,7 @@ def response(request):
         clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
         treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
-    elif isx("CLUSTER"):
+    else:
         clustersQuery = database_request(
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
@@ -121,8 +133,6 @@ def response(request):
         clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
         treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
-    else:
-        raise Error()
     result = {
         "problem": {
             "value": problemValue,
@@ -141,9 +151,4 @@ def response(request):
             "name": treeName
         }
     }
-    
-    # CRAFT RESPONSE
-    response = craftResponse(result)
-    
-    # RETURN RESPONSE
-    return response
+    return set_response(result)
