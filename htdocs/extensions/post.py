@@ -1,8 +1,8 @@
 #
-#   INIT
+#   HANDLER
 #
 
-# INIT -> HANDLER
+# HANDLER -> LOAD
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -26,7 +26,7 @@ def regex(datatype: str) -> object:
         case "LANG": return compile(r'^[a-z]{2}$')
         case "RESOURCE": return compile(r'^(?:[1-9][0-9]{0,7})$')
         case "CONTEXT": return compile(r'.*')
-        case _: raise RegexMatchError(datatype)
+        case _: raise RegexMatchError(datatype = datatype)
 
 
 #
@@ -45,14 +45,14 @@ def check(key: str, values: list = [], strict: bool = True) -> object:
         value = str(SUG.THR.PST[key])
         if not regex(key).fullmatch(value):
             if strict:
-                raise CheckError(key, regex(key), values, SUG.THR.PST[key])
+                raise CheckError(field = key, pattern = regex(key), values = values, value = SUG.THR.PST[key])
             else:
                 return False
         else:
             if len(values) > 0:
                 if strict:
                     if not SUG.THR.PST[key] in values:
-                        raise UnknownArgumentValueError(key, SUG.THR.PST[key])
+                        raise UnknownArgumentValueError(argument = key, value = SUG.THR.PST[key])
                 else:
                     return SUG.THR.PST[key] in values
             else:

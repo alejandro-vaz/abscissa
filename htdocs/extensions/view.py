@@ -1,8 +1,8 @@
 #
-#   INIT
+#   HANDLER
 #
 
-# INIT -> HANDLER
+# HANDLER -> LOAD
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -32,7 +32,7 @@ def compile_view(content: str) -> str:
         elif action == "call" and len(command) == 2:
             content = content.replace(f"<py> call {area} </py>", "\n".join(modules.get(area, [])))
         else:
-            raise UnknownHTMLpyCommandError(" ".join(command))
+            raise UnknownHTMLpyCommandError(command = " ".join(command))
     return content
     
 # HTML -> VIEW

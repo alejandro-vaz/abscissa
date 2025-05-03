@@ -81,10 +81,10 @@ function renderCodeMirror(textarea) {
             if (cursor.ch > 0) {
                 const lastCh = line.charAt(cursor.ch - 1);
                 if (!/[a-zA-Z]/.test(lastCh)) {
-                    insert = "\\cdot"
+                    insert = "\\cdot "
                 }
             } else {
-                insert = "\\cdot"
+                insert = "\\cdot "
             }
             code.replaceRange(insert, cursor);
             code.setCursor({ line: cursor.line, ch: cursor.ch + insert.length })
@@ -99,6 +99,36 @@ function renderCodeMirror(textarea) {
                 code.replaceRange(newCh, cursor);
                 code.setCursor({ line: cursor.line, ch: cursor.ch + newCh.length });
             }
+        }
+        // TRANSLATE PLUS-MINUS
+        if (pressed.key === "-") {
+            pressed.preventDefault();
+            const cursor = code.getCursor();
+            const lineText = code.getLine(cursor.line);
+            let from, to, replacement;
+            if (cursor.ch > 0 && lineText.charAt(cursor.ch - 1) === "+") {
+                from = { line: cursor.line, ch: cursor.ch - 1 };
+                to = { line: cursor.line, ch: cursor.ch };
+                replacement = "\\pm ";
+            } else {
+                from = cursor;
+                to   = cursor;
+                replacement = "-";
+            }
+            code.replaceRange(replacement, from, to);
+            const newCh = from.ch + replacement.length;
+            code.setCursor({ line: cursor.line, ch: newCh });
+        }
+        // TRANSLATE FRAC
+        if (pressed.key === "/") {
+            pressed.preventDefault();
+            const cursor = code.getCursor();
+            const from = cursor;                                       
+            const to = cursor;                                       
+            const snippet = "\\frac{}{}";
+            code.replaceRange(snippet, from, to);
+            const newCh = cursor.ch + "\\frac{".length;
+            code.setCursor({ line: cursor.line, ch: newCh });
         }
     })
     return editor;

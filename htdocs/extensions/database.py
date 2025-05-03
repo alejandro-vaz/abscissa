@@ -1,8 +1,8 @@
 #
-#   INIT
+#   HANDLER
 #
 
-# INIT -> HANDLER
+# HANDLER -> LOAD
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -29,7 +29,7 @@ def database_request(query: str, params: list) -> object:
             ident = params[pIndex]
             pIndex += 1
             if not match(r"^[A-Za-z0-9_]+$", ident):
-                raise DatabaseQueryError(query)
+                raise DatabaseQueryError(query = query)
             queryParts.append(f"`{ident}`")
         else:
             queryParts.append("?")
@@ -76,19 +76,20 @@ def setsession(session: str, username: str) -> None:
 
 # INITIALIZATION -> FUNCTION
 def database_init() -> None:
+    SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     try:
         SUG.THR.DBS = connect(
-            host = SUG.DBS["HOST"],
-            user = SUG.DBS["USER"],
-            password = SUG.DBS["PASSWORD"],
-            database = SUG.DBS["DATABASE"]
+            host = SUG.DBC["HOST"],
+            user = SUG.DBC["USER"],
+            password = SUG.DBC["PASSWORD"],
+            database = SUG.DBC["DATABASE"]
         )
     except:
         raise DatabaseConnectionError(
-            SUG.DBS["DATABASE"], 
-            SUG.DBS["USER"], 
-            SUG.DBS["HOST"], 
-            SUG.DBS["PASSWORD"]
+            name = SUG.DBC["DATABASE"], 
+            user = SUG.DBC["USER"], 
+            host = SUG.DBC["HOST"], 
+            password = SUG.DBC["PASSWORD"]
         )
     SUG.THR.DBS.autocommit = True
     SUG.THR.DBV = bool(database_request(

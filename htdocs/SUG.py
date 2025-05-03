@@ -1,8 +1,8 @@
 #
-#   INIT
+#   HANDLER
 #
 
-# INIT -> HANDLER
+# HANDLER -> LOAD
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -37,7 +37,7 @@ THR.DBV = None
 #
 
 # MASTER SUPERGLOBALS -> DATABASE
-DBS = {
+DBC = {
     "HOST": "localhost",
     "USER": "phpmyadmin",
     "PASSWORD": "orangepi",

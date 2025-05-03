@@ -1,14 +1,14 @@
 #
-#   INIT
+#   HANDLER
 #
 
-# INIT -> HANDLER
+# HANDLER -> LOAD
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# INIT -> EXTENSIONS
+# HANDLER -> EXTENSIONS
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
@@ -23,7 +23,6 @@ from extensions.response import *
 def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
-    SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
     # FUNCTION -> ACTIVATION
     database_init()
@@ -38,11 +37,11 @@ def output(request: object) -> object:
     
     # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
-        raise IncorrectArgumentInputError(SUG.THR.PST)
+        raise IncorrectArgumentInputError(PST = SUG.THR.PST)
     if isx("RESOURCE") and (isx("NODE") or isx("CONTEXT")):
-        raise IncorrectArgumentInputError(SUG.THR.PST)
+        raise IncorrectArgumentInputError(PST = SUG.THR.PST)
     if not isx("RESOURCE") and not isx("NODE") and not isx("CONTEXT"):
-        raise IncorrectArgumentInputError(SUG.THR.PST)
+        raise IncorrectArgumentInputError(PST = SUG.THR.PST)
     
     # FUNCTION -> TYPES OF QUERIES
     if isx("RESOURCE"):
