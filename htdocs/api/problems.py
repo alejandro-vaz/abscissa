@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from handler import *
 
 # INIT -> EXTENSIONS
+from extensions.bool import *
 from extensions.cryptography import *
 from extensions.database import *
 from extensions.post import *
@@ -27,25 +28,23 @@ def output(request: object) -> object:
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
     # FUNCTION -> ACTIVATION
+    bool_init()
     cryptography_init()
     database_init()
     post_init()
     response_init()
     
     # FUNCTION -> ARGUMENT CHECKS
-    check("LANG")
-    check("PROBLEM")
+    check("CONTEXT", values = ["day", "random"])
+    check("LANG", values = SUG.LAN)
     check("NODE")
+    check("PROBLEM")
     
     # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
-        raise TabError()
-    if isx("NODE") and isx("PROBLEM"):
-        raise TabError()
-    if isx("CONTEXT") and (isx("PROBLEM") or isx("NODE")):
-        raise TabError()
-    if not isx("CONTEXT") and not isx("PROBLEM") and  not isx("NODE"):
-        raise TabError()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
+    if not bool_1true(isx("CONTEXT"), isx("PROBLEM"), isx("NODE")):
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     
     # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
@@ -64,7 +63,7 @@ def output(request: object) -> object:
                 "data_" + SUG.THR.PST["LANG"]
             ]
         )
-    elif isx("CONTEXT"):
+    else:
         if SUG.THR.PST["CONTEXT"] == "day":
             result = database_request(
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
@@ -78,7 +77,7 @@ def output(request: object) -> object:
                     )[0]["total"])
                 ]
             )[0]
-        elif SUG.THR.PST["CONTEXT"] == "random":
+        else:
             result = database_request(
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
@@ -91,8 +90,4 @@ def output(request: object) -> object:
                     )[0]['total']) - 1)
                 ]
             )[0]
-        else:
-            raise TabError()
-    else:
-        raise TabError()
     return set_response(result)

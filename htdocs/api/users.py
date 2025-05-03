@@ -29,8 +29,9 @@ def output(request: object) -> object:
     response_init()
     
     # FUNCTION -> VALIDATE
-    if not database_validate():
-        raise Error()
+    if not SUG.THR.DBV:
+        result = False
+        return set_response(result)
     
     # FUNCTION -> TYPES OF QUERIES
     if True:

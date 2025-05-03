@@ -19,7 +19,7 @@ def set_response(jsonData: object, session: str = None) -> object:
     response['Content-Type'] = 'application/json; charset=utf-8'
     response['Access-Control-Allow-Origin'] = '*'
     response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-    if session:
+    if session and len(session) == 32:
         response.set_cookie(
             'session',
             session,

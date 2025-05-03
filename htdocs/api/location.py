@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from handler import *
 
 # INIT -> EXTENSIONS
+from extensions.bool import *
 from extensions.database import *
 from extensions.post import *
 from extensions.response import *
@@ -26,19 +27,20 @@ def output(request: object) -> object:
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
     # FUNCTION -> ACTIVATION
+    bool_init()
     database_init()
     post_init()
     response_init()
     
     # FUNCTION -> ARGUMENT CHECKS
-    check("LANG")
-    check("PROBLEM")
-    check("NODE")
     check("CLUSTER")
+    check("LANG", values = SUG.LAN)
+    check("NODE")
+    check("PROBLEM")
     
     # FUNCTION -> ARGUMENT RELATIONSHIP
-    if not (isx("LANG") and (isx("PROBLEM") ^ isx("NODE") ^ isx("CLUSTER"))):
-        raise Error()
+    if not (isx("LANG") and bool_1true(isx("PROBLEM"), isx("NODE"), isx("CLUSTER"))):
+        raise IncorrectArgumentInputError(SUG.THR.PST)
 
     # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
@@ -108,7 +110,7 @@ def output(request: object) -> object:
         clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
         treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
-    elif isx("CLUSTER"):
+    else:
         clustersQuery = database_request(
             "SELECT tree, ! FROM clusters WHERE cluster = ?",
             [
@@ -131,8 +133,6 @@ def output(request: object) -> object:
         clusterName = clustersQuery["name_" + SUG.THR.PST["LANG"]]
         treeValue = clustersQuery['tree']
         treeName = treesQuery["name_" + SUG.THR.PST["LANG"]]
-    else:
-        raise Error()
     result = {
         "problem": {
             "value": problemValue,

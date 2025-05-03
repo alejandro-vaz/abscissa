@@ -33,6 +33,7 @@ def output(request: object) -> object:
     response_init()
     
     # FUNCTION -> ARGUMENT CHECKS
+    check("CONTEXT", values = ["login", "register"])
     check("EMAIL")
     check("PASSWORD")
     check("USERNAME")
@@ -41,63 +42,60 @@ def output(request: object) -> object:
     if isx("CONTEXT"):
         if SUG.THR.PST["CONTEXT"] == "login":
             if not (isx("PASSWORD") and (isx("EMAIL") ^ isx("USERNAME"))):
-                raise Error()
+                raise IncorrectArgumentInputError(SUG.THR.PST)
         elif SUG.THR.PST["CONTEXT"] == "register":
             if not (isx("EMAIL") and isx("USERNAME") and isx("PASSWORD")):
-                raise Error()
-        elif SUG.THR.PST["CONTEXT"] == 'validate':
-            if isx("USERNAME") or isx("EMAIL") or isx("PASSWORD"):
-                raise Error()
-        else:
-            raise Error()
+                raise IncorrectArgumentInputError(SUG.THR.PST)
     else:
-        raise Error()
+        if isx("USERNAME") or isx("EMAIL") or isx("PASSWORD"):
+            raise IncorrectArgumentInputError(SUG.THR.PST)
     
     # FUNCTION -> TYPES OF QUERIES
-    if SUG.THR.PST["CONTEXT"] == 'login':
-        if isx("EMAIL"):
-            hashpass, username = database_request(
-                "SELECT hashpass, username FROM users WHERE email = ?",
-                [
-                    SUG.THR.PST["EMAIL"]
-                ]
-            )[0]
-            if decrypt(hashpass, SUG.THR.PST["PASSWORD"]) == username:
-                result = True
-                session = gensession()
-                setsession(session, username)
-                return set_response(result, session = session)
+    if isx("CONTEXT"):
+        if SUG.THR.PST["CONTEXT"] == 'login':
+            if isx("EMAIL"):
+                hashpass, username = database_request(
+                    "SELECT hashpass, username FROM users WHERE email = ?",
+                    [
+                        SUG.THR.PST["EMAIL"]
+                    ]
+                )[0]
+                if decrypt(hashpass, SUG.THR.PST["PASSWORD"]) == username:
+                    result = True
+                    session = gensession()
+                    setsession(session, username)
+                    return set_response(result, session = session)
+                else:
+                    result = False
+                    return set_response(result)
             else:
-                result = False
-                return set_response(result)
+                hashpass = database_request(
+                    "SELECT hashpass FROM users WHERE username = ?",
+                    [
+                        SUG.THR.PST["USERNAME"]
+                    ]
+                )[0]["hashpass"]
+                if decrypt(hashpass, SUG.THR.PST["PASSWORD"])  == SUG.THR.PST["USERNAME"]:
+                    result = True
+                    session = gensession()
+                    setsession(session, SUG.THR.PST["USERNAME"])
+                    return set_response(result, session = session)
+                else:
+                    result = False
+                    return set_response(result)
         else:
-            hashpass = database_request(
-                "SELECT hashpass FROM users WHERE username = ?",
+            result = database_request(
+                "INSERT INTO users (username, joined, email, hashpass, preferences, role) VALUES (?, ?, ?, ?, ?, ?)",
                 [
-                    SUG.THR.PST["USERNAME"]
+                    SUG.THR.PST["USERNAME"],
+                    datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    SUG.THR.PST["EMAIL"],
+                    encrypt(SUG.THR.PST["USERNAME"], SUG.THR.PST["PASSWORD"]),
+                    json.dumps([]),
+                    0
                 ]
-            )[0]["hashpass"]
-            if decrypt(hashpass, SUG.THR.PST["PASSWORD"])  == SUG.THR.PST["USERNAME"]:
-                result = True
-                session = gensession()
-                setsession(session, SUG.THR.PST["USERNAME"])
-                return set_response(result, session = session)
-            else:
-                result = False
-                return set_response(result)
-    if SUG.THR.PST["CONTEXT"] == "register":
-        result = database_request(
-            "INSERT INTO users (username, joined, email, hashpass, preferences, role) VALUES (?, ?, ?, ?, ?, ?)",
-            [
-                SUG.THR.PST["USERNAME"],
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                SUG.THR.PST["EMAIL"],
-                encrypt(SUG.THR.PST["USERNAME"], SUG.THR.PST["PASSWORD"]),
-                json.dumps([]),
-                0
-            ]
-        )
-        return set_response(result)
+            )
+            return set_response(result)
     else:
-        result = database_validate()
+        result = SUG.THR.DBV
         return set_response(result)

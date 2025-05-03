@@ -13,7 +13,9 @@ class PyError(Exception):
     
 # EXCEPTIONS -> ERRORS
 class CheckError(PyError):
-    message = "PST {field} field did not match {pattern}, the provided value was: {value}"
+    message = "PST {field} field did not match {pattern} or {values}, the provided value was: {value}"
+class RegexMatchError(PyError):
+    message = "Datatype {datatype} does not match to any known pattern"
 class DatabaseConnectionError(PyError):
     message = "An error ocurred whilst trying to access database {name} with {user}@{host} with password: {password}"
 class DatabaseQueryError(PyError):
@@ -32,6 +34,8 @@ class UnknownArgumentValueError(PyError):
     message = "The argument {argument} has an unknown value: {value}"
 class FileNotReadableError(PyError):
     message = "The file {path} is not readable."
+class UnknownHTMLpyCommandError(PyError):
+    message = "Encountered unknown command: {command}"
 
 #
 #   INITIALIZATION

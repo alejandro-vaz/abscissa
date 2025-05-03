@@ -39,9 +39,7 @@ function curl(script, data, timeout = 5000) {
 
 // API -> SESSION VALIDATION
 function validate() {
-    return curl("auth", {
-        "CONTEXT": "validate"
-    })
+    return curl("auth", {})
 }
 
 

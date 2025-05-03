@@ -31,6 +31,8 @@ def compile_view(content: str) -> str:
             modules[area].append(read(f"modules/{area}/{command[2]}.html"))
         elif action == "call" and len(command) == 2:
             content = content.replace(f"<py> call {area} </py>", "\n".join(modules.get(area, [])))
+        else:
+            raise UnknownHTMLpyCommandError(" ".join(command))
     return content
     
 # HTML -> VIEW

@@ -31,17 +31,18 @@ def output(request: object) -> object:
     response_init()
     
     # FUNCTION -> ARGUMENT CHECKS
-    check("LANG")
-    check("RESOURCE")
+    check("CONTEXT", values = ["video"])
+    check("LANG", values = SUG.LAN)
     check("NODE")
+    check("RESOURCE")
     
     # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
-        raise Error()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     if isx("RESOURCE") and (isx("NODE") or isx("CONTEXT")):
-        raise Error()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     if not isx("RESOURCE") and not isx("NODE") and not isx("CONTEXT"):
-        raise Error()
+        raise IncorrectArgumentInputError(SUG.THR.PST)
     
     # FUNCTION -> TYPES OF QUERIES
     if isx("RESOURCE"):
@@ -69,7 +70,7 @@ def output(request: object) -> object:
                 SUG.THR.PST["LANG"]
             ]
         )
-    elif isx("CONTEXT") and not isx("NODE"):
+    else:
         result = database_request(
             "SELECT * FROM resources WHERE type = ? AND lang = ?",
             [
@@ -77,6 +78,4 @@ def output(request: object) -> object:
                 SUG.THR.PST["LANG"]
             ]
         )
-    else:
-        raise Error()
     return set_response(result)

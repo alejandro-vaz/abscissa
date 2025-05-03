@@ -25,7 +25,8 @@ def regex(datatype: str) -> object:
         case "USERNAME": return compile(r'^[a-zA-Z0-9_-]{4,32}$')
         case "LANG": return compile(r'^[a-z]{2}$')
         case "RESOURCE": return compile(r'^(?:[1-9][0-9]{0,7})$')
-        case _: raise TabError()
+        case "CONTEXT": return compile(r'.*')
+        case _: raise RegexMatchError(datatype)
 
 
 #
@@ -34,20 +35,29 @@ def regex(datatype: str) -> object:
 
 # PST -> KEY EXISTS
 def isx(key: str) -> bool:
-    return key in SUG.THR.PST
+    if type(SUG.THR.PST) == dict:
+        return key in SUG.THR.PST
+    return False
 
 # PST -> KEY MATCHES PATTERN
-def check(key: str, strict: bool = True) -> object:
+def check(key: str, values: list = [], strict: bool = True) -> object:
     if isx(key):
         value = str(SUG.THR.PST[key])
         if not regex(key).fullmatch(value):
             if strict:
-                raise TabError()
+                raise CheckError(key, regex(key), values, SUG.THR.PST[key])
             else:
                 return False
         else:
-            if not strict:
-                return True
+            if len(values) > 0:
+                if strict:
+                    if not SUG.THR.PST[key] in values:
+                        raise UnknownArgumentValueError(key, SUG.THR.PST[key])
+                else:
+                    return SUG.THR.PST[key] in values
+            else:
+                if not strict:
+                    return True
     else:
         if not strict:
             return True

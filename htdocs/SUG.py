@@ -28,6 +28,9 @@ THR.DBS = None
 # THREAD SUPERGLOBALS -> SESSION ID
 THR.SID = None
 
+# THREAD SUPERGLOBALS -> VALIDATION
+THR.DBV = None
+
 
 #
 #   MASTER SUPERGLOBALS
@@ -40,3 +43,10 @@ DBS = {
     "PASSWORD": "orangepi",
     "DATABASE": "abscissa"
 }
+
+# MASTER SUPERGLOBALS -> LANG VALUES
+LAN = [
+    "de",
+    "en",
+    "es"
+]
