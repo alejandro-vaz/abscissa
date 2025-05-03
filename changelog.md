@@ -395,3 +395,27 @@
 - [X] (Patch) Added `b36encode()` and `b36decode()` functions.
 
 - [X] (Patch) Changed *Abscissa* logo.
+
+#### *Abscissa* 2.1.26 `0-1-10`
+
+- [X] (Minor) Completed [#33.](https://github.com/alejandro-vaz/Abscissa/issues/33)
+
+- [X] (Patch) Completed [#57.](https://github.com/alejandro-vaz/Abscissa/issues/57)
+
+- [X] (Patch) Completed [#62.](https://github.com/alejandro-vaz/Abscissa/issues/62)
+
+- [X] (Patch) Fixed exception argument handling.
+
+- [X] (Patch) Added `base36` module.
+
+- [X] (Patch) Deleted error page.
+
+- [X] (Patch) Modified `b36encode()` function to require padding.
+
+- [X] (Patch) Added `THR.SID` superglobal for session *ID.*
+
+- [X] (Patch) Renamed `DBS` master superglobal to `DBC` in order to avoid confusion with `THR.DBS`.
+
+- [X] (Patch) Added plus-minus *LaTeX* command replacement when `+-` is typed.
+
+- [X] (Patch) Added fraction *LaTeX* command replacement when `/` is typed.
