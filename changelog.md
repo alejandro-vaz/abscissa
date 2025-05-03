@@ -371,3 +371,27 @@
 - [X] (Minor) Changed file classification.
 
 - [X] (Major) Transpiled everything to *Python.*
+
+#### *Abscissa* 2.1.14 `0-0-11`
+
+- [X] (Patch) Added database validation thread superglobal and removed `database_validate()` function.
+
+- [X] (Patch) Added available languages master superglobal.
+
+- [X] (Patch) Added value especific checking for *POST.*
+
+- [X] (Patch) Implemented custom exceptions.
+
+- [X] (Patch) Remade auth script logic, meaning validation now does not require any input at all.
+
+- [X] (Patch) Refactored all functions and added input and output types.
+
+- [X] (Patch) Renamed functions, sticking to `camelCase` for variables and `snake_case` for functions.
+
+- [X] (Patch) Implemented strict mode for check (default: `True`).
+
+- [X] (Patch) Added *PayPal* integration.
+
+- [X] (Patch) Added `b36encode()` and `b36decode()` functions.
+
+- [X] (Patch) Changed *Abscissa* logo.
