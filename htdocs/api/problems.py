@@ -1,14 +1,15 @@
 #
-#   INIT
+#   HANDLER
 #
 
-# INIT -> HANDLER
+# HANDLER -> LOAD
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# INIT -> EXTENSIONS
+# HANDLER -> EXTENSIONS
+from extensions.base36 import *
 from extensions.bool import *
 from extensions.cryptography import *
 from extensions.database import *
@@ -25,9 +26,9 @@ from extensions.response import *
 def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
-    SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     
     # FUNCTION -> ACTIVATION
+    base36_init()
     bool_init()
     cryptography_init()
     database_init()
@@ -42,27 +43,32 @@ def output(request: object) -> object:
     
     # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
-        raise IncorrectArgumentInputError(SUG.THR.PST)
+        raise IncorrectArgumentInputError(PST = SUG.THR.PST)
     if not bool_1true(isx("CONTEXT"), isx("PROBLEM"), isx("NODE")):
-        raise IncorrectArgumentInputError(SUG.THR.PST)
+        raise IncorrectArgumentInputError(PST = SUG.THR.PST)
     
     # FUNCTION -> TYPES OF QUERIES
     if isx("PROBLEM"):
         result = database_request(
             "SELECT * FROM problems WHERE problem = ? AND ? IS NOT NULL",
             [
-                SUG.THR.PST["PROBLEM"],
+                b36decode(SUG.THR.PST["PROBLEM"]),
                 "data_" + SUG.THR.PST["LANG"]
             ]
         )[0]
+        result["problem"] = b36encode(result["problem"], 6)
+        result["node"] = b36encode(result["node"], 4)
     elif isx("NODE"):
         result = database_request(
             "SELECT * FROM problems WHERE node = ? AND ? IS NOT NULL",
             [
-                SUG.THR.PST["NODE"],
+                b36decode(SUG.THR.PST["NODE"]),
                 "data_" + SUG.THR.PST["LANG"]
             ]
         )
+        for problem in result:
+            problem["problem"] = b36encode(problem["problem"], 6)
+            problem["node"] = b36encode(problem["node"], 4)
     else:
         if SUG.THR.PST["CONTEXT"] == "day":
             result = database_request(
@@ -77,6 +83,8 @@ def output(request: object) -> object:
                     )[0]["total"])
                 ]
             )[0]
+            result["problem"] = b36encode(result["problem"], 6)
+            result["node"] = b36encode(result["node"], 4)
         else:
             result = database_request(
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
@@ -90,4 +98,6 @@ def output(request: object) -> object:
                     )[0]['total']) - 1)
                 ]
             )[0]
+            result["problem"] = b36encode(result["problem"], 6)
+            result["node"] = b36encode(result["node"], 4)
     return set_response(result)

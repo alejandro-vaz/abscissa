@@ -197,3 +197,15 @@
 /X (Patch) Added ·PayPal· integration.
 /X (Patch) Added /_b36encode()/_ and /_b36decode()/_ functions.
 /X (Patch) Changed ·Abscissa· logo.
+/h4 ·Abscissa· 2.1.26 /_0-1-10/_
+/X (Minor) Completed [#33.](https:://github.com/alejandro-vaz/Abscissa/issues/33)
+/X (Patch) Completed [#57.](https:://github.com/alejandro-vaz/Abscissa/issues/57)
+/X (Patch) Completed [#62.](https:://github.com/alejandro-vaz/Abscissa/issues/62)
+/X (Patch) Fixed exception argument handling.
+/X (Patch) Added /_base36/_ module.
+/X (Patch) Deleted error page.
+/X (Patch) Modified /_b36encode()/_ function to require padding.
+/X (Patch) Added /_THR.SID/_ superglobal for session ·ID.·
+/X (Patch) Renamed /_DBS/_ master superglobal to /_DBC/_ in order to avoid confusion with /_THR.DBS/_.
+/X (Patch) Added plus-minus ·LaTeX· command replacement when /_+-/_ is typed.
+/X (Patch) Added fraction ·LaTeX· command replacement when /_¬/¬/_ is typed.

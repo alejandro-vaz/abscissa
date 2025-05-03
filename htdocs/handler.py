@@ -87,7 +87,7 @@ def include(name: str) -> object:
     try:
         spec = spec_from_file_location(name, path)
     except:
-        raise APIScriptNotFoundError(name)
+        raise APIScriptNotFoundError(name = name)
     module = module_from_spec(spec)
     sys.modules[name] = module
     spec.loader.exec_module(module)
@@ -98,4 +98,4 @@ def read(path: str) -> str:
     try:
         return create_path(os.path.join(BASE_DIR, path)).read_text(encoding='utf-8')
     except:
-        raise FileNotReadableError(path)
+        raise FileNotReadableError(path = path)
