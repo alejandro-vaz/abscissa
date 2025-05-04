@@ -419,3 +419,13 @@
 - [X] (Patch) Added plus-minus *LaTeX* command replacement when `+-` is typed.
 
 - [X] (Patch) Added fraction *LaTeX* command replacement when `/` is typed.
+
+### *Abscissa* 2.2.0 `0-2-2`
+
+- [X] (Minor) Remade dashboard.
+
+- [X] (Minor) Completed [#65.](https://github.com/alejandro-vaz/Abscissa/issues/65)
+
+- [X] (Patch) Made font size smaller.
+
+- [X] (Patch) Changed *LaTeX* editor keybinds.
