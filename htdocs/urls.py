@@ -26,6 +26,7 @@ urlpatterns = []
 views = [
     "auth",
     "dashboard",
+    "playground",
     "problem"
 ]
 scripts = [

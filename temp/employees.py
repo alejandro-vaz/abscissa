@@ -1,12 +1,21 @@
 import math
 import random
 
+# 1.2 for minor, 1.5 for major
 k = 1.2
+
+# USE IT
+# INSIDE DEPARTMENT, SCORES ARE EVALUATED INDEPENDENTLY
+# IF HEAD OF BIDEPARTMENT, NEWELO IS SUM OF DEPARTMENT ELOS
+# TO SWITCH HEAD OF BIDEPT. ELO OF TWO PEOPLE COMBINED OF THE TWO DEPT. ARE SUMMED AND THEN USED WITH SWITCH FORMULA
 
 def newElo(pastElo, score, deptavg):
     diff = (score - deptavg) / deptavg
     new = math.log(pastElo, k) + diff
-    return round(math.pow(k, new))
+    fin = round(math.pow(k, new))
+    if fin < 5:
+        return 5
+    return fin
 
 # 0 GAP MEANS JUST THE ONE ABOVE.
 # 1 GAP MEANS ONE EMPTY POSITION IN BETWEEN
@@ -19,4 +28,4 @@ def switch(below, above, gap = 0):
     else:
         return False
 
-print(switch(33, 39, gap = -1))
+print(newElo(160, 10, 38 / 6))

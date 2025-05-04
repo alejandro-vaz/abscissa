@@ -11,6 +11,37 @@
 @use "sass:meta"
 
 
+/*                                                                           */
+/* SPACE                                                                     */
+/*                                                                           */
+
+// SPACE -> MAIN
+$_main-navbar-width: 3.8 * general.$U
+$main-default-width: 100%
+
+$main-width: calc($main-default-width - $_main-navbar-width)
+
+#main
+    +general.section(true, false, $width: $main-width)
+
+
+// SPACE -> DIV
+$space-default-width: 100%
+$space-max-width: 69.5 * general.$U
+$space-min-margin: general.$U
+$space-grow: false
+$space-height: fit-content
+$space-h2-margin-left: 1.5 * general.$U
+$space-h2-margin-top: 0
+
+$space-width: min($space-default-width - 2 * $space-min-margin, $space-max-width)
+
+#space
+    +general.section(false, false, $width: $space-width, $height: $space-height, $grow: $space-grow)
+    > h2
+        margin-left: $space-h2-margin-left
+        margin-top: $space-h2-margin-top
+
 
 /*                                                                           */
 /* PROBLEMS                                                                  */
@@ -23,7 +54,7 @@ $sections-total-width: 100%
 $sections-height: 17* general.$U
 $sections-direction: row
 $sections-padding: math.div(general.$PADDER, 2)
-$sections-margin: 0 auto 3* general.$U auto
+$sections-margin: 0 auto 2* general.$U auto
 $sections-minimum-margin: 1* general.$U
 $sections-fade: to top right
 $sections-base-color: #333333

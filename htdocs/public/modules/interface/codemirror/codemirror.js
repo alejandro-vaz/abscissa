@@ -45,7 +45,7 @@ function renderCodeMirror(textarea) {
             return true;
         }
         // REPLICATE LINE ABOVE
-        if (pressed.key === 'Tab') {
+        if (pressed.altKey) {
             pressed.preventDefault();
             const cursor = code.getCursor();
             if (cursor.line > 0) {
@@ -89,8 +89,8 @@ function renderCodeMirror(textarea) {
             code.replaceRange(insert, cursor);
             code.setCursor({ line: cursor.line, ch: cursor.ch + insert.length })
         }
-        // AUTOCOMPLETE WITH CHARACTER FROM THE LAST LINE
-        if (pressed.key === "º") {
+        // AUTOCOMPLETE WITH TAB
+        if (pressed.key === 'Tab') {
             pressed.preventDefault();
             const cursor = code.getCursor();
             if (cursor.line > 0) {

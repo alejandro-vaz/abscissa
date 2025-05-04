@@ -38,7 +38,7 @@ def compile_view(content: str) -> str:
 # HTML -> VIEW
 def create_view(viewName: str) -> object:
     def view(request: object):
-        return HTTP.HttpResponse(compile_view(read(f"content/{viewName}.html")))
+        return HTTP.HttpResponse(compile_view(read(f"content/&{viewName}.html")))
     return view
 
 

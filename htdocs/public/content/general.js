@@ -18,7 +18,10 @@ function curl(script, data, timeout = 5000) {
     const path = `api/${script}`;
     const scheme = window.location.protocol === "https:" ? 'https' : 'http';
     const host = window.location.host;
-    const scriptDir = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+    const scriptDir = window.location.pathname.substring(
+        0, 
+        window.location.pathname.lastIndexOf('/')
+    );
     const url = `${scheme}://${host}${scriptDir}/${path.replace(/^\/+/, '')}`;
     const signal = AbortSignal.timeout(timeout);
     return fetch(url, {

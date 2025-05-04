@@ -3,7 +3,7 @@
 /*                                                                           */
 
 // RENDER -> CONNECT TO ELEMENTS
-let playground = document.getElementById("playground");
+let editor = document.getElementById("editor");
 const visor = document.getElementById("visor");
 const instructions = document.getElementById("instructions");
 const answer = document.getElementById("answer");
@@ -16,7 +16,7 @@ const calculatorLinks = {
 }
 
 // RENDER -> CONNECT TO CODEMIRROR
-playground = renderCodeMirror(playground);
+editor = renderCodeMirror(editor);
 
 // RENDER -> LOAD PROBLEM
 curl("problems", { "PROBLEM": getURLParameter("problem"), "LANG": "en" }).then(data => {
@@ -38,9 +38,9 @@ curl("problems", { "PROBLEM": getURLParameter("problem"), "LANG": "en" }).then(d
         const instructionsText = document.createElement("div");
         instructionsText.innerHTML = problem.instructions;
         instructions.appendChild(instructionsText);
-        // SET UP PLAYGROUND
-        playground.setValue(problem.playgroundDefault);
-        visor.textContent = problem.playgroundDefault;
+        // SET UP EDITOR
+        editor.setValue(problem.editorDefault);
+        visor.textContent = problem.editorDefault;
         renderLaTeX(visor);
         // RUN RESULT
         result.textContent = problem.pre + problem.post;
@@ -87,7 +87,7 @@ answer.addEventListener('keydown', function(pressed) {
 });
 
 // DYNAMIC -> RENDER VISOR ON CHANGE
-playground.on("change", function(instance) {
+editor.on("change", function(instance) {
     visor.textContent = instance.getValue();
     renderLaTeX(visor);
     visor.scrollTop = visor.scrollHeight;

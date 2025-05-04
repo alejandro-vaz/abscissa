@@ -3,13 +3,12 @@
 /*                                                                           */
 
 // CONNECTIONS -> RANDOM ELEMENTS
-const randomContent = document.getElementById("randomContent");
-const randomTry = document.getElementById("random-try");
-const randomSkip = document.getElementById("random-skip");
+const randomContent = document.getElementById("random-content");
+const randomOptions = document.getElementById("random-options");
 
 // CONNECTIONS -> DAY ELEMENTS
-const dayContent = document.getElementById("dayContent");
-const dayTry = document.getElementById("day-try");
+const dayContent = document.getElementById("day-content");
+const dayOptions = document.getElementById("day-options");
 
 // CONNECTIONS -> RESOURCES
 const resources = document.getElementById("resources-links")
@@ -20,15 +19,14 @@ const resources = document.getElementById("resources-links")
 /*                                                                           */
 
 // LOADING DEFINITIONS -> PROBLEM
-function loadProblem(div, post) {
+function loadProblem(div, options, post) {
     curl("problems", post).then(data => {
         curl("location", { "LANG": post.LANG, "PROBLEM": data.problem }).then(location => {
             // GET PROBLEM DATA
             let problem = JSON.parse(data.data_en)
-            // ADD ATTRIBUTES
-            div.location = location;
             // ERASE PREVIOUS DATA
             div.innerHTML = "";
+            options.innerHTML = "";
             // CREATE SECTIONS
             const content1 = document.createElement("div")
             const content2 = document.createElement('div')
@@ -37,7 +35,7 @@ function loadProblem(div, post) {
             div.appendChild(content1)
             div.appendChild(content2)
             // ADD NAME
-            const contentHeader = document.createElement('h2');
+            const contentHeader = document.createElement('h3');
             contentHeader.className = "contentTitle"
             contentHeader.innerHTML = data["name_" + "en"];
             content1.appendChild(contentHeader);
@@ -49,15 +47,33 @@ function loadProblem(div, post) {
             // CONTENT 2 CARD: LOCATION
             const contentLocation = document.createElement("p");
             contentLocation.className = "contentCard";
-            contentLocation.id = "content-location"
             contentLocation.innerHTML = `${location.tree.value}${location.cluster.value}@${location.node.value}`;
             content2.appendChild(contentLocation);
             // CONTENT 2 CARD: ID
             const contentId = document.createElement("p");
             contentId.className = "contentCard";
-            contentLocation.id = "content-id"
             contentId.innerHTML = "#" + data.problem;
-            content2.appendChild(contentId)
+            content2.appendChild(contentId);
+            // TRY BUTTON
+            const tryButton = document.createElement('button');
+            tryButton.class = "inputButton";
+            tryButton.id = options.id === "random-options" ? "random-try" : "day-try";
+            tryButton.innerHTML = "TRY";
+            options.appendChild(tryButton);
+            tryButton.addEventListener("click", function() {
+                redirect(`problem?problem=${location.problem.value}&lang=en`);
+            })
+            // SKIP BUTTON
+            if (options.id === "random-options") {
+                const skipButton = document.createElement('button');
+                skipButton.class = "inputButton";
+                skipButton.id = "random-skip";
+                skipButton.innerHTML = "SKIP";
+                options.appendChild(skipButton);
+                skipButton.addEventListener("click", function() {
+                    loadProblem(div, options, post)
+                })
+            }
         })
     })
 }
@@ -82,22 +98,9 @@ function loadResources(times) {
 /*                                                                           */
 
 // RENDER -> STARTING CONTENT
-loadProblem(randomContent, { "LANG": "en", "CONTEXT": "random" });
-loadProblem(dayContent, { "LANG": "en", "CONTEXT": "day" });
+loadProblem(randomContent, randomOptions, { "LANG": "en", "CONTEXT": "random" });
+loadProblem(dayContent, dayOptions, { "LANG": "en", "CONTEXT": "day" });
 loadResources(5);
-
-// RENDER -> SKIPPING RANDOM
-randomSkip.addEventListener("click", function() {
-    loadProblem(randomContent, { "LANG": "en", "CONTEXT": "random" });
-})
-
-// RENDER -> TRYING PROBLEMS
-randomTry.addEventListener("click", function() {
-    redirect(`problem?problem=${randomContent.location.problem.value}&lang=en`);
-})
-dayTry.addEventListener("click", function() {
-    redirect(`problem?problem=${dayContent.location.problem.value}&lang=en`);
-})
 
 // RENDER -> INFINITE SCROLL FOR RESOURCES
 let loading = false;
