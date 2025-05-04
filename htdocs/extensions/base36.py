@@ -17,7 +17,7 @@ from handler import *
 def b36encode(num: int, pad: int) -> str:
     alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     if num < 0:
-        return '-' + b36encode(-num)
+        return '-' + b36encode(-num, pad)
     if num == 0:
         done = "0"
     else:
