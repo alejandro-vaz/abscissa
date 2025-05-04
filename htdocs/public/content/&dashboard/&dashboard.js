@@ -47,13 +47,11 @@ function loadProblem(div, options, post) {
             // CONTENT 2 CARD: LOCATION
             const contentLocation = document.createElement("p");
             contentLocation.className = "contentCard";
-            contentLocation.id = "content-location"
             contentLocation.innerHTML = `${location.tree.value}${location.cluster.value}@${location.node.value}`;
             content2.appendChild(contentLocation);
             // CONTENT 2 CARD: ID
             const contentId = document.createElement("p");
             contentId.className = "contentCard";
-            contentLocation.id = "content-id"
             contentId.innerHTML = "#" + data.problem;
             content2.appendChild(contentId);
             // TRY BUTTON
