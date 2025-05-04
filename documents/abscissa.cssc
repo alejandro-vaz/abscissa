@@ -27,94 +27,114 @@ flowchart TD
     classDef 10 fill::#007777
     classDef dept fill::#3332
 
-    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=2.1))
-    class ABSCISSA 4
 
-    alejo1([77 Alejo])
-    diego1([68 Diego])
-    class alejo1 6
-    class diego1 3
-
-    BACKEND{{DEPT. BACKEND/=\lt/=br/=\gt/=Control}}
-    FRONTEND{{DEPT. FRONTEND/=\lt/=br/=\gt/=Entry}}
-    MARKETING{{DEPT. MARKETING/=\lt/=br/=\gt/=Need}}
-    FINANZAS{{DEPT. FINANCES/=\lt/=br/=\gt/=Time}}
-    RRHH{{DEPT. HR./=\lt/=br/=\gt/=Scale}}
-    class BACKEND 8
-    class FRONTEND 5
-    class MARKETING 0
-    class FINANZAS 5
-    class RRHH 0
-
-    alejo2(77 Alejo)
-    alejo3(77 Alejo)
-    diego2(68 Diego)
-    diego3(68 Diego)
-    diego4(68 Diego)
-    class alejo2 7
-    class alejo3 5
-    class diego2 3
-    class diego3 6
-    class diego4 5
-
-    beltran/=\gt/=52 Beltrán]
-    jorge/=\gt/=39 Jorge]
-    class beltran 4
-    class jorge 0
-
-    sergio[[33 Sergio]]
-    class sergio 2
-
-    guzman[/25 Guzmán\]
-    dela[/14 Dela\]
-    class guzman 1
-    class dela 0
-
-    luis[/10 Luis/]
-    class luis 5
-
-    juan[\8 Juan\]
-    marcos[\7 Marcos\]
-    class juan 1
-    class marcos 2
-
-
+    ABSCISSA((ABSCISSA/=\lt/=br/=\gt/=2.2))
     ABSCISSA ==/=\gt/= alejo1
+    ABSCISSA ==/=\gt/= diego1
+    ABSCISSA ==/=\gt/= alejo2
+
+
+    alejo1([336 Alejo])
     alejo1 -.-/=\gt/= BACKEND
     alejo1 -.-/=\gt/= FRONTEND
 
-    ABSCISSA ==/=\gt/= diego1
-    diego1 -.-/=\gt/= MARKETING
-    diego1 -.-/=\gt/= FINANZAS
-    diego1 -.-/=\gt/= RRHH
 
+    diego1([278 Diego])
+    diego1 -.-/=\gt/= MARKETING
+    diego1 -.-/=\gt/= FINANCE
+
+
+    alejo2([178 Alejo])
+    alejo2 -.-/=\gt/= HR
+    alejo2 -.-/=\gt/= RND
+
+
+    BACKEND{{DEPT. BACKEND/=\lt/=br/=\gt/=Control}}
+    alejo3(173 Alejo)
+    beltran/=\gt/=77 Beltrán]
+    jorge/=\gt/=71 Jorge]
+    sergio[[36 Sergio]]
     subgraph 1[" "]
-        BACKEND ==/=\gt/= alejo2
-        alejo2 --/=\gt/= beltran
-        alejo2 --/=\gt/= jorge
+        BACKEND ==/=\gt/= alejo3
+        alejo3 --/=\gt/= beltran
+        alejo3 --/=\gt/= jorge
         beltran --/=\gt/= sergio
     end
+    class alejo3 9
+    class BACKEND 7
+    class beltran 5
+    class sergio 3
+    class jorge 2
 
+
+    FRONTEND{{DEPT. FRONTEND/=\lt/=br/=\gt/=Entry}}
+    alejo4(163 Alejo)
+    guzman[/19 Guzmán\]
+    juan[\5 Juan\]
     subgraph 2[" "]
-        FRONTEND ==/=\gt/= alejo3
-        alejo3 --/=\gt/= guzman
+        FRONTEND ==/=\gt/= alejo4
+        alejo4 --/=\gt/= guzman
         guzman --/=\gt/= juan
     end
+    class alejo4 7
+    class FRONTEND 6
+    class guzman 4
+    class juan 4
 
+
+    MARKETING{{DEPT. MARKETING/=\lt/=br/=\gt/=Need}}
+    diego2(145 Diego)
+    dela[/17 Dela\]
+    luis[/10 Luis/]
+    alejo5[\5 Alejo\]
     subgraph 3[" "]
         MARKETING ==/=\gt/= diego2
         diego2 --/=\gt/= dela
         dela --/=\gt/= luis
+        luis --/=\gt/= alejo5
     end
+    class alejo5 7
+    class luis 5
+    class diego2 3
+    class MARKETING 2
+    class dela 0
 
+
+    FINANCE{{DEPT. FINANCE/=\lt/=br/=\gt/=Time}}
+    diego3(133 Diego)
+    alejo6[\5 Alejo\]
     subgraph 4[" "]
-        FINANZAS ==/=\gt/= diego3
+        FINANCE ==/=\gt/= diego3
+        diego3 ==/=\gt/= alejo6
     end
+    class alejo6 8
+    class FINANCE 5
+    class diego3 0
 
+
+    HR{{DEPT. HR/=\lt/=br/=\gt/=Scale}}
+    diego4(150 Diego)
+    alejo7[\5 Alejo\]
+    marcos[\5 Marcos\]
     subgraph 5[" "]
-        RRHH ==/=\gt/= diego4
+        HR ==/=\gt/= diego4
+        diego4 --/=\gt/= alejo7
         diego4 --/=\gt/= marcos
     end
+    class HR 8
+    class alejo7 5
+    class diego4 4
+    class marcos 0
 
-    class 1,2,3,4,5 dept
+
+    RND{{DEPT. R&D/=\lt/=br/=\gt/=Improvement}}
+    alejo8(173 Alejo)
+    subgraph 6[" "]
+        RND ==/=\gt/= alejo8
+    end
+    class RND 10
+    class alejo8 9
+
+
+    class 1,2,3,4,5,6 dept
 /code
