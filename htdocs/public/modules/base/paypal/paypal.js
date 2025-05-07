@@ -2,8 +2,14 @@
 /* RENDERING                                                                 */
 /*                                                                           */
 
-// RENDERING -> BUTTON
-document.addEventListener("DOMContentLoaded", function() {
+// RENDERING -> DONATIONS
+function addDonations(place) {
+    container = document.createElement('div');
+    container.id = 'donate-button-container';
+    button = document.createElement('div');
+    button.id = 'donate-button';
+    container.appendChild(button);
+    place.appendChild(container);
     PayPal.Donation.Button({
         env:'production',
         hosted_button_id:'FY3JEAXWWBE8U',
@@ -13,10 +19,4 @@ document.addEventListener("DOMContentLoaded", function() {
             title:'PayPal - The safer, easier way to pay online!'
         }
     }).render('#donate-button');
-})
-
-/*
-<div id="donate-button-container">
-    <div id="donate-button"></div>
-</div>
-*/
+}
