@@ -1,6 +1,9 @@
 # SASS AUTOCOMPILER
 sass --watch --no-source-map --style=compressed ./:./
 
+# REACT AUTOCOMPILER
+npm run build:watch
+
 # GIT VIEWER
 git log --tags --simplify-by-decoration \
     --pretty=format:"Version: %D%nAuthor: %an%nDate: %ad" \
