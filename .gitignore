@@ -2,3 +2,4 @@
 problem/temp.json
 *.css
 *.map
+node_modules/
