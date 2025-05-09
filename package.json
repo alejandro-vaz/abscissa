@@ -1,9 +1,10 @@
 {
   "name": "abscissa",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "2.3.1",
+  "main": "public/content/general.js",
   "scripts": {
-    "build:watch": "babel . --extensions \".jsx\" --watch --out-dir . --out-file-extension .js"
+    "creact": "babel . --extensions \".jsx\" --watch --out-dir . --out-file-extension .js",
+    "csass": "sass --watch --no-source-map --style=compressed ./:./"
   },
   "repository": {
     "type": "git",

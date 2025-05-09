@@ -214,3 +214,10 @@
 /X (Minor) Completed [#65.](https:://github.com/alejandro-vaz/Abscissa/issues/65)
 /X (Patch) Made font size smaller.
 /X (Patch) Changed ·LaTeX· editor keybinds.
+/h3 ·Abscissa· 2.3.1 /_1-0-5/_
+/X (Patch) Made /_node.js/_ project.
+/X (Patch) Removed all documents except /_changelog.cssc/_.
+/X (Major) Integrated ·React.·
+/X (Patch) Replaced ·JS· /_.addEventListener("click" =/=\gt/= ...)/_ for ·HTML· property /_onclick/_ to increase simplicity.
+/X (Patch) Replaced default cursors for styled ones.
+/X (Patch) Removed app module analytics.
