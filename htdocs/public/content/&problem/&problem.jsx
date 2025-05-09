@@ -6,6 +6,7 @@
 let editor = document.getElementById("editor");
 const visor = document.getElementById("visor");
 const instructions = document.getElementById("instructions");
+const info = document.getElementById('info')
 const answer = document.getElementById("answer");
 const result = document.getElementById("result");
 const validateButton = document.getElementById("validate");
@@ -27,17 +28,18 @@ curl("problems", { "PROBLEM": getURLParameter("problem"), "LANG": "en" }).then(d
         result.dataset.pre = problem.pre;
         result.dataset.post = problem.post;
         // CREATE TITLE
-        const header = document.createElement("h2");
-        header.innerHTML = data["name_" + "en"];
-        document.getElementById("info").appendChild(header);
+        ReactDOM.createRoot(info).render(
+            <>
+                <h2>{data["name_" + "en"]}</h2>
+            </>
+        )
         // INSTRUCTIONS TITLE
-        const instructionsHeader = document.createElement("h3");
-        instructionsHeader.textContent = "Instructions";
-        instructions.appendChild(instructionsHeader);
-        // PARSE INSTRUCTIONS
-        const instructionsText = document.createElement("div");
-        instructionsText.innerHTML = problem.instructions;
-        instructions.appendChild(instructionsText);
+        ReactDOM.createRoot(instructions).render(
+            <>
+                <h3>Instructions</h3>
+                <div>{problem.instructions}</div>
+            </>
+        )
         // SET UP EDITOR
         editor.setValue(problem.editorDefault);
         visor.textContent = problem.editorDefault;

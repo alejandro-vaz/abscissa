@@ -75,7 +75,7 @@ $CURVER: root.$CURVER
     &:focus
         outline: none
     @if $type == button
-        cursor: pointer
+        cursor: url("../../res/link.cur") 4 4, pointer
         background-color: #00000055
         min-width: fit-content
         height: 2.75* $U
@@ -115,6 +115,13 @@ $CURVER: root.$CURVER
 /*                                                                           */
 
 
+// DEFAULTS -> UNSELECTABLE TEXT
+$unselectable-text-user-select: none
+
+:where(:not(.CodeMirror, .CodeMirror *))
+    user-select: $unselectable-text-user-select
+
+
 // DEFAULTS -> FONT
 $font-name: "Comic Sans MS"
 
@@ -129,11 +136,13 @@ $font-name: "Comic Sans MS"
 $document-background-center: #111111
 $document-center-share: 20%
 $document-radius-share: 80%
+$document-cursor: url("../../res/pointer.cur") 4 4, auto
 
 $document-background-radius: color.invert($COLORER)
 
 :where(html)
     background: radial-gradient(circle, $document-background-center $document-center-share, $document-background-radius $document-radius-share)
+    cursor: $document-cursor
 
 
 // DEFAULTS -> PYTAGS

@@ -429,3 +429,17 @@
 - [X] (Patch) Made font size smaller.
 
 - [X] (Patch) Changed *LaTeX* editor keybinds.
+
+### *Abscissa* 2.3.1 `1-0-5`
+
+- [X] (Patch) Made `node.js` project.
+
+- [X] (Patch) Removed all documents except `changelog.cssc`.
+
+- [X] (Major) Integrated *React.*
+
+- [X] (Patch) Replaced *JS* `.addEventListener("click" => ...)` for *HTML* property `onclick` to increase simplicity.
+
+- [X] (Patch) Replaced default cursors for styled ones.
+
+- [X] (Patch) Removed app module analytics.

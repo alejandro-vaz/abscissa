@@ -17,13 +17,16 @@
 $div-border: 0.1* root.$U solid root.$COLORER
 $div-font: monospace
 $div-wrap: break-word
+$div-cursor: url("../../../res/text.cur") 4 4, pointer
 
 .CodeMirror
     font-family: $div-font
     word-wrap: $div-wrap
     border: $div-border
+    cursor: $div-cursor
     *
         font-family: $div-font
+        cursor: $div-cursor
 
 
 // CODEMIRROR -> SYNTAX

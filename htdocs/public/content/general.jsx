@@ -55,12 +55,10 @@ function redirect(target) {
     window.location.href = `./${target}`
 }
 
-// GENERAL -> ASPECT RATIO
+// GENERAL -> FORCE ASPECT RATIO
 window.addEventListener("resize", function() {
-    const aspectRatio = window.innerWidth / window.innerHeight;
     const currentPage = window.location.pathname.split("/").pop();
-    if (aspectRatio < 3 / 2 && currentPage !== "error") {
+    if (window.innerWidth / window.innerHeight < 3 / 2 && currentPage !== "error") {
         window.location.href = "error";
     }
 });
-
