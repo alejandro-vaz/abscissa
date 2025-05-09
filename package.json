@@ -1,11 +1,30 @@
 {
-    "devDependencies": {
-        "@babel/cli": "^7.27.2",
-        "@babel/core": "^7.27.1",
-        "@babel/preset-env": "^7.27.2",
-        "@babel/preset-react": "^7.27.1"
-    },
-    "scripts": {
-        "build:watch": "babel . --extensions \".jsx\" --watch --out-dir . --out-file-extension .js"
-    }
+  "name": "abscissa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build:watch": "babel . --extensions \".jsx\" --watch --out-dir . --out-file-extension .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejandro-vaz/Abscissa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alejandro-vaz/Abscissa/issues"
+  },
+  "homepage": "https://github.com/alejandro-vaz/Abscissa#readme",
+  "description": "",
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1"
+  }
 }
