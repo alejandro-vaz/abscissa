@@ -4,10 +4,14 @@
 
 // RENDERING -> DONATIONS
 function addDonations(place) {
-    container = document.createElement('div');
+function addDonations(place) {
+    const container = document.createElement('div');
     container.id = 'donate-button-container';
-    button = document.createElement('div');
+    const button = document.createElement('div');
     button.id = 'donate-button';
+    container.appendChild(button);
+    place.appendChild(container);
+}
     container.appendChild(button);
     place.appendChild(container);
     PayPal.Donation.Button({
