@@ -1,6 +1,8 @@
 .crossnote/
+.crossnote/*
 problem/temp.json
 *.css
 *.map
 node_modules/
+node_modules/*
 *.js
