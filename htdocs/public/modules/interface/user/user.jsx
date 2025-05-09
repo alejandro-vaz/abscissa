@@ -9,37 +9,19 @@ const userDiv = document.getElementById("user")
 validate().then(authenticated => {
     if (authenticated) {
         curl("users", {}).then(user => {
-            // USER INSIGHT DISPLAY
-            const userInsight = document.createElement("p");
-            userInsight.id = 'user-insight';
-            userInsight.innerText = user.role;
-            userDiv.appendChild(userInsight);
-            // USER NAME DISPLAY
-            const userName = document.createElement("p");
-            userName.id = 'user-name';
-            userName.innerText = user.username;
-            userDiv.appendChild(userName)
-            // PREFERENCES LOGO
-            const preferencesLogo = document.createElement('img');
-            preferencesLogo.src = "public/svg/preferences.svg";
-            preferencesLogo.className = "userIcon";
-            preferencesLogo.id = "preferences-logo";
-            userDiv.appendChild(preferencesLogo);
-            // PREFERENCES REDIRECTS TO PREFERENCES
-            preferencesLogo.addEventListener("click", function() {
-                redirect("preferences");
-            })
+            ReactDOM.createRoot(userDiv).render(
+                <>
+                    <p id="user-insight">{user.role}</p>
+                    <p id="user-name">{user.username}</p>
+                    <img src="public/svg/preferences.svg" class="userIcon" id="preferences-logo" onClick={() => redirect("preferences")}/>
+                </>
+            )
         })
     } else {
-        // USER LOGO
-        const userLogo = document.createElement('img');
-        userLogo.src = "public/svg/user.svg";
-        userLogo.className = "userIcon";
-        userLogo.id = "user-logo";
-        userDiv.appendChild(userLogo);
-        // USER REDIRECTS TO AUTH
-        userLogo.addEventListener("click", function() {
-            redirect("auth");
-        })
+        ReactDOM.createRoot(userDiv).render(
+            <>
+                <img src="public/svg/user.svg" class="userIcon" id="user-logo" onClick={() => redirect('auth')}/>
+            </>
+        )
     }
 })
