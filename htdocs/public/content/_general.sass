@@ -1,176 +1,93 @@
-/*                                                                           */
-/* HEAD                                                                      */
-/*                                                                           */
+//                                                                           
+//  HEAD                                                                      
+//                                                                           
 
-
-// MODULES
+// HEAD -> MODULES
 @use "sass:color"
 @use "sass:math"
 @use "sass:string"
 @use "../modules/root"
 
+// HEAD -> SUPERVARIABLES
+$FONTSIZE: root.$FONTSIZE
+$RADIUS: root.$RADIUS
+$MARGIN: root.$MARGIN
+$PADDING: root.$PADDING
+$BORDER1: root.$BORDER1
+$BORDER2: root.$BORDER2
+$DARK: root.$DARK
+$LIGHT: root.$LIGHT
+$ACCENT: root.$ACCENT
+$INVERTED: root.$INVERTED
+$CONTRAST: root.$CONTRAST
+$TIMER1: root.$TIMER1
+$TIMER2: root.$TIMER2
+$CURVE1: root.$CURVE1
+$CURVE2: root.$CURVE2
 
-// SUPERVARIABLES
-$U: root.$U
-$FONTSIZER: root.$FONTSIZER
-$PADDER: root.$PADDER
-$COLORER: root.$COLORER
-$RADIUSER: root.$RADIUSER
-$DARKABSCISSER: root.$DARKABSCISSER
-$LIGHTABSCISSER: root.$LIGHTABSCISSER
-$TIMER: root.$TIMER
-$CURVER: root.$CURVER
 
-
-
-/*                                                                           */
-/* FUNCTIONS                                                                 */
-/*                                                                           */
-
+//                                                                           
+//  FUNCTIONS                                                                 
+//                                                                           
 
 // FUNCTIONS -> CONTAINER
 =section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
-    box-sizing: border-box
-    @if $grow
-        flex: 1 0 auto
-    @else
-        flex: 0 0 auto
-    display: $display
-    height: $height
-    width: $width
-    @if $display == flex
-        flex-direction: $direction
-        @if $align-horizontally
-            align-items: center
-        @else
-            align-items: stretch
-        @if $align-vertically
-            justify-content: center
-        @else
-            justify-content: flex-start
-
+    +root.section($align-horizontally, $align-vertically, $width: $width, $height: $height, $direction: $direction, $display: $display, $grow: $grow)
 
 // FUNCTIONS -> ELEMENT
 =element($inline)
-    box-sizing: border-box
-    margin: math.div($PADDER, 2)
-    padding: math.div($PADDER, 2)
-    border-radius: $RADIUSER
-    @if $inline
-        display: inline-block
-    @else
-        display: block
-
+    +root.element($inline)
 
 // FUNCTIONS -> INPUT
 =input($type, $inline: true)
-    padding: math.div($PADDER, 2) $PADDER
-    border-radius: $RADIUSER
-    box-sizing: border-box
-    border: 0.1* $U solid $COLORER
-    @if $inline
-        display: inline-block
-    @else
-        display: block
-    &:focus
-        outline: none
-    @if $type == button
-        cursor: url("../../res/link.cur") 4 4, pointer
-        background-color: #00000055
-        min-width: fit-content
-        height: 2.75* $U
-        transition: border-color $TIMER $CURVER, background-color $TIMER $CURVER, color $TIMER $CURVER
-        &:hover
-            background-color: string.unquote($LIGHTABSCISSER + "55")
-        &:active
-            border-color: $LIGHTABSCISSER
-            color: $LIGHTABSCISSER
-    @if $type == textarea
-        background-color: #000000
-        resize: none
-        &::placeholder
-            color: $COLORER
-            opacity: 0.5
-    @if $type == text or $type == password or $type == email
-        background-color: #000000
-        font-family: monospace
-        height: 2.75* $U
-        &::placeholder
-            color: $COLORER
-            opacity: 0.5
-
+    +root.input($type, $inline: $inline)
 
 // FUNCTIONS -> SCROLLBAR
 =scrollbar() 
-    overflow: 
-        x: scroll
-        y: scroll
-    scrollbar:
-        width: none
+    +root.scrollbar()
+
+// FUNCTIONS -> CURSOR
+=cursor($type)
+    +root.cursor($type)
 
 
-
-/*                                                                           */
-/* DEFAULTS                                                                  */
-/*                                                                           */
-
+//                                                                           
+//  DEFAULTS                                                                  
+//                                                                           
 
 // DEFAULTS -> UNSELECTABLE TEXT
-$unselectable-text-user-select: none
-
 :where(:not(.CodeMirror, .CodeMirror *))
-    user-select: $unselectable-text-user-select
-
+    user-select: none
 
 // DEFAULTS -> FONT
-$font-name: "Comic Sans MS"
-
 :where(:not(.katex-display, .katex-display *, .katex, .katex *, .CodeMirror, .CodeMirror *))
     +scrollbar()
-    font-family: $font-name
-    font-size: $FONTSIZER
-    color: $COLORER
-
+    font-family: "Comic Sans MS"
+    font-size: $FONTSIZE
+    color: $ACCENT
 
 // DEFAULTS -> DOCUMENT
-$document-background-center: #111111
-$document-center-share: 20%
-$document-radius-share: 80%
-$document-cursor: url("../../res/pointer.cur") 4 4, auto
-
-$document-background-radius: color.invert($COLORER)
-
 :where(html)
-    background: radial-gradient(circle, $document-background-center $document-center-share, $document-background-radius $document-radius-share)
-    cursor: $document-cursor
-
+    +cursor(default)
+    background: radial-gradient(circle, $CONTRAST 20%, $INVERTED 80%)
 
 // DEFAULTS -> PYTAGS
-$pytags-display: none
-
 py
-    display: $pytags-display
-
+    display: none
 
 // DEFAULTS -> MAIN
-$_main-navbar-width: 3.8* $U
-$main-padding: 4.5* $U 0 0 0
-$main-default-width: 100%
-
-$main-width: calc($main-default-width - $_main-navbar-width)
-
+$main-navbar-width-idle: 0.5vw
 :where(#main)
-    +section(false, false, $width: $main-width)
-    padding: $main-padding
+    +section(false, false, $width: calc(100% - $main-navbar-width-idle))
+    padding: 4.5vw 0 0 0
     position: fixed
     top: 0
     right: 0
 
 
-/*                                                                           */
-/* INPUTS                                                                    */
-/*                                                                           */
-
+//                                                                           
+//  INPUTS                                                                    
+//                                                                           
 
 // INPUTS -> AUTOFORMATTER
 :where(input)
@@ -188,11 +105,9 @@ $main-width: calc($main-default-width - $_main-navbar-width)
     +input(button)
 
 
-
-/*                                                                           */
-/* FORMS                                                                     */
-/*                                                                           */
-
+//                                                                           
+//  FORMS                                                                     
+//                                                                           
 
 // FORMS -> FORM
 form 
@@ -209,51 +124,26 @@ form
         border-top-right-radius: 0
 
 
-
-/*                                                                           */
-/* HEADERS                                                                   */
-/*                                                                           */
-
+//                                                                           
+//  HEADERS                                                                   
+//                                                                           
 
 // HEADERS -> H4
-$h4-scale-coefficient: 1.125
-$h4-margin: 0.7* $U 0 0.7* $U 0
-
-$h4-font-size: $h4-scale-coefficient * $FONTSIZER
-
 :where(h4)
-    font-size: $h4-font-size
-    margin: $h4-margin
-
+    font-size: 1.125 * $FONTSIZE
+    margin: 0.7vw 0 0.7vw 0
 
 // HEADERS -> H3
-$h3-scale-coefficient: 1.25
-$h3-margin: 0.8* $U 0 0.8* $U 0
-
-$h3-font-size: $h3-scale-coefficient * $FONTSIZER
-
 :where(h3)
-    font-size: $h3-font-size
-    margin: $h3-margin
-
+    font-size: 1.25 * $FONTSIZE
+    margin: 0.8vw 0 0.8vw 0
 
 // HEADERS -> H2
-$h2-scale-coefficient: 1.5
-$h2-margin: 0.9* $U 0 0.9* $U 0
-
-$h2-font-size: $h2-scale-coefficient * $FONTSIZER
-
 :where(h2)
-    font-size: $h2-font-size
-    margin: $h2-margin
-
+    font-size: 1.5 * $FONTSIZE
+    margin: 0.9vw 0 0.9vw 0
 
 // HEADERS -> H1
-$h1-scale-coefficient: 2
-$h1-margin: 1* $U 0 1* $U 0
-
-$h1-font-size: $h1-scale-coefficient * $FONTSIZER
-
 :where(h1)
-    font-size: $h1-font-size
-    margin: $h1-margin
+    font-size: 2 * $FONTSIZE
+    margin: 1vw 0 1vw 0

@@ -8,6 +8,12 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# HANDLER -> MODULES
+import re
+import secrets
+import datetime
+import mysql.connector as mysql
+
 
 #
 #   ACCESS
@@ -16,7 +22,7 @@ from handler import *
 # ACCESS -> FUNCTION
 def database_request(query: str, params: list) -> object:
     placeholders = []
-    pattern = compile(r"(!|\?)")
+    pattern = re.compile(r"(!|\?)")
     for mark in pattern.finditer(query):
         placeholders.append((mark.group(1), mark.start(), mark.end()))
     queryParts = []
@@ -28,7 +34,7 @@ def database_request(query: str, params: list) -> object:
         if markType == "!":
             ident = params[pIndex]
             pIndex += 1
-            if not match(r"^[A-Za-z0-9_]+$", ident):
+            if not re.match(r"^[A-Za-z0-9_]+$", ident):
                 raise DatabaseQueryError(query = query)
             queryParts.append(f"`{ident}`")
         else:
@@ -53,10 +59,6 @@ def database_request(query: str, params: list) -> object:
 #   SESSIONS
 #
 
-# SESSIONS -> GENERATE
-def gensession() -> str:
-    return token_hex(16)
-
 # SESSIONS -> SET
 def setsession(session: str, username: str) -> None:
     database_request(
@@ -64,7 +66,7 @@ def setsession(session: str, username: str) -> None:
         [
             session,
             username,
-            (datetime.now() + timedelta(seconds=72000)).strftime("%Y-%m-%d %H:%M:%S"),
+            (datetime.now() + datetime.timedelta(seconds=72000)).strftime("%Y-%m-%d %H:%M:%S"),
             SUG.THR.REQ.META.get('REMOTE_ADDR')
         ]
     )
@@ -78,7 +80,7 @@ def setsession(session: str, username: str) -> None:
 def database_init() -> None:
     SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
     try:
-        SUG.THR.DBS = connect(
+        SUG.THR.DBS = mysql.connect(
             host = SUG.DBC["HOST"],
             user = SUG.DBC["USER"],
             password = SUG.DBC["PASSWORD"],

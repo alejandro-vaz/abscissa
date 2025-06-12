@@ -1,6 +1,6 @@
-/*                                                                           */
-/* CODEMIRROR                                                                */
-/*                                                                           */
+//                                                                            
+//  CODEMIRROR                                                                
+//                                                                            
 
 // CODEMIRROR -> RENDERING
 function renderCodeMirror(textarea) {

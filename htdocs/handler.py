@@ -42,39 +42,36 @@ class UnknownHTMLpyCommandError(PyError):
 #
 
 # INITIALIZATION -> DJANGO
-from django import conf as CONF
-from django.core import management as CORE_MANAGEMENT
-from django.core import wsgi as CORE_WSGI
-from django import http as HTTP
-from django import urls as URLS
-from django.views.decorators.csrf import csrf_exempt
+# from django import conf as CONF
+# from django.core import management as CORE_MANAGEMENT
+# from django.core import wsgi as CORE_WSGI
+# from django import http as HTTP
+# from django import urls as URLS
+# from django.views.decorators.csrf import csrf_exempt
 
-# INITIALIZATION -> IMPORTS
+# INITIALIZATION -> COMMON MODULES
 import os
 import sys
-import json
-import zlib
-import base64
-import threading
-from random import randint
-from secrets import token_hex
-from re import compile, match
-from re import DOTALL as dotall
-from re import Pattern as pattern
-from pathlib import Path as create_path
-from Cryptodome.Cipher import AES as aes
-from datetime import datetime, timedelta
-from Cryptodome.Hash import SHA256 as sha256
-from Cryptodome.Random import get_random_bytes
-from Cryptodome.Util.Padding import pad, unpad
-from mysql.connector import MySQLConnection, Error, connect
-from importlib.util import module_from_spec, spec_from_file_location
+import importlib.util as util
+import pathlib
+# import json
+# 
+# 
+# import threading
+# from random import randint
+# from secrets import token_hex
+# 
+# from re import DOTALL as dotall
+# from re import Pattern as pattern
+# 
+# 
+#
+# 
+# 
+
 
 # INITIALIZATION -> SUPERGLOBALS
 import SUG
-
-# INITIALIZATION -> DIRECTORY
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 #
@@ -83,12 +80,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # MANAGER -> INCLUDE PYTHON FILE
 def include(name: str) -> object:
-    path = os.path.join(BASE_DIR, os.path.join("api", f"{name}.py"))
+    path = os.path.join(SUG.DIR, os.path.join("api", f"{name}.py"))
     try:
-        spec = spec_from_file_location(name, path)
+        spec = util.spec_from_file_location(name, path)
     except:
         raise APIScriptNotFoundError(name = name)
-    module = module_from_spec(spec)
+    module = util.module_from_spec(spec)
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
@@ -96,6 +93,6 @@ def include(name: str) -> object:
 # MANAGER -> FILE READER
 def read(path: str) -> str:
     try:
-        return create_path(os.path.join(BASE_DIR, path)).read_text(encoding='utf-8')
+        return pathlib.Path(os.path.join(SUG.DIR, path)).read_text(encoding='utf-8')
     except:
         raise FileNotReadableError(path = path)

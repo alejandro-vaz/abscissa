@@ -1,48 +1,40 @@
-/*                                                                           */
-/* HEAD                                                                      */
-/*                                                                           */
-
+//                                                                            
+//  HEAD                                                                      
+//                                                                            
 
 // MODULES
 @use "../../root"
 
 
+//                                                                            
+//  NAVBAR                                                                    
+//                                                                            
 
-/*                                                                           */
-/* NAVBAR                                                                    */
-/*                                                                           */
-
-
-// NAVBAR -> DIV
-$div-width: 3.8* root.$U
-$div-border: 0.3* root.$U solid root.$DARKABSCISSER
-$div-background: #000000
-$div-z-index: 1000
-
-#navbar 
-    +root.section(true, false, $width: $div-width)
+// NAVBAR -> CONTAINER
+$container-left: 1vw
+#navbar-container
+    +root.section(true, true, $width: 4vw)
+    z-index: 1000
     position: fixed
     top: 0
-    left: 0
-    z-index: $div-z-index
-    border-right: $div-border
-    background: $div-background
+    left: $container-left
+    transition: left root.$TIMER2 root.$CURVE2
 
+// NAVBAR -> BAR
+#navbar
+    +root.element(false)
+    background-color: root.$CONTRAST
+    border: root.$BORDER1 solid root.$DARK
+    border-radius: root.$RADIUS
+    width: 100%
 
 // NAVBAR -> ICON
-$icon-width: 2.75* root.$U
-$icon-separation: 0.5 * root.$U
-$icon-default-background: transparent
-$icon-cursor: url("../../../res/link.cur") 4 4, pointer
-
 .navbarIcon
-    width: $icon-width
-    margin-top: $icon-separation
-    cursor: $icon-cursor
-    background: $icon-default-background
-    border-radius: root.$RADIUSER
-    transition: background-color root.$TIMER root.$CURVER
-    &:first-of-type
-        background-color: root.$DARKABSCISSER
+    +root.cursor(click)
+    width: 100%
+    border-radius: root.$RADIUS
+    transition: background-color root.$TIMER1 root.$CURVE1
+    &:disabled
+        background-color: root.$DARK
     &:hover
-        background-color: root.$LIGHTABSCISSER
+        background-color: root.$LIGHT

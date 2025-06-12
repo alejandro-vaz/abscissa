@@ -1,6 +1,6 @@
-/*                                                                           */
-/* UTILITIES                                                                 */
-/*                                                                           */
+//                                                                            
+//  UTILITIES                                                                 
+//                                                                            
 
 // UTILITIES -> RAW LATEX
 function rawLaTeX(latex) {
@@ -18,9 +18,9 @@ function rawLaTeX(latex) {
 }
 
 
-/*                                                                           */
-/* RENDERING                                                                 */
-/*                                                                           */
+//                                                                            
+//  RENDERING                                                                 
+//                                                                            
 
 // RENDERING -> ELEMENT
 function renderLaTeX(element) {
@@ -36,9 +36,7 @@ function renderLaTeX(element) {
 
 // RENDERING -> OBSERVER
 document.addEventListener("DOMContentLoaded", function() {
-    // INITIAL RENDERING
     renderLaTeX(document.body);
-    // OBSERVER FOR RENDERING DYNAMIC CHANGES
     const observer = new MutationObserver(function(changeList) {
         for (const change of changeList) {
             if (change.type === 'childList') {
@@ -50,6 +48,5 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     });
-    // START OBSERVING BODY
     observer.observe(document.body, { childList: true, subtree: true });
 });

@@ -8,6 +8,10 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# HANDLER -> MODULES
+import re
+from django import http
+
 
 #
 #   HTML
@@ -21,7 +25,7 @@ def compile_view(content: str) -> str:
         "base": [],
         "interface": []
     }
-    for tag in compile(r"<py>(.*?)</py>", dotall).finditer(content):
+    for tag in re.compile(r"<py>(.*?)</py>", re.DOTALL).finditer(content):
         tokens = tag.group(1).strip().split()
         if tokens:
             commands.append(tokens)
@@ -38,7 +42,7 @@ def compile_view(content: str) -> str:
 # HTML -> VIEW
 def create_view(viewName: str) -> object:
     def view(request: object):
-        return HTTP.HttpResponse(compile_view(read(f"content/&{viewName}.html")))
+        return http.HttpResponse(compile_view(read(f"content/&{viewName}.html")))
     return view
 
 

@@ -21,7 +21,6 @@ from extensions.response import *
 #
 
 # FUNCTION -> DECLARATION
-@csrf_exempt
 def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
@@ -40,7 +39,7 @@ def output(request: object) -> object:
     check("PROBLEM")
     
     # FUNCTION -> ARGUMENT RELATIONSHIP
-    if not (isx("LANG") and bool_1true(isx("PROBLEM"), isx("NODE"), isx("CLUSTER"))):
+    if not (isx("LANG") and count(isx("PROBLEM"), isx("NODE"), isx("CLUSTER")) == 1):
         raise IncorrectArgumentInputError(PST = SUG.THR.PST)
 
     # FUNCTION -> TYPES OF QUERIES

@@ -8,10 +8,13 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# INIT -> EXTENSIONS
+# HANDLER -> MODULES
+import django.urls as urls
+
+# HANDLER -> EXTENSIONS
 from extensions.view import *
 
-# INIT -> ACTIVATION
+# HANDLER -> ACTIVATION
 view_init()
 
 
@@ -22,13 +25,12 @@ view_init()
 # URL PATTERNS -> INITIALIZATION
 urlpatterns = []
 
-# URL PATTERNS -> DECLARATIONS
+# URL PATTERNS -> VIEWS
 views = [
-    "auth",
-    "dashboard",
-    "playground",
-    "problem"
+    "",
 ]
+
+# URL PATTERNS -> API
 scripts = [
     "auth",
     "location",
@@ -39,6 +41,6 @@ scripts = [
 
 # URL PATTERNS -> ADD PATTERNS
 for view in views:
-    urlpatterns.append(URLS.path(view, create_view(view)))
+    urlpatterns.append(urls.path(view, create_view(view)))
 for script in scripts:
-    urlpatterns.append(URLS.path(f'api/{script}', include(script).output))
+    urlpatterns.append(urls.path(f'api/{script}', include(script).output))

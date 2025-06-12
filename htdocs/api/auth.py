@@ -12,6 +12,7 @@ from handler import *
 from extensions.cryptography import *
 from extensions.database import *
 from extensions.post import *
+from extensions.random import *
 from extensions.response import *
 
 
@@ -20,7 +21,6 @@ from extensions.response import *
 #
 
 # FUNCTION -> DECLARATION
-@csrf_exempt
 def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
@@ -29,6 +29,7 @@ def output(request: object) -> object:
     cryptography_init()
     database_init()
     post_init()
+    random_init()
     response_init()
     
     # FUNCTION -> ARGUMENT CHECKS

@@ -14,6 +14,7 @@ from extensions.bool import *
 from extensions.cryptography import *
 from extensions.database import *
 from extensions.post import *
+from extensions.random import *
 from extensions.response import *
 
 
@@ -22,7 +23,6 @@ from extensions.response import *
 #
 
 # FUNCTION -> DECLARATION
-@csrf_exempt
 def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request
@@ -33,6 +33,7 @@ def output(request: object) -> object:
     cryptography_init()
     database_init()
     post_init()
+    random_init()
     response_init()
     
     # FUNCTION -> ARGUMENT CHECKS
@@ -44,7 +45,7 @@ def output(request: object) -> object:
     # FUNCTION -> ARGUMENT RELATIONSHIP
     if not isx("LANG"):
         raise IncorrectArgumentInputError(PST = SUG.THR.PST)
-    if not bool_1true(isx("CONTEXT"), isx("PROBLEM"), isx("NODE")):
+    if count(isx("CONTEXT"), isx("PROBLEM"), isx("NODE")) != 1:
         raise IncorrectArgumentInputError(PST = SUG.THR.PST)
     
     # FUNCTION -> TYPES OF QUERIES
@@ -90,7 +91,7 @@ def output(request: object) -> object:
                 "SELECT * FROM problems WHERE ? IS NOT NULL LIMIT ?, 1",
                 [
                     "data_" + SUG.THR.PST["LANG"],
-                    randint(0, int(database_request(
+                    random.randomint(0, int(database_request(
                         "SELECT COUNT(*) AS total FROM problems WHERE ? IS NOT NULL",
                         [
                             "data_" + SUG.THR.PST["LANG"]

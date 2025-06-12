@@ -8,6 +8,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
+# HANDLER -> MODULES
+from django import http
 
 #
 #   CRAFT RESPONSE
@@ -15,7 +17,7 @@ from handler import *
 
 # CRAFT RESPONSE -> FUNCTION
 def set_response(jsonData: object, session: str = None) -> object:
-    response = HTTP.JsonResponse(jsonData, status=200, safe=False)
+    response = http.JsonResponse(jsonData, status=200, safe=False)
     response['Content-Type'] = 'application/json; charset=utf-8'
     response['Access-Control-Allow-Origin'] = '*'
     response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'

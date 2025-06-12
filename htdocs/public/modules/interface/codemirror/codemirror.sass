@@ -1,52 +1,32 @@
-/*                                                                           */
-/* HEAD                                                                      */
-/*                                                                           */
-
+//                                                                            
+//  HEAD                                                                      
+//                                                                            
 
 // MODULES
 @use "../../root"
 
 
-
-/*                                                                           */
-/* CODEMIRROR                                                                */
-/*                                                                           */
-
+//                                                                            
+//  CODEMIRROR                                                                
+//                                                                            
 
 // CODEMIRROR -> DIV
-$div-border: 0.1* root.$U solid root.$COLORER
-$div-font: monospace
-$div-wrap: break-word
-$div-cursor: url("../../../res/text.cur") 4 4, pointer
-
 .CodeMirror
-    font-family: $div-font
-    word-wrap: $div-wrap
-    border: $div-border
-    cursor: $div-cursor
+    +root.cursor(text)
+    word-wrap: break-word
+    border: root.$BORDER2 solid root.$ACCENT
     *
-        font-family: $div-font
-        cursor: $div-cursor
-
+        font-family: monospace
 
 // CODEMIRROR -> SYNTAX
-$syntax-error-background: transparent
-$syntax-error-color: #666666
-$syntax-keyword-color: #E4BA00
-$syntax-keyword-weight: bold
-
 .CodeMirror div span
     .cm-keyword
-        font-weight: $syntax-keyword-weight
-        color: $syntax-keyword-color
+        font-weight: bold
+        color: #E4BA00
     .cm-error
-        background: $syntax-error-background
-        color: $syntax-error-color
-
+        background: transparent
+        color: #666666
 
 // CODEMIRROR -> SCROLLBAR
-$scrollbar-display: none
-
 .CodeMirror-vscrollbar
-    +root.scrollbar()
-    display: $scrollbar-display
+    display: none

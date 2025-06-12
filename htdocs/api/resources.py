@@ -19,7 +19,6 @@ from extensions.response import *
 #
 
 # FUNCTION -> DECLARATION
-@csrf_exempt
 def output(request: object) -> object:
     # FUNCTION -> SUPERGLOBALS
     SUG.THR.REQ = request

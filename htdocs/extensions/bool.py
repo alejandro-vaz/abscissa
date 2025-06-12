@@ -13,9 +13,9 @@ from handler import *
 #   FUNCTIONS
 #
 
-# FUNCTIONS -> ONE TRUE
-def bool_1true(*args):
-    return sum(map(bool, args)) == 1
+# FUNCTIONS -> COUNT TRUE
+def count(*args):
+    return sum(map(bool, args))
 
 
 #

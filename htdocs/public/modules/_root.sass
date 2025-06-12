@@ -1,25 +1,32 @@
-/*                                                                           */
-/* HEAD                                                                      */
-/*                                                                           */
+//                                                                           
+//  HEAD                                                                      
+//                                                                           
+
+// HEAD -> MODULES
+@use "sass:math"
+@use "sass:string"
+
+// HEAD -> SUPERVARIABLES
+$FONTSIZE: 1vw
+$RADIUS: 1vw
+$MARGIN: 0.8vw
+$PADDING: 0.6vw
+$BORDER1: 0.2vw
+$BORDER2: 0.1vw
+$DARK: #4d4da0
+$LIGHT: #7f7fd2
+$ACCENT: #FFFFFF
+$INVERTED: #000000
+$CONTRAST: #111111
+$TIMER1: 0.1s
+$TIMER2: 0.3s
+$CURVE1: ease-in-out
+$CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
 
 
-// SUPERVARIABLES
-$U: 1vw
-$FONTSIZER: $U !default
-$PADDER: 0.6* $U !default
-$COLORER: #FFFFFF !default
-$RADIUSER: 0.5* $U !default
-$DARKABSCISSER: #4d4da0 !default
-$LIGHTABSCISSER: #7f7fd2 !default
-$TIMER: 0.15s !default
-$CURVER: ease-in-out !default
-
-
-
-/*                                                                           */
-/* FUNCTIONS                                                                 */
-/*                                                                           */
-
+//                                                                           
+//  FUNCTIONS                                                                 
+//                                                                           
 
 // FUNCTIONS -> CONTAINER
 =section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
@@ -42,25 +49,23 @@ $CURVER: ease-in-out !default
         @else
             justify-content: flex-start
 
-
 // FUNCTIONS -> ELEMENT
 =element($inline)
     box-sizing: border-box
-    margin: calc($PADDER / 2)
-    padding: calc($PADDER / 2)
-    border-radius: $RADIUSER
+    margin: calc($MARGIN / 2)
+    padding: calc($PADDING / 2)
+    border-radius: $RADIUS
     @if $inline
         display: inline-block
     @else
         display: block
 
-
 // FUNCTIONS -> INPUT
 =input($type, $inline: true)
-    padding: math.div($PADDER, 2) $PADDER
-    border-radius: $RADIUSER
+    padding: math.div($PADDING, 2) $PADDING
+    border-radius: $RADIUS
     box-sizing: border-box
-    border: 0.1* $U solid $COLORER
+    border: $BORDER2 solid $ACCENT
     @if $inline
         display: inline-block
     @else
@@ -71,32 +76,37 @@ $CURVER: ease-in-out !default
         cursor: pointer
         background-color: #00000055
         min-width: fit-content
-        height: 2.75* $U
-        transition: border-color $TIMER $CURVER, background-color $TIMER $CURVER, color $TIMER $CURVER
+        height: 2.75vw
+        transition: border-color $TIMER1 $CURVE1, background-color $TIMER1 $CURVE1, color $TIMER1 $CURVE1
         &:hover
-            background-color: string.unquote($LIGHTABSCISSER + "55")
+            background-color: string.unquote($LIGHT + "55")
         &:active
-            border-color: $LIGHTABSCISSER
-            color: $LIGHTABSCISSER
+            border-color: $LIGHT
+            color: $LIGHT
     @if $type == textarea
         background-color: #000000
+        font-family: monospace
         resize: none
         &::placeholder
-            color: $COLORER
+            color: $ACCENT
             opacity: 0.5
     @if $type == text or $type == password or $type == email
         background-color: #000000
         font-family: monospace
-        height: 2.75* $U
+        height: 2.75vw
         &::placeholder
-            color: $COLORER
+            color: $ACCENT
             opacity: 0.5
-
 
 // FUNCTIONS -> SCROLLBAR
 =scrollbar() 
-    overflow: 
-        x: scroll
-        y: scroll
-    scrollbar:
-        width: none
+    scrollbar-width: none
+
+// FUNCTIONS -> CURSOR
+=cursor($type)
+    @if $type == default
+        cursor: url("/public/res/pointer.cur") 0 0, auto
+    @if $type == click
+        cursor: url("/public/res/link.cur") 0 0, pointer
+    @if $type == text
+        cursor: url("/public/res/text.cur") 0 0, text

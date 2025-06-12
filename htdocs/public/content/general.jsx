@@ -1,20 +1,30 @@
-/*                                                                           */
-/* URL PARAMETERS                                                            */
-/*                                                                           */
+//                                                                            
+//  WINDOW                                                            
+//                                                                            
 
 // URL PARAMETERS -> GET
-function getURLParameter(request) {
-    const parameters = new URLSearchParams(window.location.search);
-    return parameters.get(request);
+const PAR = Object.fromEntries(new URLSearchParams(window.location.search).entries());
+
+// WINDOW -> REDIRECT
+function redirect(target) {
+    window.location.href = `${target}`
 }
 
+// WINDOW -> FORCE ASPECT RATIO
+window.addEventListener("resize", function() {
+    const currentPage = window.location.pathname.split("/").pop();
+    if (window.innerWidth / window.innerHeight < 3 / 2 && currentPage !== "error") {
+        window.location.href = "error";
+    }
+});
 
-/*                                                                           */
-/* API                                                                       */
-/*                                                                           */
+
+//                                                                            
+//  API                                                                       
+//                                                                            
 
 // API -> REQUEST
-function curl(script, data, timeout = 5000) {
+function curl(script, data, timeout = 2000) {
     const path = `api/${script}`;
     const scheme = window.location.protocol === "https:" ? 'https' : 'http';
     const host = window.location.host;
@@ -33,32 +43,25 @@ function curl(script, data, timeout = 5000) {
         body: JSON.stringify(data),
         signal
     }).then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
         return response.json();
     });
 }
 
-// API -> SESSION VALIDATION
-function validate() {
-    return curl("auth", {})
+
+//
+//  REACT
+//
+
+// REACT -> APPEND CONTENT
+function inject(element, content) {
+    ReactDOM.creteRoot(element).render(content);
 }
 
 
-/*                                                                           */
-/* GENERAL                                                                   */
-/*                                                                           */
+//
+//  ELEMENTS
+//
 
-// GENERAL -> REDIRECT
-function redirect(target) {
-    window.location.href = `./${target}`
+function connect(id) {
+    return document.getElementById(id);
 }
-
-// GENERAL -> FORCE ASPECT RATIO
-window.addEventListener("resize", function() {
-    const currentPage = window.location.pathname.split("/").pop();
-    if (window.innerWidth / window.innerHeight < 3 / 2 && currentPage !== "error") {
-        window.location.href = "error";
-    }
-});
