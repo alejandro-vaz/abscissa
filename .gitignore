@@ -1,8 +1,7 @@
-.crossnote/
-.crossnote/*
-problem/temp.json
 *.css
-*.map
-node_modules/
-node_modules/*
 *.js
+node_modules/
+SUG.py
+__pychache__/
+extensions/__pycache__/
+api/__pycache__/
