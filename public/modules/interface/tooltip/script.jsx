@@ -21,8 +21,7 @@ document.addEventListener("mouseover", (event) => {
 
 // LOGIC -> DISAPPEAR
 document.addEventListener("mouseout", (event) => {
-    const target = event.target.closest("[tooltip]");
-    if (target) {
+    if (event.target.closest("[tooltip]")) {
         clearTimeout(timer);
         tooltip.style.opacity = 0;
     }

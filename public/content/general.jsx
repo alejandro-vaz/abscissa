@@ -13,7 +13,9 @@ function redirect(target) {
 // WINDOW -> FORCE ASPECT RATIO
 window.addEventListener("resize", function() {
     if (window.innerWidth / window.innerHeight < 3 / 2 && window.location.pathname.split("/").pop() !== "error") {
-        redirect("error");
+        redirect("error?code=0");
+    } else if (window.innerWidth / window.innerHeight >= 3 / 2 && window.location.pathname.split("/").pop() == "error" && +PAR.code == 0) {
+        redirect("dashboard");
     }
 });
 

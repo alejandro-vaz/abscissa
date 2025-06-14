@@ -29,6 +29,7 @@ urlpatterns = []
 views = [
     "",
     "dashboard",
+    "error",
     "playground",
     "search",
     "settings",

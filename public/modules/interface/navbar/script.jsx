@@ -10,6 +10,7 @@ const backIcon = connect("navbar-back");
 const dashboardIcon = connect("navbar-dashboard");
 const searchIcon = connect("navbar-search");
 const playgroundIcon = connect("navbar-playground");
+const statsIcon = connect("navbar-stats");
 const userIcon = connect("navbar-user");
 const settingsIcon = connect("navbar-settings");
 
@@ -18,8 +19,9 @@ const currentIcon = {
     dashboard: dashboardIcon,
     search: searchIcon,
     playground: playgroundIcon,
+    stats: statsIcon,
     user: userIcon,
-    settings: settingsIcon,
+    settings: settingsIcon
 }[window.location.pathname.split("/").pop()];
 if (currentIcon) {
     currentIcon.className = "navbarCurrent";
