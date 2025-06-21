@@ -8,9 +8,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from handler import *
 
-# HANDLER -> MODULES
-import django.core.wsgi as wsgi
-
 
 #
 #   GATEWAY

@@ -1,7 +1,9 @@
 *.css
 *.js
+public/templates/database.sql
 node_modules/
 SUG.py
 __pychache__/
 extensions/__pycache__/
 api/__pycache__/
+dbml-error.log

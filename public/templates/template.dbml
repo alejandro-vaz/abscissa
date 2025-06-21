@@ -1,0 +1,141 @@
+Table USERS {
+	Uid integer [ pk, increment, not null, unique, note: 'Unique identifier.' ]
+	Uname varchar [ not null, unique, note: 'Exclusive username.' ]
+	Uemail varchar [ not null, unique, note: 'User email address.' ]
+	Uhashpass varchar [ not null, note: 'Hashed user password so not even us can know it.' ]
+	Ujoined datetime [ not null, note: 'Date and time when user joined.' ]
+	Uplayground json [ not null, note: 'User playground data.' ]
+	Usettings json [ not null, note: 'User preferences.' ]
+	Oid mediumint [ not null, note: 'If the user is inside an organisation, be it not 0 but the ID of the organisation.' ]
+	Urole tinyint [ not null, note: 'Permissions of the user.' ]
+
+	indexes {
+		(Uname, Uemail, Oid) [ name: 'USERS_index_0' ]
+	}
+}
+
+Table COMPLETED {
+	Uid integer [ not null, note: 'Unique identifier of the user who completed the problem.' ]
+	Pid binary [ not null, note: 'Identifier of the completed problem.' ]
+	Cprocess json [ not null, note: 'LaTeX process that user wrote.' ]
+	Ctime datetime [ not null, note: 'When was the problem completed.' ]
+	Cgrade binary [ note: 'Grade in binary when graded.' ]
+
+	indexes {
+		(Uid, Pid) [ name: 'COMPLETED_index_0' ]
+	}
+}
+
+Table PROBLEMS {
+	Pid binary [ pk, not null, unique, note: 'Unique ID of the problem.' ]
+	Uid integer [ not null, note: 'Uid of the creator of the problem.' ]
+	Kid smallint [ not null, note: 'Concept identifier which the problem talks about.' ]
+	Pedited datetime [ not null, note: 'When was the problem created or last edited.' ]
+	Pmeta json [ not null, note: 'Problem metadata independant of language.' ]
+	Pdataen json [ not null, note: 'Mandatory problem in English.' ]
+	Pdataes json [ note: 'Optional problem in Spanish.' ]
+	Pdatade json [ note: 'Optional problem in Deutsch.' ]
+
+	indexes {
+		(Uid, Kid) [ name: 'index_0' ]
+	}
+}
+
+Table CONCEPTS {
+	Kid smallint [ pk, increment, not null, unique, note: 'Concept ID.' ]
+	Ken varchar [ not null, unique, note: 'Name of the concept in English.' ]
+	Kes varchar [ not null, unique, note: 'Name of the concept in Spanish.' ]
+	Kde varchar [ not null, unique, note: 'Name of the concept in German.' ]
+
+	indexes {
+		(Ken, Kes, Kde) [ name: 'CONCEPTS_index_0' ]
+	}
+}
+
+Table COMMENTS {
+	Mid bigint [ pk, increment, not null, unique, note: 'Comment ID.' ]
+	Uid integer [ not null, note: 'User ID of the poster.' ]
+	Pid binary [ not null, note: 'Problem in which the comment is posted.' ]
+	Mposted datetime [ not null, note: 'Date and time when the comment was posted.' ]
+
+	indexes {
+		(Uid, Pid) [ name: 'COMMENTS_index_0' ]
+	}
+}
+
+Table LIKES {
+	Mid bigint [ not null, note: 'Comment ID which received the like.' ]
+	Uid integer [ not null, note: 'User who liked the comment.' ]
+}
+
+Table RESOURCES {
+	Rid mediumint [ pk, increment, not null, unique, note: 'ID of the resource.' ]
+	Kid smallint [ not null, note: 'Concept the resource talks about.' ]
+	Rlang varchar [ not null, note: 'Language the resource is in.' ]
+	Rvideo bit [ not null, note: 'Whether or not resource link is a YouTube video.' ]
+	Rlink varchar [ not null, note: 'Hyperlink to the resource.' ]
+
+	indexes {
+		(Rvideo, Rlang, Kid) [ name: 'RESOURCES_index_0' ]
+	}
+}
+
+Table SESSIONS {
+	Sid binary [ pk, not null, unique, note: 'Session ID.' ]
+	Uid integer [ not null, unique, note: 'User linked to that session.' ]
+	Sip varchar [ not null, note: 'IP.' ]
+	Sexpires datetime [ not null, note: 'When the session expires.' ]
+
+	indexes {
+		(Uid) [ name: 'SESSIONS_index_0' ]
+	}
+}
+
+Table ORGANISATIONS {
+	Oid mediumint [ pk, increment, not null, unique, note: 'Organisation ID.' ]
+	Oname varchar [ not null, unique, note: 'Name of the organisation.' ]
+}
+
+Ref fk_COMPLETED_Uid_USERS {
+	COMPLETED.Uid > USERS.Uid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_COMPLETED_Pid_PROBLEMS {
+	COMPLETED.Pid > PROBLEMS.Pid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_PROBLEMS_Uid_USERS {
+	PROBLEMS.Uid > USERS.Uid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_PROBLEMS_Kid_CONCEPTS {
+	PROBLEMS.Kid > CONCEPTS.Kid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_COMMENTS_Uid_USERS {
+	COMMENTS.Uid > USERS.Uid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_COMMENTS_Pid_PROBLEMS {
+	COMMENTS.Pid > PROBLEMS.Pid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_LIKES_Mid_COMMENTS {
+	LIKES.Mid > COMMENTS.Mid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_LIKES_Uid_USERS {
+	LIKES.Uid > USERS.Uid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_RESOURCES_Kid_CONCEPTS {
+	RESOURCES.Kid > CONCEPTS.Kid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_USERS_Uid_SESSIONS {
+	USERS.Uid - SESSIONS.Uid [ delete: cascade, update: cascade ]
+}
+
+Ref fk_USERS_Oid_ORGANISATIONS {
+	USERS.Oid > ORGANISATIONS.Oid [ delete: cascade, update: cascade ]
+}

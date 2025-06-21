@@ -5,6 +5,7 @@
     <link rel="preload" href="public/content/&dashboard/style.css" as="style" type="text/css">
     <link rel="stylesheet" href="public/content/&dashboard/style.css">
     <!-- MODULES -->
+    <py> add app prerender </py>
     <py> add app settings </py>
     <py> add interface navbar </py>
     <py> add interface tooltip </py>
@@ -20,8 +21,10 @@
     <!-- INTERFACE MODULES -->
     <py> call interface </py>
     <!-- CONTENT -->
-    <div id="main"></div>
+    <div id="main">
+        <div id="content"></div>
+    </div>
     <!-- SCRIPT -->
-    <script src="public/content/&dashboard/script.js"></script>
+    <script type="module" src="public/content/&dashboard/script.js"></script>
 </body>
 </html>

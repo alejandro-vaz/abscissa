@@ -9,9 +9,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from handler import *
 
 # HANDLER -> MODULES
-import re
-import secrets
 import datetime
+import json
 import mysql.connector as mysql
 
 
@@ -20,7 +19,11 @@ import mysql.connector as mysql
 #
 
 # ACCESS -> FUNCTION
-def database_request(query: str, params: list) -> object:
+def request(query: str, params: list) -> object:
+    for index in range(len(params)):
+        par = params[index]
+        if isinstance(par, (list, dict)):
+            params[index] = json.dumps(par)
     placeholders = []
     pattern = re.compile(r"(!|\?)")
     for mark in pattern.finditer(query):
@@ -47,8 +50,7 @@ def database_request(query: str, params: list) -> object:
     cursor = SUG.THR.DBS.cursor(prepared=True)
     cursor.execute(final_query, val_params)
     if cursor.with_rows:
-        cols = [col[0] for col in cursor.description]
-        rows = [dict(zip(cols, row)) for row in cursor.fetchall()]
+        rows = [dict(zip([col[0] for col in cursor.description], row)) for row in cursor.fetchall()]
         cursor.close()
         return rows
     cursor.close()
@@ -60,14 +62,14 @@ def database_request(query: str, params: list) -> object:
 #
 
 # SESSIONS -> SET
-def setsession(session: str, username: str) -> None:
-    database_request(
-        "INSERT INTO sessions (session, username, expires, ip) VALUES (?, ?, ?, ?)",
+def session(Sid: bytes, Uid: int) -> None:
+    request(
+        "UPDATE SESSIONS SET Sid = ?, Sip = ?, Sexpires = ? WHERE Uid = ?",
         [
-            session,
-            username,
-            (datetime.now() + datetime.timedelta(seconds=72000)).strftime("%Y-%m-%d %H:%M:%S"),
-            SUG.THR.REQ.META.get('REMOTE_ADDR')
+            Sid,
+            SUG.REQ.SIP,
+            (datetime.now() + datetime.timedelta(seconds=604800)).strftime("%Y-%m-%d %H:%M:%S"),
+            Uid
         ]
     )
 
@@ -76,27 +78,37 @@ def setsession(session: str, username: str) -> None:
 #   INITIALIZATION
 #
 
-# INITIALIZATION -> FUNCTION
-def database_init() -> None:
-    SUG.THR.SID = SUG.THR.REQ.COOKIES.get('session')
-    try:
-        SUG.THR.DBS = mysql.connect(
-            host = SUG.DBC["HOST"],
-            user = SUG.DBC["USER"],
-            password = SUG.DBC["PASSWORD"],
-            database = SUG.DBC["DATABASE"]
-        )
-    except:
-        raise DatabaseConnectionError(
-            name = SUG.DBC["DATABASE"], 
-            user = SUG.DBC["USER"], 
-            host = SUG.DBC["HOST"], 
-            password = SUG.DBC["PASSWORD"]
-        )
-    SUG.THR.DBS.autocommit = True
-    SUG.THR.DBV = bool(database_request(
-        "SELECT session, username, expires, ip FROM sessions WHERE session = ?",
+# INITIALIZATION -> PROCESS
+try:
+    SUG.THR.DBS = mysql.connect(
+        host = SUG.DBC["HOST"],
+        user = SUG.DBC["USER"],
+        password = SUG.DBC["PASSWORD"],
+        database = SUG.DBC["DATABASE"]
+    )
+except:
+    raise DatabaseConnectionError(
+        name = SUG.DBC["DATABASE"], 
+        user = SUG.DBC["USER"], 
+        host = SUG.DBC["HOST"], 
+        password = SUG.DBC["PASSWORD"]
+    )
+SUG.THR.DBS.autocommit = True
+SUG.THR.DBV = bool(request(
+    "SELECT * FROM SESSIONS WHERE Sid = ?",
+    [
+        SUG.REQ.SID
+    ]
+))
+if SUG.THR.DBV: 
+    SUG.THR.UDT = request(
+        "SELECT * FROM USERS WHERE Uid = ?",
         [
-            SUG.THR.SID
+            request(
+                "SELECT Uid FROM SESSIONS WHERE Sid = ?",
+                [
+                    SUG.REQ.SID
+                ]
+            )[0]["Uid"]
         ]
-    ))
+    )[0]

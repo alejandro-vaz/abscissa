@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "target": "ES2024",
+        "jsx": "react-jsx",
+        "strictFunctionTypes": true,
+        "noEmit": true,
+        "sourceMap": true,
+        "resolveJsonModule": true
+    },
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

@@ -18,18 +18,9 @@ import secrets
 #
 
 # FUNCTIONS -> GENERATE SESSION
-def gensession() -> str:
-    return secrets.token_hex(16)
+def session() -> bytes:
+    return secrets.token_bytes(32)
 
 # FUNCTIONS -> RANDOM INTEGER
-def randomint(lower, upper) -> int:
+def integer(lower: int, upper: int) -> int:
     return random.randint(lower, upper)
-
-
-#
-#   INITIALIZATION
-#
-
-# INITIALIZATION -> FUNCTION
-def random_init() -> None:
-    pass

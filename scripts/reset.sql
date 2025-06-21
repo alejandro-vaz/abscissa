@@ -1,0 +1,11 @@
+--
+--  RESET DATABASE
+--
+
+-- RESET DATABASE -> DROP
+DROP DATABASE IF EXISTS `abscissa`;
+
+-- RESET DATABASE -> REMAKE
+CREATE DATABASE `abscissa`
+    DEFAULT CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
