@@ -1,6 +1,5 @@
 # *Abscissa* changelog
 ## *Abscissa* 0.0.1 `1-0-0`
----
 - [X] (Major) Initial release.
 ### *Abscissa* 0.1.9 `0-2-6`
 - [X] (Patch) Changed problems *JSON* structure.

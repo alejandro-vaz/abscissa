@@ -3,11 +3,9 @@
 //
 
 // HEAD -> MODULES 
+import React from 'react';
 // @ts-ignore
-import * as React from  'https://esm.sh/react@18.2.0';
-// @ts-ignore
-import * as ReactDOM from "https://esm.sh/react-dom@18.2.0/client";
-
+import * as ReactDOM from 'https://esm.sh/react-dom@19.1.0/client';
 
 
 //                                                                            
@@ -55,11 +53,11 @@ if (document.currentScript?.getAttribute('src')?.endsWith('general.js')) {
 // API -> REQUEST
 export async function curl(script: string, data: object, timeout = 5000): Promise<object | boolean> {
     return (await fetch(
-        window.location.protocol === "https:" ? 'https' : 'http' + 
-        "://" +
-        window.location.host +
-        "/api/" +
-        script.replace(/^\/+/, ''),
+        (window.location.protocol === "https:" ? 'https' : 'http') + 
+        ("://") +
+        (window.location.host) +
+        ("/api/") +
+        (script.replace(/^\/+/, '')),
         {
             cache: "no-store",
             method: 'POST',

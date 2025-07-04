@@ -1,23 +1,18 @@
 #
-#   HANDLER
+#   MODULES
 #
 
-# HANDLER -> LOAD
+# MODULES -> LOAD
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
-
+from django.core import wsgi
 
 #
 #   GATEWAY
 #
 
-# GATEWAY -> PROJECT PATH
-sys.path.insert(0, '/srv/www/abscissa')
-
-# GATEWAY -> SETTINGS FILE
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-
-# GATEWAY -> APPLICATION
+# GATEWAY -> SETUP
+sys.path.append('/srv/www')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'website.settings')
+sys.path.append('/srv/www/website')
 application = wsgi.get_wsgi_application()

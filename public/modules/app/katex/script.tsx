@@ -4,27 +4,7 @@
 
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
-import * as LaTeX from 'katex/contrib/auto-render';
-
-
-//                                                                            
-//  UTILITIES                                                                 
-//                                                                            
-
-// UTILITIES -> RAW LATEX
-export function rawLaTeX(latex: string): string {
-    return latex
-    .replaceAll("\\\\", "\\")
-    .replaceAll("\\right", "")
-    .replaceAll("\\left", "")
-    .replaceAll("\\cdot", "")
-    .replaceAll("{", "")
-    .replaceAll("}", "")
-    .replaceAll("*", "")
-    .replaceAll("\\\\", "")
-    .replaceAll(" ", "")
-    .trim()
-}
+import * as KaTeX from 'katex/contrib/auto-render';
 
 
 //                                                                            
@@ -33,7 +13,7 @@ export function rawLaTeX(latex: string): string {
 
 // RENDERING -> ELEMENT
 export function render(element: HTMLElement): void {
-    LaTeX(element, {
+    KaTeX(element, {
         delimiters: [
             {left: "$$", right: "$$", display: true},
             {left: "$", right: "$", display: false}

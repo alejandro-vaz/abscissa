@@ -32,6 +32,7 @@ Table PROBLEMS {
 	Kid smallint [ not null, note: 'Concept identifier which the problem talks about.' ]
 	Pedited datetime [ not null, note: 'When was the problem created or last edited.' ]
 	Pmeta json [ not null, note: 'Problem metadata independant of language.' ]
+	Psolution json [ not null, note: 'Problem solution information which is not given to the app.' ]
 	Pdataen json [ not null, note: 'Mandatory problem in English.' ]
 	Pdataes json [ note: 'Optional problem in Spanish.' ]
 	Pdatade json [ note: 'Optional problem in Deutsch.' ]
@@ -50,22 +51,6 @@ Table CONCEPTS {
 	indexes {
 		(Ken, Kes, Kde) [ name: 'CONCEPTS_index_0' ]
 	}
-}
-
-Table COMMENTS {
-	Mid bigint [ pk, increment, not null, unique, note: 'Comment ID.' ]
-	Uid integer [ not null, note: 'User ID of the poster.' ]
-	Pid binary [ not null, note: 'Problem in which the comment is posted.' ]
-	Mposted datetime [ not null, note: 'Date and time when the comment was posted.' ]
-
-	indexes {
-		(Uid, Pid) [ name: 'COMMENTS_index_0' ]
-	}
-}
-
-Table LIKES {
-	Mid bigint [ not null, note: 'Comment ID which received the like.' ]
-	Uid integer [ not null, note: 'User who liked the comment.' ]
 }
 
 Table RESOURCES {
@@ -110,22 +95,6 @@ Ref fk_PROBLEMS_Uid_USERS {
 
 Ref fk_PROBLEMS_Kid_CONCEPTS {
 	PROBLEMS.Kid > CONCEPTS.Kid [ delete: cascade, update: cascade ]
-}
-
-Ref fk_COMMENTS_Uid_USERS {
-	COMMENTS.Uid > USERS.Uid [ delete: cascade, update: cascade ]
-}
-
-Ref fk_COMMENTS_Pid_PROBLEMS {
-	COMMENTS.Pid > PROBLEMS.Pid [ delete: cascade, update: cascade ]
-}
-
-Ref fk_LIKES_Mid_COMMENTS {
-	LIKES.Mid > COMMENTS.Mid [ delete: cascade, update: cascade ]
-}
-
-Ref fk_LIKES_Uid_USERS {
-	LIKES.Uid > USERS.Uid [ delete: cascade, update: cascade ]
 }
 
 Ref fk_RESOURCES_Kid_CONCEPTS {

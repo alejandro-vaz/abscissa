@@ -1,16 +1,5 @@
 {
     "calculator": true, // false OR "basic", "scientific", "graphing", "financial", "advanced"
-    "preResult": "$$v = ",
     "postResult": " m/s$$",
-    "numericalResult": true, // or false if it is not numerical but algebraic
-    "result": {
-        "value": 3.14,
-        "error": 0.02,
-        "correct": null, //
-        "incorrect": null // THESE TWO FIELDS SHOULD BE A LIST OF CORRECT AND INCORRECT ANSWERS IF NUMERICALRESULT IS TRUE
-    },
-    "tags": [
-        12,
-        38
-    ] // LIST OF TAGS WHICH ARE STORED ON THE SERVER
+    "preResult": "$$v = "
 }

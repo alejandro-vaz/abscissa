@@ -1,6 +1,0 @@
-{
-    "instructions": "do x, y and z. you might want to include latex between double dollar signs",
-    "svg": "svg content here",
-    "proof": "between double dollar signs",
-    "editor": "editor default LaTeX"
-}
