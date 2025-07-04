@@ -1,5 +1,3 @@
 {
-    "calculator": true, // false OR "basic", "scientific", "graphing", "financial", "advanced"
-    "postResult": " m/s$$",
-    "preResult": "$$v = "
+    "calculator": true // false OR "basic", "scientific", "graphing", "financial", "advanced"
 }

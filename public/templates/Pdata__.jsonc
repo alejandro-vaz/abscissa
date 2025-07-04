@@ -1,5 +1,5 @@
 {
-    "editor": "editor default LaTeX",
-    "instructions": "do x, y and z. you might want to include latex between double dollar signs",
+    "editor": "editor default mathsys",
+    "instructions": "do x, y and z. you might want to include mathsys between tripple backticks. rendered as markdown",
     "svg": "svg content here"
 }
