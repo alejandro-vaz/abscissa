@@ -1,4 +1,12 @@
 #
+#   HANDLER
+#
+
+# HANDLER -> LOAD
+from website import *
+
+
+#
 #   SETTINGS
 #
 
@@ -7,10 +15,10 @@ DEBUG = True
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 # SETTINGS -> SECRET KEY
-SECRET_KEY = 'aoisdnoin28yh98ASN9inks'
+SECRET_KEY = secrets.token_urlsafe(64)
 
 # SETTINGS -> ALLOWED HOSTS
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["abscissa.eu", "abscissa.gamusino.net"]
 
 # SETTINGS -> URLS
 ROOT_URLCONF = 'urls'
@@ -20,13 +28,6 @@ MIDDLEWARE = ['django.middleware.common.CommonMiddleware']
 
 # SETTINGS -> AUTOFIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
-# SETTINGS -> CACHE
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
-    }
-}
 
 # SETTINGS -> DATABASE
 DATABASES = {

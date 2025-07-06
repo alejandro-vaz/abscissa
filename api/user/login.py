@@ -3,10 +3,7 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 
 #
@@ -14,27 +11,30 @@ from handler import *
 #
 
 # FUNCTION -> DECLARATION
-def output(request: object) -> object:
+def output(request: HttpRequest) -> HttpResponse:
     # DECLARATION -> EXTENSIONS
-    from extensions import _
-    _.__init__(request)
-    from extensions import database, post, random
-    
+    from website.extensions import Response; Response(request)
+    from website.extensions import bools; bools.init()
+    from website.extensions import database; database.init()
+    from website.extensions import post; post.init()
+    from website.extensions import random; random.init()
     # DECLARATION -> ARGUMENT CHECKS    
-    if not post.checks("Uemail", "Uhashpass", "Uname"): return SUG.REQ.RES.error(1)
-    
+    if not post.checks("Uhashpass", "Uname"): return SUG.REQ.RES.error(1)
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Uhashpass") and (post.exists("Uemail") ^ post.exists("Uname"))): return SUG.REQ.RES.error(2)
-    
+    if not (post.exists("Uhashpass", "Uname") == [True, True]): return SUG.REQ.RES.error(2)
     # DECLARATION -> QUERY
-    key = "Uemail" if post.exists("Uemail") else "Uname"
     Uid, Uhashpass = database.request(
-        "SELECT Uid, Uhashpass FROM USERS WHERE ! = ?",
+        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = ?",
         [
-            key,
-            SUG.REQ.PST[key]
+            SUG.REQ.PST["Uname"]
         ]
-    )[0]
+    )[0].values()
+    debug(Uhashpass, SUG.REQ.PST["Uhashpass"], Uid, database.request(
+        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = ?",
+        [
+            SUG.REQ.PST["Uname"]
+        ]
+    )[0])
     result = Uhashpass == SUG.REQ.PST["Uhashpass"]
     SUG.REQ.RES.write(result)
     if result:

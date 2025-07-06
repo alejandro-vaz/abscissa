@@ -3,10 +3,7 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 # HANDLER -> MODULES
 import datetime
@@ -26,5 +23,6 @@ def now() -> str:
 #   INITIALIZATION
 #
 
-# INITIALIZATION -> PROCESS
-SUG.THR.D32 = zlib.crc32(datetime.datetime.now().strftime('%Y-%m-%d').encode()) & 0xFFFFFFFF
+# INITIALIZATION -> FUNCTION
+def init() -> None:
+    SUG.THR.D32 = zlib.crc32(datetime.datetime.now().strftime('%Y-%m-%d').encode()) & 0xFFFFFFFF

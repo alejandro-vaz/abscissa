@@ -3,10 +3,7 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 
 #
@@ -14,24 +11,22 @@ from handler import *
 #
 
 # FUNCTION -> DECLARATION
-def output(request: object) -> object:
+def output(request: HttpRequest) -> HttpResponse:
     # DECLARATION -> EXTENSIONS
-    from extensions import _
-    _.__init__(request)
-    from extensions import bools, database, post
-    
+    from website.extensions import Response; Response(request)
+    from website.extensions import bools; bools.init() 
+    from website.extensions import database; database.init() 
+    from website.extensions import post; post.init()
     # DECLARATION -> ARGUMENT CHECKS
     if not post.checks("Ken", "Kes", "Kde"): return SUG.REQ.RES.error(1)
-    
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not bools.count(post.exists("Ken"), post.exists("Kes"), post.exists("Kde")) == 1: return SUG.REQ.RES.error(2)
-    
+    if not bools.count(*post.exists("Ken", "Kes", "Kde")) == 1: return SUG.REQ.RES.error(2)
     # DECLARATION -> QUERY
     string = next(lang for lang in ["Ken", "Kes", "Kde"] if post.exists(lang))
     SUG.REQ.RES.write(database.request(
         f"SELECT * FROM CONCEPTS WHERE {string} LIKE ?",
         [
-            "%" + SUG.REQ.PST[string.split(" ")[0]] + "%",
+            "%" + SUG.REQ.PST[string.split(" ")[0]] + "%"
         ]
     ))
     return SUG.REQ.RES.get()

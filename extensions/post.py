@@ -3,10 +3,7 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 
 #
@@ -14,15 +11,29 @@ from handler import *
 #
 
 # PST -> KEY EXISTS
-def exists(key: str) -> bool:
-    if isinstance(SUG.REQ.PST, dict):
-        return key in SUG.REQ.PST
-    return False
+def exists(*keys: str) -> bool | list:
+    if len(keys) == 1:
+        return keys[0] in SUG.REQ.PST
+    else:
+        values = []
+        for key in keys:
+            values.append(key in SUG.REQ.PST)
+        return values
 
 # PST -> CHECKS
 def checks(*keys: str) -> bool:
     for key in keys:
         if exists(key):
-            if not re.compile(SUG.PAT[key]).fullmatch(str(SUG.REQ.PST[key])):
-                return False
+            if isinstance(SUG.PAT[key], set):
+                if not SUG.PAT[key].issubset(SUG.REQ.PST[key]): return False
+            else:
+                if not bool(re.compile(SUG.PAT[key]).fullmatch(str(SUG.REQ.PST[key]))): return False
     return True
+
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def init() -> None: pass

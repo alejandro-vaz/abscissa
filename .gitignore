@@ -1,9 +1,18 @@
+#
+#   IGNORE
+#
+
+# IGNORE -> BUILD
 *.css
 *.js
-public/templates/database.sql
+
+# IGNORE -> NODE
 node_modules/
-SUG.py
+
+# IGNORE -> PYCACHE
 __pychache__/
 extensions/__pycache__/
 api/__pycache__/
+
+# IGNORE -> DBML
 dbml-error.log

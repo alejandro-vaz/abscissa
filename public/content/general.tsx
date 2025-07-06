@@ -3,11 +3,9 @@
 //
 
 // HEAD -> MODULES 
+import React from 'react';
 // @ts-ignore
-import * as React from  'https://esm.sh/react@18.2.0';
-// @ts-ignore
-import * as ReactDOM from "https://esm.sh/react-dom@18.2.0/client";
-
+import * as ReactDOM from 'https://esm.sh/react-dom@19.1.0/client';
 
 
 //                                                                            
@@ -24,13 +22,8 @@ export function redirect(target: string): void {
     window.location.href = target;
 }
 
-// WINDOW -> RUNNING ON MAIN
-export function ismain(script: string): boolean {
-    return document.currentScript?.getAttribute('src')?.endsWith(`${script}/script.js`)
-}
-
 // WINDOW -> FORCE ASPECT RATIO
-if (document.currentScript?.getAttribute('src')?.endsWith('general.js')) {
+if ((new URL(import.meta.url)).searchParams.has("main")) {
     window.addEventListener("resize", function(): void {
         if (
             window.innerWidth / window.innerHeight < 3 / 2 && 
@@ -45,6 +38,9 @@ if (document.currentScript?.getAttribute('src')?.endsWith('general.js')) {
             redirect("dashboard");
         }
     });
+    document.addEventListener("contextmenu", (open) => {
+        open.preventDefault();
+    })
 }
 
 
@@ -53,13 +49,13 @@ if (document.currentScript?.getAttribute('src')?.endsWith('general.js')) {
 //                                                                            
 
 // API -> REQUEST
-export async function curl(script: string, data: object, timeout = 5000): Promise<object | boolean> {
+export async function curl(script: string, data: object, timeout = 5000): Promise<object | boolean | string | number | null> {
     return (await fetch(
-        window.location.protocol === "https:" ? 'https' : 'http' + 
-        "://" +
-        window.location.host +
-        "/api/" +
-        script.replace(/^\/+/, ''),
+        (window.location.protocol === "https:" ? 'https' : 'http') + 
+        ("://") +
+        (window.location.host) +
+        ("/api/") +
+        (script.replace(/^\/+/, '')),
         {
             cache: "no-store",
             method: 'POST',

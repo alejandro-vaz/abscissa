@@ -17,7 +17,8 @@ $DARK: #4d4da0
 $LIGHT: #7f7fd2
 $ACCENT: #FFFFFF
 $INVERTED: #000000
-$CONTRAST: #111111
+$TOUCH: #111111
+$CONTRAST: #333333
 $TIMER1: 0.1s
 $TIMER2: 0.3s
 $CURVE1: ease-in-out
@@ -31,6 +32,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
 // FUNCTIONS -> CONTAINER
 =section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
     box-sizing: border-box
+    overflow-y: scroll
     @if $grow
         flex: 1 0 auto
     @else
@@ -73,17 +75,18 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
     &:focus
         outline: none
     @if $type == button
-        cursor: pointer
+        +cursor(click)
         background-color: #00000055
         min-width: fit-content
         height: 2.75vw
         transition: border-color $TIMER1 $CURVE1, background-color $TIMER1 $CURVE1, color $TIMER1 $CURVE1
         &:hover
-            background-color: string.unquote($LIGHT + "55")
+            background-color: $TOUCH
         &:active
             border-color: $LIGHT
             color: $LIGHT
     @if $type == textarea
+        +cursor(text)
         background-color: #000000
         font-family: monospace
         resize: none
@@ -91,6 +94,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
             color: $ACCENT
             opacity: 0.5
     @if $type == text or $type == password or $type == email
+        +cursor(text)
         background-color: #000000
         font-family: monospace
         height: 2.75vw

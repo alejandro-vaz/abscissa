@@ -3,14 +3,10 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 # HANDLER -> MODULES
 import random
-import secrets
 
 
 #
@@ -24,3 +20,11 @@ def session() -> bytes:
 # FUNCTIONS -> RANDOM INTEGER
 def integer(lower: int, upper: int) -> int:
     return random.randint(lower, upper)
+
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def init() -> None: pass

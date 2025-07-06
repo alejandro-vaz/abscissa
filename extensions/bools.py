@@ -3,10 +3,7 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 
 #
@@ -16,3 +13,11 @@ from handler import *
 # FUNCTIONS -> COUNT TRUE
 def count(*args: bool) -> int:
     return sum(map(bool, args))
+
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def init() -> None: pass

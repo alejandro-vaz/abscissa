@@ -3,10 +3,7 @@
 #
 
 # HANDLER -> LOAD
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from handler import *
+from website import *
 
 
 #
@@ -18,5 +15,13 @@ def str2bin(string: str) -> bytes:
     return bytes.fromhex(string)
 
 # HEX BASE -> DECODE
-def bin2str(data: bytes) -> str:
-    return data.hex().upper()
+def bin2str(bin: bytes) -> str:
+    return bin.hex().upper()
+
+
+#
+#   INITIALIZATION
+#
+
+# INITIALIZATION -> FUNCTION
+def init() -> None: pass
