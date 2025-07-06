@@ -60,7 +60,7 @@ def session(Sid: bytes, Uid: int) -> None:
         [
             Sid,
             SUG.REQ.SIP,
-            (datetime.now() + datetime.timedelta(seconds=604800)).strftime("%Y-%m-%d %H:%M:%S"),
+            (datetime.datetime.now() + datetime.timedelta(seconds=604800)).strftime("%Y-%m-%d %H:%M:%S"),
             Uid
         ]
     )

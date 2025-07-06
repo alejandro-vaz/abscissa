@@ -11,7 +11,7 @@ from website import *
 #
 
 # SETTINGS -> DEBUG
-DEBUG = False
+DEBUG = True
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 # SETTINGS -> SECRET KEY

@@ -20,7 +20,7 @@ class Response:
     def __init__(self, request: HttpRequest) -> None:
         SUG.REQ.SID = bytes.fromhex(request.COOKIES.get('Sid')) if bool(request.COOKIES.get('Sid')) else None
         SUG.REQ.SIP = request.META.get('REMOTE_ADDR')
-        SUG.REQ.PST = json.loads(request.body) if bool(request.body) else None
+        SUG.REQ.PST = json.loads(request.body)
         SUG.REQ.RES = self
         self.data = None
         self.Sid = None

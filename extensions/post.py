@@ -13,13 +13,11 @@ from website import *
 # PST -> KEY EXISTS
 def exists(*keys: str) -> bool | list:
     if len(keys) == 1:
-        if isinstance(SUG.REQ.PST, dict):
-            return keys in SUG.REQ.PST
-        return False
+        return keys[0] in SUG.REQ.PST
     else:
         values = []
         for key in keys:
-            values.append(exists(key))
+            values.append(key in SUG.REQ.PST)
         return values
 
 # PST -> CHECKS

@@ -15,3 +15,12 @@ import secrets
 
 # INITIALIZATION -> SUPERGLOBALS
 import SUG
+
+#
+#   FUNCTIONS
+#
+
+# FUNCTIONS -> DEBUG
+def debug(*variables: object):
+    for variable in variables:
+        print(repr(variable), file=sys.stderr)

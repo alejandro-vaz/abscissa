@@ -61,11 +61,8 @@ views = [
     "",
     "dashboard",
     "error",
-    "playground",
-    "search",
-    "settings",
-    "stats",
-    "user"
+    "login",
+    "register"
 ]
 
 # URL PATTERNS -> API

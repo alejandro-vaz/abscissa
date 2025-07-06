@@ -22,7 +22,7 @@ def output(request: HttpRequest) -> HttpResponse:
     # DECLARATION -> ARGUMENT RELATIONSHIP
     if not (post.exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): return SUG.REQ.RES.error(2)
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(database.request(
+    SUG.REQ.RES.write(bool(database.request(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass, Ujoined, Uplayground, Usettings, Oid, Urole) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
             SUG.REQ.PST["Uname"],
@@ -34,5 +34,5 @@ def output(request: HttpRequest) -> HttpResponse:
             0,
             0
         ]
-    ))
+    )))
     return SUG.REQ.RES.get()

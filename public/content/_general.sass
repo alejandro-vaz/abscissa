@@ -19,6 +19,7 @@ $DARK: root.$DARK
 $LIGHT: root.$LIGHT
 $ACCENT: root.$ACCENT
 $INVERTED: root.$INVERTED
+$TOUCH: root.$TOUCH
 $CONTRAST: root.$CONTRAST
 $TIMER1: root.$TIMER1
 $TIMER2: root.$TIMER2
@@ -81,7 +82,7 @@ py
 $main-navbar-width-idle: 1vw
 $main-top-padding: 5.5vw
 $main-bottom-padding: 2.5vw
-$main-fade-radius: 0.5vw
+$main-fade-distance: 1vw
 :where(#main)
     +section(true, false, $width: calc(100% - $main-navbar-width-idle))
     padding: $main-top-padding 0 $main-bottom-padding 0
@@ -89,9 +90,11 @@ $main-fade-radius: 0.5vw
     top: 0
     right: 0
     mask:
-        image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) $main-top-padding - $main-fade-radius, rgba(0, 0, 0, 1) $main-top-padding + $main-fade-radius, rgba(0, 0, 0, 1) calc(100% - $main-bottom-padding - $main-fade-radius), rgba(0, 0, 0, 0) calc(100% - $main-bottom-padding + $main-fade-radius), rgba(0, 0, 0, 0) 100%)
+        image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) $main-top-padding, rgba(0, 0, 0, 1) $main-top-padding + $main-fade-distance, rgba(0, 0, 0, 1) calc(100% - $main-bottom-padding - $main-fade-distance), rgba(0, 0, 0, 0) calc(100% - $main-bottom-padding), rgba(0, 0, 0, 0) 100%)
         size: 100% 100%
         repeat: no-repeat
+    > :first-child
+        margin-top: $main-fade-distance
 
 
 //                                                                           
@@ -103,15 +106,15 @@ $main-fade-radius: 0.5vw
     &[type="text"]
         +input(text)
     &[type="textarea"]
-        +input(textarea)
+        +input(textarea, $inline: false)
     &[type="password"]
         +input(password)
     &[type="submit"]
         +input(button)
     &[type="email"]
         +input(email)
-:where(.inputButton)
-    +input(button)
+    &[type="button"]
+        +input(button)
 
 
 //                                                                           
@@ -119,8 +122,8 @@ $main-fade-radius: 0.5vw
 //                                                                           
 
 // FORMS -> FORM
-form 
-    +section(true, true)
+:where(form)
+    +section(true, true, $grow: false, $height: fit-content)
     input
         width: 100%
     input:not(:first-of-type, :last-of-type)

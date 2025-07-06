@@ -19,18 +19,22 @@ def output(request: HttpRequest) -> HttpResponse:
     from website.extensions import post; post.init()
     from website.extensions import random; random.init()
     # DECLARATION -> ARGUMENT CHECKS    
-    if not post.checks("Uemail", "Uhashpass", "Uname"): return SUG.REQ.RES.error(1)
+    if not post.checks("Uhashpass", "Uname"): return SUG.REQ.RES.error(1)
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Uhashpass") and bools.count(post.exists("Uemail", "Uname")) == 1): return SUG.REQ.RES.error(2)
+    if not (post.exists("Uhashpass", "Uname") == [True, True]): return SUG.REQ.RES.error(2)
     # DECLARATION -> QUERY
-    key = "Uemail" if post.exists("Uemail") else "Uname"
     Uid, Uhashpass = database.request(
-        "SELECT Uid, Uhashpass FROM USERS WHERE ! = ?",
+        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = ?",
         [
-            key,
-            SUG.REQ.PST[key]
+            SUG.REQ.PST["Uname"]
         ]
-    )[0]
+    )[0].values()
+    debug(Uhashpass, SUG.REQ.PST["Uhashpass"], Uid, database.request(
+        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = ?",
+        [
+            SUG.REQ.PST["Uname"]
+        ]
+    )[0])
     result = Uhashpass == SUG.REQ.PST["Uhashpass"]
     SUG.REQ.RES.write(result)
     if result:
