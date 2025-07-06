@@ -220,3 +220,27 @@
 - [X] (Patch) Replaced *JS* `.addEventListener("click" => ...)` for *HTML* property `onclick` to increase simplicity.
 - [X] (Patch) Replaced default cursors for styled ones.
 - [X] (Patch) Removed app module analytics.
+### *Abscissa* 2.6.0 `3-5-15`
+- [X] (Patch) Added comments on `.gitignore`.
+- [X] (Minor) Database is now generated from *DBML* code and initialization scripts.
+- [X] (Patch) Added `README.md`.
+- [X] (Patch) Published `SUG.py` as there is no risk for leaked passwords.
+- [X] (Patch) Renamed `handler.py` to `__init__.py` and it now acts as a package via dir hacking.
+- [X] (Patch) Moved everything out of `htdocs/`.
+- [X] (Major) Fully remade the *API* from scratch, being the newer simpler and with more features.
+- [X] (Minor) Moved from `.jsx` to `.tsx` to benefit from *TypeScript* strong typing features.
+- [X] (Patch) Removed *CSScribe* support.
+- [X] (Major) Remade the *HTML* completely.
+- [X] (Minor) *API* now benefits from a `Response` class than handles the reply to the frontend.
+- [X] (Patch) Revised and refactored all `extensions/`.
+- [X] (Patch) Remade branding.
+- [X] (Patch) Added *Google Analytics* once again.
+- [X] (Minor) New navbar interface module which is comes out from the side with an animation.
+- [X] (Patch) New topbar interface module which displays information about the current view.
+- [X] (Patch) New tooltip interface module which displays information about what the user is hovering over.
+- [X] (Patch) Changed `npm` run commands.
+- [X] (Major) Moved from `UMD` to `ES` modules in all `.tsx`.
+- [X] (Patch) Polished commenting convention in the backend.
+- [X] (Minor) Coded again root and general *SASS* modules to ensure the styling of new views is straightforward.
+- [X] (Patch) Moved encryption from server to client.
+- [X] (Patch) Added public templates for the *JSON* stored in the database.
