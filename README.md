@@ -12,7 +12,7 @@ Check it out on [*Abscissa*](https://abscissa.eu)
 I say *we* but I'm indeed a solo developer for now, so if you want to get involved learn
 
 ## How to contribute
-1. **Check out our wiki:** [Here](https://github.com/abscissa-math/website/wiki).
+1. **Check out our wiki:** [here](https://github.com/abscissa-math/website/wiki).
 2. **Join the team:** Contact us to become a member of the organisation and get write role.
 3. **Work on a branch:** Create a new branch and add your changes. The branch `main` is protected against direct commits to keep the codebase clean, every commit there is a version deployed into the website.
 4. **Submit the pull request:** Create a pull request. Don't forget to update the `changelog.md` and the version numbers accordingly. We will give you feedback.
@@ -32,6 +32,9 @@ And for the backend:
    - *MariaDB* as the database for everything.
    - *Django* serving the *HTML* and the *API*.
    - *Apache* with `mod_wsgi` handling static files.
+
+> [!IMPORTANT]
+> The backend will change a lot in the coming weeks. We will be moving from our current stack to *Nginx* + *Uvicorn* + *FastAPI.* Our frontend will also adapt, we will turn *Abscissa* into a single-page-app which will be much faster and reliable. 
 
 ## License
 This project has the [*Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International*](https://creativecommons.org/licenses/by-nc-nd/4.0/) license. That means:
