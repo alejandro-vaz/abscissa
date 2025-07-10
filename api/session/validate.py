@@ -10,11 +10,16 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/session/validate")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init()
+    from website.extensions import database
+    await asyncio.gather(
+        database.init(request, response)
+    )
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(SUG.THR.DBV)
-    return SUG.REQ.RES.get()
+    return JSONResponse(content = database.validate)

@@ -10,23 +10,28 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/concept/search")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import bools; bools.init() 
-    from website.extensions import database; database.init() 
-    from website.extensions import post; post.init()
+    from website.extensions import bools, database, post
+    await asyncio.gather(
+        bools.init(request, response),
+        database.init(request, response),
+        post.init(request, response)
+    )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks("Ken", "Kes", "Kde"): return SUG.REQ.RES.error(1)
+    if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not bools.count(*post.exists("Ken", "Kes", "Kde")) == 1: return SUG.REQ.RES.error(2)
+    if not bools.count(*post.exists("Ken", "Kes", "Kde")) == 1: raise SUG.ERR[1]
     # DECLARATION -> QUERY
-    string = next(lang for lang in ["Ken", "Kes", "Kde"] if post.exists(lang))
-    SUG.REQ.RES.write(database.request(
-        f"SELECT * FROM CONCEPTS WHERE {string} LIKE ?",
+    language = [lang for lang in ["Ken", "Kes", "Kde"] if post.exists(lang)][0]
+    return JSONResponse(content = await database.request(
+        f"SELECT * FROM CONCEPTS WHERE {language} LIKE ?",
         [
-            "%" + SUG.REQ.PST[string.split(" ")[0]] + "%"
+            "%" + post.data[language] + "%"
         ]
     ))
-    return SUG.REQ.RES.get()

@@ -10,21 +10,26 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/user/lookup")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init()
-    from website.extensions import post; post.init()
+    from website.extensions import database, post
+    await asyncio.gather(
+        database.init(request, response),
+        post.init(request, response)
+    )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks("Uid"): return SUG.REQ.RES.error(1)
+    if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not post.exists("Uid"): return SUG.REQ.RES.error(2)
+    if not post.exists("Uname"): raise SUG.ERR[1]
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(database.request(
-        "SELECT Uid, Uname, Ujoined, Oid, Urole FROM USERS WHERE Uid = ?",
+    return JSONResponse(content = await database.request(
+        "SELECT Uname, Ujoined, Oid, Urole FROM USERS WHERE Uname = ?",
         [
-            SUG.REQ.PST["Uid"]
+            post.data["Uname"]
         ]
-    )[0])
-    return SUG.REQ.RES.get()
+    ))

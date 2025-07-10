@@ -10,23 +10,28 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/resource/stream")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init() 
-    from website.extensions import post; post.init()
+    from website.extensions import database, post
+    await asyncio.gather(
+        database.init(request, response),
+        post.init(request, response)
+    )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks("Kid", "Rlang", "Rvideo"): return SUG.REQ.RES.error(1)
+    if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Kid", "Rlang", "Rvideo") == [True, True, True]): return SUG.REQ.RES.error(2)
+    if not (post.exists("Kid", "Rlang", "Rvideo") == [True, True, True]): raise SUG.ERR[1]
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(database.request(
+    return JSONResponse(content = await database.request(
         "SELECT * FROM RESOURCES WHERE Kid = ? AND Rlang = ? AND Rvideo = ?",
         [
-            SUG.REQ.PST["Kid"],
-            SUG.REQ.PST["Rlang"],
-            SUG.REQ.PST["Rvideo"]
+            post.data["Kid"],
+            post.data["Rlang"],
+            post.data["Rvideo"]
         ]
     ))
-    return SUG.REQ.RES.get()

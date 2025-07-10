@@ -10,29 +10,34 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/user/register")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init() 
-    from website.extensions import post; post.init() 
-    from website.extensions import time; time.init()
+    from website.extensions import database, post, time
+    await asyncio.gather(
+        database.init(request, response),
+        post.init(request, response),
+        time.init(request, response)
+    )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks("Uemail", "Uhashpass", "Uname"): return SUG.REQ.RES.error(1)
+    if not post.checks.get(): raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): return SUG.REQ.RES.error(2)
+    if not (post.exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): raise SUG.ERR[1]
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(bool(database.request(
+    return JSONResponse(content = await database.query(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass, Ujoined, Uplayground, Usettings, Oid, Urole) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
-            SUG.REQ.PST["Uname"],
-            SUG.REQ.PST["Uemail"],
-            SUG.REQ.PST["Uhashpass"],
+            post.data["Uname"],
+            post.data["Uemail"],
+            post.data["Uhashpass"],
             time.now(),
             {},
             {},
             0,
             0
         ]
-    )))
-    return SUG.REQ.RES.get()
+    ))

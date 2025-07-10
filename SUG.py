@@ -7,43 +7,17 @@ from website import *
 
 
 #
-#   REQUEST SUPERGLOBALS
-#
-
-# REQUEST SUPERGLOBALS -> CONTAINER
-REQ = threading.local()
-
-# REQUEST SUPERGLOBALS -> SESSION ID
-REQ.SID = None
-
-# REQUEST SUPERGLOBALS -> IP
-REQ.SIP = None
-
-# REQUEST SUPERGLOBALS -> POST
-REQ.PST = None
-
-# REQUEST SUPERGLOBALS -> RESPONSE
-REQ.RES = None
-
-
-#
-#   THREAD SUPERGLOBALS
-#
-
-# THREAD SUPERGLOBALS -> CONTAINER
-THR = threading.local()
-
-
-#
 #   MASTER SUPERGLOBALS
 #
 
 # MASTER SUPERGLOBALS -> DATABASE CREDENTIALS
 DBC = {
-    "HOST": "localhost",
-    "USER": "phpmyadmin",
-    "PASSWORD": "orangepi",
-    "DATABASE": "abscissa"
+    "host": "localhost",
+    "port": 3306,
+    "user": "phpmyadmin",
+    "password": "orangepi",
+    "db": "abscissa",
+    "autocommit": True
 }
 
 
@@ -122,8 +96,7 @@ PER = {
 
 # MASTER SUPERGLOBALS -> ERROR CODES
 ERR = [
-    500,
-    400,
-    400,
-    403
+    HTTPException(status_code=status.HTTP_400_BAD_REQUEST),
+    HTTPException(status_code=status.HTTP_400_BAD_REQUEST),
+    HTTPException(status_code=status.HTTP_403_FORBIDDEN)
 ]

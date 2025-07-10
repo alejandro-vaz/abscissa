@@ -10,32 +10,37 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/organisation/join")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init() 
-    from website.extensions import post; post.init()
+    from website.extensions import database, post
+    await asyncio.gather(
+        database.init(request, response),
+        post.init(request, response)
+    )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks("Oid"): return SUG.REQ.RES.error(1)
+    if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not post.exists("Oid"): return SUG.REQ.RES.error(2)
+    if not post.exists("Oid"): raise SUG.ERR[1]
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
-    if not (SUG.THR.DBV and SUG.THR.UDT["Urole"] >= SUG.PER["organisation"]["join"]): return SUG.REQ.RES.error(3)
+    if not (database.validate and database.user["Urole"] >= SUG.PER["organisation"]["join"]): raise SUG.ERR[2]
     # DECLARATION -> QUERY
-    result = bool(database.request(
+    result = bool(await database.request(
         "SELECT * FROM ORGANISATIONS WHERE Oid = ?",
         [
-            SUG.REQ.PST["Oid"]
+            post.data["Oid"]
         ]
     ))
-    SUG.REQ.RES.write(result)
     if result:
-        database.request(
+        await database.request(
             "UPDATE USERS SET Oid = ? WHERE Uid = ?",
             [
-                SUG.REQ.PST["Oid"],
-                SUG.THR.UDT["Uid"]
+                post.data["Oid"],
+                database.user["Uid"]
             ]
         )
-    return SUG.REQ.RES.get()
+    return JSONResponse(content = result)

@@ -5,16 +5,19 @@
 # INITIALIZATION -> COMMON MODULES
 import os
 import sys
-from importlib import util
 import pathlib
-import threading
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django import urls
+from fastapi import Request, Depends, HTTPException, status, APIRouter, Response
+from fastapi.responses import JSONResponse, HTMLResponse
+from contextvars import ContextVar
+import fastapi
 import re
-import secrets
+import asyncio
+import aiomysql
+from aiomysql import Connection
 
 # INITIALIZATION -> SUPERGLOBALS
 import SUG
+
 
 #
 #   FUNCTIONS
@@ -23,4 +26,11 @@ import SUG
 # FUNCTIONS -> DEBUG
 def debug(*variables: object):
     for variable in variables:
-        print(repr(variable), file=sys.stderr)
+        print(f"DEBUG: {repr(variable)}", file=sys.stderr)
+
+# FUNCTIONS -> ADD
+def add(*extensions: str) -> str:
+    code = []
+    for extension in extensions:
+        with open(f"/srv/www/website/extensions/{extension}.py", "r") as file: code.append(file.read())
+    return "\n\n".join(code)
