@@ -10,17 +10,20 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/session/refresh")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init()
-    from website.extensions import random; random.init()
+    from website.extensions import database, random
+    await asyncio.gather(
+        database.init(request, response),
+        random.init(request, response)
+    )
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
-    if not (SUG.THR.DBV and SUG.THR.UDT["Urole"] >= SUG.PER["session"]["refresh"]): return SUG.REQ.RES.error(3)
+    if not (database.validate and database.user["Urole"] >= SUG.PER["session"]["refresh"]): raise SUG.ERR[2]
     # DECLARATION -> QUERY
-    Sid = random.session()
-    SUG.REQ.RES.cookie(Sid)
-    database.session(Sid, SUG.THR.UDT["Uid"])
-    SUG.REQ.RES.write(True)
-    return SUG.REQ.RES.get()
+    await database.newSession()
+    return JSONResponse(content = True)

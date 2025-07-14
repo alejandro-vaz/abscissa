@@ -3,6 +3,7 @@
 //
 
 // HEAD -> MODULES
+// @ts-nocheck
 import * as General from "../../../content/general.js";
 import * as KaTeX from 'katex/contrib/auto-render';
 

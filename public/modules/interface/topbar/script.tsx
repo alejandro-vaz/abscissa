@@ -5,21 +5,22 @@
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
 
+// HEAD -> CONNECTIONS
+const topbar = General.connect("interface-topbar");
+
 
 //
-// CONFIGURE
+//  TOPBAR
 //
 
-// CONFIGURE -> CONNECT
-const header = General.connect("title");
-const desc = General.connect("description");
+// TOPBAR -> VARIABLES
+let title;
+let description;
+let timer;
+let topbarState = false;
 
-// CONFIGURE -> DEFAULTS
-header.innerText = document.title;
-desc.innerText = document.querySelector('meta[name="description"]')?.getAttribute('content');
-
-// CONFIGURE -> DYNAMICALLY UPDATE DEFAULTS
-new MutationObserver(mutations => {
+// TOPBAR -> MUTATION OBSERVER
+const observer = new MutationObserver(mutations => {
     let needsUpdate = false;
     for (const mutation of mutations) {
         if (mutation.type === 'childList') {
@@ -59,28 +60,13 @@ new MutationObserver(mutations => {
         }
     }
     if (needsUpdate) {
-        header.innerText = document.title;
-        desc.innerText = document.querySelector('meta[name="description"]')?.getAttribute('content');
+        title.innerText = document.title;
+        description.innerText = document.querySelector('meta[name="description"]')?.getAttribute('content');
     }
-}).observe(document.head, {
-    childList: true,
-    subtree: true,
-    characterData: true,
-    attributes: true,
-    attributeFilter: [
-        'content'
-    ]
-});
+})
 
-
-//
-// MOVEMENT
-//
-
-// MOVEMENT -> DETECTION
-let timer;
-let topbarState = false;
-window.addEventListener('mousemove', function(event: MouseEvent): void {
+// TOPBAR -> OPENER FUNCTION
+function alternate(event: MouseEvent): void {
     let topbarStateChange;
     if (topbarState) {
         topbarStateChange = !(event.clientY <= window.innerWidth * 0.05)
@@ -88,18 +74,54 @@ window.addEventListener('mousemove', function(event: MouseEvent): void {
         topbarStateChange = event.clientY <= window.innerWidth * 0.05;
     }
     if (topbarStateChange) {
-        topbarState = !topbarState
+        topbarState = !topbarState;
         if (topbarState) {
             clearTimeout(timer);
-            header.style.fontSize = "1.5vw";
-            header.style.margin = "0.9vw 0 0.9vw 0";
-            desc.style.opacity = "1";
+            title.style.fontSize = "1.5vw";
+            title.style.margin = "0.9vw 0 0.9vw 0";
+            description.style.opacity = "1";
         } else {
             timer = setTimeout(function(): void {
-                header.style.fontSize = "2vw";
-                header.style.margin = "1vw 0 1vw 0";
-                desc.style.opacity = "0";
+                title.style.fontSize = "2vw";
+                title.style.margin = "1vw 0 1vw 0";
+                description.style.opacity = "0";
             }, 0);
         }
     }
-})
+}
+
+// TOPBAR -> ACTIVATE
+export async function activate(): Promise<void> {
+    title = undefined;
+    description = undefined;
+    timer = undefined;
+    topbarState = false;
+    General.inject(topbar,
+        <>
+            <link rel="stylesheet" href="public/modules/interface/topbar/style.css"/>
+            <h1 id="title" ref={(node) => {
+                title = node;
+            }}></h1>
+            <p id="description" ref={(node) => {
+                description = node;
+            }}></p>
+        </>
+    )
+    window.addEventListener("mousemove", alternate);
+    observer.observe(document.head, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: [
+            'content'
+        ]
+    });
+}
+
+// TOPBAR -> DEACTIVATE
+export function deactivate(): void {
+    observer.disconnect();
+    window.removeEventListener("mousemove", alternate);
+    General.inject(topbar, <></>);
+}

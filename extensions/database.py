@@ -1,99 +1,74 @@
 #
-#   HANDLER
+#   DATABASE
 #
 
-# HANDLER -> LOAD
-from website import *
-
-# HANDLER -> MODULES
+# DATABASE -> MODULES
 import datetime
 import json
-import mysql.connector as sql
+import secrets
 
+# DATABASE -> NAMESPACE
+database = ContextVar("database")
 
-#
-#   ACCESS
-#
-
-# ACCESS -> FUNCTION
-def request(query: str, parameters: list) -> list | bool:
-    for index in range(len(parameters)):
-        parameter = parameters[index]
-        if isinstance(parameter, (list, dict)):
-            parameters[index] = json.dumps(parameter)
-    placeholders = []
-    for mark in re.compile(r"(!|\?)").finditer(query):
-        placeholders.append((mark.group(1), mark.start(), mark.end()))
-    queryParts = []
-    position = 0
-    values = []
-    counter = 0
-    for markType, start, end in sorted(placeholders, key=lambda x: x[1]):
-        queryParts.append(query[position:start])
-        if markType == "!":
-            ident = parameters[counter]
-            queryParts.append(f"`{ident}`")
-        else:
-            queryParts.append("?")
-            values.append(parameters[counter])
-        counter += 1
-        position = end
-    queryParts.append(query[position:])
-    cursor = SUG.THR.DBS.cursor(prepared=True)
-    cursor.execute(''.join(queryParts), values)
-    if cursor.with_rows:
-        rows = [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]
-        cursor.close()
-        return rows
-    cursor.close()
-    return True
-
-
-#
-#   SESSIONS
-#
-
-# SESSIONS -> SET
-def session(Sid: bytes, Uid: int) -> None:
-    request(
-        "UPDATE SESSIONS SET Sid = ?, Sip = ?, Sexpires = ? WHERE Uid = ?",
-        [
-            Sid,
-            SUG.REQ.SIP,
-            (datetime.datetime.now() + datetime.timedelta(seconds=604800)).strftime("%Y-%m-%d %H:%M:%S"),
-            Uid
-        ]
-    )
-
-
-#
-#   INITIALIZATION
-#
-
-# INITIALIZATION -> FUNCTION
-def init() -> None:
-    SUG.THR.DBS = sql.connect(
-        host = SUG.DBC["HOST"],
-        user = SUG.DBC["USER"],
-        password = SUG.DBC["PASSWORD"],
-        database = SUG.DBC["DATABASE"]
-    )
-    SUG.THR.DBS.autocommit = True
-    SUG.THR.DBV = bool(request(
-        "SELECT * FROM SESSIONS WHERE Sid = ?",
-        [
-            SUG.REQ.SID
-        ]
-    ))
-    if SUG.THR.DBV: 
-        SUG.THR.UDT = request(
-            "SELECT * FROM USERS WHERE Uid = ?",
+# DATABAES -> CLASS
+class _database:
+    # CLASS -> VARIABLES
+    connection: Connection
+    ip: str
+    response: Response
+    Sid: bytes
+    validate: bool
+    user: dict
+    # CLASS -> CREATION
+    def __init__(self) -> None: database.set(self)
+    # CLASS -> INIT
+    async def init(self, request: Request, response: Response) -> None:
+        self.connection = await aiomysql.connect(**SUG.DBC)
+        self.ip = request.client.host
+        self.response = response
+        self.Sid = bytes.fromhex(request.cookies.get("Sid")) if request.cookies.get("Sid") is not None else None
+        self.validate = bool(await self.query(
+            "SELECT * FROM SESSIONS WHERE Sid = %s",
             [
-                request(
-                    "SELECT Uid FROM SESSIONS WHERE Sid = ?",
-                    [
-                        SUG.REQ.SID
-                    ]
-                )[0]["Uid"]
+                self.Sid 
             ]
-        )[0]
+        )) if self.Sid is not None and len(self.Sid) == 4 else False
+        self.user = (await self.query(
+            "SELECT * FROM USERS WHERE Uid = %s",
+            [
+                (await self.query(
+                    "SELECT Uid FROM SESSIONS WHERE Sid = %s",
+                    [
+                        self.Sid
+                    ]
+                ))[0]["Uid"]
+            ]
+        ))[0] if self.validate else None
+    # CLASS -> QUERY
+    async def query(self, command: str, parameters: list) -> list[dict] | bool:
+        async with self.connection.cursor() as cursor:
+            await cursor.execute(command, parameters)
+            return [dict(zip([column[0] for column in cursor.description], row)) for row in await cursor.fetchall()] if cursor.description else True
+    # CLASS -> SESSION
+    async def session(self, Uid: int):
+        self.Sid = secrets.token_bytes(4)
+        await self.query(
+            "UPDATE SESSIONS SET Sid = %s, Sip = %s, Sexpires = %s WHERE Uid = %s",
+            [
+                self.Sid,
+                self.ip,
+                (datetime.datetime.now() + datetime.timedelta(seconds=604800)).strftime("%Y-%m-%d %H:%M:%S"),
+                Uid
+            ]
+        )
+        self.response.set_cookie(
+            "Sid",
+            self.Sid.hex().upper(),
+            max_age = datetime.timedelta(seconds = 604800),
+            httponly = True,
+            secure = True,
+            samesite = "lax"
+        )
+
+# DATABASE -> INIT
+_database()

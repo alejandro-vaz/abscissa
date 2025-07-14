@@ -10,7 +10,7 @@
 node_modules/
 
 # IGNORE -> PYCACHE
-__pychache__/
+__pycache__/
 extensions/__pycache__/
 api/__pycache__/
 

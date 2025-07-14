@@ -10,35 +10,38 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/user/login")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import bools; bools.init()
-    from website.extensions import database; database.init()
-    from website.extensions import post; post.init()
-    from website.extensions import random; random.init()
-    # DECLARATION -> ARGUMENT CHECKS    
-    if not post.checks("Uhashpass", "Uname"): return SUG.REQ.RES.error(1)
+    exec(add(
+        "binary",
+        "bools",
+        "database",
+        "post", 
+        "random", 
+        "time"
+    ), globals())
+    await binary.get().init(request, response),
+    await bools.get().init(request, response),
+    await database.get().init(request, response),
+    await post.get().init(request, response),
+    await random.get().init(request, response),
+    await time.get().init(request, response)
+    # DECLARATION -> ARGUMENT CHECKS
+    if not post.get().checks(): raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Uhashpass", "Uname") == [True, True]): return SUG.REQ.RES.error(2)
+    if not (post.get().exists("Uhashpass", "Uname") == [True, True]): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
-    Uid, Uhashpass = database.request(
-        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = ?",
+    Uid, Uhashpass = data[0].values() if data := await database.get().query(
+        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = %s",
         [
-            SUG.REQ.PST["Uname"]
+            post.get().data["Uname"]
         ]
-    )[0].values()
-    debug(Uhashpass, SUG.REQ.PST["Uhashpass"], Uid, database.request(
-        "SELECT Uid, Uhashpass FROM USERS WHERE Uname = ?",
-        [
-            SUG.REQ.PST["Uname"]
-        ]
-    )[0])
-    result = Uhashpass == SUG.REQ.PST["Uhashpass"]
-    SUG.REQ.RES.write(result)
-    if result:
-        Sid = random.session()
-        SUG.REQ.RES.cookie(Sid)
-        database.session(Sid, Uid)
-    return SUG.REQ.RES.get()
+    ) else None, None
+    result = Uhashpass == post.get().data["Uhashpass"]
+    if result: await database.get().session(Uid)
+    return JSONResponse(content = result)

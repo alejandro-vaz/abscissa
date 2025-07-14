@@ -5,32 +5,55 @@
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
 
+// HEAD -> CONNECTIONS
+const tooltip = General.connect("interface-tooltip");
+
 
 //
-//  LOGIC
+//  TOOLTIP
 //
 
-// LOGIC -> CONNECT
-const tooltip = General.connect("tooltip");
-
-// LOGIC -> TIMER
+// TOOLTIP -> VARIABLES
 let timer;
+let text;
 
-// LOGIC -> APPEAR
-document.addEventListener("mouseover", function(event: Event): void {
+// TOOLTIP -> MOUSEOVER FUNCTION
+function mouseover(event: MouseEvent): void {
     const target = (event.target as HTMLElement)?.closest("[tooltip]");
     if (target) {
         timer = setTimeout(function(): void {
-            tooltip.textContent = target.getAttribute("tooltip");
-            tooltip.style.opacity = "1";
+            text.textContent = target.getAttribute("tooltip");
+            text.style.opacity = "1";
         }, 0);
     }
-});
+}
 
-// LOGIC -> DISAPPEAR
-document.addEventListener("mouseout", (event: Event) => {
+// TOOLTIP -> MOUSEOUT
+function mouseout(event: MouseEvent): void {
     if ((event.target as HTMLElement)?.closest("[tooltip]")) {
         clearTimeout(timer);
-        tooltip.style.opacity = "0";
+        text.style.opacity = "0";
     }
-});
+}
+
+// TOOLTIP -> ACTIVATE
+export async function activate(): Promise<void> {
+    timer = undefined;
+    text = undefined;
+    General.inject(tooltip,
+        <>
+            <p id="tooltip" ref={(node) => {
+                text = node;
+                window.addEventListener("mouseover", mouseover);
+                window.addEventListener("mouseout", mouseout)
+            }}></p>
+        </>
+    )
+}
+
+// TOOLTIP -> DEACTIVATE
+export function deactivate(): void {
+    window.removeEventListener("mouseover", mouseover);
+    window.removeEventListener("mouseout", mouseout);
+    General.inject(tooltip, <></>);
+}

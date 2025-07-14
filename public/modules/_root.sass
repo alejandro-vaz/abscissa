@@ -10,13 +10,15 @@
 $FONTSIZE: 1vw
 $RADIUS: 1vw
 $MARGIN: 0.8vw
-$PADDING: 0.6vw
+$PADDING1: 0.6vw
+$PADDING2: 0.4vw
 $BORDER1: 0.2vw
 $BORDER2: 0.1vw
 $DARK: #4d4da0
 $LIGHT: #7f7fd2
 $ACCENT: #FFFFFF
 $INVERTED: #000000
+$BLURRED: #0000007F
 $TOUCH: #111111
 $CONTRAST: #333333
 $TIMER1: 0.1s
@@ -55,7 +57,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
 =element($inline)
     box-sizing: border-box
     margin: calc($MARGIN / 2)
-    padding: calc($PADDING / 2)
+    padding: calc($PADDING1 / 2)
     border-radius: $RADIUS
     @if $inline
         display: inline-block
@@ -64,7 +66,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
 
 // FUNCTIONS -> INPUT
 =input($type, $inline: true)
-    padding: math.div($PADDING, 2) $PADDING
+    padding: math.div($PADDING1, 2) $PADDING1
     border-radius: $RADIUS
     box-sizing: border-box
     border: $BORDER2 solid $ACCENT
@@ -76,7 +78,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
         outline: none
     @if $type == button
         +cursor(click)
-        background-color: #00000055
+        +blurred()
         min-width: fit-content
         height: 2.75vw
         transition: border-color $TIMER1 $CURVE1, background-color $TIMER1 $CURVE1, color $TIMER1 $CURVE1
@@ -87,7 +89,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
             color: $LIGHT
     @if $type == textarea
         +cursor(text)
-        background-color: #000000
+        background-color: $INVERTED
         font-family: monospace
         resize: none
         &::placeholder
@@ -95,7 +97,7 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
             opacity: 0.5
     @if $type == text or $type == password or $type == email
         +cursor(text)
-        background-color: #000000
+        background-color: $INVERTED
         font-family: monospace
         height: 2.75vw
         &::placeholder
@@ -114,3 +116,8 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
         cursor: url("/public/res/click.cur") 0 0, pointer
     @if $type == text
         cursor: url("/public/res/text.cur") 0 0, text
+
+// FUNCTIONS -> BLURRED
+=blurred()
+    background-color: $BLURRED
+    backdrop-filter: blur(1vw)

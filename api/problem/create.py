@@ -10,31 +10,36 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/problem/create")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init() 
-    from website.extensions import post; post.init() 
-    from website.extensions import time; time.init()
+    from website.extensions import database, post, time
+    await asyncio.gather(
+        database.init(request, response),
+        post.init(request, response),
+        time.init(request, response)
+    )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks("Kid", "Pmeta", "Psolution", "Pdataen", "Pdataes", "Pdatade"): return SUG.REQ.RES.error(1)
+    if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Kid", "Pmeta", "Psolution", "Pdataen") == [True, True, True, True]): return SUG.REQ.RES.error(2)
+    if not (post.exists("Kid", "Pmeta", "Psolution", "Pdataen") == [True, True, True, True]): raise SUG.ERR[1]
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
-    if not (SUG.THR.DBV and SUG.THR.UDT["Urole"] >= SUG.PER["problem"]["create"]): return SUG.REQ.RES.error(3)
+    if not (database.validate and database.user["Urole"] >= SUG.PER["problem"]["create"]): raise SUG.ERR[2]
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(database.request(
+    return JSONResponse(content = await database.request(
         "INSERT INTO PROBLEMS (Uid, Kid, Pedited, Pmeta, Psolution, Pdataen, Pdataes, Pdatade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
-            SUG.THR.UDT["Uid"],
-            SUG.REQ.PST["Kid"],
+            database.user["Uid"],
+            post.data["Kid"],
             time.now(),
-            SUG.REQ.PST["Pmeta"],
-            SUG.REQ.PST["Psolution"],
-            SUG.REQ.PST["Pdataen"],
-            SUG.REQ.PST["Pdataes"] if SUG.REQ.PST["Pdataen"] else None,
-            SUG.REQ.PST["Pdatade"] if SUG.REQ.PST["Pdatade"] else None
+            post.data["Pmeta"],
+            post.data["Psolution"],
+            post.data["Pdataen"],
+            post.data["Pdataes"] if post.data["Pdataes"] else None,
+            post.data["Pdatade"] if post.data["Pdatade"] else None
         ]
     ))
-    return SUG.REQ.RES.get()

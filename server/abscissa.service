@@ -1,0 +1,15 @@
+#/etc/systemd/system/
+
+[Unit]
+Description=Abscissa FastAPI Service
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/www/website
+ExecStart=python3 -m uvicorn API:app --host 127.0.0.1 --port 8000 --log-level info --reload
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

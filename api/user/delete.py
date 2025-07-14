@@ -10,18 +10,23 @@ from website import *
 #   FUNCTION
 #
 
+# FUNCTION -> ROUTER
+router = APIRouter()
+
 # FUNCTION -> DECLARATION
-def output(request: HttpRequest) -> HttpResponse:
+@router.post("/api/user/delete")
+async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> EXTENSIONS
-    from website.extensions import Response; Response(request)
-    from website.extensions import database; database.init()
+    from website.extensions import database
+    await asyncio.gather(
+        database.init(request, response)
+    )
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
-    if not (SUG.THR.DBV and SUG.THR.UDT["Urole"] >= SUG.PER["user"]["delete"]): return SUG.REQ.RES.error(3)
+    if not (database.validate and database.user["Urole"] >= SUG.PER["user"]["delete"]): raise SUG.ERR[2]
     # DECLARATION -> QUERY
-    SUG.REQ.RES.write(database.request(
+    return JSONResponse(content = await database.request(
         "DELETE FROM USERS WHERE Uid = ?",
         [
-            SUG.THR.UDT["Uid"]
+            post.data["Uid"]
         ]
     ))
-    return SUG.REQ.RES.get()

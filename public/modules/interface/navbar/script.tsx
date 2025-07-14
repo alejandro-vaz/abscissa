@@ -5,50 +5,24 @@
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
 
+// HEAD -> CONNECTIONS
+const navbar = General.connect("interface-navbar");
+
 
 //
-//  LOCATION
+//  NAVBAR
 //
 
-// LOCATION -> CONNECT TO CONTAINER
-const navbar = General.connect("navbar-container");
+// NAVBAR -> DISPLAY STATUS
+let navbarState = true;
 
-// LOCATION -> CONNECT TO ICONS
-const backIcon = General.connect("navbar-back");
-const dashboardIcon = General.connect("navbar-dashboard");
-const searchIcon = General.connect("navbar-search");
-const playgroundIcon = General.connect("navbar-playground");
-const statsIcon = General.connect("navbar-stats");
-const userIcon = General.connect("navbar-user");
-const settingsIcon = General.connect("navbar-settings");
-
-// LOCATION -> CHANGE CURRENT 
-const currentIcon = {
-    dashboard: dashboardIcon,
-    search: searchIcon,
-    playground: playgroundIcon,
-    stats: statsIcon,
-    user: userIcon,
-    settings: settingsIcon
-}[window.location.pathname.split("/").pop()];
-if (currentIcon) {
-    currentIcon.className = "navbarCurrent";
-    currentIcon.onclick = null;
-    (currentIcon as any).tooltip = null;
-}
-
-// LOCATION -> BACK BUTTON
-if (window.location.pathname.split("/").length > 2) {
-    backIcon.style.display = "block";
-}
-
-// LOCATION -> OPEN AND CLOSE
-let navbarState = true
-window.addEventListener('mousemove', function(event) {
+// NAVBAR -> OPENER FUNCTION
+function alternate(event) {
+    let navbarStateChange;
     if (navbarState) {
-        var navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
+        navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
     } else {
-        var navbarStateChange = event.clientX <= window.innerWidth * 0.01;
+        navbarStateChange = event.clientX <= window.innerWidth * 0.01;
     }
     if (navbarStateChange) {
         navbarState = !navbarState
@@ -58,4 +32,64 @@ window.addEventListener('mousemove', function(event) {
             navbar.style.left = "-3.5vw"
         }
     }
-})
+}
+
+// NAVBAR -> ACTIVATE
+export async function activate(): Promise<void> {
+    navbarState = true;
+    General.inject(navbar,
+        <>
+            <div id="navbar">
+                <img 
+                    src="/public/svg/logo_light.svg" 
+                    id="navbar-dashboard" 
+                    className="navbarIcon" 
+                    onClick={() => General.redirect("/dashboard")}
+                    tooltip="Go to dashboard"
+                />
+                <img 
+                    src="/public/svg/search.svg" 
+                    id="navbar-search" 
+                    className="navbarIcon" 
+                    onClick={() => General.redirect("/search")}
+                    tooltip="Go to search"
+                />
+                <img 
+                    src="/public/svg/playground.svg" 
+                    id="navbar-playground" 
+                    className="navbarIcon" 
+                    onClick={() => General.redirect("/playground")}
+                    tooltip="Go to playground"
+                />
+                <img 
+                    src="/public/svg/stats.svg" 
+                    id="navbar-stats" 
+                    className="navbarIcon" 
+                    onClick={() => General.redirect("/stats")}
+                    tooltip="Go to your stats"
+                />
+                <img 
+                    src="/public/svg/user.svg" 
+                    id="navbar-user" 
+                    className="navbarIcon" 
+                    onClick={() => General.redirect("/user")}
+                    tooltip="Go to your user"
+                />
+                <img 
+                    src="/public/svg/settings.svg" 
+                    id="navbar-settings" 
+                    className="navbarIcon" 
+                    onClick={() => General.redirect("/settings")}
+                    tooltip="Go to settings"
+                />
+            </div>
+        </>
+    )
+    window.addEventListener('mousemove', alternate)
+}
+
+// NAVBAR -> DEACTIVATE
+export function deactivate(): void {
+    window.removeEventListener('mousemove', alternate);
+    General.inject(navbar, <></>);
+}

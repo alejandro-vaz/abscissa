@@ -1,30 +1,22 @@
 #
-#   HANDLER
+#   RANDOM
 #
 
-# HANDLER -> LOAD
-from website import *
+# RANDOM -> MODULES
+import random as rng
 
-# HANDLER -> MODULES
-import random
+# RANDOM -> NAMESPACE
+random = ContextVar("random")
 
+# RANDOM -> CLASS
+class _random:
+    # CLASS -> CREATION
+    def __init__(self) -> None: random.set(self)
+    # CLASS -> INIT
+    async def init(self, request: Request, response: Response) -> None: pass
+    # CLASS -> RANDOM INTEGER
+    def integer(self, minimum: int, maximum: int) -> int:
+        return rng.randint(minimum, maximum)
 
-#
-#   FUNCTIONS
-#
-
-# FUNCTIONS -> GENERATE SESSION
-def session() -> bytes:
-    return secrets.token_bytes(32)
-
-# FUNCTIONS -> RANDOM INTEGER
-def integer(lower: int, upper: int) -> int:
-    return random.randint(lower, upper)
-
-
-#
-#   INITIALIZATION
-#
-
-# INITIALIZATION -> FUNCTION
-def init() -> None: pass
+# RANDOM -> INIT
+_random()
