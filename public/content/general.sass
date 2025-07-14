@@ -1,0 +1,183 @@
+//                                                                           
+//  HEAD                                                                      
+//                                                                           
+
+// HEAD -> MODULES
+@use "sass:color"
+@use "sass:math"
+@use "sass:string"
+@use "../modules/root"
+
+// HEAD -> SUPERVARIABLES
+$FONTSIZE: root.$FONTSIZE
+$RADIUS: root.$RADIUS
+$MARGIN: root.$MARGIN
+$PADDING1: root.$PADDING1
+$PADDING2: root.$PADDING2
+$BORDER1: root.$BORDER1
+$BORDER2: root.$BORDER2
+$DARK: root.$DARK
+$LIGHT: root.$LIGHT
+$ACCENT: root.$ACCENT
+$INVERTED: root.$INVERTED
+$BLURRED: root.$BLURRED
+$TOUCH: root.$TOUCH
+$CONTRAST: root.$CONTRAST
+$TIMER1: root.$TIMER1
+$TIMER2: root.$TIMER2
+$CURVE1: root.$CURVE1
+$CURVE2: root.$CURVE2
+
+
+//                                                                           
+//  FUNCTIONS                                                                 
+//                                                                           
+
+// FUNCTIONS -> CONTAINER
+=section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
+    +root.section($align-horizontally, $align-vertically, $width: $width, $height: $height, $direction: $direction, $display: $display, $grow: $grow)
+
+// FUNCTIONS -> ELEMENT
+=element($inline)
+    +root.element($inline)
+
+// FUNCTIONS -> INPUT
+=input($type, $inline: true)
+    +root.input($type, $inline: $inline)
+
+// FUNCTIONS -> SCROLLBAR
+=scrollbar() 
+    +root.scrollbar()
+
+// FUNCTIONS -> CURSOR
+=cursor($type)
+    +root.cursor($type)
+
+
+//
+//  FONT
+//
+
+// FONT -> COMIC SANS MS
+@font-face
+    font-family: 'comicSansMS'
+    src: url('/public/fonts/comicSansMS.ttf') format('truetype')
+    font:
+        weight: normal
+        style: normal
+        display: block
+
+
+//                                                                           
+//  DEFAULTS                                                                  
+//                                                                           
+
+// DEFAULTS -> UNSELECTABLE TEXT
+:where(:not(.CodeMirror, .CodeMirror *))
+    user-select: none
+    -webkit-user-drag: none
+
+// DEFAULTS -> FONT
+:where(:not(.katex-display, .katex-display *, .katex, .katex *, .CodeMirror, .CodeMirror *))
+    +scrollbar()
+    font-family: "comicSansMS"
+    font-size: $FONTSIZE
+    color: $ACCENT
+
+// DEFAULTS -> DOCUMENT
+:where(html)
+    +cursor(default)
+    background-color: $INVERTED
+    opacity: 0.99
+    transition: opacity root.$TIMER2 root.$CURVE1
+
+// DEFAULTS -> PYTAGS
+py
+    display: none
+
+// DEFAULTS -> MAIN
+$main-navbar-width-idle: 1vw
+$main-top-padding: 5.5vw
+$main-bottom-padding: 2.5vw
+$main-fade-distance: 1vw
+:where(#main)
+    +section(true, false, $width: calc(100% - $main-navbar-width-idle))
+    padding: $main-top-padding 0 $main-bottom-padding 0
+    position: fixed
+    top: 0
+    right: 0
+    mask:
+        image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) $main-top-padding, rgba(0, 0, 0, 1) $main-top-padding + $main-fade-distance, rgba(0, 0, 0, 1) calc(100% - $main-bottom-padding - $main-fade-distance), rgba(0, 0, 0, 0) calc(100% - $main-bottom-padding), rgba(0, 0, 0, 0) 100%)
+        size: 100% 100%
+        repeat: no-repeat
+    > :first-child
+        margin-top: $main-fade-distance
+
+
+//                                                                           
+//  INPUTS                                                                    
+//                                                                           
+
+// INPUTS -> AUTOFORMATTER
+:where(input)
+    &[type="text"]
+        +input(text)
+    &[type="textarea"]
+        +input(textarea, $inline: false)
+    &[type="password"]
+        +input(password)
+    &[type="submit"]
+        +input(button)
+    &[type="email"]
+        +input(email)
+    &[type="button"]
+        +input(button)
+
+
+//                                                                           
+//  FORMS                                                                     
+//                                                                           
+
+// FORMS -> FORM
+:where(form)
+    +section(true, true, $grow: false, $height: fit-content)
+    input
+        width: 100%
+    input:not(:first-of-type, :last-of-type)
+        border-radius: 0
+    input:first-of-type
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+    input:last-of-type
+        border-top-left-radius: 0
+        border-top-right-radius: 0
+
+
+//                                                                           
+//  HEADERS                                                                   
+//                                                                           
+
+// HEADERS -> P
+:where(p)
+    font-size: $FONTSIZE
+    margin: 0.6vw 0 0.6vw 0
+
+// HEADERS -> H4
+:where(h4)
+    font-size: 1.125 * $FONTSIZE
+    margin: 0.7vw 0 0.7vw 0
+
+// HEADERS -> H3
+:where(h3)
+    font-size: 1.25 * $FONTSIZE
+    margin: 0.8vw 0 0.8vw 0
+
+// HEADERS -> H2
+:where(h2)
+    font-size: 1.5 * $FONTSIZE
+    margin: 0.9vw 0 0.9vw 0
+
+// HEADERS -> H1
+:where(h1)
+    font-size: 2 * $FONTSIZE
+    margin: 1vw 0 1vw 0

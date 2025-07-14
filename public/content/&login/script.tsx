@@ -4,30 +4,34 @@
 
 // HEAD -> MODULES
 import * as General from "../general.js";
+import * as Tooltip from "../../modules/interface/tooltip/script.js";
+import * as Topbar from "../../modules/interface/topbar/script.js";
 
-// HEAD -> CONNECTIONS
-const form = General.connect("auth");
-const switcher = General.connect("switch-auth");
+// HEAD -> ORIGIN
+const origin = General.connect("main");
 
 
 //
-//  FORM
+//  REMOVE
 //
 
-// FORM -> HANDLE SUBMISSION
-form.addEventListener("submit", async (submission) => {
-    submission.preventDefault();
-    const data = new FormData(form as HTMLFormElement);
-    const response = await General.curl("user/login", {
-        Uname: data.get("username"),
-        Uhashpass: data.get("password")
-    })
-    if (response) {
-        General.redirect("dashboard");
-    }
-})
+// REMOVE -> PROCESS
+(window as any)._login = (window as any)._login || {};
+(window as any)._login.remove = () => {
+    Tooltip.deactivate();
+    Topbar.deactivate();
+}
 
-// FORM -> CHANGE TO LOGIN
-switcher.addEventListener("click", (click) => {
-    General.redirect("register");
-})
+
+//
+//  CONTENT
+//
+
+// CONTENT -> FUNCTION
+export default async function content() {
+    // FUNCTION -> INTERFACE
+    await Promise.all([
+        Tooltip.activate(),
+        Topbar.activate()
+    ])
+}

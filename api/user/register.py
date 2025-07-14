@@ -24,9 +24,9 @@ async def output(request: Request, response: Response) -> JSONResponse:
         time.init(request, response)
     )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks.get(): raise SUG.ERR[0]
+    if not post.checks.get(): raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): raise SUG.ERR[1]
+    if not (post.exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
     return JSONResponse(content = await database.query(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass, Ujoined, Uplayground, Usettings, Oid, Urole) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",

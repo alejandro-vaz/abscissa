@@ -11,49 +11,39 @@
 //                                                                            
 
 // NAVBAR -> CONTAINER
-$container-left: 1vw
-#navbar-container
+$interface-left: 1vw
+#interface-navbar
     +root.section(true, true, $width: 4vw)
     z-index: 1000
     position: fixed
     top: 0
-    left: $container-left
+    left: $interface-left
     transition: left root.$TIMER2 root.$CURVE2
 
 // NAVBAR -> BAR
 #navbar
-    +root.element(false)
-    background-color: root.$TOUCH
+    +root.section(true, true, $height: fit-content, $grow: false)
+    +root.blurred()
+    padding: root.$PADDING1 root.$PADDING2
     border: root.$BORDER1 solid root.$DARK
     border-radius: root.$RADIUS
     width: 100%
-    height: fit-content
 
 // NAVBAR -> BACK
 #navbar-back
     display: none
 
 // NAVBAR -> ICONS
-.navbarIcon, .navbarCurrent
+.navbarIcon
+    +root.cursor(click)
     box-sizing: border-box
     border: root.$BORDER1 solid transparent
     width: 100%
     height: fit-content
     border-radius: root.$RADIUS
     margin-bottom: root.$MARGIN
+    transition: border-width root.$TIMER1 root.$CURVE1
     &:last-of-type
         margin-bottom: 0
-
-// NAVBAR -> SWITCH ICON
-.navbarIcon
-    +root.cursor(click)
-    transition: background-color root.$TIMER1 root.$CURVE1, border-color root.$TIMER1 root.$CURVE1
     &:hover
-        background-color: root.$LIGHT
-        border-color: root.$LIGHT
-
-// NAVBAR -> CURRENT ICON
-.navbarCurrent
-    +root.cursor(default)
-    background-color: root.$DARK
-    border-color: root.$DARK
+        border-width: 0

@@ -3,20 +3,4 @@
 //
 
 // HEAD -> MODULES
-@use "../general"
-
-
-//
-//  CONTENT
-//
-
-// CONTENT -> STYLE
-#content
-    +general.section(false, false, $width: 20vw, $height: fit-content, $grow: false)
-    padding: 2*general.$PADDING
-    background-color: general.$TOUCH
-    border-radius: general.$RADIUS
-
-// CONTENT -> SWITCH
-#switch-auth
-    margin-bottom: 2*general.$MARGIN
+@use "../../modules/root"

@@ -3,7 +3,7 @@
         "module": "nodenext",
         "moduleResolution": "nodenext",
         "target": "ES2024",
-        "jsx": "react-jsx",
+        "jsx": "preserve",
         "strictFunctionTypes": true,
         "noEmit": true,
         "sourceMap": true,

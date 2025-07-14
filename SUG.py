@@ -1,12 +1,4 @@
 #
-#   HANDLER
-#
-
-# HANDLER -> LOAD
-from website import *
-
-
-#
 #   MASTER SUPERGLOBALS
 #
 
@@ -20,9 +12,8 @@ DBC = {
     "autocommit": True
 }
 
-
 # MASTER SUPERGLOBALS -> DIRECTORY
-DIR = str(os.path.dirname(os.path.abspath(__file__))) + "/"
+DIR = "/srv/www/website/"
 
 # MASTER SUPERGLOBALS -> REGEX PATTERNS
 PAT = {
@@ -96,7 +87,7 @@ PER = {
 
 # MASTER SUPERGLOBALS -> ERROR CODES
 ERR = [
-    HTTPException(status_code=status.HTTP_400_BAD_REQUEST),
-    HTTPException(status_code=status.HTTP_400_BAD_REQUEST),
-    HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+    {status_code = 400, detail = "Bad request"},
+    {status_code = 400, detail = "Bad request"},
+    {status_code = 403, detail = "Forbidden"}
 ]

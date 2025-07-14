@@ -34,7 +34,7 @@ async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> ARGUMENT CHECKS
     if not post.get().checks(): raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.get().exists("Uhashpass", "Uname") == [True, True]): raise SUG.ERR[1]
+    if not (post.get().exists("Uhashpass", "Uname") == [True, True]): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
     Uid, Uhashpass = (await database.get().query(
         "SELECT Uid, Uhashpass FROM USERS WHERE Uname = %s",

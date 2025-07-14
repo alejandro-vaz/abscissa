@@ -1,0 +1,4 @@
+#/etc/mysql/conf.d/
+
+[mysqld]
+wait_timeout = 60

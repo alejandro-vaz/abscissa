@@ -5,7 +5,7 @@ And to accomplish our goal we are also developing [*Mathsys*](https://github.com
 
 It is currently on the early stages, so don't get too motivated. This is a pre-alpha and most of the features that will be available on the final product are not even close being developed just yet.
 
-**We ship every Sunday.**
+**We ship every Sunday or Monday.**
 
 Check it out on [*Abscissa*](https://abscissa.eu)
 
@@ -21,20 +21,17 @@ I say *we* but I'm indeed a solo developer for now, so if you want to get involv
 > If there is already a branch that is developing the next version, branch out instead from that branch instead of branching out from `main`.
 
 ## Technical background
-
-As of this version, the stack is a bit messy, not gonna lie. For the frontend we have:
-   - *HTML* that is not raw, but rather it is transformed to allow for modularization by the *Python* backend.
+The frontend consists of a *Single-Page App*:
+   - One same *HTML* body for every view, not fetched every time the `href` changes.
    - *SASS* handling styling.
    - *React* in the background, without it being a proper dynamic *React* app.
 
 And for the backend:
    - *VPS* with one core and `1GB` of *RAM.*
    - *MariaDB* as the database for everything.
-   - *Django* serving the *HTML* and the *API*.
-   - *Apache* with `mod_wsgi` handling static files.
-
-> [!IMPORTANT]
-> The backend will change a lot in the coming weeks. We will be moving from our current stack to *Nginx* + *Uvicorn* + *FastAPI.* Our frontend will also adapt, we will turn *Abscissa* into a single-page-app which will be much faster and reliable. 
+   - *Nginx* as the web server, serving static files.
+   - *Uvicorn* accommodating *FastAPI*
+   - *FastAPI* handling the API requests.
 
 ## License
 This project has the [*Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International*](https://creativecommons.org/licenses/by-nc-nd/4.0/) license. That means:

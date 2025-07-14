@@ -7,7 +7,7 @@ import os
 import sys
 import pathlib
 from fastapi import Request, Depends, HTTPException, status, APIRouter, Response
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.responses import JSONResponse
 from contextvars import ContextVar
 import fastapi
 import re

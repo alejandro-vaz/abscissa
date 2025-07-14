@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- IMPORT MAP -->
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@19.1.0",
+                "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
+                "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
+                "mathsys": "https://esm.sh/mathsys@0.2.4",
+                "katex/contrib/auto-render": "https://esm.sh/katex@0.16.22/contrib/auto-render",
+                "codemirror": "https://esm.sh/codemirror@6.0.2",
+                "@codemirror/autocomplete": "https://esm.sh/@codemirror/autocomplete@6.18.6",
+                "@codemirror/state": "https://esm.sh/@codemirror/state@6.5.2",
+                "@codemirror/view": "https://esm.sh/@codemirror/view@6.37.2"
+            }
+        }
+    </script>
+    <!-- BASIC STYLE -->
+    <link rel="preload" href="/public/content/general.css" as="style" type="text/css">
+    <link rel="preload" href="/public/fonts/comicSansMS.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/content/general.css">
+    <!-- SETTINGS -->
+    <title>Abscissa</title>
+    <meta name="description" content="Abscissa landing page.">
+    <meta name="keywords" content="abscissa landing math">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Alejandro Vaz">
+    <script type="module" src="/public/content/general.js"></script>
+    <!-- COMPLEX STYLING -->
+    <link rel="preload" href="/public/content/&/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/content/&dashboard/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/content/&error/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/content/&login/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/content/&register/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/modules/interface/navbar/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/modules/interface/tooltip/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/modules/interface/topbar/style.css" as="style" type="text/css">
+    <link rel="stylesheet" href="/public/content/&/style.css">
+    <link rel="stylesheet" href="/public/content/&dashboard/style.css">
+    <link rel="stylesheet" href="/public/content/&error/style.css">
+    <link rel="stylesheet" href="/public/content/&login/style.css">
+    <link rel="stylesheet" href="/public/content/&register/style.css">
+    <link rel="stylesheet" href="/public/modules/interface/navbar/style.css">
+    <link rel="stylesheet" href="/public/modules/interface/tooltip/style.css">
+    <link rel="stylesheet" href="/public/modules/interface/topbar/style.css">
+    <!-- APP MODULES -->
+    <div id="app-codemirror"></div>
+    <div id="app-cryptography"></div>
+    <div id="app-katex"></div>
+</head>
+<body>
+    <!-- INTERFACE MODULES -->
+    <div id="interface-navbar"></div>
+    <div id="interface-tooltip"></div>
+    <div id="interface-topbar"></div>
+    <!-- CONTENT -->
+    <div id="main"></div>
+</body>
+</html>

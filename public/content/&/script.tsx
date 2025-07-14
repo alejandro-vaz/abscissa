@@ -3,11 +3,26 @@
 //
 
 // HEAD -> MODULES
-import * as General from "../general.js"
+import * as General from "../general.js";
+
+// HEAD -> CONNECTIONS
+const origin = General.connect("main");
+
 
 //
-//  REDIRECT
+//  REMOVE
 //
 
-// REDIRECT -> DASHBOARD
-General.redirect("dashboard");
+// REMOVE -> PROCESS
+(window as any)._ = (window as any)._ || {};
+(window as any)._.remove = () => {}
+
+
+//
+//  CONTENT
+//
+
+// CONTENT -> FUNCTION
+export default async function content(): Promise<void> {
+    General.redirect("dashboard");
+}
