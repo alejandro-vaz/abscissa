@@ -18,10 +18,11 @@ let navbarState = true;
 
 // NAVBAR -> OPENER FUNCTION
 function alternate(event) {
+    let navbarStateChange;
     if (navbarState) {
-        var navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
+        navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
     } else {
-        var navbarStateChange = event.clientX <= window.innerWidth * 0.01;
+        navbarStateChange = event.clientX <= window.innerWidth * 0.01;
     }
     if (navbarStateChange) {
         navbarState = !navbarState

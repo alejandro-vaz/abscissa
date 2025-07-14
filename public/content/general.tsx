@@ -136,7 +136,7 @@ export function append(element: HTMLElement, content: ReactNode): void {
 //
 
 // DEBUG -> FUNCTION
-export function debug(...variables: []) {
+export function debug(...variables: any[]) {
     for (const variable of variables) {
         console.warn(`DEBUG: ${variable}`)
     }

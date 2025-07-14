@@ -18,7 +18,7 @@ let timer;
 let text;
 
 // TOOLTIP -> MOUSEOVER FUNCTION
-function mouseover(event): void {
+function mouseover(event: MouseEvent): void {
     const target = (event.target as HTMLElement)?.closest("[tooltip]");
     if (target) {
         timer = setTimeout(function(): void {
@@ -29,7 +29,7 @@ function mouseover(event): void {
 }
 
 // TOOLTIP -> MOUSEOUT
-function mouseout(event): void {
+function mouseout(event: MouseEvent): void {
     if ((event.target as HTMLElement)?.closest("[tooltip]")) {
         clearTimeout(timer);
         text.style.opacity = "0";
