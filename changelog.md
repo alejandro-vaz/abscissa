@@ -244,3 +244,18 @@
 - [X] (Minor) Coded again root and general *SASS* modules to ensure the styling of new views is straightforward.
 - [X] (Patch) Moved encryption from server to client.
 - [X] (Patch) Added public templates for the *JSON* stored in the database.
+## *Abscissa* 3.2.3 `4-4-6`
+- [X] (Major) Replaced *Apache* with *Nginx.*
+- [X] (Major) Replaced *Django* with *FastAPI.*
+- [X] (Major) Made *SUG.py* a static file with no dependencies.
+- [X] (Minor) Moved from sync to async libraries.
+- [X] (Patch) Renamed `hex` module to `binary`.
+- [X] (Minor) Rewrote every extension as a class that stores itself on a `ContextVar`.
+- [X] (Patch) Removed runtime dependencies on `npm`, website now uses an importmap.
+- [X] (Major) Turned website into a *Single-Page App* which has barely any *FOUC* and only has to fetch once.
+- [X] (Patch) Converted `_general.sass` into `general.sass` so it's no longer a module.
+- [X] (Patch) Added `debug()` and `append()` *React* functions.
+- [X] (Minor) *HTML* is now fully static.
+- [X] (Patch) Added a blur effect on the navbar.
+- [X] (Patch) Added *SASS* `blurred()` function.
+- [X] (Minor) Added server config files under `/server`.
