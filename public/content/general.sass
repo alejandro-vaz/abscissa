@@ -10,31 +10,6 @@
 
 
 //
-//  FUNCTIONS                                                                 
-//
-
-// FUNCTIONS -> CONTAINER
-=section($align-horizontally, $align-vertically, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true)
-    +root.section($align-horizontally, $align-vertically, $width: $width, $height: $height, $direction: $direction, $display: $display, $grow: $grow)
-
-// FUNCTIONS -> ELEMENT
-=element($inline)
-    +root.element($inline)
-
-// FUNCTIONS -> INPUT
-=input($type, $inline: true)
-    +root.input($type, $inline: $inline)
-
-// FUNCTIONS -> SCROLLBAR
-=scrollbar() 
-    +root.scrollbar()
-
-// FUNCTIONS -> CURSOR
-=cursor($type)
-    +root.cursor($type)
-
-
-//
 //  FONT
 //
 
@@ -59,14 +34,14 @@
 
 // DEFAULTS -> FONT
 :where(:not(.katex-display, .katex-display *, .katex, .katex *, .CodeMirror, .CodeMirror *))
-    +scrollbar()
+    +root.scrollbar()
     font-family: "comicSansMS", "Comic Sans MS", monospace
     font-size: root.$FONTSIZE
     color: root.$ACCENT
 
 // DEFAULTS -> DOCUMENT
 :where(html)
-    +cursor(default)
+    +root.cursor(default)
     background-color: root.$INVERTED    
 
 // DEFAULTS -> MAIN
@@ -74,7 +49,7 @@ $main-navbar-width-idle: 1vw
 $main-topbar-height: 5.5vw
 $main-tooltip-height: 2vw
 :where(#main)
-    +section(true, false, $width: calc(100% - $main-navbar-width-idle), $height: calc(100% - $main-topbar-height - $main-tooltip-height))
+    +root.section(normal, normal, center, $width: calc(100% - $main-navbar-width-idle), $height: calc(100% - $main-topbar-height - $main-tooltip-height))
     position: fixed
     top: $main-topbar-height
     right: 0
@@ -87,17 +62,17 @@ $main-tooltip-height: 2vw
 // INPUTS -> AUTOFORMATTER
 :where(input)
     &[type="text"]
-        +input(text)
+        +root.input(text)
     &[type="textarea"]
-        +input(textarea, $inline: false)
+        +root.input(textarea, $inline: false)
     &[type="password"]
-        +input(password)
+        +root.input(password)
     &[type="submit"]
-        +input(button)
+        +root.input(button)
     &[type="email"]
-        +input(email)
+        +root.input(email)
     &[type="button"]
-        +input(button)
+        +root.input(button)
 
 
 //
@@ -106,7 +81,7 @@ $main-tooltip-height: 2vw
 
 // FORMS -> FORM
 :where(form)
-    +section(true, true, $grow: false, $height: fit-content)
+    +root.section(normal, center, center, $grow: false, $height: fit-content)
     input
         width: 100%
     input:not(:first-of-type, :last-of-type)
@@ -127,23 +102,28 @@ $main-tooltip-height: 2vw
 :where(p)
     font-size: root.$FONTSIZE
     margin: 0.6vw 0 0.6vw 0
+    padding: 0
 
 // HEADERS -> H4
 :where(h4)
     font-size: 1.125 * root.$FONTSIZE
     margin: 0.7vw 0 0.7vw 0
+    padding: 0
 
 // HEADERS -> H3
 :where(h3)
     font-size: 1.25 * root.$FONTSIZE
     margin: 0.8vw 0 0.8vw 0
+    padding: 0
 
 // HEADERS -> H2
 :where(h2)
     font-size: 1.5 * root.$FONTSIZE
     margin: 0.9vw 0 0.9vw 0
+    padding: 0
 
 // HEADERS -> H1
 :where(h1)
     font-size: 2 * root.$FONTSIZE
     margin: 1vw 0 1vw 0
+    padding: 0

@@ -25,7 +25,7 @@ const origin = General.connect("main");
 // CONTENT -> FUNCTION
 export default async function content(): Promise<void> {
     // FUNCTION -> INTERFACE
-    await General.interfaceModulator(
+    await General.modulator(
         "navbar",
         "tooltip",
         "topbar"

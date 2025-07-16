@@ -13,6 +13,7 @@ import _dashboard from "./&dashboard/script.js";
 import _error from "./&error/script.js";
 
 // HEAD -> APP MODULES
+import * as __popup from "../modules/app/popup/script.js";
 
 // HEAD -> INTERFACE MODULES
 import * as ___navbar from "../modules/interface/navbar/script.js";
@@ -27,7 +28,6 @@ import * as ___topbar from "../modules/interface/topbar/script.js";
 // SUPERGLOBALS -> DICTIONARY
 export const SUG = {
     get VWD(): string[] {return window.location.pathname.split("/").slice(1)},
-    AMD: {},
     IMD: {
         navbar: {active: false, module: ___navbar},
         tooltip: {active: false, module: ___tooltip},
@@ -44,32 +44,27 @@ export const SUG = {
 
 // WINDOW MANAGEMENT -> REDIRECT
 export async function redirect(target: string): void {
-    await view(target);
-    history.pushState(null, '', target);
-}
-
-// WINDOW MANAGEMENT -> VIEW MANAGER
-async function view(target: string): void {
     switch (SUG.VWD[0]) {
-        case "_": window._.remove();
-        case "dashboard": window._dashboard.remove();
-        default: window._dashboard.remove();
+        case "": window._.remove(); break;
+        case "dashboard": window._dashboard.remove(); break;
+        default: window._error.remove();
     }
-    switch (target.split("/")[1]) {
-        case '': await _();
-        case 'dashboard': await _dashboard();
+    history.pushState(null, '', target)
+    switch (SUG.VWD[0]) {
+        case '': await _(); break;
+        case 'dashboard': await _dashboard(); break;
         default: await _error();
     }
 }
 
 // WINDOW MANAGEMENT -> VIEW LOADER
 document.addEventListener('DOMContentLoaded', () => {
-    view(window.location.pathname);
+    redirect(window.location.pathname);
 })
 
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
 window.addEventListener('popstate', () => {
-    view(window.location.pathname);
+    redirect(window.location.pathname);
 })
 
 // WINDOW MANAGEMENT -> NO CONTEXTMENU
@@ -92,23 +87,8 @@ export function setDescription(newDescription: string): void {
 //  MODULE MANAGEMENT
 //
 
-// MODULE MANAGEMENT -> APP MODULATOR
-export async function appModulator(...activate: string[]): Promise<void> {
-    const promises = [];
-    for (const mod in SUG.AMD) {
-        if (SUG.AMD[mod].active && !activate.includes(mod)) {
-            promises.push(SUG.AMD[mod].module.deactivate());
-            SUG.AMD[mod].active = false;
-        } else if (!SUG.AMD[mod].active && activate.includes(mod)) {
-            promises.push(SUG.AMD[mod].module.activate());
-            SUG.AMD[mod].active = true;
-        }
-    }
-    await Promise.all(promises);
-}
-
-// MODULE MANAGEMENT -> INTERFACE MODULATOR
-export async function interfaceModulator(...activate: string[]): Promise<void> {
+// MODULE MANAGEMENT -> MODULATOR
+export async function modulator(...activate: string[]): Promise<void> {
     const promises = [];
     for (const mod in SUG.IMD) {
         if (SUG.IMD[mod].active && !activate.includes(mod)) {
@@ -177,13 +157,13 @@ export function connect(id: string): HTMLElement {
 }
 
 // ELEMENTS -> REPLACE CONTENT
-export async function inject(element: HTMLElement, content: ReactNode): Promise<void> {
+export async function inject(root: HTMLElement, content: React.ReactNode): Promise<void> {
     return new Promise<void>((resolve) => {
         const Wrapper: React.FC = () => {
             React.useEffect(() => {resolve()}, []);
             return <>{content}</>;
         };
-        ReactDOM.createRoot(element).render(<Wrapper/>);
+        ReactDOM.createRoot(root).render(<Wrapper/>);
     });
 }
 
@@ -195,6 +175,16 @@ export async function inject(element: HTMLElement, content: ReactNode): Promise<
 // DEBUG -> FUNCTION
 export function debug(...variables: any[]) {
     for (const variable of variables) {
-        console.warn(`DEBUG: ${variable}`)
+        console.warn(variable)
     }
+}
+
+
+//
+//  TIME
+//
+
+// TIME -> DELAY
+export async function delay(seconds: number): Promise<void> {
+    return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
 }

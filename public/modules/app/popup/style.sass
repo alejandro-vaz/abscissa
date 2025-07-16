@@ -1,0 +1,39 @@
+//
+//  HEAD                                                                      
+//
+
+// MODULES
+@use "../../root"
+
+
+//
+//  POPUP
+//
+
+// POPUP -> CONTAINER
+#app-popup
+    +root.section(normal, normal, center, $width: 100vw, $height: 100vh)
+    +root.blurred()
+    position: fixed
+    top: 0
+    left: 0
+    opacity: 0
+    z-index: 2000
+    transition: opacity root.$TIMER1 root.$CURVE1
+    pointer-events: none
+
+// POPUP -> WINDOW
+#app-popup-window
+    +root.section(normal, normal, center, $width: 30vw, $height: 40vw, $grow: false)
+    position: relative
+    background-color: root.$CONTRAST
+    margin-top: root.$MARGIN
+    border-radius: root.$RADIUS
+
+// POPUP -> CLOSE
+#app-popup-close
+    +root.cursor(click)
+    position: absolute
+    right: 1vw
+    top: 1vw
+    width: 2vw

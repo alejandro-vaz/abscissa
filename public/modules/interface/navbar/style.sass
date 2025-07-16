@@ -13,7 +13,7 @@
 // NAVBAR -> CONTAINER
 $interface-left: 1vw
 #interface-navbar
-    +root.section(true, true, $width: 4.5vw)
+    +root.section(normal, center, center, $width: 4.5vw)
     z-index: 1000
     position: fixed
     top: 0
@@ -22,7 +22,7 @@ $interface-left: 1vw
 
 // NAVBAR -> BAR
 #interface-navbar-container
-    +root.section(true, true, $width: 4vw, $height: fit-content, $grow: false)
+    +root.section(normal, center, center, $width: 4vw, $height: fit-content, $grow: false)
     +root.blurred()
     padding: root.$PADDING1 root.$PADDING2
     border: root.$BORDER1 solid root.$DARK
