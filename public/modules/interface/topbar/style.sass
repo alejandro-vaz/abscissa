@@ -1,24 +1,33 @@
-//                                                                            
+//
 //  HEAD                                                                      
-//                                                                            
+//
 
 // MODULES
 @use "../../root"
 
 
-//                                                                            
-//  TOPBAR                                                                
-//        
+//
+//  TOPBAR
+//
+
+// TOPBAR -> CONTAINER
+$interface-height: 5.5vw
+$navbar-width-idle: 1vw
+#interface-topbar
+    +root.section(false, false, $height: $interface-height, $direction: row, $width: calc(100vw - $navbar-width-idle))
+    position: fixed
+    top: 0
+    right: 0
 
 // TOPBAR -> TITLE
-h1
+#interface-topbar-title
     position: fixed
     top: 0vw
     left: 6vw
     transition: font-size root.$TIMER2 root.$CURVE1
 
 // TOPBAR -> DESCRIPTION
-#description
+#interface-topbar-description
     opacity: 0
     position: fixed
     top: 2.25vw

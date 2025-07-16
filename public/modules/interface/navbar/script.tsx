@@ -37,48 +37,48 @@ function alternate(event) {
 // NAVBAR -> ACTIVATE
 export async function activate(): Promise<void> {
     navbarState = true;
-    General.inject(navbar,
+    await General.inject(navbar,
         <>
-            <div id="navbar">
+            <div id="interface-navbar-container">
                 <img 
                     src="/public/svg/logo_light.svg" 
-                    id="navbar-dashboard" 
-                    className="navbarIcon" 
+                    id="interface-navbar-dashboard" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/dashboard")}
                     tooltip="Go to dashboard"
                 />
                 <img 
                     src="/public/svg/search.svg" 
-                    id="navbar-search" 
-                    className="navbarIcon" 
+                    id="interface-navbar-search" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/search")}
                     tooltip="Go to search"
                 />
                 <img 
                     src="/public/svg/playground.svg" 
-                    id="navbar-playground" 
-                    className="navbarIcon" 
+                    id="interface-navbar-playground" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/playground")}
                     tooltip="Go to playground"
                 />
                 <img 
                     src="/public/svg/stats.svg" 
-                    id="navbar-stats" 
-                    className="navbarIcon" 
+                    id="interface-navbar-stats" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/stats")}
                     tooltip="Go to your stats"
                 />
                 <img 
                     src="/public/svg/user.svg" 
-                    id="navbar-user" 
-                    className="navbarIcon" 
+                    id="interface-navbar-user" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/user")}
                     tooltip="Go to your user"
                 />
                 <img 
                     src="/public/svg/settings.svg" 
-                    id="navbar-settings" 
-                    className="navbarIcon" 
+                    id="interface-navbar-settings" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/settings")}
                     tooltip="Go to settings"
                 />

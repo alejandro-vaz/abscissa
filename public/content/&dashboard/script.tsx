@@ -4,9 +4,6 @@
 
 // HEAD -> MODULES
 import * as General from "../general.js";
-import * as Navbar from "../../modules/interface/navbar/script.js";
-import * as Tooltip from "../../modules/interface/tooltip/script.js";
-import * as Topbar from "../../modules/interface/topbar/script.js";
 
 // HEAD -> ORIGIN
 const origin = General.connect("main");
@@ -18,11 +15,7 @@ const origin = General.connect("main");
 
 // REMOVE -> PROCESS
 (window as any)._dashboard = (window as any)._dashboard || {};
-(window as any)._dashboard.remove = () => {
-    Navbar.deactivate();
-    Tooltip.deactivate();
-    Topbar.deactivate();
-}
+(window as any)._dashboard.remove = () => {}    
 
 
 //
@@ -32,9 +25,12 @@ const origin = General.connect("main");
 // CONTENT -> FUNCTION
 export default async function content(): Promise<void> {
     // FUNCTION -> INTERFACE
-    await Promise.all([
-        Navbar.activate(),
-        Tooltip.activate(),
-        Topbar.activate()
-    ])
+    await General.interfaceModulator(
+        "navbar",
+        "tooltip",
+        "topbar"
+    )
+    // FUNCTION -> WINDOW
+    General.setTitle("Dashboard");
+    General.setDescription("Here is where the magic happens.");
 }

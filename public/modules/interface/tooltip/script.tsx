@@ -40,20 +40,18 @@ function mouseout(event: MouseEvent): void {
 export async function activate(): Promise<void> {
     timer = undefined;
     text = undefined;
-    General.inject(tooltip,
+    await General.inject(tooltip,
         <>
-            <p id="tooltip" ref={(node) => {
-                text = node;
-                window.addEventListener("mouseover", mouseover);
-                window.addEventListener("mouseout", mouseout)
-            }}></p>
+            <p id="interface-tooltip-text" ref={(node: HTMLElement) => {text = node}}></p>
         </>
     )
+    window.addEventListener("mouseover", mouseover);
+    window.addEventListener("mouseout", mouseout)
 }
 
 // TOOLTIP -> DEACTIVATE
 export function deactivate(): void {
-    window.removeEventListener("mouseover", mouseover);
     window.removeEventListener("mouseout", mouseout);
+    window.removeEventListener("mouseover", mouseover);
     General.inject(tooltip, <></>);
 }

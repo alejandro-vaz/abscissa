@@ -32,7 +32,7 @@ class _database:
             [
                 self.Sid 
             ]
-        )) if self.Sid is not None and len(self.Sid) == 4 else False
+        )) if self.Sid is not None and len(self.Sid) == 32 else False
         self.user = (await self.query(
             "SELECT * FROM USERS WHERE Uid = %s",
             [
@@ -51,7 +51,7 @@ class _database:
             return [dict(zip([column[0] for column in cursor.description], row)) for row in await cursor.fetchall()] if cursor.description else True
     # CLASS -> SESSION
     async def session(self, Uid: int):
-        self.Sid = secrets.token_bytes(4)
+        self.Sid = secrets.token_bytes(32)
         await self.query(
             "UPDATE SESSIONS SET Sid = %s, Sip = %s, Sexpires = %s WHERE Uid = %s",
             [

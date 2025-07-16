@@ -9,8 +9,17 @@
 //  TOOLTIP
 //
 
+// TOOLTIP -> CONTAINER
+$interface-height: 2vw
+$navbar-width-idle: 1vw
+#interface-tooltip
+    +root.section(false, false, $height: $interface-height, $direction: row, $width: calc(100vw - $navbar-width-idle))
+    position: fixed
+    bottom: 0
+    right: 0
+
 // TOOLTIP -> APPEARANCE
-#tooltip
+#interface-tooltip-text
     position: fixed
     bottom: 0
     right: 0.5vw

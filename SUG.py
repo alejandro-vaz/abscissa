@@ -12,8 +12,11 @@ DBC = {
     "autocommit": True
 }
 
+# MASTER SUPERGLOBALS -> PARENT DIR
+PDR = "/srv/www"
+
 # MASTER SUPERGLOBALS -> DIRECTORY
-DIR = "/srv/www/website/"
+DIR = "/srv/www/website"
 
 # MASTER SUPERGLOBALS -> REGEX PATTERNS
 PAT = {

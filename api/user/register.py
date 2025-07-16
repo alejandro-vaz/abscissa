@@ -16,19 +16,24 @@ router = APIRouter()
 # FUNCTION -> DECLARATION
 @router.post("/api/user/register")
 async def output(request: Request, response: Response) -> JSONResponse:
-    # DECLARATION -> EXTENSIONS
-    from website.extensions import database, post, time
+    # DECLARATION -> LOAD EXTENSIONS
+    exec(add(
+        "database",
+        "post",
+        "time"
+    ), globals())
+    # DECLARATION -> ACTIVATE EXTENSIONS
     await asyncio.gather(
-        database.init(request, response),
-        post.init(request, response),
-        time.init(request, response)
+        database.get().init(request, response),
+        post.get().init(request, response),
+        time.get().init(request, response)
     )
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks.get(): raise HTTPException(**SUG.ERR[0])
+    if not post.get().checks(): raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): raise HTTPException(**SUG.ERR[1])
+    if not (post.get().exists("Uemail", "Uhashpass", "Uname") == [True, True, True]): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
-    return JSONResponse(content = await database.query(
+    return JSONResponse(content = await database.get().query(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass, Ujoined, Uplayground, Usettings, Oid, Urole) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
             post.data["Uname"],

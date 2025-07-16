@@ -1,7 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- IMPORT MAP -->
+    <!-- 
+        BASIC STYLING
+    -->
+    <!-- BASIC STYLING : PRELOAD -->
+    <link rel="preload" href="/public/fonts/comicSansMS.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="/public/svg/logo_dark.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/svg/logo_light.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/content/general.css" as="style" type="text/css">
+    <!-- BASIC STYLING : RENDER -->
+    <link rel="stylesheet" href="/public/content/general.css">
+    <!--
+        INTERFACE STYLING PRELOAD
+    -->
+    <!-- INTERFACE STYLING PRELOAD : NAVBAR -->
+    <link rel="preload" href="/public/modules/interface/navbar/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/modules/interface/navbar/svg/playground.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/modules/interface/navbar/svg/search.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/modules/interface/navbar/svg/settings.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/modules/interface/navbar/svg/stats.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/modules/interface/navbar/svg/user.svg" as="image" type="image/svg+xml">
+    <!-- INTERFACE STYLING PRELOAD : TOOLTIP -->
+    <link rel="preload" href="/public/modules/interface/tooltip/style.css" as="style" type="text/css">
+    <!-- INTERFACE STYLING PRELOAD : TOPBAR -->
+    <link rel="preload" href="/public/modules/interface/topbar/style.css" as="style" type="text/css">
+    <!--
+        APP STYLING PRELOAD
+    -->
+    <!--
+        VIEW STYLING PRELOAD
+    -->
+    <!-- VIEW STYLING PRELOAD : & -->
+    <link rel="preload" href="/public/content/&/style.css" as="style" type="text/css">
+    <!-- VIEW STYLING PRELOAD : &DASHBOARD -->
+    <link rel="preload" href="/public/content/&dashboard/style.css" as="style" type="text/css">
+    <!-- VIEW STYLING PRELOAD : &ERROR -->
+    <link rel="preload" href="/public/content/&error/style.css" as="style" type="text/css">
+    <!--
+        INTERFACE STYLING RENDER
+    -->
+    <!-- INTERFACE STYLING RENDER : NAVBAR -->
+    <link rel="stylesheet" href="/public/modules/interface/navbar/style.css">
+    <!-- INTERFACE STYLING RENDER : TOOLTIP -->
+    <link rel="stylesheet" href="/public/modules/interface/tooltip/style.css">
+    <!-- INTERFACE STYLING RENDER : TOPBAR -->
+    <link rel="stylesheet" href="/public/modules/interface/topbar/style.css">
+    <!--
+        APP STYLING RENDER
+    -->
+    <!--
+        VIEW STYLING RENDER
+    -->
+    <!-- VIEW STYLING RENDER : & -->
+    <link rel="stylesheet" href="/public/content/&/style.css">
+    <!-- VIEW STYLING RENDER : &DASHBOARD -->
+    <link rel="stylesheet" href="/public/content/&dashboard/style.css">
+    <!-- VIEW STYLING RENDER : &ERROR -->
+    <link rel="stylesheet" href="/public/content/&error/style.css">
+    <!--
+        SETTINGS
+    -->
+    <!-- SETTINGS : IMPORT MAP -->
     <script type="importmap">
         {
             "imports": {
@@ -17,46 +77,29 @@
             }
         }
     </script>
-    <!-- BASIC STYLE -->
-    <link rel="preload" href="/public/content/general.css" as="style" type="text/css">
-    <link rel="preload" href="/public/fonts/comicSansMS.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/content/general.css">
-    <!-- SETTINGS -->
+    <!-- SETTINGS : CONFIGURATION -->
     <title>Abscissa</title>
     <meta name="description" content="Abscissa landing page.">
     <meta name="keywords" content="abscissa landing math">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alejandro Vaz">
+    <!-- SETTINGS : JAVASCRIPT -->
     <script type="module" src="/public/content/general.js"></script>
-    <!-- COMPLEX STYLING -->
-    <link rel="preload" href="/public/content/&/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/content/&dashboard/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/content/&error/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/content/&login/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/content/&register/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/modules/interface/navbar/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/modules/interface/tooltip/style.css" as="style" type="text/css">
-    <link rel="preload" href="/public/modules/interface/topbar/style.css" as="style" type="text/css">
-    <link rel="stylesheet" href="/public/content/&/style.css">
-    <link rel="stylesheet" href="/public/content/&dashboard/style.css">
-    <link rel="stylesheet" href="/public/content/&error/style.css">
-    <link rel="stylesheet" href="/public/content/&login/style.css">
-    <link rel="stylesheet" href="/public/content/&register/style.css">
-    <link rel="stylesheet" href="/public/modules/interface/navbar/style.css">
-    <link rel="stylesheet" href="/public/modules/interface/tooltip/style.css">
-    <link rel="stylesheet" href="/public/modules/interface/topbar/style.css">
 </head>
 <body>
-    <!-- APP MODULES -->
+    <!--
+        CONTENT
+    -->
+    <!-- CONTENT : APP MODULES -->
     <div id="app-codemirror"></div>
     <div id="app-cryptography"></div>
     <div id="app-katex"></div>
-    <!-- INTERFACE MODULES -->
+    <!-- CONTENT : INTERFACE MODULES -->
     <div id="interface-navbar"></div>
     <div id="interface-tooltip"></div>
     <div id="interface-topbar"></div>
-    <!-- CONTENT -->
+    <!-- CONTENT : VIEW -->
     <div id="main"></div>
 </body>
 </html>
