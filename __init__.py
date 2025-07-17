@@ -31,3 +31,11 @@ def add(*extensions: str) -> str:
     for extension in extensions:
         with open(f"{SUG.DIR}/extensions/{extension}.py", "r") as file: code.append(file.read())
     return "\n\n".join(code)
+
+
+#
+#   SELF
+#
+
+# SELF -> CLASS
+class Self: pass

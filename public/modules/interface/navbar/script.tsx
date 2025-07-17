@@ -47,42 +47,42 @@ export async function activate(): Promise<void> {
                     id="interface-navbar-dashboard" 
                     className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/dashboard")}
-                    tooltip="/dashboard"
+                    tooltip="Go to dashboard"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/search.svg" 
                     id="interface-navbar-search" 
                     className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/search")}
-                    tooltip="/search"
+                    tooltip="Go to search"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/playground.svg" 
                     id="interface-navbar-playground" 
                     className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/playground")}
-                    tooltip="/playground"
+                    tooltip="Go to playground"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/stats.svg" 
                     id="interface-navbar-stats" 
                     className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/stats")}
-                    tooltip="/stats"
+                    tooltip="Go to stats"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/user.svg" 
                     id="interface-navbar-user" 
                     className="interface-navbar-Icon" 
                     onClick={() => validate ? General.redirect("/user") : Popup.create("auth")}
-                    tooltip="/user"
+                    tooltip={validate ? "Go to your profile" : "Log in or register"}
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/settings.svg" 
                     id="interface-navbar-settings" 
                     className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/settings")}
-                    tooltip="/settings"
+                    tooltip="Go to settings"
                 />
             </div>
         </>

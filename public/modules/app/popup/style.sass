@@ -24,16 +24,30 @@
 
 // POPUP -> WINDOW
 #app-popup-window
-    +root.section(normal, normal, center, $width: 30vw, $height: 40vw, $grow: false)
-    position: relative
-    background-color: root.$CONTRAST
+    +root.section(normal, normal, center, $width: 20vw, $height: fit-content, $grow: false)
+    border: root.$BORDER1 solid root.$DARK
+    background-color: root.$TOUCH
     margin-top: root.$MARGIN
     border-radius: root.$RADIUS
+    padding: root.$PADDING1
+
+// POPUP -> HEADER
+#app-popup-header
+    +root.section(normal, flex-end, center, $direction: row, $height: 2vw, $grow: false)
 
 // POPUP -> CLOSE
 #app-popup-close
     +root.cursor(click)
-    position: absolute
-    right: 1vw
-    top: 1vw
-    width: 2vw
+    height: 100%
+    z-index: 2500
+
+// POPUP -> AUTH
+#app-popup-auth
+    +root.section(normal, normal, center, $height: fit-content, $grow: false)
+    margin-top: -2vw
+    > input[type="button"]
+        width: 100%
+    > h2
+        margin-top: 0
+    > form
+        margin-bottom: root.$MARGIN

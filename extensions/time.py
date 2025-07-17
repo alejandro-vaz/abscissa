@@ -1,4 +1,12 @@
 #
+#   HANDLER
+#
+
+# HANDLER -> LOAD
+from website import *
+
+
+#
 #   TIME
 #
 
@@ -6,21 +14,14 @@
 import datetime
 import zlib
 
-# TIME -> NAMESPACE
-time = ContextVar("time")
-
 # TIME -> CLASS
-class _time:
+class namespace:
     # CLASS -> VARIABLES
-    crcdate: int
-    # CLASS -> CREATION
-    def __init__(self) -> None: time.set(self)
+    crc32date: int
     # CLASS -> INIT
-    async def init(self, request: Request, response: Response) -> None:
-        self.crcdate = zlib.crc32(datetime.datetime.now().strftime('%Y-%m-%d').encode()) & 0xFFFFFFFF
+    async def init(self, request: Request) -> Self:
+        self.crc32date = zlib.crc32(datetime.datetime.now().strftime('%Y-%m-%d').encode()) & 0xFFFFFFFF
+        return self
     # CLASS -> TIME NOW
     def now(self) -> str:
         return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-# TIME -> INIT
-_time()

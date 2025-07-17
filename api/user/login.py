@@ -13,30 +13,29 @@ from website import *
 # FUNCTION -> ROUTER
 router = APIRouter()
 
+# FUNCTION -> EXTENSIONS
+from website.extensions import (
+    database as _database,
+    post as _post
+)
+
 # FUNCTION -> DECLARATION
 @router.post("/api/user/login")
-async def output(request: Request, response: Response) -> JSONResponse:
-    # DECLARATION -> LOAD EXTENSIONS
-    exec(add(
-        "database",
-        "post", 
-    ), globals())
+async def output(request: Request) -> JSONResponse:
     # DECLARATION -> ACTIVATE EXTENSIONS
-    await asyncio.gather(
-        database.get().init(request, response),
-        post.get().init(request, response)
-    )
+    database = await _database.namespace().init(request)
+    post = await _post.namespace().init(request)
     # DECLARATION -> ARGUMENT CHECKS
-    if not post.get().checks(): raise HTTPException(**SUG.ERR[0])
+    if not post.checks(): raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.get().exists("Uhashpass", "Uname") == [True, True]): raise HTTPException(**SUG.ERR[1])
+    if not all(post.exists("Uhashpass", "Uname")): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
-    Uid, Uhashpass = data[0].values() if (data := await database.get().query(
+    Uid, Uhashpass = (tuple(data[0].values()) if (data := await database.query(
         "SELECT Uid, Uhashpass FROM USERS WHERE Uname = %s",
         [
-            post.get().data["Uname"]
+            post.data["Uname"]
         ]
-    )) else None, None
-    result = Uhashpass == post.get().data["Uhashpass"]
-    if result: await database.get().session(Uid)
-    return JSONResponse(content = result)
+        )) else (None, None)
+    )
+    result = Uhashpass == post.data["Uhashpass"]
+    return await database.session(JSONResponse(content = result), Uid) if result else JSONResponse(content = result)

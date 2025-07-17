@@ -13,16 +13,15 @@ from website import *
 # FUNCTION -> ROUTER
 router = APIRouter()
 
+# FUNCTION -> EXTENSIONS
+from website.extensions import (
+    database as _database
+)
+
 # FUNCTION -> DECLARATION
 @router.post("/api/session/validate")
-async def output(request: Request, response: Response) -> JSONResponse:
-    # DECLARATION -> LOAD EXTENSIONS
-    exec(add(
-        "database"
-    ), globals())
+async def output(request: Request) -> JSONResponse:
     # DECLARATION -> ACTIVATE EXTENSIONS
-    await asyncio.gather(
-        database.get().init(request, response)
-    )
+    database = await _database.namespace().init(request)
     # DECLARATION -> QUERY
-    return JSONResponse(content = database.get().validate)
+    return JSONResponse(content = database.validate)
