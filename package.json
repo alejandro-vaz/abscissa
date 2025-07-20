@@ -1,6 +1,6 @@
 {
   "name": "abscissa",
-  "version": "3.2.3",
+  "version": "3.5.2",
   "main": "public/content/general.js",
   "scripts": {
     "buildtsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
@@ -15,7 +15,7 @@
   "keywords": [],
   "type": "module",
   "author": "alejandro-vaz",
-  "license": "CC-BY-NC-ND-4.0",
+  "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
     "url": "https://github.com/abscissa-math/website/issues"
   },

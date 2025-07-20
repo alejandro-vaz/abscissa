@@ -12,14 +12,14 @@ CREATE TABLE `USERS` (
 
 CREATE TABLE `COMPLETED` (
   `Uid` integer NOT NULL COMMENT 'Unique identifier of the user who completed the problem.',
-  `Pid` binary NOT NULL COMMENT 'Identifier of the completed problem.',
+  `Pid` binary(4) NOT NULL COMMENT 'Identifier of the completed problem.',
   `Cprocess` json NOT NULL COMMENT 'LaTeX process that user wrote.',
   `Ctime` datetime NOT NULL COMMENT 'When was the problem completed.',
-  `Cgrade` binary COMMENT 'Grade in binary when graded.'
+  `Cgrade` binary(1) COMMENT 'Grade in binary when graded.'
 );
 
 CREATE TABLE `PROBLEMS` (
-  `Pid` binary UNIQUE PRIMARY KEY NOT NULL COMMENT 'Unique ID of the problem.',
+  `Pid` binary(4) UNIQUE PRIMARY KEY NOT NULL COMMENT 'Unique ID of the problem.',
   `Uid` integer NOT NULL COMMENT 'Uid of the creator of the problem.',
   `Kid` smallint NOT NULL COMMENT 'Concept identifier which the problem talks about.',
   `Pedited` datetime NOT NULL COMMENT 'When was the problem created or last edited.',
@@ -46,7 +46,7 @@ CREATE TABLE `RESOURCES` (
 );
 
 CREATE TABLE `SESSIONS` (
-  `Sid` binary UNIQUE PRIMARY KEY NOT NULL COMMENT 'Session ID.',
+  `Sid` binary(32) UNIQUE PRIMARY KEY NOT NULL COMMENT 'Session ID.',
   `Uid` integer UNIQUE NOT NULL COMMENT 'User linked to that session.',
   `Sip` varchar(255) NOT NULL COMMENT 'IP.',
   `Sexpires` datetime NOT NULL COMMENT 'When the session expires.'

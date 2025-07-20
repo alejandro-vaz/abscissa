@@ -1,0 +1,23 @@
+//
+//  HEAD
+//
+
+// HEAD -> MODULES
+@use "../../modules/root"
+
+
+//
+//  PLAYGROUND
+//
+
+// PLAYGROUND -> NAMESPACE
+._playground
+    flex-direction: row
+    > #editor-container
+        +root.section(normal, normal, normal, $width: 50%, $grow: false)
+        > .cm-editor
+            height: 100%
+            border: root.$DARK solid root.$BORDER2
+            border-radius: root.$RADIUS
+    > #output
+        +root.section(normal, normal, center, $width: 50%, $grow: false)

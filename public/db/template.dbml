@@ -16,10 +16,10 @@ Table USERS {
 
 Table COMPLETED {
 	Uid integer [ not null, note: 'Unique identifier of the user who completed the problem.' ]
-	Pid binary [ not null, note: 'Identifier of the completed problem.' ]
+	Pid binary(4) [ not null, note: 'Identifier of the completed problem.' ]
 	Cprocess json [ not null, note: 'LaTeX process that user wrote.' ]
 	Ctime datetime [ not null, note: 'When was the problem completed.' ]
-	Cgrade binary [ note: 'Grade in binary when graded.' ]
+	Cgrade binary(1) [ note: 'Grade in binary when graded.' ]
 
 	indexes {
 		(Uid, Pid) [ name: 'COMPLETED_index_0' ]
@@ -27,7 +27,7 @@ Table COMPLETED {
 }
 
 Table PROBLEMS {
-	Pid binary [ pk, not null, unique, note: 'Unique ID of the problem.' ]
+	Pid binary(4) [ pk, not null, unique, note: 'Unique ID of the problem.' ]
 	Uid integer [ not null, note: 'Uid of the creator of the problem.' ]
 	Kid smallint [ not null, note: 'Concept identifier which the problem talks about.' ]
 	Pedited datetime [ not null, note: 'When was the problem created or last edited.' ]
@@ -66,7 +66,7 @@ Table RESOURCES {
 }
 
 Table SESSIONS {
-	Sid binary [ pk, not null, unique, note: 'Session ID.' ]
+	Sid binary(32) [ pk, not null, unique, note: 'Session ID.' ]
 	Uid integer [ not null, unique, note: 'User linked to that session.' ]
 	Sip varchar [ not null, note: 'IP.' ]
 	Sexpires datetime [ not null, note: 'When the session expires.' ]

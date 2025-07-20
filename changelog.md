@@ -259,3 +259,20 @@
 - [X] (Patch) Added a blur effect on the navbar.
 - [X] (Patch) Added *SASS* `blurred()` function.
 - [X] (Minor) Added server config files under `/server`.
+### *Abscissa* 3.5.2 `2-4-10`
+- [X] (Patch) Cleaned imports on `API.py`.
+- [X] (Patch) Refactored *Python* scripts with constants in `SUG.py`.
+- [X] (Major) Added *Mathsys* integration on *API* and *Codemirror.*
+- [X] (Patch) Switched to an `All rights reserved.` license.
+- [X] (Patch) Removed unused imports from `__init__.py`.
+- [X] (Patch) Added `Self` class on `__init__.py`.
+- [X] (Minor) Updated extension import method, now relying on module renaming and `namespace` classes.
+- [X] (Minor) Added a module handler in *JavaScript* so modules are not reloaded on every page change.
+- [X] (Major) Added fully functional playground page connected to *Mathsys API.*
+- [X] (Patch) Reorganized *CSS* styles per page.
+- [X] (Patch) Trimmed down `general.sass`.
+- [X] (Minor) Added some utilities (`modulator()`, `setTitle`, `delay`...) to `general.tsx`.
+- [X] (Patch) Reorganized `index.html`.
+- [X] (Patch) Adjusted byte length in database.
+- [X] (Minor) Added popup modal windows.
+- [X] (Patch) Changed some of the `svg`s.

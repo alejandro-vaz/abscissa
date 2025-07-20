@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
+import * as Popup from "../../app/popup/script.js";
 
 // HEAD -> CONNECTIONS
 const navbar = General.connect("interface-navbar");
@@ -37,48 +38,49 @@ function alternate(event) {
 // NAVBAR -> ACTIVATE
 export async function activate(): Promise<void> {
     navbarState = true;
-    General.inject(navbar,
+    const validate = await General.curl("session/validate", {});
+    await General.inject(navbar,
         <>
-            <div id="navbar">
+            <div id="interface-navbar-container">
                 <img 
                     src="/public/svg/logo_light.svg" 
-                    id="navbar-dashboard" 
-                    className="navbarIcon" 
+                    id="interface-navbar-dashboard" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/dashboard")}
                     tooltip="Go to dashboard"
                 />
                 <img 
-                    src="/public/svg/search.svg" 
-                    id="navbar-search" 
-                    className="navbarIcon" 
+                    src="/public/modules/interface/navbar/svg/search.svg" 
+                    id="interface-navbar-search" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/search")}
                     tooltip="Go to search"
                 />
                 <img 
-                    src="/public/svg/playground.svg" 
-                    id="navbar-playground" 
-                    className="navbarIcon" 
+                    src="/public/modules/interface/navbar/svg/playground.svg" 
+                    id="interface-navbar-playground" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/playground")}
                     tooltip="Go to playground"
                 />
                 <img 
-                    src="/public/svg/stats.svg" 
-                    id="navbar-stats" 
-                    className="navbarIcon" 
+                    src="/public/modules/interface/navbar/svg/stats.svg" 
+                    id="interface-navbar-stats" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/stats")}
-                    tooltip="Go to your stats"
+                    tooltip="Go to stats"
                 />
                 <img 
-                    src="/public/svg/user.svg" 
-                    id="navbar-user" 
-                    className="navbarIcon" 
-                    onClick={() => General.redirect("/user")}
-                    tooltip="Go to your user"
+                    src="/public/modules/interface/navbar/svg/user.svg" 
+                    id="interface-navbar-user" 
+                    className="interface-navbar-Icon" 
+                    onClick={() => validate ? General.redirect("/user") : Popup.create("auth")}
+                    tooltip={validate ? "Go to your profile" : "Log in or register"}
                 />
                 <img 
-                    src="/public/svg/settings.svg" 
-                    id="navbar-settings" 
-                    className="navbarIcon" 
+                    src="/public/modules/interface/navbar/svg/settings.svg" 
+                    id="interface-navbar-settings" 
+                    className="interface-navbar-Icon" 
                     onClick={() => General.redirect("/settings")}
                     tooltip="Go to settings"
                 />

@@ -5,7 +5,7 @@
 // HEAD -> MODULES
 import * as General from "../general.js";
 
-// HEAD -> CONNECTIONS
+// HEAD -> ORIGIN
 const origin = General.connect("main");
 
 
@@ -15,7 +15,9 @@ const origin = General.connect("main");
 
 // REMOVE -> PROCESS
 (window as any)._ = (window as any)._ || {};
-(window as any)._.remove = () => {}
+(window as any)._.remove = async() => {
+    origin.classList.remove("_");
+}
 
 
 //
@@ -24,5 +26,15 @@ const origin = General.connect("main");
 
 // CONTENT -> FUNCTION
 export default async function content(): Promise<void> {
+    // FUNCTION -> STYLES
+    origin.classList.add("_");
+    // FUNCTION -> INTERFACE
+    await General.modulator(
+        "tooltip"
+    )
+    // FUNCTION -> WINDOW
+    General.setTitle("Abscissa");
+    General.setDescription("Landing page.");
+    // FUNCTION -> REDIRECT
     General.redirect("dashboard");
 }

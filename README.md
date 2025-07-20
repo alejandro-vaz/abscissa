@@ -5,9 +5,9 @@ And to accomplish our goal we are also developing [*Mathsys*](https://github.com
 
 It is currently on the early stages, so don't get too motivated. This is a pre-alpha and most of the features that will be available on the final product are not even close being developed just yet.
 
-**We ship every Sunday or Monday.**
+**We ship every Sunday.**
 
-Check it out on [*Abscissa*](https://abscissa.eu)
+Check it out live on [*Abscissa*](https://abscissa.eu)
 
 I say *we* but I'm indeed a solo developer for now, so if you want to get involved learn
 
@@ -34,6 +34,4 @@ And for the backend:
    - *FastAPI* handling the API requests.
 
 ## License
-This project has the [*Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International*](https://creativecommons.org/licenses/by-nc-nd/4.0/) license. That means:
-   - You can share the code as long as it's not for commercial use.
-   - You cannot modify or create derivatives without permission.
+All rights reserved. See the `LICENSE.md` file for more information.

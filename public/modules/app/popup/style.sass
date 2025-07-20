@@ -1,0 +1,53 @@
+//
+//  HEAD                                                                      
+//
+
+// MODULES
+@use "../../root"
+
+
+//
+//  POPUP
+//
+
+// POPUP -> CONTAINER
+#app-popup
+    +root.section(normal, normal, center, $width: 100vw, $height: 100vh)
+    +root.blurred()
+    position: fixed
+    top: 0
+    left: 0
+    opacity: 0
+    z-index: 2000
+    transition: opacity root.$TIMER1 root.$CURVE1
+    pointer-events: none
+
+// POPUP -> WINDOW
+#app-popup-window
+    +root.section(normal, normal, center, $width: 20vw, $height: fit-content, $grow: false)
+    border: root.$BORDER1 solid root.$DARK
+    background-color: root.$TOUCH
+    margin-top: root.$MARGIN
+    border-radius: root.$RADIUS
+    padding: root.$PADDING1
+
+// POPUP -> HEADER
+#app-popup-header
+    +root.section(normal, flex-end, center, $direction: row, $height: 2vw, $grow: false)
+
+// POPUP -> CLOSE
+#app-popup-close
+    +root.cursor(click)
+    height: 100%
+    z-index: 2500
+
+// POPUP -> AUTH
+#app-popup-auth
+    +root.section(normal, normal, center, $height: fit-content, $grow: false)
+    margin-top: -2vw
+    > input[type="button"]
+        width: 100%
+    > h2
+        margin-top: 0
+    > form
+        margin-bottom: root.$MARGIN

@@ -4,62 +4,113 @@
 
 // HEAD -> MODULES
 // @ts-nocheck
+import React from "react";
 import * as ReactDOM from 'react-dom/client';
 
 // HEAD -> VIEWS
 import _ from "./&/script.js";
 import _dashboard from "./&dashboard/script.js";
 import _error from "./&error/script.js";
-import _login from "./&login/script.js";
-import _register from "./&register/script.js";
+import _playground from "./&playground/script.js";
+
+// HEAD -> INTERFACE MODULES
+import * as ___navbar from "../modules/interface/navbar/script.js";
+import * as ___tooltip from "../modules/interface/tooltip/script.js";
+import * as ___topbar from "../modules/interface/topbar/script.js";
+
+// HEAD -> ORIGIN
+const origin = connect("main");
 
 
-//                                                                            
-//  WINDOW                                                            
-//                                                                            
+//
+//  SUPERGLOBALS
+//
 
-// WINDOW -> SUPERGLOBALS
+// SUPERGLOBALS -> DICTIONARY
 export const SUG = {
-    PAR: Object.fromEntries(new URLSearchParams(window.location.search).entries()),
-    get VWD(): string[] {return window.location.pathname.split("/").slice(1)}
+    get VWD(): string[] {return window.location.pathname.split("/").slice(1)},
+    IMD: {
+        navbar: {active: false, module: ___navbar},
+        tooltip: {active: false, module: ___tooltip},
+        topbar: {active: false, module: ___topbar}
+    },
+    get TIT(): string {return document.title},
+    get DES(): string {return document.querySelector<HTMLMetaElement>('meta[name="description"]').content}
 }
 
-// WINDOW -> REDIRECT
+
+//
+//  WINDOW MANAGEMENT
+//
+
+// WINDOW MANAGEMENT -> REDIRECT
 export async function redirect(target: string): void {
-    await view(target);
-    history.pushState(null, '', target);
-}
-
-// WINDOW -> MANAGER
-// @ts-nocheck
-async function view(target: string): void {
     switch (SUG.VWD[0]) {
-        case "_": window._.remove();
-        case "dashboard": window._dashboard.remove();
-        case "error": window._error.remove();
-        case "login": window._login.remove();
-        case "register": window._register.remove();
+        case "": await window._.remove(); break;
+        case "dashboard": await window._dashboard.remove(); break;
+        case "playground": await window._playground.remove(); break;
+        default: await window._error.remove();
     }
-    switch (target.split("/")[1]) {
-        case '': await _();
-        case 'dashboard': await _dashboard();
-        case 'error': await _error();
-        case 'login': await _login();
-        case 'register': await _register();
+    history.pushState(null, '', target)
+    switch (SUG.VWD[0]) {
+        case '': await _(); break;
+        case 'dashboard': await _dashboard(); break;
+        case 'playground': await _playground(); break;
+        default: await _error();
     }
 }
 
-// WINDOW -> VIEW LOADER
+// WINDOW MANAGEMENT -> VIEW LOADER
 document.addEventListener('DOMContentLoaded', () => {
-    view(window.location.pathname);
+    redirect(window.location.pathname);
 })
 
-// WINDOW -> BUTTON NAVIGATION
+// WINDOW MANAGEMENT -> BUTTON NAVIGATION
 window.addEventListener('popstate', () => {
-    view(window.location.pathname);
+    redirect(window.location.pathname);
 })
 
-// WINDOW -> VERTICAL SCREEN ERROR
+// WINDOW MANAGEMENT -> NO CONTEXTMENU
+document.addEventListener("contextmenu", (open) => {
+    open.preventDefault();
+})
+
+// WINDOW MANAGEMENT -> TITLE
+export function setTitle(newTitle: string): void {
+    document.title = newTitle;
+}
+
+// WINDOW MANAGEMENT -> DESCRIPTION
+export function setDescription(newDescription: string): void {
+    document.querySelector('meta[name="description"]').setAttribute('content', newDescription);
+}
+
+
+//
+//  MODULE MANAGEMENT
+//
+
+// MODULE MANAGEMENT -> MODULATOR
+export async function modulator(...activate: string[]): Promise<void> {
+    const promises = [];
+    for (const mod in SUG.IMD) {
+        if (SUG.IMD[mod].active && !activate.includes(mod)) {
+            promises.push(SUG.IMD[mod].module.deactivate());
+            SUG.IMD[mod].active = false;
+        } else if (!SUG.IMD[mod].active && activate.includes(mod)) {
+            promises.push(SUG.IMD[mod].module.activate());
+            SUG.IMD[mod].active = true;
+        }
+    }
+    await Promise.all(promises);
+}
+
+
+//
+//  ERRORS
+//
+
+// ERRORS -> VERTICAL SCREEN
 window.addEventListener("resize", function(): void {
     if (
         window.innerWidth / window.innerHeight < 3 / 2 && 
@@ -74,18 +125,13 @@ window.addEventListener("resize", function(): void {
     }
 });
 
-// WINDOW -> NO CONTEXTMENU
-document.addEventListener("contextmenu", (open) => {
-    open.preventDefault();
-})
 
-
-//                                                                            
+//
 //  API                                                                       
-//                                                                            
+//
 
 // API -> REQUEST
-export async function curl(script: string, data: object, timeout = 5000): Promise<object | boolean | string | number | null> {
+export async function curl(script: string, data: object): Promise<object | boolean | string | number | null> {
     return (await fetch(
         ("https://") +
         (window.location.host) +
@@ -98,7 +144,7 @@ export async function curl(script: string, data: object, timeout = 5000): Promis
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
-            signal: AbortSignal.timeout(timeout)
+            signal: AbortSignal.timeout(5000)
         }
     )).json();
 }
@@ -110,24 +156,18 @@ export async function curl(script: string, data: object, timeout = 5000): Promis
 
 // ELEMENTS -> CONNECTIONS
 export function connect(id: string): HTMLElement {
-    const element = document.getElementById(id);
-    if (element) {
-        return element
-    } else {
-        throw new Error(`Could not connect to ${id}`)
-    }
+    return document.getElementById(id);
 }
 
 // ELEMENTS -> REPLACE CONTENT
-export function inject(element: HTMLElement, content: ReactNode): void {
-    ReactDOM.createRoot(element).render(content);
-}
-
-// ELEMENTS -> APPEND CONTENT
-export function append(element: HTMLElement, content: ReactNode): void {
-    const container = document.createElement('div');
-    inject(container, content)
-    element.innerHTML = element.innerHTML + container.innerHTML;
+export async function inject(root: HTMLElement, content: React.ReactNode): Promise<void> {
+    return new Promise<void>((resolve) => {
+        function Wrapper(): React.FC {
+            React.useEffect(() => {resolve()}, []);
+            return <>{content}</>
+        }
+        ReactDOM.createRoot(root).render(<Wrapper/>);
+    });
 }
 
 
@@ -138,6 +178,26 @@ export function append(element: HTMLElement, content: ReactNode): void {
 // DEBUG -> FUNCTION
 export function debug(...variables: any[]) {
     for (const variable of variables) {
-        console.warn(`DEBUG: ${variable}`)
+        console.warn(variable)
     }
+}
+
+
+//
+//  TIME
+//
+
+// TIME -> DELAY
+export async function delay(seconds: number): Promise<void> {
+    return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
+}
+
+// TIME -> WAIT FOR DEFINITIONS
+export async function definition(getter: () => any): Promise<void> {
+    return new Promise((resolve) => {
+        function checkResolution() {
+            (getter() !== null) ? resolve() : requestAnimationFrame(checkResolution)
+        }
+        checkResolution();
+    })
 }

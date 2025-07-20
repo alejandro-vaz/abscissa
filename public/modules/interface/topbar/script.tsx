@@ -20,49 +20,9 @@ let timer;
 let topbarState = false;
 
 // TOPBAR -> MUTATION OBSERVER
-const observer = new MutationObserver(mutations => {
-    let needsUpdate = false;
-    for (const mutation of mutations) {
-        if (mutation.type === 'childList') {
-            for (const node of mutation.addedNodes) {
-                if (
-                    node.nodeName === 'TITLE' ||
-                    (node.nodeName === 'META' && (node instanceof HTMLMetaElement) && node.name === 'description')
-                ) {
-                    needsUpdate = true;
-                }
-            }
-            for (const node of mutation.removedNodes) {
-                if (
-                    node.nodeName === 'TITLE' ||
-                    (node.nodeName === 'META' && (node instanceof HTMLMetaElement) && node.name === 'description')
-                ) {
-                    needsUpdate = true;
-                }
-            }
-        }
-        if (mutation.type === 'characterData') {
-            const parent = mutation.target.parentNode;
-            if (parent && parent.nodeName === 'TITLE') {
-                needsUpdate = true;
-            }
-        }
-        if (mutation.type === 'attributes') {
-            const target = mutation.target;
-            if (
-                target.nodeName === 'META' &&
-                (target instanceof HTMLMetaElement) &&
-                target.name === 'description' &&
-                mutation.attributeName === 'content'
-            ) {
-                needsUpdate = true;
-            }
-        }
-    }
-    if (needsUpdate) {
-        title.innerText = document.title;
-        description.innerText = document.querySelector('meta[name="description"]')?.getAttribute('content');
-    }
+const observer = new MutationObserver(() => {
+    title.innerText = General.SUG.TIT;
+    description.innerText = General.SUG.DES;
 })
 
 // TOPBAR -> OPENER FUNCTION
@@ -96,15 +56,10 @@ export async function activate(): Promise<void> {
     description = undefined;
     timer = undefined;
     topbarState = false;
-    General.inject(topbar,
+    await General.inject(topbar,
         <>
-            <link rel="stylesheet" href="public/modules/interface/topbar/style.css"/>
-            <h1 id="title" ref={(node) => {
-                title = node;
-            }}></h1>
-            <p id="description" ref={(node) => {
-                description = node;
-            }}></p>
+            <h1 id="interface-topbar-title" ref={(node: HTMLElement) => {title = node}}></h1>
+            <p id="interface-topbar-description" ref={(node: HTMLElement) => {description = node}}></p>
         </>
     )
     window.addEventListener("mousemove", alternate);

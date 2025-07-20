@@ -1,19 +1,19 @@
-//                                                                            
+//
 //  HEAD                                                                      
-//                                                                            
+//
 
 // MODULES
 @use "../../root"
 
 
-//                                                                            
+//
 //  NAVBAR                                                                    
-//                                                                            
+//
 
 // NAVBAR -> CONTAINER
 $interface-left: 1vw
 #interface-navbar
-    +root.section(true, true, $width: 4vw)
+    +root.section(normal, center, center, $width: 4.5vw)
     z-index: 1000
     position: fixed
     top: 0
@@ -21,20 +21,15 @@ $interface-left: 1vw
     transition: left root.$TIMER2 root.$CURVE2
 
 // NAVBAR -> BAR
-#navbar
-    +root.section(true, true, $height: fit-content, $grow: false)
+#interface-navbar-container
+    +root.section(normal, center, center, $width: 4vw, $height: fit-content, $grow: false)
     +root.blurred()
     padding: root.$PADDING1 root.$PADDING2
     border: root.$BORDER1 solid root.$DARK
     border-radius: root.$RADIUS
-    width: 100%
-
-// NAVBAR -> BACK
-#navbar-back
-    display: none
 
 // NAVBAR -> ICONS
-.navbarIcon
+.interface-navbar-Icon
     +root.cursor(click)
     box-sizing: border-box
     border: root.$BORDER1 solid transparent
