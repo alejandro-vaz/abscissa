@@ -11,6 +11,7 @@ import * as ReactDOM from 'react-dom/client';
 import _ from "./&/script.js";
 import _dashboard from "./&dashboard/script.js";
 import _error from "./&error/script.js";
+import _playground from "./&playground/script.js";
 
 // HEAD -> APP MODULES
 import * as __popup from "../modules/app/popup/script.js";
@@ -19,6 +20,9 @@ import * as __popup from "../modules/app/popup/script.js";
 import * as ___navbar from "../modules/interface/navbar/script.js";
 import * as ___tooltip from "../modules/interface/tooltip/script.js";
 import * as ___topbar from "../modules/interface/topbar/script.js";
+
+// HEAD -> ORIGIN
+const origin = connect("main");
 
 
 //
@@ -45,14 +49,16 @@ export const SUG = {
 // WINDOW MANAGEMENT -> REDIRECT
 export async function redirect(target: string): void {
     switch (SUG.VWD[0]) {
-        case "": window._.remove(); break;
-        case "dashboard": window._dashboard.remove(); break;
-        default: window._error.remove();
+        case "": await window._.remove(); break;
+        case "dashboard": await window._dashboard.remove(); break;
+        case "playground": await window._playground.remove(); break;
+        default: await window._error.remove();
     }
     history.pushState(null, '', target)
     switch (SUG.VWD[0]) {
         case '': await _(); break;
         case 'dashboard': await _dashboard(); break;
+        case 'playground': await _playground(); break;
         default: await _error();
     }
 }
@@ -128,7 +134,7 @@ window.addEventListener("resize", function(): void {
 //
 
 // API -> REQUEST
-export async function curl(script: string, data: object, timeout = 5000): Promise<object | boolean | string | number | null> {
+export async function curl(script: string, data: object): Promise<object | boolean | string | number | null> {
     return (await fetch(
         ("https://") +
         (window.location.host) +
@@ -141,7 +147,7 @@ export async function curl(script: string, data: object, timeout = 5000): Promis
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
-            signal: AbortSignal.timeout(timeout)
+            signal: AbortSignal.timeout(5000)
         }
     )).json();
 }
@@ -159,10 +165,10 @@ export function connect(id: string): HTMLElement {
 // ELEMENTS -> REPLACE CONTENT
 export async function inject(root: HTMLElement, content: React.ReactNode): Promise<void> {
     return new Promise<void>((resolve) => {
-        const Wrapper: React.FC = () => {
+        function Wrapper(): React.FC {
             React.useEffect(() => {resolve()}, []);
-            return <>{content}</>;
-        };
+            return <>{content}</>
+        }
         ReactDOM.createRoot(root).render(<Wrapper/>);
     });
 }
@@ -187,4 +193,14 @@ export function debug(...variables: any[]) {
 // TIME -> DELAY
 export async function delay(seconds: number): Promise<void> {
     return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
+}
+
+// TIME -> WAIT FOR DEFINITIONS
+export async function definition(getter: () => any): Promise<void> {
+    return new Promise((resolve) => {
+        function checkResolution() {
+            (getter() !== null) ? resolve() : requestAnimationFrame(checkResolution)
+        }
+        checkResolution();
+    })
 }

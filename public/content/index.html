@@ -28,9 +28,12 @@
     <!--
         APP STYLING PRELOAD
     -->
+    <!-- APP STYLING PRELOAD : KATEX -->
+    <link rel="preload" href="/public/modules/app/katex/style.css" as="style" type="text/css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" as="style" type="text/css" crossorigin="anonymous">
     <!-- APP STYLING PRELOAD : POPUP -->
-     <link rel="preload" href="/public/modules/app/popup/style.css" as="style" type="text/css">
-     <link rel="preload" href="/public/modules/app/popup/svg/close.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/public/modules/app/popup/style.css" as="style" type="text/css">
+    <link rel="preload" href="/public/modules/app/popup/svg/close.svg" as="image" type="image/svg+xml">
     <!--
         VIEW STYLING PRELOAD
     -->
@@ -40,6 +43,8 @@
     <link rel="preload" href="/public/content/&dashboard/style.css" as="style" type="text/css">
     <!-- VIEW STYLING PRELOAD : &ERROR -->
     <link rel="preload" href="/public/content/&error/style.css" as="style" type="text/css">
+    <!-- VIEW STYLING PRELOAD : PLAYGROUND -->
+    <link rel="preload" href="/public/content/&playground/style.css" as="style" type="text/css">
     <!--
         INTERFACE STYLING RENDER
     -->
@@ -52,6 +57,9 @@
     <!--
         APP STYLING RENDER
     -->
+    <!-- APP STYLING RENDER : KATEX -->
+    <link rel="stylesheet" href="/public/modules/app/katex/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
     <!-- APP STYLING RENDER : POPUP -->
     <link rel="stylesheet" href="/public/modules/app/popup/style.css">
     <!--
@@ -63,6 +71,8 @@
     <link rel="stylesheet" href="/public/content/&dashboard/style.css">
     <!-- VIEW STYLING RENDER : &ERROR -->
     <link rel="stylesheet" href="/public/content/&error/style.css">
+    <!-- VIEW STYLING RENDER : PLAYGROUND -->
+    <link rel="stylesheet" href="/public/content/&playground/style.css">
     <!--
         SETTINGS
     -->
@@ -74,18 +84,18 @@
                 "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
                 "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
                 "mathsys": "https://esm.sh/mathsys@0.2.4",
-                "katex/contrib/auto-render": "https://esm.sh/katex@0.16.22/contrib/auto-render",
-                "codemirror": "https://esm.sh/codemirror@6.0.2",
+                "katex/contrib/auto-render": "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.mjs",
                 "@codemirror/autocomplete": "https://esm.sh/@codemirror/autocomplete@6.18.6",
                 "@codemirror/state": "https://esm.sh/@codemirror/state@6.5.2",
-                "@codemirror/view": "https://esm.sh/@codemirror/view@6.37.2"
+                "@codemirror/view": "https://esm.sh/@codemirror/view@6.38.1",
+                "@codemirror/commands": "https://esm.sh/@codemirror/commands@6.8.1"
             }
         }
     </script>
     <!-- SETTINGS : CONFIGURATION -->
     <title>Abscissa</title>
     <meta name="description" content="Abscissa landing page.">
-    <meta name="keywords" content="abscissa landing math">
+    <meta name="keywords" content="abscissa math mathsys">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alejandro Vaz">

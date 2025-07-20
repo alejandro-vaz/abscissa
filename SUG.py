@@ -2,6 +2,27 @@
 #   MASTER SUPERGLOBALS
 #
 
+# MASTER SUPERGLOBALS -> SCRIPTS
+SCR = [
+    "/concept/create",
+    "/concept/search",
+    "/mathsys/compile",
+    "/organisation/create",
+    "/organisation/join",
+    "/organisation/search",
+    "/problem/create",
+    "/resource/create",
+    "/resource/stream",
+    "/session/refresh",
+    "/session/validate",
+    "/user/ban",
+    "/user/delete",
+    "/user/login",
+    "/user/lookup",
+    "/user/register",
+    "/user/search"
+]
+
 # MASTER SUPERGLOBALS -> DATABASE CREDENTIALS
 DBC = {
     "host": "localhost",
@@ -28,6 +49,7 @@ PAT = {
     "Ken": r"^.{8,64}$",
     "Kes": r"^.{8,64}$",
     "Kid": r"^\d+$",
+    "Mcode": r"[\s\S]*",
     "Oid": r"^\d+$",
     "Oname": r'^[a-zA-Z0-9_-]{4,32}$',
     "Pdataen": {

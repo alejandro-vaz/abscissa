@@ -15,7 +15,9 @@ const origin = General.connect("main");
 
 // REMOVE -> PROCESS
 (window as any)._dashboard = (window as any)._dashboard || {};
-(window as any)._dashboard.remove = () => {}    
+(window as any)._dashboard.remove = async() => {
+    origin.classList.remove("_dashboard");
+}    
 
 
 //
@@ -24,6 +26,8 @@ const origin = General.connect("main");
 
 // CONTENT -> FUNCTION
 export default async function content(): Promise<void> {
+    // FUNCTION -> STYLES
+    origin.classList.add("_dashboard");
     // FUNCTION -> INTERFACE
     await General.modulator(
         "navbar",

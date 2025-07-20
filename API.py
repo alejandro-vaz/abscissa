@@ -29,21 +29,4 @@ def include(name: str) -> object:
     return module
 
 # GATEWAY -> SCRIPTS
-for script in [
-    "/concept/create",
-    "/concept/search",
-    "/organisation/create",
-    "/organisation/join",
-    "/organisation/search",
-    "/problem/create",
-    "/resource/create",
-    "/resource/stream",
-    "/session/refresh",
-    "/session/validate",
-    "/user/ban",
-    "/user/delete",
-    "/user/login",
-    "/user/lookup",
-    "/user/register",
-    "/user/search"
-]: app.include_router(include(script).router)
+for script in SUG.SCR: app.include_router(include(script).router)

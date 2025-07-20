@@ -28,12 +28,12 @@
 //
 
 // DEFAULTS -> UNSELECTABLE TEXT
-:where(:not(.CodeMirror, .CodeMirror *))
+:where(:not(.cm-editor, .cm-editor *))
     user-select: none
     -webkit-user-drag: none
 
 // DEFAULTS -> FONT
-:where(:not(.katex-display, .katex-display *, .katex, .katex *, .CodeMirror, .CodeMirror *))
+:where(:not(.katex-display, .katex-display *, .katex, .katex *, .cm-editor, .cm-editor *))
     +root.scrollbar()
     font-family: "comicSansMS", "Comic Sans MS", monospace
     font-size: root.$FONTSIZE

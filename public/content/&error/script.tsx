@@ -15,7 +15,9 @@ const origin = General.connect("main");
 
 // REMOVE -> PROCESS
 (window as any)._error = (window as any)._error || {};
-(window as any)._error.remove = () => {}
+(window as any)._error.remove = async() => {
+    origin.classList.remove("_error");
+}
 
 
 //
@@ -24,6 +26,8 @@ const origin = General.connect("main");
 
 // CONTENT -> FUNCTION
 export default async function content(): Promise<void> {
+    // FUNCTION -> STYLES
+    origin.classList.add("_error");
     // FUNCTION -> INTERFACE
     await General.modulator(
         "topbar"

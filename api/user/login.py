@@ -35,7 +35,6 @@ async def output(request: Request) -> JSONResponse:
         [
             post.data["Uname"]
         ]
-        )) else (None, None)
-    )
+    )) else (None, None))
     result = Uhashpass == post.data["Uhashpass"]
     return await database.session(JSONResponse(content = result), Uid) if result else JSONResponse(content = result)
