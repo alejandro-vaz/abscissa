@@ -13,9 +13,6 @@ import _dashboard from "./&dashboard/script.js";
 import _error from "./&error/script.js";
 import _playground from "./&playground/script.js";
 
-// HEAD -> APP MODULES
-import * as __popup from "../modules/app/popup/script.js";
-
 // HEAD -> INTERFACE MODULES
 import * as ___navbar from "../modules/interface/navbar/script.js";
 import * as ___tooltip from "../modules/interface/tooltip/script.js";

@@ -34,4 +34,4 @@ And for the backend:
    - *FastAPI* handling the API requests.
 
 ## License
-This project is licensed under the [*Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International*](https://creativecommons.org/licenses/by-nc-nd/4.0/) license subject to additional clauses and exceptions. See `LICENSE` for more details.
+All rights reserved. See the `LICENSE.md` file for more information.
