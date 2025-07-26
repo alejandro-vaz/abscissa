@@ -11,11 +11,13 @@ SCR = [
     "/organisation/join",
     "/organisation/search",
     "/problem/create",
+    "/problem/lookup",
     "/resource/create",
     "/resource/stream",
     "/session/refresh",
     "/session/validate",
     "/user/ban",
+    "/user/data",
     "/user/delete",
     "/user/login",
     "/user/lookup",
@@ -67,7 +69,7 @@ PAT = {
         "instructions",
         "svg"
     },
-    "Pid": r'^[A-Z0-9]{8}$',
+    "Pid": r'^[A-F0-9]{8}$',
     "Pmeta":{
         "calculator",
         "postResult",
@@ -105,8 +107,9 @@ PER = {
         "refresh": 0
     },
     "user": {
-        "delete": 0,
-        "ban": 255
+        "ban": 255,
+        "data": 0,
+        "delete": 0
     }
 }
 

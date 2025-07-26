@@ -13,6 +13,3 @@ node_modules/
 __pycache__/
 extensions/__pycache__/
 api/__pycache__/
-
-# IGNORE -> DBML
-dbml-error.log

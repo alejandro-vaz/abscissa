@@ -1,7 +1,0 @@
---
---  DEFAULTS
---
-
--- DEFAULTS -> ORGANISATIONS
-INSERT INTO ORGANISATIONS (Oid, Oname) VALUES (0, "public");
-UPDATE ORGANISATIONS SET Oid = 0 WHERE Oname = "public";

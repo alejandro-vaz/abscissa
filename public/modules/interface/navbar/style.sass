@@ -2,7 +2,7 @@
 //  HEAD                                                                      
 //
 
-// MODULES
+// HEAD -> MODULES
 @use "../../root"
 
 
@@ -10,35 +10,31 @@
 //  NAVBAR                                                                    
 //
 
-// NAVBAR -> CONTAINER
+// NAVBAR -> NAMESPACE
 $interface-left: 1vw
-#interface-navbar
+#InterfaceNavbar
     +root.section(normal, center, center, $width: 4.5vw)
     z-index: 1000
     position: fixed
     top: 0
     left: $interface-left
     transition: left root.$TIMER2 root.$CURVE2
-
-// NAVBAR -> BAR
-#interface-navbar-container
-    +root.section(normal, center, center, $width: 4vw, $height: fit-content, $grow: false)
-    +root.blurred()
-    padding: root.$PADDING1 root.$PADDING2
-    border: root.$BORDER1 solid root.$DARK
-    border-radius: root.$RADIUS
-
-// NAVBAR -> ICONS
-.interface-navbar-Icon
-    +root.cursor(click)
-    box-sizing: border-box
-    border: root.$BORDER1 solid transparent
-    width: 100%
-    height: fit-content
-    border-radius: root.$RADIUS
-    margin-bottom: root.$MARGIN
-    transition: border-width root.$TIMER1 root.$CURVE1
-    &:last-of-type
-        margin-bottom: 0
-    &:hover
-        border-width: 0
+    > #Container
+        +root.section(normal, center, center, $width: 4vw, $height: fit-content, $grow: false)
+        +root.blurred()
+        padding: root.$PADDING1 root.$PADDING2
+        border: root.$BORDER1 solid root.$DARK
+        border-radius: root.$RADIUS
+        > .icon
+            +root.cursor(click)
+            box-sizing: border-box
+            border: root.$BORDER1 solid transparent
+            width: 100%
+            height: fit-content
+            border-radius: 100%
+            margin-bottom: root.$MARGIN
+            transition: border-width root.$TIMER1 root.$CURVE1
+            &:last-of-type
+                margin-bottom: 0
+            &:hover
+                border-width: 0

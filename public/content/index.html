@@ -28,6 +28,8 @@
     <!--
         APP STYLING PRELOAD
     -->
+    <!-- APP STYLING PRELOAD : DICEBEAR -->
+    <link rel="preload" href="/public/modules/app/dicebear/style.css" as="style" type="text/css">
     <!-- APP STYLING PRELOAD : RENDER -->
     <link rel="preload" href="/public/modules/app/render/style.css" as="style" type="text/css">
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" as="style" type="text/css" crossorigin="anonymous">
@@ -57,6 +59,8 @@
     <!--
         APP STYLING RENDER
     -->
+    <!-- APP STYLING RENDER : DICEBEAR -->
+    <link rel="stylesheet" href="/public/modules/app/dicebear/style.css">
     <!-- APP STYLING RENDER : RENDER -->
     <link rel="stylesheet" href="/public/modules/app/render/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
@@ -84,11 +88,13 @@
                 "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
                 "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
                 "mathsys": "https://esm.sh/mathsys@0.2.4",
-                "katex/contrib/auto-render": "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.mjs",
+                "katex/contrib/auto-render": "https://esm.sh/katex@0.16.22/dist/contrib/auto-render.mjs",
                 "@codemirror/autocomplete": "https://esm.sh/@codemirror/autocomplete@6.18.6",
                 "@codemirror/state": "https://esm.sh/@codemirror/state@6.5.2",
                 "@codemirror/view": "https://esm.sh/@codemirror/view@6.38.1",
-                "@codemirror/commands": "https://esm.sh/@codemirror/commands@6.8.1"
+                "@codemirror/commands": "https://esm.sh/@codemirror/commands@6.8.1",
+                "@dicebear/core": "https://esm.sh/@dicebear/core@9.2.3",
+                "@dicebear/identicon": "https://esm.sh/@dicebear/identicon@9.2.3"
             }
         }
     </script>
@@ -107,15 +113,14 @@
         CONTENT
     -->
     <!-- CONTENT : APP MODULES -->
-    <div id="app-codemirror"></div>
-    <div id="app-cryptography"></div>
-    <div id="app-katex"></div>
-    <div id="app-popup"></div>
+    <div id="AppDicebear"></div>
+    <div id="AppPopup"></div>
+    <div id="AppRender"></div>
     <!-- CONTENT : INTERFACE MODULES -->
-    <div id="interface-navbar"></div>
-    <div id="interface-tooltip"></div>
-    <div id="interface-topbar"></div>
+    <div id="InterfaceNavbar"></div>
+    <div id="InterfaceTooltip"></div>
+    <div id="InterfaceTopbar"></div>
     <!-- CONTENT : VIEW -->
-    <div id="main"></div>
+    <div id="Main"></div>
 </body>
 </html>

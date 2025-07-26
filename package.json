@@ -5,8 +5,10 @@
   "scripts": {
     "buildtsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
     "buildsass": "sass --watch --no-source-map --style=compressed public/:public/",
-    "builddbml": "dbml2sql public/db/template.dbml --mysql > database/database.sql",
-    "connect": "ssh 192.168.1.100 -l root"
+    "connect": "ssh 192.168.1.100 -l root",
+    "chromium": "chromium --ignore-certificate-errors --user-data-dir=/tmp/dev-profile",
+    "setupsql": "mysql -u root -p < database/setup.sql",
+    "updatesql": "mysql -u root -p < database/update.sql"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,6 @@
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
-    "@dbml/cli": "^3.13.6",
     "sass": "^1.89.2"
   }
 }

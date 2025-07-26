@@ -5,18 +5,14 @@
 // HEAD -> MODULES
 import * as General from "../general.js";
 
-// HEAD -> ORIGIN
-const origin = General.connect("main");
-
 
 //
 //  REMOVE
 //
 
-// REMOVE -> PROCESS
-(window as any)._error = (window as any)._error || {};
-(window as any)._error.remove = async() => {
-    origin.classList.remove("_error");
+// REMOVE -> FUNCTION
+export async function hide(): Promise<void> {
+    await General.inject(General.origin, <></>);
 }
 
 
@@ -25,25 +21,30 @@ const origin = General.connect("main");
 //
 
 // CONTENT -> FUNCTION
-export default async function content(): Promise<void> {
-    // FUNCTION -> STYLES
-    origin.classList.add("_error");
+export async function show(): Promise<void> {
     // FUNCTION -> INTERFACE
     await General.modulator(
         "topbar"
     )
     // FUNCTION -> WINDOW
-    let title;
+    let code;
     let description;
     switch (+General.SUG.VWD[1]) {
         case 0:
-            title = "Error 0";
+            code = 0;
             description = "Vertical screen error.";
             break;
         default:
-            title = "Error";
-            description = "Unknown error.";
+            code = 404;
+            description = "Not found.";
     }
-    General.setTitle(title);
+    General.setTitle("Error");
     General.setDescription(description);
+    // FUNCTION -> CONTENT
+    await General.inject(General.origin,
+        <>
+            <h2>{code}</h2>
+            <p>{description}</p>
+        </>
+    )
 }

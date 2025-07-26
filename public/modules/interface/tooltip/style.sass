@@ -2,26 +2,24 @@
 //  HEAD                                                                      
 //                                                                            
 
-// MODULES
+// HEAD -> MODULES
 @use "../../root"
 
 //
 //  TOOLTIP
 //
 
-// TOOLTIP -> CONTAINER
-$interface-height: 2vw
+// TOOLTIP -> NAMESPACE
+$interface-height: 1.25vw
 $navbar-width-idle: 1vw
-#interface-tooltip
-    +root.section(normal, flex-end, center, $height: $interface-height, $direction: row, $width: calc(100vw - $navbar-width-idle))
+#InterfaceTooltip
+    +root.section(normal, flex-end, flex-end, $height: $interface-height, $direction: row, $width: calc(100vw - $navbar-width-idle))
     position: fixed
     bottom: 0
     right: 0
     justify-content: flex-end
     z-index: 3000
-
-// TOOLTIP -> APPEARANCE
-#interface-tooltip-text
-    opacity: 0
-    transition: opacity root.$TIMER2 root.$CURVE1
-    margin-right: root.$MARGIN
+    > #Text
+        opacity: 0
+        transition: opacity root.$TIMER2 root.$CURVE1
+        padding-right: root.$PADDING2

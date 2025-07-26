@@ -5,8 +5,8 @@
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
 
-// HEAD -> CONNECTIONS
-const topbar = General.connect("interface-topbar");
+// HEAD -> INTERFACE TOPBAR
+const origin = await General.connect("InterfaceTopbar");
 
 
 //
@@ -17,7 +17,7 @@ const topbar = General.connect("interface-topbar");
 let title;
 let description;
 let timer;
-let topbarState = false;
+let topbarState = true;
 
 // TOPBAR -> MUTATION OBSERVER
 const observer = new MutationObserver(() => {
@@ -29,9 +29,9 @@ const observer = new MutationObserver(() => {
 function alternate(event: MouseEvent): void {
     let topbarStateChange;
     if (topbarState) {
-        topbarStateChange = !(event.clientY <= window.innerWidth * 0.05)
+        topbarStateChange = !(event.clientY <= window.innerWidth * 0.045)
     } else {
-        topbarStateChange = event.clientY <= window.innerWidth * 0.05;
+        topbarStateChange = event.clientY <= window.innerWidth * 0.045;
     }
     if (topbarStateChange) {
         topbarState = !topbarState;
@@ -41,7 +41,7 @@ function alternate(event: MouseEvent): void {
             title.style.margin = "0.9vw 0 0.9vw 0";
             description.style.opacity = "1";
         } else {
-            timer = setTimeout(function(): void {
+            timer = setTimeout(() => {
                 title.style.fontSize = "2vw";
                 title.style.margin = "1vw 0 1vw 0";
                 description.style.opacity = "0";
@@ -55,11 +55,11 @@ export async function activate(): Promise<void> {
     title = undefined;
     description = undefined;
     timer = undefined;
-    topbarState = false;
-    await General.inject(topbar,
+    topbarState = true;
+    await General.inject(origin,
         <>
-            <h1 id="interface-topbar-title" ref={(node: HTMLElement) => {title = node}}></h1>
-            <p id="interface-topbar-description" ref={(node: HTMLElement) => {description = node}}></p>
+            <h1 id="Title" ref={(node) => {title = node}}></h1>
+            <p id="Description" ref={(node) => {description = node}}></p>
         </>
     )
     window.addEventListener("mousemove", alternate);
@@ -75,8 +75,8 @@ export async function activate(): Promise<void> {
 }
 
 // TOPBAR -> DEACTIVATE
-export function deactivate(): void {
+export async function deactivate(): Promise<void> {
     observer.disconnect();
     window.removeEventListener("mousemove", alternate);
-    General.inject(topbar, <></>);
+    General.inject(origin, <></>);
 }

@@ -5,8 +5,8 @@
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
 
-// HEAD -> CONNECTIONS
-const tooltip = General.connect("interface-tooltip");
+// HEAD -> INTERFACE TOOLTIP
+const origin = await General.connect("InterfaceTooltip");
 
 
 //
@@ -21,7 +21,7 @@ let text;
 function mouseover(event: MouseEvent): void {
     const target = (event.target as HTMLElement)?.closest("[tooltip]");
     if (target) {
-        timer = setTimeout(function(): void {
+        timer = setTimeout(() => {
             text.textContent = target.getAttribute("tooltip");
             text.style.opacity = "1";
         }, 0);
@@ -40,9 +40,9 @@ function mouseout(event: MouseEvent): void {
 export async function activate(): Promise<void> {
     timer = undefined;
     text = undefined;
-    await General.inject(tooltip,
+    await General.inject(origin,
         <>
-            <p id="interface-tooltip-text" ref={(node: HTMLElement) => {text = node}}></p>
+            <p id="Text" ref={(node) => {text = node}}></p>
         </>
     )
     window.addEventListener("mouseover", mouseover);
@@ -50,8 +50,8 @@ export async function activate(): Promise<void> {
 }
 
 // TOOLTIP -> DEACTIVATE
-export function deactivate(): void {
+export async function deactivate(): Promise<void> {
     window.removeEventListener("mouseout", mouseout);
     window.removeEventListener("mouseover", mouseover);
-    General.inject(tooltip, <></>);
+    General.inject(origin, <></>);
 }
