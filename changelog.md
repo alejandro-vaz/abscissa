@@ -276,3 +276,27 @@
 - [X] (Patch) Adjusted byte length in database.
 - [X] (Minor) Added popup modal windows.
 - [X] (Patch) Changed some of the `svg`s.
+## *Abscissa* 4.0.55 `0-8-15`
+- [X] (Minor) Removed *DBML* and switched to *SQL* scripts for setup and update.
+- [X] (Minor) Added `user/data` and `problem/lookup` *API* endpoints.
+- [X] (Patch) Forced `Pid` to be 8 hexadecimal characters.
+- [X] (Minor) Added `json` extension for handling non-standard data types returned by `aiomysql`.
+- [X] (Patch) Simplified user registration by adding default fields.
+- [X] (Minor) Hardcoded two problems into `setup.sql`.
+- [X] (Patch) Removed old *HTML* modules.
+- [X] (Patch) Added `npm` commands to open *Chromium,* and setup or update the database.
+- [X] (Patch) Converted *TSX* views from default exports to normal exports.
+- [X] (Patch) `origin` is no longer a per-view variable but rather stored in `General.tsx`.
+- [X] (Minor) Added two problems to the dashboard.
+- [X] (Minor) Added minimalist landing page.
+- [X] (Minor) Refactored styles, *IDs* and classes to allow for branched styling in *SASS.*
+- [X] (Patch) Improved error message screen.
+- [X] (Patch) Improved default content in playground editor.
+- [X] (Patch) Reduced font size and adjusted interface module's dimensions.
+- [X] (Patch) Removed popstate feature.
+- [X] (Patch) Made *TSX* `connect()` function async so it waits for elements to be on the *DOM.*
+- [X] (Patch) Removed *TSX* `definition()` function.
+- [X] (Minor) Added *DiceBear* profile pictures for logged in users.
+- [X] (Patch) Added line wrapping to *Codemirror* 6 editor.
+- [X] (Patch) Added `robots.txt` and `sitemap.xml` for website crawling.
+- [X] (Patch) Added `title` to problem language data.

@@ -1,6 +1,6 @@
 {
   "name": "abscissa",
-  "version": "3.5.2",
+  "version": "4.0.55",
   "main": "public/content/general.js",
   "scripts": {
     "buildtsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
