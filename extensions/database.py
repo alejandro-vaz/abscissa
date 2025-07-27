@@ -15,7 +15,7 @@ import datetime
 import json
 import secrets
 
-# DATABAES -> CLASS
+# DATABASE -> CLASS
 class namespace:
     # CLASS -> VARIABLES
     connection: Connection

@@ -3,9 +3,6 @@
 //
 
 // HEAD -> MODULES
-@use "sass:color"
-@use "sass:math"
-@use "sass:string"
 @use "../modules/root"
 
 
@@ -46,9 +43,9 @@
 
 // DEFAULTS -> MAIN
 $main-navbar-width-idle: 1vw
-$main-topbar-height: 5.5vw
-$main-tooltip-height: 2vw
-:where(#main)
+$main-topbar-height: 4.5vw
+$main-tooltip-height: 1.25vw
+:where(#Main)
     +root.section(normal, normal, center, $width: calc(100% - $main-navbar-width-idle), $height: calc(100% - $main-topbar-height - $main-tooltip-height))
     position: fixed
     top: $main-topbar-height
@@ -101,29 +98,39 @@ $main-tooltip-height: 2vw
 // HEADERS -> P
 :where(p)
     font-size: root.$FONTSIZE
-    margin: 0.6vw 0 0.6vw 0
+    margin: 0.6vw 0 0.3vw 0
     padding: 0
 
 // HEADERS -> H4
 :where(h4)
-    font-size: 1.125 * root.$FONTSIZE
-    margin: 0.7vw 0 0.7vw 0
+    font-size: 1.25 * root.$FONTSIZE
+    margin: 0.7vw 0 0.35vw 0
     padding: 0
 
 // HEADERS -> H3
 :where(h3)
-    font-size: 1.25 * root.$FONTSIZE
-    margin: 0.8vw 0 0.8vw 0
+    font-size: 1.5 * root.$FONTSIZE
+    margin: 0.8vw 0 0.4vw 0
     padding: 0
 
 // HEADERS -> H2
 :where(h2)
-    font-size: 1.5 * root.$FONTSIZE
-    margin: 0.9vw 0 0.9vw 0
+    font-size: 2 * root.$FONTSIZE
+    margin: 0.9vw 0 0.45vw 0
     padding: 0
 
 // HEADERS -> H1
 :where(h1)
-    font-size: 2 * root.$FONTSIZE
-    margin: 1vw 0 1vw 0
+    font-size: 3 * root.$FONTSIZE
+    margin: 1vw 0 0.5vw 0
     padding: 0
+
+
+//
+//  RENDERING
+//
+
+// RENDERING -> NEWLINES
+:where(.newline)
+    display: block
+    height: root.$MARGIN

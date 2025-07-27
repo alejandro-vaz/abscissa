@@ -5,9 +5,10 @@
 // HEAD -> MODULES
 import * as General from "../../../content/general.js";
 import * as Popup from "../../app/popup/script.js";
+import * as Dicebear from "../../app/dicebear/script.js";
 
-// HEAD -> CONNECTIONS
-const navbar = General.connect("interface-navbar");
+// HEAD -> INTERFACE NAVBAR
+const origin = await General.connect("InterfaceNavbar");
 
 
 //
@@ -18,7 +19,7 @@ const navbar = General.connect("interface-navbar");
 let navbarState = true;
 
 // NAVBAR -> OPENER FUNCTION
-function alternate(event) {
+async function alternate(event) {
     let navbarStateChange;
     if (navbarState) {
         navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
@@ -28,9 +29,9 @@ function alternate(event) {
     if (navbarStateChange) {
         navbarState = !navbarState
         if (navbarState) {
-            navbar.style.left = "1vw"
+            origin.style.left = "1vw"
         } else {
-            navbar.style.left = "-3.5vw"
+            origin.style.left = "-3.5vw"
         }
     }
 }
@@ -39,48 +40,46 @@ function alternate(event) {
 export async function activate(): Promise<void> {
     navbarState = true;
     const validate = await General.curl("session/validate", {});
-    await General.inject(navbar,
+    let user;
+    if (validate) {
+        user = await General.curl("user/data", {});
+    }
+    await General.inject(origin,
         <>
-            <div id="interface-navbar-container">
+            <div id="Container">
                 <img 
                     src="/public/svg/logo_light.svg" 
-                    id="interface-navbar-dashboard" 
-                    className="interface-navbar-Icon" 
+                    className="icon" 
                     onClick={() => General.redirect("/dashboard")}
                     tooltip="Go to dashboard"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/search.svg" 
-                    id="interface-navbar-search" 
-                    className="interface-navbar-Icon" 
+                    className="icon" 
                     onClick={() => General.redirect("/search")}
                     tooltip="Go to search"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/playground.svg" 
-                    id="interface-navbar-playground" 
-                    className="interface-navbar-Icon" 
+                    className="icon" 
                     onClick={() => General.redirect("/playground")}
                     tooltip="Go to playground"
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/stats.svg" 
-                    id="interface-navbar-stats" 
-                    className="interface-navbar-Icon" 
+                    className="icon" 
                     onClick={() => General.redirect("/stats")}
                     tooltip="Go to stats"
                 />
                 <img 
-                    src="/public/modules/interface/navbar/svg/user.svg" 
-                    id="interface-navbar-user" 
-                    className="interface-navbar-Icon" 
+                    src={validate ? Dicebear.identicon(user.Uname) : "/public/modules/interface/navbar/svg/user.svg" }
+                    className="icon" 
                     onClick={() => validate ? General.redirect("/user") : Popup.create("auth")}
                     tooltip={validate ? "Go to your profile" : "Log in or register"}
                 />
                 <img 
                     src="/public/modules/interface/navbar/svg/settings.svg" 
-                    id="interface-navbar-settings" 
-                    className="interface-navbar-Icon" 
+                    className="icon" 
                     onClick={() => General.redirect("/settings")}
                     tooltip="Go to settings"
                 />
@@ -91,7 +90,7 @@ export async function activate(): Promise<void> {
 }
 
 // NAVBAR -> DEACTIVATE
-export function deactivate(): void {
+export async function deactivate(): Promise<void> {
     window.removeEventListener('mousemove', alternate);
-    General.inject(navbar, <></>);
+    General.inject(origin, <></>);
 }

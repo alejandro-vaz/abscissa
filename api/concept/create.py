@@ -25,7 +25,7 @@ async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> ARGUMENT CHECKS    
     if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Ken", "Kes", "Kde") == [True, True, True]): raise SUG.ERR[1]
+    if not all(post.exists("Ken", "Kes", "Kde")): raise SUG.ERR[1]
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
     if not (database.validate and database.user["Urole"] >= SUG.PER["concept"]["create"]): raise SUG.ERR[2]
     # DECLARATION -> QUERY

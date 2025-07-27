@@ -4,3 +4,37 @@
 
 // HEAD -> MODULES
 @use "../../modules/root"
+
+
+//
+//  DASHBOARD
+//
+
+// DASHBOARD -> NAMESPACE
+._dashboard
+    align-items: center
+    > #Container
+        +root.section(normal, normal, normal, $width: 50%, $grow: false, $height: fit-content)
+        > h2
+            margin-left: root.$MARGIN
+            &:first-child
+                margin-top: 0
+        > .problem
+            +root.section(normal, normal, normal, $grow: false, $height: 15vw)
+            border-radius: root.$RADIUS + root.$PADDING2
+            padding: root.$PADDING2
+            &#Daily
+                background: linear-gradient(to top right, root.$TOUCH, #112277)
+            &#Random
+                background: linear-gradient(to top right, root.$TOUCH, #117722)
+            > #Wrapper
+                +root.section(normal, normal, normal, $grow: false, $height: 100%)
+                +root.blurred()
+                border-radius: root.$RADIUS
+                padding: root.$PADDING1
+                > #Title
+                    margin: 0
+                > #Data
+                    +root.section(normal, normal, normal, $grow: true, $direction: row, $height: 0)
+                    > #Description
+                        +root.section(normal, normal, normal, $grow: true, $direction: column, $width: 0)

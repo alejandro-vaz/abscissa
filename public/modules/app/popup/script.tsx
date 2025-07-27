@@ -7,8 +7,8 @@
 import * as General from "../../../content/general.js";
 import React from "react";
 
-// HEAD -> CONNECTIONS
-const popup = General.connect("app-popup");
+// HEAD -> APP POPUP
+const origin = await General.connect("AppPopup");
 
 
 //
@@ -21,7 +21,7 @@ class $Auth extends React.Component<{initialState: boolean}, {mode: boolean}> {
     render() {
         return (
             <>
-                <div id="app-popup-auth">
+                <div id="Auth">
                     <h2>{this.state.mode ? "Log in" : "Register"}</h2>
                     <form noValidate onSubmit={async (event: React.FormEvent) => {
                         event.preventDefault();
@@ -75,13 +75,13 @@ export async function create(preset: string, ...presetArguments: any[]): Promise
     switch (preset) {
         case "auth": content = <$Auth initialState={presetArguments[0]}/>;
     }
-    await General.inject(popup,
+    await General.inject(origin,
         <>
-            <div id="app-popup-window">
-                <div id="app-popup-header">
+            <div id="Window">
+                <div id="Header">
                     <img 
                         src="/public/modules/app/popup/svg/close.svg" 
-                        id="app-popup-close"
+                        id="Close"
                         onClick={() => remove()}
                         tooltip="Close window"
                     />
@@ -90,14 +90,14 @@ export async function create(preset: string, ...presetArguments: any[]): Promise
             </div>
         </>
     )
-    popup.style.pointerEvents = "auto";
-    popup.style.opacity = "1";
+    origin.style.pointerEvents = "auto";
+    origin.style.opacity = "1";
 }
 
 // POPUP -> REMOVE
 export async function remove(): Promise<void> {
-    popup.style.opacity = "0";
-    popup.style.pointerEvents = "none";
+    origin.style.opacity = "0";
+    origin.style.pointerEvents = "none";
     await General.delay(0.1);
-    await General.inject(popup, <></>);
+    await General.inject(origin, <></>);
 }

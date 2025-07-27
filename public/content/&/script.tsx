@@ -5,18 +5,14 @@
 // HEAD -> MODULES
 import * as General from "../general.js";
 
-// HEAD -> ORIGIN
-const origin = General.connect("main");
-
 
 //
 //  REMOVE
 //
 
-// REMOVE -> PROCESS
-(window as any)._ = (window as any)._ || {};
-(window as any)._.remove = async() => {
-    origin.classList.remove("_");
+// REMOVE -> FUNCTION
+export async function hide(): Promise<void> {
+    await General.inject(General.origin, <></>);
 }
 
 
@@ -25,9 +21,7 @@ const origin = General.connect("main");
 //
 
 // CONTENT -> FUNCTION
-export default async function content(): Promise<void> {
-    // FUNCTION -> STYLES
-    origin.classList.add("_");
+export async function show(): Promise<void> {
     // FUNCTION -> INTERFACE
     await General.modulator(
         "tooltip"
@@ -35,6 +29,16 @@ export default async function content(): Promise<void> {
     // FUNCTION -> WINDOW
     General.setTitle("Abscissa");
     General.setDescription("Landing page.");
-    // FUNCTION -> REDIRECT
-    General.redirect("dashboard");
+    // FUNCTION -> CONTENT
+    await General.inject(General.origin, 
+        <>
+            <h1>LeetCode but for math</h1>
+            <h3>Learn math by solving real problems</h3>
+            <input 
+                type="button" 
+                value="Try it now"
+                onClick={async() => await General.redirect("/playground")}
+            />
+        </>
+    )
 }

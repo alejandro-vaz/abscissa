@@ -26,13 +26,14 @@ async def output(request: Request, response: Response) -> JSONResponse:
     # DECLARATION -> ARGUMENT CHECKS
     if not post.checks: raise SUG.ERR[0]
     # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not (post.exists("Kid", "Pmeta", "Psolution", "Pdataen") == [True, True, True, True]): raise SUG.ERR[1]
+    if not all(post.exists("Kid", "Pmeta", "Psolution", "Pdataen")): raise SUG.ERR[1]
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
     if not (database.validate and database.user["Urole"] >= SUG.PER["problem"]["create"]): raise SUG.ERR[2]
     # DECLARATION -> QUERY
     return JSONResponse(content = await database.request(
-        "INSERT INTO PROBLEMS (Uid, Kid, Pedited, Pmeta, Psolution, Pdataen, Pdataes, Pdatade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO PROBLEMS (Pid, Uid, Kid, Pedited, Pmeta, Psolution, Pdataen, Pdataes, Pdatade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
+            0x00000000,
             database.user["Uid"],
             post.data["Kid"],
             time.now(),

@@ -33,15 +33,10 @@ async def output(request: Request) -> JSONResponse:
     if not all(post.exists("Uemail", "Uhashpass", "Uname")): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
     return JSONResponse(content = await database.query(
-        "INSERT INTO USERS (Uname, Uemail, Uhashpass, Ujoined, Uplayground, Usettings, Oid, Urole) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        "INSERT INTO USERS (Uname, Uemail, Uhashpass) VALUES (%s, %s, %s)",
         [
             post.data["Uname"],
             post.data["Uemail"],
             post.data["Uhashpass"],
-            time.now(),
-            {},
-            {},
-            0,
-            0
         ]
     ))

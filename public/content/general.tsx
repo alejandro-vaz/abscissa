@@ -8,18 +8,18 @@ import React from "react";
 import * as ReactDOM from 'react-dom/client';
 
 // HEAD -> VIEWS
-import _ from "./&/script.js";
-import _dashboard from "./&dashboard/script.js";
-import _error from "./&error/script.js";
-import _playground from "./&playground/script.js";
+import * as _ from "./&/script.js";
+import * as _dashboard from "./&dashboard/script.js";
+import * as _error from "./&error/script.js";
+import * as _playground from "./&playground/script.js";
 
 // HEAD -> INTERFACE MODULES
-import * as ___navbar from "../modules/interface/navbar/script.js";
-import * as ___tooltip from "../modules/interface/tooltip/script.js";
-import * as ___topbar from "../modules/interface/topbar/script.js";
+import * as __navbar from "../modules/interface/navbar/script.js";
+import * as __tooltip from "../modules/interface/tooltip/script.js";
+import * as __topbar from "../modules/interface/topbar/script.js";
 
 // HEAD -> ORIGIN
-const origin = connect("main");
+export const origin = await connect("Main");
 
 
 //
@@ -30,9 +30,9 @@ const origin = connect("main");
 export const SUG = {
     get VWD(): string[] {return window.location.pathname.split("/").slice(1)},
     IMD: {
-        navbar: {active: false, module: ___navbar},
-        tooltip: {active: false, module: ___tooltip},
-        topbar: {active: false, module: ___topbar}
+        navbar: {active: false, module: __navbar},
+        tooltip: {active: false, module: __tooltip},
+        topbar: {active: false, module: __topbar}
     },
     get TIT(): string {return document.title},
     get DES(): string {return document.querySelector<HTMLMetaElement>('meta[name="description"]').content}
@@ -45,18 +45,50 @@ export const SUG = {
 
 // WINDOW MANAGEMENT -> REDIRECT
 export async function redirect(target: string): void {
+    debug(SUG.VWD[0]);
     switch (SUG.VWD[0]) {
-        case "": await window._.remove(); break;
-        case "dashboard": await window._dashboard.remove(); break;
-        case "playground": await window._playground.remove(); break;
-        default: await window._error.remove();
+        case "": {
+            await _.hide()
+            origin.classList.remove("_");
+            break;
+        }
+        case "dashboard": {
+            await _dashboard.hide(); 
+            origin.classList.remove("_dashboard");
+            break;
+        }
+        case "playground": {
+            await _playground.hide(); 
+            origin.classList.remove("_playground");
+            break;
+        }
+        default: {
+            await _error.hide();
+            origin.classList.remove("_error");
+        }
     }
-    history.pushState(null, '', target)
+    history.pushState(null, '', target);
+    debug(SUG.VWD[0]);
     switch (SUG.VWD[0]) {
-        case '': await _(); break;
-        case 'dashboard': await _dashboard(); break;
-        case 'playground': await _playground(); break;
-        default: await _error();
+        case '': {
+            origin.classList.add("_");
+            await _.show(); 
+            break;
+        }
+        case 'dashboard': {
+            origin.classList.add("_dashboard");
+            await _dashboard.show(); 
+            break;
+        }
+        case 'playground': {
+            origin.classList.add("_playground");
+            await _playground.show(); 
+            break;
+        }
+        default: {
+            origin.classList.add("_error"); 
+            await _error.show();
+        }
     }
 }
 
@@ -67,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
 window.addEventListener('popstate', () => {
-    redirect(window.location.pathname);
+    history.go(1);
 })
 
 // WINDOW MANAGEMENT -> NO CONTEXTMENU
@@ -111,7 +143,7 @@ export async function modulator(...activate: string[]): Promise<void> {
 //
 
 // ERRORS -> VERTICAL SCREEN
-window.addEventListener("resize", function(): void {
+window.addEventListener("resize", () => {
     if (
         window.innerWidth / window.innerHeight < 3 / 2 && 
         SUG.VWD[0] !== 'error' && SUG.VWD[1] !== '0'
@@ -143,8 +175,7 @@ export async function curl(script: string, data: object): Promise<object | boole
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
-            signal: AbortSignal.timeout(5000)
+            body: JSON.stringify(data)
         }
     )).json();
 }
@@ -154,20 +185,38 @@ export async function curl(script: string, data: object): Promise<object | boole
 //  ELEMENTS
 //
 
-// ELEMENTS -> CONNECTIONS
-export function connect(id: string): HTMLElement {
-    return document.getElementById(id);
-}
-
 // ELEMENTS -> REPLACE CONTENT
 export async function inject(root: HTMLElement, content: React.ReactNode): Promise<void> {
     return new Promise<void>((resolve) => {
-        function Wrapper(): React.FC {
+        function Wrapper(): React.ReactElement {
             React.useEffect(() => {resolve()}, []);
             return <>{content}</>
         }
         ReactDOM.createRoot(root).render(<Wrapper/>);
     });
+}
+
+// ELEMENTS -> CONNECT
+export async function connect(path: string): Promise<HTMLElement> {
+    let frames = 0;
+    return new Promise((resolve, reject) => {
+        function tryConnect() {
+            let current = document.body;
+            for (const id of path.split("/")) {
+                current = Array.from(current.children).find((child) => child.id === id);
+                if (current === undefined) {break}
+            }
+            if (current !== undefined) {resolve(current)} else {
+                frames++
+                if (frames >= 100) {
+                    reject(new Error(`Could not find element by path "${path}"`))
+                } else {
+                    requestAnimationFrame(tryConnect)
+                }
+            }
+        }
+        tryConnect();
+    })
 }
 
 
@@ -190,14 +239,4 @@ export function debug(...variables: any[]) {
 // TIME -> DELAY
 export async function delay(seconds: number): Promise<void> {
     return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
-}
-
-// TIME -> WAIT FOR DEFINITIONS
-export async function definition(getter: () => any): Promise<void> {
-    return new Promise((resolve) => {
-        function checkResolution() {
-            (getter() !== null) ? resolve() : requestAnimationFrame(checkResolution)
-        }
-        checkResolution();
-    })
 }

@@ -11,20 +11,23 @@ import * as CodemirrorView from '@codemirror/view';
 import * as CodemirrorCommands from '@codemirror/commands'
 import * as renderKaTeX from "katex/contrib/auto-render";
 
+// HEAD -> APP RENDER
+const origin = await General.connect("AppRender");
+
 
 //
 //  RENDER
 //
 
 // RENDER -> PLAYGROUND
-export function playground(parent: HTMLElement, output: HTMLElement): CodemirrorView.EditorView {
+export function playground(text: string, parent: HTMLElement, output: HTMLElement): CodemirrorView.EditorView {
     const outputListener = CodemirrorView.EditorView.updateListener.of((update) => {
         if (update.docChanged) {
             string(update.state.doc.toString(), output);
         }
     })
     const state = CodemirrorState.EditorState.create({
-        doc: "var = 3*2 (5 + 2*x - y)",
+        doc: text,
         extensions: [
             CodemirrorView.keymap.of(CodemirrorCommands.historyKeymap),
             CodemirrorView.EditorView.theme(
@@ -61,7 +64,8 @@ export function playground(parent: HTMLElement, output: HTMLElement): Codemirror
             outputListener,
             CodemirrorView.lineNumbers(),
             CodemirrorView.highlightActiveLine(),
-            CodemirrorCommands.history()
+            CodemirrorCommands.history(),
+            CodemirrorView.EditorView.lineWrapping
         ]
     })
     string(state.doc.toString(), output);
@@ -73,13 +77,16 @@ export function playground(parent: HTMLElement, output: HTMLElement): Codemirror
 
 // RENDER -> STRING
 export async function string(code: string, element: HTMLElement): void {
-    element.textContent = await General.curl("mathsys/compile", {Mcode: code});
-    renderKaTeX.default(element, {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false}
-        ],
-        strict: false,
-        throwOnError: false,
-    });
+    const result = await General.curl("mathsys/compile", {Mcode: code});
+    if (result !== false) {
+        element.textContent = result;
+        renderKaTeX.default(element, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ],
+            strict: false,
+            throwOnError: false,
+        });
+    }
 }
