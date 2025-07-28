@@ -8,7 +8,31 @@
         "noEmit": true,
         "sourceMap": true,
         "resolveJsonModule": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {                
+            "€react": ["https://esm.sh/react@19.1.0"],
+            "€react/jsx-runtime": ["https://esm.sh/react@19.1.0/jsx-runtime"],
+            "€react-dom/client": ["https://esm.sh/react-dom@19.1.0/client"],
+            "€katex/contrib/auto-render": ["https://esm.sh/katex@0.16.22/dist/contrib/auto-render.mjs"],
+            "€@codemirror/autocomplete": ["https://esm.sh/@codemirror/autocomplete@6.18.6"],
+            "€@codemirror/state": ["https://esm.sh/@codemirror/state@6.5.2"],
+            "€@codemirror/view": ["https://esm.sh/@codemirror/view@6.38.1"],
+            "€@codemirror/commands": ["https://esm.sh/@codemirror/commands@6.8.1"],
+            "€@dicebear/core": ["https://esm.sh/@dicebear/core@9.2.3"],
+            "€@dicebear/identicon": ["https://esm.sh/@dicebear/identicon@9.2.3"],
+            "$": ["public/base/script.js"],
+            "&": ["public/content/&/script.js"],
+            "&dashboard": ["public/content/&dashboard/script.js"],
+            "&error": ["public/content/&error/script.js"],
+            "&playground": ["public/content/&playground/script.js"],
+            "#dicebear": ["public/app/dicebear/script.js"],
+            "#popup": ["public/app/popup/script.js"],
+            "#render": ["public/app/render/script.js"],
+            "=navbar": ["public/interface/navbar/script.js"],
+            "=tooltip": ["public/interface/tooltip/script.js"],
+            "=topbar": ["public/interface/topbar/script.js"]
+        }
     },
     "exclude": [
         "node_modules/",

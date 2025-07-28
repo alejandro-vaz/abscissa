@@ -2,6 +2,9 @@
 #   HANDLER
 #
 
+# HANDLER -> FUTURE
+from __future__ import annotations
+
 # HANDLER -> LOAD
 from website import *
 
@@ -18,7 +21,7 @@ class namespace:
     # CLASS -> VARIABLES
     data: dict
     # CLASS -> INIT
-    async def init(self, request: Request) -> Self:
+    async def init(self, request: Request) -> namespace:
         self.data = await request.json()
         return self
     # CLASS -> EXISTS

@@ -1,0 +1,116 @@
+//
+//  SUPERVARIABLES          
+//
+
+// SUPERVARIABLES -> FONTSIZE
+$FONTSIZE: 0.75vw
+
+// SUPERVARIABLES -> RADIUS
+$RADIUS: 1vw
+
+// SUPERVARIABLES -> MARGIN
+$MARGIN: 0.8vw
+
+// SUPERVARIABLES -> PADDING
+$PADDING1: 0.6vw
+$PADDING2: 0.4vw
+
+// SUPERVARIABLES -> BORDER
+$BORDER1: 0.2vw
+$BORDER2: 0.1vw
+
+// SUPERVARIABLES -> COLORS
+$DARK: #4d4da0
+$LIGHT: #7f7fd2
+$ACCENT: #FFFFFF
+$INVERTED: #000000
+$BLURRED: #0000004f
+$TOUCH: #111111
+$CONTRAST: #333333
+
+// SUPERVARIABLES -> TIMER
+$TIMER1: 0.1s
+$TIMER2: 0.3s
+
+// SUPERVARIABLES -> CURVE
+$CURVE1: ease-in-out
+$CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
+
+
+//
+//  FUNCTIONS                                                                 
+//
+
+// FUNCTIONS -> CONTAINER
+=section($align-content, $justify-content, $align-items, $width: 100%, $height: 100%, $direction: column, $display: flex, $grow: true, $wrap: nowrap)
+    box-sizing: border-box
+    overflow-y: scroll
+    display: $display
+    height: $height
+    width: $width
+    align-content: $align-content
+    justify-content: $justify-content
+    align-items: $align-items
+    @if $display == flex
+        flex-direction: $direction
+        flex-wrap: $wrap
+        @if $grow
+            flex: 1 0 auto
+        @else
+            flex: 0 0 auto
+
+// FUNCTIONS -> INPUT
+=input($type, $inline: true)
+    padding: $PADDING1
+    border-radius: $RADIUS
+    box-sizing: border-box
+    border: $BORDER2 solid $ACCENT
+    height: fit-content
+    @if $inline
+        display: inline-block
+    @else
+        display: block
+    &:focus
+        outline: none
+    @if $type == button
+        +cursor(click)
+        +blurred()
+        transition: border-color $TIMER1 $CURVE1, background-color $TIMER1 $CURVE1, color $TIMER1 $CURVE1
+        &:hover
+            background-color: $TOUCH
+        &:active
+            border-color: $LIGHT
+            color: $LIGHT
+    @if $type == textarea
+        +cursor(text)
+        background-color: $INVERTED
+        font-family: monospace
+        resize: none
+        &::placeholder
+            color: $ACCENT
+            opacity: 0.5
+    @if $type == text or $type == password or $type == email
+        +cursor(text)
+        background-color: $INVERTED
+        font-family: monospace
+        &::placeholder
+            color: $ACCENT
+            opacity: 0.5
+
+// FUNCTIONS -> SCROLLBAR
+=scrollbar() 
+    scrollbar-width: none
+
+// FUNCTIONS -> CURSOR
+=cursor($type)
+    @if $type == default
+        cursor: url("/public/res/default.cur") 0 0, auto
+    @if $type == click
+        cursor: url("/public/res/click.cur") 0 0, pointer
+    @if $type == text
+        cursor: url("/public/res/text.cur") 0 0, text
+
+// FUNCTIONS -> BLURRED
+=blurred()
+    background-color: $BLURRED
+    backdrop-filter: blur(1vw)

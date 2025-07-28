@@ -1,5 +1,3 @@
-#/etc/systemd/system/
-
 [Unit]
 Description=Abscissa FastAPI Service
 After=network.target

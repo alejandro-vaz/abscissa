@@ -7,8 +7,8 @@
     "buildsass": "sass --watch --no-source-map --style=compressed public/:public/",
     "connect": "ssh 192.168.1.100 -l root",
     "chromium": "chromium --ignore-certificate-errors --user-data-dir=/tmp/dev-profile",
-    "setupsql": "mysql -u root -p < database/setup.sql",
-    "updatesql": "mysql -u root -p < database/update.sql"
+    "setup": "chmod +x package/setup.sh && bash package/setup.sh",
+    "update": "chmod +x package/update.sh && bash package/update.sh"
   },
   "repository": {
     "type": "git",

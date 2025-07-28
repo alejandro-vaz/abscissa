@@ -2,6 +2,9 @@
 #   HANDLER
 #
 
+# HANDLER -> FUTURE
+from __future__ import annotations
+
 # HANDLER -> LOAD
 from website import *
 
@@ -24,7 +27,7 @@ class namespace:
     validate: bool
     user: dict
     # CLASS -> INIT
-    async def init(self, request: Request) -> Self:
+    async def init(self, request: Request) -> namespace:
         self.connection = await aiomysql.connect(**SUG.DBC)
         self.ip = request.client.host
         self.Sid = bytes.fromhex(request.cookies.get("Sid")) if request.cookies.get("Sid") is not None else None

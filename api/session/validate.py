@@ -15,7 +15,8 @@ router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
 from website.extensions import (
-    database as _database
+    database as _database,
+    response as _response
 )
 
 # FUNCTION -> DECLARATION
@@ -23,5 +24,7 @@ from website.extensions import (
 async def output(request: Request) -> JSONResponse:
     # DECLARATION -> ACTIVATE EXTENSIONS
     database = await _database.namespace().init(request)
+    response = await _response.namespace().init(request)
     # DECLARATION -> QUERY
-    return JSONResponse(content = database.validate)
+    response.load(database.validate)
+    return response.get()

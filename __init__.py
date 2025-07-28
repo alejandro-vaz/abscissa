@@ -32,10 +32,6 @@ def add(*extensions: str) -> str:
         with open(f"{SUG.DIR}/extensions/{extension}.py", "r") as file: code.append(file.read())
     return "\n\n".join(code)
 
-
-#
-#   SELF
-#
-
-# SELF -> CLASS
-class Self: pass
+# FUNCTIONS -> SAFE ACCESS
+def º(array: list | dict, key: int | str) -> any:
+    return array[key] if key in (array if isinstance(array, dict) else range(len(array))) else None
