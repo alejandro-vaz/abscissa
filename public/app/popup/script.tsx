@@ -3,9 +3,8 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
-/* @ts-ignore */import * as react from "€react";
+import * as $ from "$";
+import * as react from "€react";
 
 
 // HEAD -> APP POPUP

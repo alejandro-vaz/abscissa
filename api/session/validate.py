@@ -26,5 +26,6 @@ async def output(request: Request) -> JSONResponse:
     database = await _database.namespace().init(request)
     response = await _response.namespace().init(request)
     # DECLARATION -> QUERY
+    await database.analytics("validate")
     response.load(database.validate)
     return response.get()

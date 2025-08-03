@@ -3,10 +3,9 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
-/* @ts-ignore */import * as DiceBear from "#dicebear";
-/* @ts-ignore */import * as Popup from "#popup";
+import * as $ from "$";
+import * as DiceBear from "#dicebear";
+import * as Popup from "#popup";
 
 // HEAD -> INTERFACE NAVBAR
 const origin = await $.connect("InterfaceNavbar");
@@ -52,36 +51,42 @@ export async function activate(): Promise<void> {
                     src="/public/svg/logoLight.svg" 
                     className="icon" 
                     onClick={() => $.redirect("/dashboard", true)}
+                    onContextMenu={() => $.redirect("/dashboard", true) && $.redirect("/dashboard", false)}
                     tooltip="Go to dashboard"
                 />
                 <img 
                     src="/public/interface/navbar/svg/search.svg" 
                     className="icon" 
                     onClick={() => $.redirect("/search", true)}
+                    onContextMenu={() => $.redirect("/search", true) && $.redirect("/search", false)}
                     tooltip="Go to search"
                 />
                 <img 
                     src="/public/interface/navbar/svg/playground.svg" 
                     className="icon" 
                     onClick={() => $.redirect("/playground", true)}
+                    onContextMenu={() => $.redirect("/playground", true) && $.redirect("/playground", false)}
                     tooltip="Go to playground"
                 />
                 <img 
                     src="/public/interface/navbar/svg/stats.svg" 
                     className="icon" 
                     onClick={() => $.redirect("/stats", true)}
+                    onContextMenu={() => $.redirect("/stats", true) && $.redirect("/stats", false)}
                     tooltip="Go to stats"
                 />
                 <img 
-                    src={validate ? DiceBear.identicon(user.Uname) : "/public/interface/navbar/svg/user.svg" }
+                    src={validate ? DiceBear.icon(user.Uname) : "/public/interface/navbar/svg/user.svg" }
                     className="icon" 
                     onClick={() => validate ? $.redirect("/user", true) : Popup.create("auth")}
+                    onContextMenu={() => validate ? $.redirect("/user", true) && $.redirect("/user", false) : Popup.create("auth")}
                     tooltip={validate ? "Go to your profile" : "Log in or register"}
                 />
                 <img 
                     src="/public/interface/navbar/svg/settings.svg" 
                     className="icon" 
                     onClick={() => $.redirect("/settings", true)}
+                    onContextMenu={() => $.redirect("/settings", true) && $.redirect("/settings", false)}
                     tooltip="Go to settings"
                 />
             </div>

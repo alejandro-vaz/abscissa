@@ -3,8 +3,7 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
+import * as $ from "$";
 
 
 //
@@ -30,7 +29,13 @@ export async function show(): Promise<void> {
     // FUNCTION -> WINDOW
     let code;
     let description;
-    switch (+$.SUG.VWD[1]) {
+    let condition;
+    if ($.SUG.VWD[0] === "error") {
+        condition = +$.SUG.VWD[1];
+    } else {
+        condition = null;
+    }
+    switch (condition) {
         case 0:
             code = 0;
             description = "Vertical screen error.";

@@ -3,12 +3,11 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
-/* @ts-ignore */import * as codemirrorState from '€@codemirror/state';
-/* @ts-ignore */import * as codemirrorView from '€@codemirror/view';
-/* @ts-ignore */import * as codemirrorCommands from '€@codemirror/commands';
-/* @ts-ignore */import * as katex from "€katex/contrib/auto-render";
+import * as $ from "$";
+import * as katex from "€katex/contrib/auto-render";
+import * as codemirrorState from '€@codemirror/state';
+import * as codemirrorView from '€@codemirror/view';
+import * as codemirrorCommands from '€@codemirror/commands';
 
 
 //

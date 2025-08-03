@@ -3,8 +3,7 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
+import * as $ from "$";
 
 
 //

@@ -23,16 +23,24 @@
             +root.section(normal, normal, normal, $grow: false, $height: 15vw)
             border-radius: root.$RADIUS + root.$PADDING2
             padding: root.$PADDING2
+            margin-bottom: root.$MARGIN
+            transition: opacity root.$TIMER2 root.$CURVE1, filter root.$TIMER2 root.$CURVE1
+            &:hover
+                +root.cursor(click)
+                > #Wrapper
+                    > #Title
+                        text-decoration: underline
+            &:last-child
+                margin-bottom: 0
             &#Daily
                 background: linear-gradient(to top right, root.$TOUCH, #112277)
-            &#Random
-                background: linear-gradient(to top right, root.$TOUCH, #117722)
             > #Wrapper
                 +root.section(normal, normal, normal, $grow: false, $height: 100%)
                 +root.blurred()
                 border-radius: root.$RADIUS
                 padding: root.$PADDING1
                 > #Title
+                    transition: text-decoration root.$TIMER2 root.$CURVE1
                     margin: 0
                 > #Data
                     +root.section(normal, normal, normal, $grow: true, $direction: row, $height: 0)

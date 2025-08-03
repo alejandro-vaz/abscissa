@@ -3,9 +3,8 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
-/* @ts-ignore */import * as Render from "#render";
+import * as $ from "$";
+import * as Render from "#render";
 
 
 //

@@ -106,3 +106,8 @@ ERR = [
     {"status_code": 400, "detail": "Bad request"},
     {"status_code": 403, "detail": "Forbidden"}
 ]
+
+# MASTER SUPERGLOBALS -> ACTIONS
+ACT = {
+    "validate": 0
+}

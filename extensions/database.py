@@ -4,6 +4,7 @@
 
 # HANDLER -> FUTURE
 from __future__ import annotations
+from argparse import Namespace
 
 # HANDLER -> LOAD
 from website import *
@@ -23,31 +24,36 @@ class namespace:
     # CLASS -> VARIABLES
     connection: Connection
     ip: str
-    Sid: bytes
+    Sid: bytes | None
     validate: bool
-    user: dict
+    user: dict | None
     # CLASS -> INIT
     async def init(self, request: Request) -> namespace:
         self.connection = await aiomysql.connect(**SUG.DBC)
         self.ip = request.client.host
-        self.Sid = bytes.fromhex(request.cookies.get("Sid")) if request.cookies.get("Sid") is not None else None
-        self.validate = bool(await self.query(
-            "SELECT * FROM SESSIONS WHERE Sid = %s",
-            [
-                self.Sid 
-            ]
-        )) if self.Sid is not None else False
-        self.user = (await self.query(
-            "SELECT * FROM USERS WHERE Uid = %s",
-            [
-                (await self.query(
-                    "SELECT Uid FROM SESSIONS WHERE Sid = %s",
-                    [
-                        self.Sid
-                    ]
-                ))[0]["Uid"]
-            ]
-        ))[0] if self.validate else None
+        if request.cookies.get("Sid") is not None: 
+            self.Sid = bytes.fromhex(request.cookies.get("Sid"))
+            self.validate = bool(await self.query(
+                "SELECT * FROM SESSIONS WHERE Sid = %s",
+                [
+                    self.Sid 
+                ]
+            ))
+            self.user = º(await self.query(
+                "SELECT * FROM USERS WHERE Uid = %s",
+                [
+                    º(º(await self.query(
+                        "SELECT Uid FROM SESSIONS WHERE Sid = %s",
+                        [
+                            self.Sid
+                        ]
+                    ), 0), "Uid")
+                ]
+            ), 0) if self.validate else None
+        else:
+            self.Sid = None
+            self.validate = False
+            self.user = None
         return self
     # CLASS -> QUERY
     async def query(self, command: str, parameters: list) -> list[dict] | bool:
@@ -82,3 +88,11 @@ class namespace:
             samesite = "lax"
         )
         return response
+    # CLASS -> ANALYTICS
+    async def analytics(self, action: str) -> None:
+        await self.query(
+            "INSERT INTO ANALYTICS (Aaction) VALUES (%s)",
+            [
+                SUG.ACT[action]
+            ]
+        )

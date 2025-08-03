@@ -3,8 +3,7 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import * as $ from "$";
+import * as $ from "$";
 
 // HEAD -> INTERFACE TOOLTIP
 const origin = await $.connect("InterfaceTooltip");

@@ -3,9 +3,8 @@
 //
 
 // HEAD -> MODULES
-/* @ts-ignore */
-/* @ts-ignore */import react from "€react";
-/* @ts-ignore */import * as reactdom from '€react-dom/client';
+import react from "€react";
+import * as reactdom from '€react-dom/client';
 
 // HEAD -> VIEWS
 import * as _ from "&";
@@ -219,7 +218,7 @@ export async function connect(path: string): Promise<HTMLElement> {
 //
 
 // DEBUG -> FUNCTION
-export function debug(...variables: any[]) {
+export function debug(...variables: any[]): void {
     for (const variable of variables) {
         console.warn(variable)
     }

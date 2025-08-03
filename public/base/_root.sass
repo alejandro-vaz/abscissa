@@ -104,11 +104,11 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
 // FUNCTIONS -> CURSOR
 =cursor($type)
     @if $type == default
-        cursor: url("/public/res/default.cur") 0 0, auto
+        cursor: default
     @if $type == click
-        cursor: url("/public/res/click.cur") 0 0, pointer
+        cursor: pointer
     @if $type == text
-        cursor: url("/public/res/text.cur") 0 0, text
+        cursor: text
 
 // FUNCTIONS -> BLURRED
 =blurred()
