@@ -13,6 +13,9 @@ CREATE DATABASE `abscissa`
 -- RESET -> USE
 USE `abscissa`;
 
+-- RESET -> MANUAL ZERO
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
 
 --
 --  TABLES
@@ -20,7 +23,7 @@ USE `abscissa`;
 
 -- TABLES -> ORGANISATIONS
 CREATE TABLE `ORGANISATIONS` (
-  `Oid` mediumint UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
+  `Oid` mediumint UNSIGNED UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
   COMMENT 'Organisation ID.',
   `Oname` varchar(128) UNIQUE NOT NULL 
   COMMENT 'Name of the organisation.'
@@ -28,7 +31,7 @@ CREATE TABLE `ORGANISATIONS` (
 
 -- TABLES -> USERS
 CREATE TABLE `USERS` (
-  `Uid` integer UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
+  `Uid` integer UNSIGNED UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
   COMMENT 'Unique identifier.',
   `Uname` varchar(32) UNIQUE NOT NULL 
   COMMENT 'Exclusive username.',
@@ -40,9 +43,9 @@ CREATE TABLE `USERS` (
   COMMENT 'Date and time when user joined.',
   `Usettings` json NOT NULL DEFAULT "{}"
   COMMENT 'User preferences.',
-  `Oid` mediumint NOT NULL DEFAULT 0 
+  `Oid` mediumint UNSIGNED NOT NULL DEFAULT 0 
   COMMENT 'If the user is inside an organisation, be it not 0 but the ID of the organisation.',
-  `Urole` tinyint NOT NULL DEFAULT 0 
+  `Urole` tinyint UNSIGNED NOT NULL DEFAULT 0 
   COMMENT 'Permissions of the user.',
   FOREIGN KEY (`Oid`) REFERENCES `ORGANISATIONS` (`Oid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -51,7 +54,7 @@ CREATE TABLE `USERS` (
 CREATE TABLE `SESSIONS` (
   `Sid` binary(32) UNIQUE PRIMARY KEY NOT NULL 
   COMMENT 'Session ID.',
-  `Uid` integer UNIQUE NOT NULL 
+  `Uid` integer UNSIGNED UNIQUE NOT NULL 
   COMMENT 'User linked to that session.',
   `Sip` varchar(64) NOT NULL 
   COMMENT 'IP.',
@@ -62,7 +65,7 @@ CREATE TABLE `SESSIONS` (
 
 -- TABLES -> CONCEPTS
 CREATE TABLE `CONCEPTS` (
-  `Kid` smallint UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
+  `Kid` smallint UNSIGNED UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
   COMMENT 'Concept ID.',
   `Ken` varchar(64) UNIQUE NOT NULL 
   COMMENT 'Name of the concept in English.',
@@ -74,11 +77,12 @@ CREATE TABLE `CONCEPTS` (
 
 -- TABLES -> RESOURCES
 CREATE TABLE `RESOURCES` (
-  `Rid` mediumint UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
+  `Rid` mediumint UNSIGNED UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT 
   COMMENT 'ID of the resource.',
-  `Kid` smallint NOT NULL 
+  `Kid` smallint UNSIGNED NOT NULL 
   COMMENT 'Concept the resource talks about.',
-  `Rlang` char(2) NOT NULL COMMENT 'Language the resource is in.',
+  `Rlang` char(2) NOT NULL 
+  COMMENT 'Language the resource is in.',
   `Rvideo` bit NOT NULL 
   COMMENT 'Whether or not resource link is a YouTube video.',
   `Rlink` varchar(256) NOT NULL 
@@ -90,9 +94,9 @@ CREATE TABLE `RESOURCES` (
 CREATE TABLE `PROBLEMS` (
   `Pid` binary(4) UNIQUE PRIMARY KEY NOT NULL 
   COMMENT 'Unique ID of the problem.',
-  `Uid` integer NOT NULL 
+  `Uid` integer UNSIGNED NOT NULL 
   COMMENT 'Uid of the creator of the problem.',
-  `Kid` smallint NOT NULL 
+  `Kid` smallint UNSIGNED NOT NULL 
   COMMENT 'Concept identifier which the problem talks about.',
   `Pedited` datetime NOT NULL 
   COMMENT 'When was the problem created or last edited.',
@@ -112,18 +116,26 @@ CREATE TABLE `PROBLEMS` (
 
 -- TABLES -> COMPLETED
 CREATE TABLE `COMPLETED` (
-  `Uid` integer NOT NULL 
+  `Uid` integer UNSIGNED NOT NULL
   COMMENT 'Unique identifier of the user who completed the problem.',
   `Pid` binary(4) NOT NULL 
   COMMENT 'Identifier of the completed problem.',
   `Cprocess` json NOT NULL 
   COMMENT 'LaTeX process that user wrote.',
-  `Ctime` datetime NOT NULL 
+  `Ctime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
   COMMENT 'When was the problem completed.',
   `Cgrade` binary(1) 
   COMMENT 'Grade in binary when graded.',
   FOREIGN KEY (`Uid`) REFERENCES `USERS` (`Uid`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`Pid`) REFERENCES `PROBLEMS` (`Pid`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- TABLES -> ANALYTICS
+CREATE TABLE `ANALYTICS` (
+  `Atime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COMMENT 'Time when the action was registered',
+  `Aaction` smallint UNSIGNED NOT NULL
+  COMMENT 'Action triggered'
 );
 
 
@@ -139,10 +151,11 @@ UPDATE ORGANISATIONS SET Oid = 0 WHERE Oname = "public";
 INSERT INTO CONCEPTS (Kes, Ken, Kde) VALUES ("Álgebra", "Algebra", "Algebra");
 
 -- DEFAULTS -> MY USER
-INSERT INTO USERS (Uname, Uemail, Uhashpass) VALUES (
+INSERT INTO USERS (Uname, Uemail, Uhashpass, Urole) VALUES (
   "myuseris",
   "myuseris@gmail.com",
-  "myhashpass"
+  "myhashpass",
+  255
 );
 
 -- DEFAULTS -> INITIAL PROBLEMS

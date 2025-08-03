@@ -17,7 +17,7 @@ router = APIRouter()
 from website.extensions import (
     database as _database,
     post as _post,
-    time as _time
+    response as _response
 )
 
 # FUNCTION -> DECLARATION
@@ -26,17 +26,18 @@ async def output(request: Request) -> JSONResponse:
     # DECLARATION -> ACTIVATE EXTENSIONS
     database = await _database.namespace().init(request)
     post = await _post.namespace().init(request)
-    time = await _time.namespace().init(request)
+    response = await _response.namespace().init(request)
     # DECLARATION -> ARGUMENT CHECKS
     if not post.checks(): raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ARGUMENT RELATIONSHIP
     if not all(post.exists("Uemail", "Uhashpass", "Uname")): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
-    return JSONResponse(content = await database.query(
+    response.load(await database.query(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass) VALUES (%s, %s, %s)",
         [
             post.data["Uname"],
             post.data["Uemail"],
-            post.data["Uhashpass"],
+            post.data["Uhashpass"]
         ]
     ))
+    return response.get()

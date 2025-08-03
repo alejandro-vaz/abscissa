@@ -2,6 +2,9 @@
 #   HANDLER
 #
 
+# HANDLER -> FUTURE
+from __future__ import annotations
+
 # HANDLER -> LOAD
 from website import *
 
@@ -13,7 +16,7 @@ from website import *
 # BINARY -> CLASS
 class namespace:
     # CLASS -> INIT
-    async def init(self, request: Request) -> Self: return self
+    async def init(self, request: Request) -> namespace: return self
     # CLASS -> STRING TO BYTES
     def str2bin(self, hexadecimal: str) -> bytes:
         return bytes.fromhex(hexadecimal)

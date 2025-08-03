@@ -3,26 +3,13 @@
 #
 
 # MASTER SUPERGLOBALS -> SCRIPTS
-SCR = [
-    "/concept/create",
-    "/concept/search",
+SRC = [
     "/mathsys/compile",
-    "/organisation/create",
-    "/organisation/join",
-    "/organisation/search",
-    "/problem/create",
     "/problem/lookup",
-    "/resource/create",
-    "/resource/stream",
-    "/session/refresh",
     "/session/validate",
-    "/user/ban",
     "/user/data",
-    "/user/delete",
     "/user/login",
-    "/user/lookup",
-    "/user/register",
-    "/user/search"
+    "/user/register"
 ]
 
 # MASTER SUPERGLOBALS -> DATABASE CREDENTIALS
@@ -119,3 +106,8 @@ ERR = [
     {"status_code": 400, "detail": "Bad request"},
     {"status_code": 403, "detail": "Forbidden"}
 ]
+
+# MASTER SUPERGLOBALS -> ACTIONS
+ACT = {
+    "validate": 0
+}

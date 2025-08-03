@@ -3,7 +3,7 @@
 //
 
 // HEAD -> MODULES
-import * as General from "../general.js";
+import * as $ from "$";
 
 
 //
@@ -12,7 +12,7 @@ import * as General from "../general.js";
 
 // REMOVE -> FUNCTION
 export async function hide(): Promise<void> {
-    await General.inject(General.origin, <></>);
+    await $.inject($.SUG.ORG, <></>);
 }
 
 
@@ -23,21 +23,21 @@ export async function hide(): Promise<void> {
 // CONTENT -> FUNCTION
 export async function show(): Promise<void> {
     // FUNCTION -> INTERFACE
-    await General.modulator(
+    await $.modulator(
         "tooltip"
     )
     // FUNCTION -> WINDOW
-    General.setTitle("Abscissa");
-    General.setDescription("Landing page.");
+    $.setTitle("Abscissa");
+    $.setDescription("Landing page.");
     // FUNCTION -> CONTENT
-    await General.inject(General.origin, 
+    await $.inject($.SUG.ORG, 
         <>
             <h1>LeetCode but for math</h1>
             <h3>Learn math by solving real problems</h3>
             <input 
                 type="button" 
                 value="Try it now"
-                onClick={async() => await General.redirect("/playground")}
+                onClick={async() => await $.redirect("/playground", true)}
             />
         </>
     )

@@ -8,8 +8,3 @@
 
 # IGNORE -> NODE
 node_modules/
-
-# IGNORE -> PYCACHE
-__pycache__/
-extensions/__pycache__/
-api/__pycache__/

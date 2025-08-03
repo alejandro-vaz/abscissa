@@ -3,7 +3,7 @@
 //
 
 // HEAD -> MODULES
-import * as General from "../general.js";
+import * as $ from "$";
 
 
 //
@@ -12,7 +12,7 @@ import * as General from "../general.js";
 
 // REMOVE -> FUNCTION
 export async function hide(): Promise<void> {
-    await General.inject(General.origin, <></>);
+    await $.inject($.SUG.ORG, <></>);
 }
 
 
@@ -23,13 +23,19 @@ export async function hide(): Promise<void> {
 // CONTENT -> FUNCTION
 export async function show(): Promise<void> {
     // FUNCTION -> INTERFACE
-    await General.modulator(
+    await $.modulator(
         "topbar"
     )
     // FUNCTION -> WINDOW
     let code;
     let description;
-    switch (+General.SUG.VWD[1]) {
+    let condition;
+    if ($.SUG.VWD[0] === "error") {
+        condition = +$.SUG.VWD[1];
+    } else {
+        condition = null;
+    }
+    switch (condition) {
         case 0:
             code = 0;
             description = "Vertical screen error.";
@@ -38,10 +44,10 @@ export async function show(): Promise<void> {
             code = 404;
             description = "Not found.";
     }
-    General.setTitle("Error");
-    General.setDescription(description);
+    $.setTitle("Error");
+    $.setDescription(description);
     // FUNCTION -> CONTENT
-    await General.inject(General.origin,
+    await $.inject($.SUG.ORG,
         <>
             <h2>{code}</h2>
             <p>{description}</p>

@@ -1,0 +1,25 @@
+//                                                                            
+//  HEAD                                                                      
+//                                                                            
+
+// HEAD -> MODULES
+@use "../../base/root"
+
+//
+//  TOOLTIP
+//
+
+// TOOLTIP -> NAMESPACE
+$interface-height: 1.25vw
+$navbar-width-idle: 1vw
+#InterfaceTooltip
+    +root.section(normal, flex-end, flex-end, $height: $interface-height, $direction: row, $width: calc(100vw - $navbar-width-idle))
+    position: fixed
+    bottom: 0
+    right: 0
+    justify-content: flex-end
+    z-index: 3000
+    > #Text
+        opacity: 0
+        transition: opacity root.$TIMER2 root.$CURVE1
+        padding-right: root.$PADDING2

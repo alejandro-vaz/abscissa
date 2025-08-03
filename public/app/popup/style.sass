@@ -1,0 +1,53 @@
+//
+//  HEAD                                                                      
+//
+
+// MODULES
+@use "../../base/root"
+
+
+//
+//  POPUP
+//
+
+// POPUP -> NAMESPACE
+#AppPopup
+    +root.section(normal, normal, center, $width: 100vw, $height: 100vh)
+    +root.blurred()
+    position: fixed
+    top: 0
+    left: 0
+    opacity: 0
+    z-index: 2000
+    transition: opacity root.$TIMER1 root.$CURVE1
+    pointer-events: none
+    > #Window
+        +root.section(normal, normal, center, $width: 20vw, $height: fit-content, $grow: false)
+        border: root.$BORDER1 solid root.$DARK
+        background-color: root.$TOUCH
+        margin-top: root.$MARGIN
+        border-radius: root.$RADIUS
+        padding: root.$PADDING1
+        > #Header
+            +root.section(normal, flex-end, center, $direction: row, $height: 2vw, $grow: false)
+            > #Close
+                +root.cursor(click)
+                height: 100%
+                z-index: 2500
+                box-sizing: border-box
+                border: root.$BORDER1 solid transparent
+                width: fit-content
+                border-radius: root.$RADIUS
+                transition: border-width root.$TIMER1 root.$CURVE1
+                &:hover
+                    border-width: 0
+        > #Header + div
+            margin-top: -2.25vw
+            +root.section(normal, normal, center, $height: fit-content, $grow: false)
+        > #Auth
+            > input[type="button"]
+                width: 100%
+            > h2
+                margin-top: 0
+            > form
+                margin-bottom: root.$MARGIN

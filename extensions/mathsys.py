@@ -2,6 +2,9 @@
 #   HANDLER
 #
 
+# HANDLER -> FUTURE
+from __future__ import annotations
+
 # HANDLER -> LOAD
 from website import *
 
@@ -16,6 +19,6 @@ import mathsys
 # MATHSYS -> CLASS
 class namespace:
     # CLASS -> INIT
-    async def init(self, request: Request) -> Self: return self
+    async def init(self, request: Request) -> namespace: return self
     # CLASS -> COMPILE
     def compile(self, code: str) -> str: return mathsys.compile(code)

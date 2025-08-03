@@ -3,8 +3,8 @@
 //
 
 // HEAD -> MODULES
-import * as General from "../general.js";
-import * as Render from "../../modules/app/render/script.js";
+import * as $ from "$";
+import * as Render from "#render";
 
 
 //
@@ -13,7 +13,7 @@ import * as Render from "../../modules/app/render/script.js";
 
 // REMOVE -> FUNCTION
 export async function hide(): Promise<void> {
-    await General.inject(General.origin, <></>);
+    await $.inject($.SUG.ORG, <></>);
 }
 
 
@@ -24,35 +24,26 @@ export async function hide(): Promise<void> {
 // CONTENT -> FUNCTION
 export async function show(): Promise<void> {
     // FUNCTION -> INTERFACE
-    await General.modulator(
+    await $.modulator(
         "navbar",
         "tooltip",
         "topbar"
     )
     // FUNCTION -> WINDOW
-    General.setTitle("Dashboard");
-    General.setDescription("Here is where the magic happens.");
+    $.setTitle("Dashboard");
+    $.setDescription("Here is where the magic happens.");
     // FUNCTION -> CONTENT
-    const data = await General.curl("problem/lookup", {Pid: "00000000"}) as any;
-    const info = await General.curl("problem/lookup", {Pid: "00000001"}) as any;
-    await General.inject(General.origin,
+    const data = await $.curl("problem/lookup", {Pid: "00000000"}) as any;
+    const info = await $.curl("problem/lookup", {Pid: "00000001"}) as any;
+    await $.inject($.SUG.ORG,
         <>
             <div id="Container">
                 <h2>Jump right in</h2>
-                <div class="problem" id="Daily">
+                <div class="problem" id="Daily" onClick={() => $.redirect("/problem/00000000", true)}>
                     <div id="Wrapper">
                         <h3 id="Title">{data.Pdataen.title}</h3>
                         <div id="Data">
                             <div id="Description" ref={async(node) => await Render.string(data.Pdataen.instructions, node)}></div>
-                            <img id="Image"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="problem" id="Random">
-                    <div id="Wrapper">
-                        <h3 id="Title">{info.Pdataen.title}</h3>
-                        <div id="Data">
-                            <div id="Description" ref={async(node) => await Render.string(info.Pdataen.instructions, node)}></div>
                             <img id="Image"/>
                         </div>
                     </div>

@@ -300,3 +300,23 @@
 - [X] (Patch) Added line wrapping to *Codemirror* 6 editor.
 - [X] (Patch) Added `robots.txt` and `sitemap.xml` for website crawling.
 - [X] (Patch) Added `title` to problem language data.
+### *Abscissa* 4.2.3 `1-3-15`
+- [X] (Patch) Removed `__pycache__/`s from `.gitignore`.
+- [X] (Patch) Renamed `SUG.SCR` to `SUG.SRC`.
+- [X] (Patch) Removed unused *API* endpoints.
+- [X] (Minor) Added basic analytics for endpoint hits.
+- [X] (Patch) Removed *Python* class `Self`.
+- [X] (Patch) Added safe array access *Python* function.
+- [X] (Minor) Added `response` extension.
+- [X] (Major) Improved module handling with `importmap` and `globals.d.ts`.
+- [X] (Patch) Allowed manual zero value in database.
+- [X] (Patch) Made database number columns unsigned.
+- [X] (Patch) Used `__future__` for *Python* extensions.
+- [X] (Minor) Added scripts for update and setup.
+- [X] (Patch) Removed custom cursors and unused variables.
+- [X] (Patch) Added *Google* site verification.
+- [X] (Patch) Removed *TSX* no-checks.
+- [X] (Patch) Refactored base style for a tree architecture.
+- [X] (Patch) Removed second problem from dashboard.
+- [X] (Patch) Improved problems appearance in dashboard.
+- [X] (Patch) Added *Python* linter config.
