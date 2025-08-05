@@ -3,8 +3,8 @@
   "version": "4.2.3",
   "main": "public/content/general.js",
   "scripts": {
-    "buildtsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
-    "buildsass": "sass --watch --no-source-map --style=compressed public/:public/",
+    "build/tsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
+    "build/sass": "sass --watch --no-source-map --style=compressed public/:public/",
     "connect": "ssh 192.168.1.100 -l root",
     "chromium": "chromium --ignore-certificate-errors --user-data-dir=/tmp/dev-profile",
     "setup": "chmod +x package/setup.sh && bash package/setup.sh",

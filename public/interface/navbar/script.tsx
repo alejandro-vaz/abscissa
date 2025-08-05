@@ -19,7 +19,7 @@ const origin = await $.connect("InterfaceNavbar");
 let navbarState = true;
 
 // NAVBAR -> OPENER FUNCTION
-function alternate(event) {
+function alternate(event: MouseEvent) {
     let navbarStateChange;
     if (navbarState) {
         navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
@@ -50,43 +50,43 @@ export async function activate(): Promise<void> {
                 <img 
                     src="/public/svg/logoLight.svg" 
                     className="icon" 
-                    onClick={() => $.redirect("/dashboard", true)}
-                    onContextMenu={() => $.redirect("/dashboard", true) && $.redirect("/dashboard", false)}
+                    onClick={async() => await $.redirect("/dashboard")}
+                    onContextMenu={async() => await $.redirect("/dashboard", true, true)}
                     tooltip="Go to dashboard"
                 />
                 <img 
                     src="/public/interface/navbar/svg/search.svg" 
                     className="icon" 
-                    onClick={() => $.redirect("/search", true)}
-                    onContextMenu={() => $.redirect("/search", true) && $.redirect("/search", false)}
+                    onClick={async() => await $.redirect("/search")}
+                    onContextMenu={async() => await $.redirect("/search", true, true)}
                     tooltip="Go to search"
                 />
                 <img 
                     src="/public/interface/navbar/svg/playground.svg" 
                     className="icon" 
-                    onClick={() => $.redirect("/playground", true)}
-                    onContextMenu={() => $.redirect("/playground", true) && $.redirect("/playground", false)}
+                    onClick={async() => await $.redirect("/playground")}
+                    onContextMenu={async() => await $.redirect("/playground", true, true)}
                     tooltip="Go to playground"
                 />
                 <img 
                     src="/public/interface/navbar/svg/stats.svg" 
                     className="icon" 
-                    onClick={() => $.redirect("/stats", true)}
-                    onContextMenu={() => $.redirect("/stats", true) && $.redirect("/stats", false)}
+                    onClick={async() => await $.redirect("/stats")}
+                    onContextMenu={async() => await $.redirect("/stats", true, true)}
                     tooltip="Go to stats"
                 />
                 <img 
                     src={validate ? DiceBear.icon(user.Uname) : "/public/interface/navbar/svg/user.svg" }
                     className="icon" 
-                    onClick={() => validate ? $.redirect("/user", true) : Popup.create("auth")}
-                    onContextMenu={() => validate ? $.redirect("/user", true) && $.redirect("/user", false) : Popup.create("auth")}
+                    onClick={async() => validate ? await $.redirect("/user") : Popup.create("auth")}
+                    onContextMenu={async() => validate ? await $.redirect("/user", true, true) : Popup.create("auth")}
                     tooltip={validate ? "Go to your profile" : "Log in or register"}
                 />
                 <img 
                     src="/public/interface/navbar/svg/settings.svg" 
                     className="icon" 
-                    onClick={() => $.redirect("/settings", true)}
-                    onContextMenu={() => $.redirect("/settings", true) && $.redirect("/settings", false)}
+                    onClick={async() => await $.redirect("/settings")}
+                    onContextMenu={async() => await $.redirect("/settings", true, true)}
                     tooltip="Go to settings"
                 />
             </div>

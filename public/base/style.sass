@@ -71,6 +71,8 @@ $main-tooltip-height: 1.25vw
         input:last-of-type
             border-top-left-radius: 0
             border-top-right-radius: 0
+        input:not(:last-of-type)
+            border-bottom-width: 0
     :where(p)
         font-size: root.$FONTSIZE
         margin: 0.6vw 0 0.3vw 0
@@ -94,3 +96,5 @@ $main-tooltip-height: 1.25vw
     :where(.newline)
         display: block
         height: root.$MARGIN
+    :where(.katex-display, .katex)
+        font-size: 1vw

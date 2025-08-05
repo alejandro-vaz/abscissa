@@ -16,9 +16,13 @@ import * as codemirrorCommands from '€@codemirror/commands';
 
 // RENDER -> PLAYGROUND
 export function playground(text: string, parent: HTMLElement, output: HTMLElement): codemirrorView.EditorView {
+    let timer;
     const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
         if (update.docChanged) {
-            string(update.state.doc.toString(), output);
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                string(update.state.doc.toString(), output);
+            }, 250);
         }
     })
     const state = codemirrorState.EditorState.create({
@@ -73,7 +77,7 @@ export function playground(text: string, parent: HTMLElement, output: HTMLElemen
 // RENDER -> STRING
 export async function string(code: string, element: HTMLElement): Promise<void> {
     const result = await $.curl("mathsys/compile", {Mcode: code}) as boolean | string;
-    if (result != false) {
+    if (result !== false) {
         element.textContent = result as string;
         katex.default(element, {
             delimiters: [

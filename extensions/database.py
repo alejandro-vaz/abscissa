@@ -4,7 +4,6 @@
 
 # HANDLER -> FUTURE
 from __future__ import annotations
-from argparse import Namespace
 
 # HANDLER -> LOAD
 from website import *

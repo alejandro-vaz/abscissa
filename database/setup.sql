@@ -37,7 +37,7 @@ CREATE TABLE `USERS` (
   COMMENT 'Exclusive username.',
   `Uemail` varchar(64) UNIQUE NOT NULL 
   COMMENT 'User email address.',
-  `Uhashpass` varchar(64) NOT NULL 
+  `Uhashpass` varchar(256) NOT NULL 
   COMMENT 'Hashed user password so not even us can know it.',
   `Ujoined` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP 
   COMMENT 'Date and time when user joined.',
@@ -151,11 +151,12 @@ UPDATE ORGANISATIONS SET Oid = 0 WHERE Oname = "public";
 INSERT INTO CONCEPTS (Kes, Ken, Kde) VALUES ("Álgebra", "Algebra", "Algebra");
 
 -- DEFAULTS -> MY USER
-INSERT INTO USERS (Uname, Uemail, Uhashpass, Urole) VALUES (
-  "myuseris",
-  "myuseris@gmail.com",
-  "myhashpass",
-  255
+INSERT INTO USERS (Uname, Uemail, Uhashpass, Urole, Uid) VALUES (
+  "root",
+  "root@gmail.com",
+  "rootpassword",
+  255,
+  0
 );
 
 -- DEFAULTS -> INITIAL PROBLEMS

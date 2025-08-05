@@ -5,21 +5,31 @@
 // GENERAL -> MODULE
 declare module "$" {
     export const SUG: {
-        VMD: string[], 
-        IMD: object, 
+        VWD: string[], 
+        IMD: {
+            navbar: {active: boolean, module: any},
+            tooltip: {active: boolean, module: any},
+            topbar: {active: boolean, module: any}
+        }, 
         TIT: string, 
         DES: string, 
-        ORG: HTMLElement
+        ORG: HTMLElement,
+        PAT: {
+            Uemail: RegExp,
+            Uhashpass: RegExp,
+            Uname: RegExp
+        }
     };
-    export async function redirect(target: string, update: boolean): Promise<void>;
+    export function redirect(target: string, append?: boolean, divide?: boolean): Promise<void>;
     export function setTitle(newTitle: string): void;
     export function setDescription(newDescription: string): void;
-    export async function modulator(...activate: string[]): Promise<void>;
-    export async function curl(script: string, data: object): Promise<object | boolean | string | number | null>;
-    export async function inject(root: HTMLElement, content: react.ReactNode): Promise<void>;
-    export async function connect(path: string): Promise<HTMLElement>;
+    export function modulator(...activate: string[]): Promise<void>;
+    export function curl(script: string, data: object): Promise<object | boolean | string | number | null>;
+    export function inject(root: HTMLElement, content: import("€react").ReactNode): Promise<void>;
+    export function connect(path: string): Promise<HTMLElement>;
+    export function delay(seconds: number): Promise<void>;
+    export function check(input: string, pattern: RegExp): boolean
     export function debug(...variables: any[]): void;
-    export async function delay(seconds: number): Promise<void>;
 }
 
 
@@ -29,26 +39,26 @@ declare module "$" {
 
 // VIEW -> &
 declare module "&" {
-    export async function show(): Promise<void>;
-    export async function hide(): Promise<void>;
+    export function show(): Promise<void>;
+    export function hide(): Promise<void>;
 }
 
 // VIEW -> &DASHBOARD
 declare module "&dashboard" {
-    export async function show(): Promise<void>;
-    export async function hide(): Promise<void>;
+    export function show(): Promise<void>;
+    export function hide(): Promise<void>;
 }
 
 // VIEW -> &ERROR
 declare module "&error" {
-    export async function show(): Promise<void>;
-    export async function hide(): Promise<void>;
+    export function show(): Promise<void>;
+    export function hide(): Promise<void>;
 }
 
 // VIEW -> &PLAYGROUND
 declare module "&playground" {
-    export async function show(): Promise<void>;
-    export async function hide(): Promise<void>;
+    export function show(): Promise<void>;
+    export function hide(): Promise<void>;
 }
 
 
@@ -63,14 +73,14 @@ declare module "#dicebear" {
 
 // APP -> POPUP
 declare module "#popup" {
-    export async function create(preset: string, ...presetArguments: any[]): Promise<void>;
-    export async function remove(): Promise<void>;
+    export function create(preset: string, ...presetArguments: any[]): Promise<void>;
+    export function remove(): Promise<void>;
 }
 
 // APP -> RENDER
 declare module "#render" {
-    export function playground(text: string, parent: HTMLElement, output: HTMLElement): codemirrorView.EditorView;
-    export async function string(code: string, element: HTMLElement): Promise<void>;
+    export function playground(text: string, parent: HTMLElement, output: HTMLElement): import("€@codemirror/view").EditorView;
+    export function string(code: string, element: HTMLElement): Promise<void>;
 }
 
 
@@ -80,20 +90,20 @@ declare module "#render" {
 
 // INTERFACE -> NAVBAR
 declare module "=navbar" {
-    export async function activate(): Promise<void>;
-    export async function deactivate(): Promise<void>;
+    export function activate(): Promise<void>;
+    export function deactivate(): Promise<void>;
 }
 
 // INTERFACE -> TOOLTIP
 declare module "=tooltip" {
-    export async function activate(): Promise<void>;
-    export async function deactivate(): Promise<void>;
+    export function activate(): Promise<void>;
+    export function deactivate(): Promise<void>;
 }
 
 // INTERFACE -> TOPBAR
 declare module "=topbar" {
-    export async function activate(): Promise<void>;
-    export async function deactivate(): Promise<void>;
+    export function activate(): Promise<void>;
+    export function deactivate(): Promise<void>;
 }
 
 
@@ -105,9 +115,14 @@ declare module "=topbar" {
 declare module "€react" {
     export function useState(arg1: any): any;
     export function useEffect(arg1: any, arg2: any): any;
-    export class ReactNode {};
-    export class ReactElement {};
+    export class ReactNode {}
+    export class ReactElement {}
     export const FormEvent: any;
+    export type FormEvent<Type = Element> = {
+        currentTarget: Type;
+        preventDefault: () => void;
+    }
+    export function Suspense(arg1: {fallback?: ReactNode; children?: ReactNode}): ReactElement;
 }
 
 // EXTERN -> REACT DOM
@@ -129,12 +144,12 @@ declare module "€@codemirror/state" {
 // EXTERN -> CODEMIRROR VIEW
 declare module "€@codemirror/view" {
     export class EditorView {
-        constructor(arg1: any): any;
+        constructor(arg1: any);
         [key: string]: any;
         static updateListener: any;
         static theme: any;
         static lineWrapping: any;
-    };
+    }
     export class keymap {
         static of: any;
     }

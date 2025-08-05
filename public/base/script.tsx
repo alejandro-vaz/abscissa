@@ -32,7 +32,12 @@ export const SUG = {
     },
     get TIT(): string {return document.title},
     get DES(): string {return document.querySelector<HTMLMetaElement>('meta[name="description"]').content},
-    ORG: await connect("Main")
+    ORG: await connect("Main"),
+    PAT: {
+        Uemail: /^[A-Za-z0-9._%\-]{8,64}@gmail\.com$/,
+        Uhashpass: /^.{8,64}$/,
+        Uname: /^[a-zA-Z0-9_-]{4,32}$/
+    }
 }
 
 
@@ -41,63 +46,72 @@ export const SUG = {
 //
 
 // WINDOW MANAGEMENT -> REDIRECT
-export async function redirect(target: string, update: boolean): Promise<void> {
-    if (target === window.location.pathname && update) {return}
-    switch (SUG.ORG.classList[0]) {
-        case "_": await _.hide(); break;
-        case "_dashboard": await _dashboard.hide(); break;
-        case "_playground": await _playground.hide(); break;
-        default: await _error.hide();
-    }
-    SUG.ORG.classList.remove(...SUG.ORG.classList);
-    if (update) {history.pushState(null, '', target)}
-    switch (SUG.VWD[0]) {
-        case '': {
-            SUG.ORG.classList.add("_");
-            await _.show(); 
-            break;
+export async function redirect(target: string, append: boolean = true, divide: boolean = false): Promise<void> {
+    if (target === window.location.pathname && append && !divide) {return}
+    if (divide) {
+        window.open("https://" + window.location.host + target, "_blank");
+    } else {
+        switch (SUG.ORG.classList[0]) {
+            case "_": await _.hide(); break;
+            case "_dashboard": await _dashboard.hide(); break;
+            case "_playground": await _playground.hide(); break;
+            default: await _error.hide();
         }
-        case 'dashboard': {
-            SUG.ORG.classList.add("_dashboard");
-            await _dashboard.show(); 
-            break;
-        }
-        case 'playground': {
-            SUG.ORG.classList.add("_playground");
-            await _playground.show(); 
-            break;
-        }
-        default: {
-            SUG.ORG.classList.add("_error"); 
-            await _error.show();
+        SUG.ORG.classList.remove(...SUG.ORG.classList);
+        if (append) {history.pushState(null, '', target)}
+        switch (SUG.VWD[0]) {
+            case '': {
+                SUG.ORG.classList.add("_");
+                await _.show(); 
+                break;
+            }
+            case 'dashboard': {
+                SUG.ORG.classList.add("_dashboard");
+                await _dashboard.show(); 
+                break;
+            }
+            case 'playground': {
+                SUG.ORG.classList.add("_playground");
+                await _playground.show(); 
+                break;
+            }
+            default: {
+                SUG.ORG.classList.add("_error"); 
+                await _error.show();
+            }
         }
     }
 }
 
-// WINDOW MANAGEMENT -> VIEW LOADER
-document.addEventListener('DOMContentLoaded', () => {
-    redirect(window.location.pathname, false);
+// WINDOW MANAGEMENT -> CHECK ASPECT RATIO
+async function aspectRatio() {
     if (
-        window.innerWidth / window.innerHeight < 3 / 2 && 
-        SUG.VWD[0] !== 'error' && SUG.VWD[1] !== '0'
+        window.innerWidth / window.innerHeight < 3 / 2 &&
+        SUG.VWD[0] !== 'error' &&
+        SUG.VWD[1] !== '0'
     ) {
-        redirect("/error/0", true);
+        await redirect('/error/0');
     } else if (
-        window.innerWidth / window.innerHeight >= 3 / 2 && 
-        SUG.VWD[0] === 'error' && SUG.VWD[1] === '0'
+        window.innerWidth / window.innerHeight >= 3 / 2 &&
+        SUG.VWD[0] === 'error' &&
+        SUG.VWD[1] === '0'
     ) {
-        redirect("/dashboard", true);
+        await redirect('/dashboard');
     }
-})
+}
+
+// WINDOW MANAGEMENT -> ASPECT RATIO
+document.addEventListener('DOMContentLoaded', async() => {await redirect(window.location.pathname, false); await aspectRatio()})
+window.addEventListener("resize", aspectRatio);
 
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
-window.addEventListener('popstate', () => {
-    redirect(window.location.pathname, false);
+window.addEventListener('popstate', async() => {
+    await redirect(window.location.pathname, false);
 })
 
 // WINDOW MANAGEMENT -> NO CONTEXTMENU
-document.addEventListener("contextmenu", (open) => {
-    open.preventDefault();
+document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
 })
 
 // WINDOW MANAGEMENT -> TITLE
@@ -132,45 +146,30 @@ export async function modulator(...activate: string[]): Promise<void> {
 
 
 //
-//  ERRORS
-//
-
-// ERRORS -> VERTICAL SCREEN
-window.addEventListener("resize", () => {
-    if (
-        window.innerWidth / window.innerHeight < 3 / 2 && 
-        SUG.VWD[0] !== 'error' && SUG.VWD[1] !== '0'
-    ) {
-        redirect("/error/0", true);
-    } else if (
-        window.innerWidth / window.innerHeight >= 3 / 2 && 
-        SUG.VWD[0] === 'error' && SUG.VWD[1] === '0'
-    ) {
-        redirect("/dashboard", true);
-    }
-});
-
-
-//
 //  API                                                                       
 //
 
 // API -> REQUEST
 export async function curl(script: string, data: object): Promise<object | boolean | string | number | null> {
-    return (await fetch(
-        ("https://") +
-        (window.location.host) +
-        ("/api/") +
-        (script.replace(/^\/+/, '')),
-        {
-            cache: "no-store",
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }
-    )).json();
+    try {
+        return (await fetch(
+            ("https://") +
+            (window.location.host) +
+            ("/api/") +
+            (script.replace(/^\/+/, '')),
+            {
+                cache: "no-store",
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+        )).json();
+    } catch (error) {
+        debug(error);
+        return false;
+    }
 }
 
 
@@ -183,7 +182,11 @@ export async function inject(root: HTMLElement, content: react.ReactNode): Promi
     return new Promise<void>((resolve) => {
         function Wrapper(): react.ReactElement {
             react.useEffect(() => {resolve()}, []);
-            return <>{content}</>
+            return <>
+                <react.Suspense>
+                    {content}
+                </react.Suspense>
+            </>
         }
         reactdom.createRoot(root).render(<Wrapper/>);
     });
@@ -214,22 +217,32 @@ export async function connect(path: string): Promise<HTMLElement> {
 
 
 //
-//  DEBUG
-//
-
-// DEBUG -> FUNCTION
-export function debug(...variables: any[]): void {
-    for (const variable of variables) {
-        console.warn(variable)
-    }
-}
-
-
-//
 //  TIME
 //
 
 // TIME -> DELAY
 export async function delay(seconds: number): Promise<void> {
     return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
+}
+
+
+//
+//  REGEX
+//
+
+// REGEX -> VALIDATE
+export function check(input: string, pattern: RegExp): boolean {
+    return pattern.test(input);
+}
+
+
+//
+//  DEBUG
+//
+
+// DEBUG -> FUNCTION
+export function debug(...variables: any[]): void {
+    for (const variable of variables) {
+        console.log(variable)
+    }
 }

@@ -39,7 +39,7 @@ export async function show(): Promise<void> {
         <>
             <div id="Container">
                 <h2>Jump right in</h2>
-                <div class="problem" id="Daily" onClick={() => $.redirect("/problem/00000000", true)}>
+                <div class="problem" id="Daily" onClick={async() => await $.redirect("/problem/00000000")} tooltip="yeah">
                     <div id="Wrapper">
                         <h3 id="Title">{data.Pdataen.title}</h3>
                         <div id="Data">

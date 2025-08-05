@@ -10,14 +10,14 @@ from website import *
 
 
 #
-#   JSON
+#   RESPONSE
 #
 
-# JSON -> MODULES
+# RESPONSE -> MODULES
 import datetime
 import json
 
-# JSON -> CLASS
+# RESPONSE -> CLASS
 class namespace:
     # CLASS -> VARIABLES
     data: dict | int | float | str | bool | list | None
@@ -31,7 +31,7 @@ class namespace:
             for index in range(len(data)):
                 data[index] = self.convert(data[index])
         self.data = data
-    def convert(self, value: any) -> dict | int | float | str | bool | list | None:
+    def convert(self, value: Any) -> dict | int | float | str | bool | list | None:
         match value:
             case datetime.datetime(): return value.isoformat()
             case bytes(): return value.hex().upper()

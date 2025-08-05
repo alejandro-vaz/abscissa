@@ -7,7 +7,7 @@ It is currently on the early stages, so don't get too motivated. This is a pre-a
 
 **We ship every Sunday.**
 
-Check it out live on [*Abscissa*](https://abscissa.eu)
+Check it out live on [*our website.*](https://abscissa.eu)
 
 I say *we* but I'm indeed a solo developer for now, so if you want to get involved learn
 

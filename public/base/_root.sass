@@ -76,11 +76,15 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
         +cursor(click)
         +blurred()
         transition: border-color $TIMER1 $CURVE1, background-color $TIMER1 $CURVE1, color $TIMER1 $CURVE1
-        &:hover
-            background-color: $TOUCH
-        &:active
-            border-color: $LIGHT
-            color: $LIGHT
+        &:not(:disabled)
+            &:hover
+                background-color: $TOUCH
+            &:active
+                border-color: $LIGHT
+                color: $LIGHT
+        &:disabled
+            background-color: $INVERTED
+            +cursor(default)
     @if $type == textarea
         +cursor(text)
         background-color: $INVERTED
