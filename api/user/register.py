@@ -15,6 +15,7 @@ router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
 from website.extensions import (
+    cryptography as _cryptography,
     database as _database,
     post as _post,
     response as _response
@@ -24,6 +25,7 @@ from website.extensions import (
 @router.post("/api/user/register")
 async def output(request: Request) -> JSONResponse:
     # DECLARATION -> ACTIVATE EXTENSIONS
+    cryptography = await _cryptography.namespace().init(request)
     database = await _database.namespace().init(request)
     post = await _post.namespace().init(request)
     response = await _response.namespace().init(request)
@@ -37,7 +39,7 @@ async def output(request: Request) -> JSONResponse:
         [
             post.data["Uname"],
             post.data["Uemail"],
-            post.data["Uhashpass"]
+            cryptography.hash(post.data["Uhashpass"])
         ]
     ))
     return response.get()

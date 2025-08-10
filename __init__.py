@@ -5,12 +5,13 @@
 # INITIALIZATION -> COMMON MODULES
 import sys
 from fastapi import Request, HTTPException, APIRouter, Response
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from contextvars import ContextVar
 import fastapi
 import asyncio
 import aiomysql
 from aiomysql import Connection
+from typing import Any
 
 # INITIALIZATION -> SUPERGLOBALS
 import SUG
@@ -21,7 +22,7 @@ import SUG
 #
 
 # FUNCTIONS -> DEBUG
-def debug(*variables: any) -> None:
+def debug(*variables: Any) -> None:
     for variable in variables:
         print(f"DEBUG: {repr(variable)}", file=sys.stderr)
 
@@ -33,5 +34,7 @@ def add(*extensions: str) -> str:
     return "\n\n".join(code)
 
 # FUNCTIONS -> SAFE ACCESS
-def º(array: list | dict, key: int | str) -> any:
-    return array[key] if key in (array if isinstance(array, dict) else range(len(array))) else None
+def º(array: list | dict, key: int | str) -> Any:
+    match array:
+        case dict(): return array[key] if key in array else None
+        case list(): return array[int(key)] if int(key) < len(array) else None

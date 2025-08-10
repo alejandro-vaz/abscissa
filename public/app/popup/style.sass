@@ -31,23 +31,19 @@
         > #Header
             +root.section(normal, flex-end, center, $direction: row, $height: 2vw, $grow: false)
             > #Close
-                +root.cursor(click)
-                height: 100%
                 z-index: 2500
-                box-sizing: border-box
-                border: root.$BORDER1 solid transparent
-                width: fit-content
-                border-radius: root.$RADIUS
-                transition: border-width root.$TIMER1 root.$CURVE1
-                &:hover
-                    border-width: 0
+                justify-content: flex-end
         > #Header + div
             margin-top: -2.25vw
             +root.section(normal, normal, center, $height: fit-content, $grow: false)
         > #Auth
-            > input[type="button"]
+            > #Change
                 width: 100%
-            > h2
+            > #Title
                 margin-top: 0
-            > form
+            > #Form
                 margin-bottom: root.$MARGIN
+                > #Agreement
+                    text-align: center
+                    display: flex
+                    flex-wrap: wrap

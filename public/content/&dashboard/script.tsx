@@ -4,7 +4,8 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
-import * as Render from "#render";
+import * as ß from "ß";
+import * as Mathsys from "#mathsys";
 
 
 //
@@ -13,7 +14,7 @@ import * as Render from "#render";
 
 // REMOVE -> FUNCTION
 export async function hide(): Promise<void> {
-    await $.inject($.SUG.ORG, <></>);
+    await ß.inject($.SUG.ORG, <></>);
 }
 
 
@@ -35,15 +36,15 @@ export async function show(): Promise<void> {
     // FUNCTION -> CONTENT
     const data = await $.curl("problem/lookup", {Pid: "00000000"}) as any;
     const info = await $.curl("problem/lookup", {Pid: "00000001"}) as any;
-    await $.inject($.SUG.ORG,
+    await ß.inject($.SUG.ORG,
         <>
             <div id="Container">
                 <h2>Jump right in</h2>
-                <div class="problem" id="Daily" onClick={() => $.redirect("/problem/00000000", true)}>
+                <div class="problem" id="Daily" onClick={async() => await $.redirect("/problem/00000000")} tooltip="yeah">
                     <div id="Wrapper">
                         <h3 id="Title">{data.Pdataen.title}</h3>
                         <div id="Data">
-                            <div id="Description" ref={async(node) => await Render.string(data.Pdataen.instructions, node)}></div>
+                            <div id="Description" ref={async(node) => await Mathsys.view(data.Pdataen.instructions, node)}></div>
                             <img id="Image"/>
                         </div>
                     </div>

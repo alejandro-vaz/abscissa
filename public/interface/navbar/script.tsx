@@ -4,8 +4,12 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
+import * as ß from "ß";
 import * as DiceBear from "#dicebear";
 import * as Popup from "#popup";
+
+// HEAD -> COMPONENTS
+import $SVGIcon from "ßSVGIcon";
 
 // HEAD -> INTERFACE NAVBAR
 const origin = await $.connect("InterfaceNavbar");
@@ -19,7 +23,7 @@ const origin = await $.connect("InterfaceNavbar");
 let navbarState = true;
 
 // NAVBAR -> OPENER FUNCTION
-function alternate(event) {
+function alternate(event: MouseEvent) {
     let navbarStateChange;
     if (navbarState) {
         navbarStateChange = !(event.clientX <= window.innerWidth * 0.06)
@@ -44,50 +48,29 @@ export async function activate(): Promise<void> {
     if (validate) {
         user = await $.curl("user/data", {});
     }
-    await $.inject(origin,
+    await ß.inject(origin,
         <>
             <div id="Container">
-                <img 
-                    src="/public/svg/logoLight.svg" 
-                    className="icon" 
-                    onClick={() => $.redirect("/dashboard", true)}
-                    onContextMenu={() => $.redirect("/dashboard", true) && $.redirect("/dashboard", false)}
+                <$SVGIcon
+                    path="/public/svg/logoLight.svg"
+                    id="Dashboard"
+                    onClick={async() => await $.redirect("/dashboard")}
+                    onContextMenu={async() => await $.redirect("/dashboard", true, true)}
                     tooltip="Go to dashboard"
                 />
-                <img 
-                    src="/public/interface/navbar/svg/search.svg" 
-                    className="icon" 
-                    onClick={() => $.redirect("/search", true)}
-                    onContextMenu={() => $.redirect("/search", true) && $.redirect("/search", false)}
-                    tooltip="Go to search"
-                />
-                <img 
-                    src="/public/interface/navbar/svg/playground.svg" 
-                    className="icon" 
-                    onClick={() => $.redirect("/playground", true)}
-                    onContextMenu={() => $.redirect("/playground", true) && $.redirect("/playground", false)}
+                <$SVGIcon 
+                    path="/public/interface/navbar/svg/playground.svg" 
+                    id="Playground"
+                    onClick={async() => await $.redirect("/playground")}
+                    onContextMenu={async() => await $.redirect("/playground", true, true)}
                     tooltip="Go to playground"
                 />
-                <img 
-                    src="/public/interface/navbar/svg/stats.svg" 
-                    className="icon" 
-                    onClick={() => $.redirect("/stats", true)}
-                    onContextMenu={() => $.redirect("/stats", true) && $.redirect("/stats", false)}
-                    tooltip="Go to stats"
-                />
-                <img 
-                    src={validate ? DiceBear.icon(user.Uname) : "/public/interface/navbar/svg/user.svg" }
-                    className="icon" 
-                    onClick={() => validate ? $.redirect("/user", true) : Popup.create("auth")}
-                    onContextMenu={() => validate ? $.redirect("/user", true) && $.redirect("/user", false) : Popup.create("auth")}
+                <$SVGIcon 
+                    path={validate ? DiceBear.icon(user.Uname) : "/public/interface/navbar/svg/user.svg"}
+                    id="User"
+                    onClick={async() => validate ? await $.redirect("/user") : Popup.create("auth")}
+                    onContextMenu={async() => validate ? await $.redirect("/user", true, true) : Popup.create("auth")}
                     tooltip={validate ? "Go to your profile" : "Log in or register"}
-                />
-                <img 
-                    src="/public/interface/navbar/svg/settings.svg" 
-                    className="icon" 
-                    onClick={() => $.redirect("/settings", true)}
-                    onContextMenu={() => $.redirect("/settings", true) && $.redirect("/settings", false)}
-                    tooltip="Go to settings"
                 />
             </div>
         </>
@@ -98,5 +81,5 @@ export async function activate(): Promise<void> {
 // NAVBAR -> DEACTIVATE
 export async function deactivate(): Promise<void> {
     window.removeEventListener('mousemove', alternate);
-    await $.inject(origin, <></>);
+    await ß.inject(origin, <></>);
 }

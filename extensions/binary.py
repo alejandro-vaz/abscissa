@@ -15,11 +15,20 @@ from website import *
 
 # BINARY -> CLASS
 class namespace:
+    # CLASS -> VARIABLES
+    data: bytes
     # CLASS -> INIT
     async def init(self, request: Request) -> namespace: return self
-    # CLASS -> STRING TO BYTES
-    def str2bin(self, hexadecimal: str) -> bytes:
-        return bytes.fromhex(hexadecimal)
-    # CLASS -> BYTES TO STRING
-    def bin2str(self, bytecode: bytes) -> str:
-        return bytecode.hex().upper()
+    # CLASS -> LOAD
+    def load(self, data: bytes | str) -> None:
+        self.data = data if isinstance(data, bytes) else bytes.fromhex(data)
+    # CLASS -> SERIALIZE
+    def serialize(self) -> str:
+        return self.data.hex().upper()
+    # CLASS -> GET
+    def get(self) -> StreamingResponse:
+        def iterator() -> object:
+            size = 8192
+            for index in range(0, len(self.data), size):
+                yield self.data[index:index+size]
+        return StreamingResponse(iterator(), media_type = "application/wasm")

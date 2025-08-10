@@ -1,0 +1,40 @@
+//                                                                            
+//  HEAD                                                                      
+//                                                                            
+
+// MODULES
+@use "../base/root"
+
+
+//
+//  COMPONENTS
+//
+
+// COMPONENTS -> SVGICON
+:where(html)
+    :where(.svg-icon)
+        +root.cursor(click)
+        padding: 0
+        display: flex
+        flex-wrap: nowrap
+        flex: 1 0 auto
+        box-sizing: border-box
+        aspect-ratio: 1
+        max-width: 100%
+        max-height: 100%
+        border-style: solid
+        border-color: transparent
+        background: transparent
+        border-radius: 100%
+    :where(.word-appear-text)
+        > span
+            display: inline-block
+            white-space: pre
+    :where(.button)
+        box-sizing: border-box
+        padding: root.$PADDING1
+        border-radius: root.$RADIUS
+        border-width: root.$BORDER2
+        border-style: solid
+        height: fit-content
+        backdrop-filter: blur(1vw)

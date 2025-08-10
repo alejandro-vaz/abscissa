@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
+import * as ß from "ß";
 
 // HEAD -> INTERFACE TOOLTIP
 const origin = await $.connect("InterfaceTooltip");
@@ -19,10 +20,10 @@ let text;
 
 // TOOLTIP -> MOUSEOVER FUNCTION
 function mouseover(event: MouseEvent): void {
-    const target = (event.target as HTMLElement)?.closest("[tooltip]");
+    const target = (event.target as HTMLElement)?.closest("[data-tooltip]");
     if (target) {
         timer = setTimeout(() => {
-            text.textContent = target.getAttribute("tooltip");
+            text.textContent = target.getAttribute("data-tooltip");
             text.style.opacity = "1";
         }, 0);
     }
@@ -30,7 +31,7 @@ function mouseover(event: MouseEvent): void {
 
 // TOOLTIP -> MOUSEOUT
 function mouseout(event: MouseEvent): void {
-    if ((event.target as HTMLElement)?.closest("[tooltip]")) {
+    if ((event.target as HTMLElement)?.closest("[data-tooltip]")) {
         clearTimeout(timer);
         text.style.opacity = "0";
     }
@@ -40,7 +41,7 @@ function mouseout(event: MouseEvent): void {
 export async function activate(): Promise<void> {
     timer = undefined;
     text = undefined;
-    await $.inject(origin,
+    await ß.inject(origin,
         <>
             <p id="Text" ref={(node) => {text = node}}></p>
         </>
@@ -53,5 +54,5 @@ export async function activate(): Promise<void> {
 export async function deactivate(): Promise<void> {
     window.removeEventListener("mouseout", mouseout);
     window.removeEventListener("mouseover", mouseover);
-    await $.inject(origin, <></>);
+    await ß.inject(origin, <></>);
 }

@@ -320,3 +320,13 @@
 - [X] (Patch) Removed second problem from dashboard.
 - [X] (Patch) Improved problems appearance in dashboard.
 - [X] (Patch) Added *Python* linter config.
+### *Abscissa* 4.3.4 `1-3-5`
+- [X] (Patch) Added `AGENTS.md`
+- [X] (Minor) Added cryptography *API* extension.
+- [X] (Major) Updated to an unreleased version of *Mathsys* that allows executing code in the browser.
+- [X] (Minor) Added a binary stream function on frontend and a way of passing binary data from the *API.*
+- [X] (Patch) Modified root user and password length in the database.
+- [X] (Patch) Improved external modules handling.
+- [X] (Patch) Renamed app module render to *Mathsys.*
+- [X] (Minor) Started adding *Motion* components with their own style and trimming the base `style.sass`.
+- [X] (Patch) Added *TSX* regex validation.
