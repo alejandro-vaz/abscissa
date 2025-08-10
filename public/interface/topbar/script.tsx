@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
+import * as ß from "ß";
 
 // HEAD -> INTERFACE TOPBAR
 const origin = await $.connect("InterfaceTopbar");
@@ -56,7 +57,7 @@ export async function activate(): Promise<void> {
     description = undefined;
     timer = undefined;
     topbarState = true;
-    await $.inject(origin,
+    await ß.inject(origin,
         <>
             <h1 id="Title" ref={(node) => {title = node}}></h1>
             <p id="Description" ref={(node) => {description = node}}></p>
@@ -78,5 +79,5 @@ export async function activate(): Promise<void> {
 export async function deactivate(): Promise<void> {
     observer.disconnect();
     window.removeEventListener("mousemove", alternate);
-    await $.inject(origin, <></>);
+    await ß.inject(origin, <></>);
 }

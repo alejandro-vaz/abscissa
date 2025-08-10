@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
+import * as ß from "ß";
 
 
 //
@@ -12,7 +13,7 @@ import * as $ from "$";
 
 // REMOVE -> FUNCTION
 export async function hide(): Promise<void> {
-    await $.inject($.SUG.ORG, <></>);
+    await ß.inject($.SUG.ORG, <></>);
 }
 
 
@@ -30,7 +31,7 @@ export async function show(): Promise<void> {
     $.setTitle("Abscissa");
     $.setDescription("Landing page.");
     // FUNCTION -> CONTENT
-    await $.inject($.SUG.ORG, 
+    await ß.inject($.SUG.ORG, 
         <>
             <h1>LeetCode but for math</h1>
             <h3>Learn math by solving real problems</h3>

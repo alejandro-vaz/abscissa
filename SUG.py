@@ -5,6 +5,8 @@
 # MASTER SUPERGLOBALS -> SCRIPTS
 SRC = [
     "/mathsys/compile",
+    "/mathsys/validate",
+    "/mathsys/view",
     "/problem/lookup",
     "/session/validate",
     "/user/data",

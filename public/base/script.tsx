@@ -2,10 +2,6 @@
 //  HEAD
 //
 
-// HEAD -> MODULES
-import react from "€react";
-import * as reactdom from '€react-dom/client';
-
 // HEAD -> VIEWS
 import * as _ from "&";
 import * as _dashboard from "&dashboard";
@@ -149,48 +145,64 @@ export async function modulator(...activate: string[]): Promise<void> {
 //  API                                                                       
 //
 
-// API -> REQUEST
+// API -> JSON RESPONSE
 export async function curl(script: string, data: object): Promise<object | boolean | string | number | null> {
-    try {
-        return (await fetch(
-            ("https://") +
-            (window.location.host) +
-            ("/api/") +
-            (script.replace(/^\/+/, '')),
-            {
-                cache: "no-store",
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }
-        )).json();
-    } catch (error) {
-        debug(error);
-        return false;
+    return (await fetch(
+        ("https://") +
+        (window.location.host) +
+        ("/api/") +
+        (script.replace(/^\/+/, '')),
+        {
+            cache: "no-store",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+    )).json();
+}
+
+// API -> STREAMING RESPONSE
+export async function stream(script: string, data: object): Promise<ArrayBuffer> {
+    const response = await fetch(
+        ("https://") +
+        (window.location.host) +
+        ("/api/") +
+        (script.replace(/^\/+/, '')),
+        {
+            cache: "no-store",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+    );
+    const reader = response.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let totalLength = 0;
+    while (true) {
+        const {done, value} = await reader.read();
+        if (done) {break}
+        if (value) {
+            chunks.push(value);
+            totalLength += value.length;
+        }
     }
+    const result = new Uint8Array(totalLength);
+    let offset = 0;
+    for (const chunk of chunks) {
+        result.set(chunk, offset);
+        offset += chunk.length;
+    }
+    return result.buffer.slice(result.byteOffset, result.byteOffset + result.byteLength);
 }
 
 
 //
 //  ELEMENTS
 //
-
-// ELEMENTS -> REPLACE CONTENT
-export async function inject(root: HTMLElement, content: react.ReactNode): Promise<void> {
-    return new Promise<void>((resolve) => {
-        function Wrapper(): react.ReactElement {
-            react.useEffect(() => {resolve()}, []);
-            return <>
-                <react.Suspense>
-                    {content}
-                </react.Suspense>
-            </>
-        }
-        reactdom.createRoot(root).render(<Wrapper/>);
-    });
-}
 
 // ELEMENTS -> CONNECT
 export async function connect(path: string): Promise<HTMLElement> {

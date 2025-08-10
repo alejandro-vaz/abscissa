@@ -34,10 +34,11 @@ async def output(request: Request) -> JSONResponse:
     # DECLARATION -> ARGUMENT RELATIONSHIP
     if not post.exists("Pid"): raise HTTPException(**SUG.ERR[1])
     # DECLARATION -> QUERY
+    binary.load(post.data["Pid"])
     response.load(º(await database.query(
         "SELECT * FROM PROBLEMS WHERE Pid = %s",
         [
-            binary.str2bin(post.data["Pid"])
+            binary.data
         ]
     ), 0))
     response.tojson("Pmeta", "Pdataen", "Pdataes", "Pdatade", "Psolution")

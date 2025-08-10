@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
+import * as ß from "ß";
 
 
 //
@@ -12,7 +13,7 @@ import * as $ from "$";
 
 // REMOVE -> FUNCTION
 export async function hide(): Promise<void> {
-    await $.inject($.SUG.ORG, <></>);
+    await ß.inject($.SUG.ORG, <></>);
 }
 
 
@@ -47,7 +48,7 @@ export async function show(): Promise<void> {
     $.setTitle("Error");
     $.setDescription(description);
     // FUNCTION -> CONTENT
-    await $.inject($.SUG.ORG,
+    await ß.inject($.SUG.ORG,
         <>
             <h2>{code}</h2>
             <p>{description}</p>

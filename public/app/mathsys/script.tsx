@@ -4,25 +4,33 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
-import * as katex from "€katex/contrib/auto-render";
+import katex from "€katex/contrib/auto-render";
 import * as codemirrorState from '€@codemirror/state';
 import * as codemirrorView from '€@codemirror/view';
 import * as codemirrorCommands from '€@codemirror/commands';
 
 
 //
-//  RENDER
+//  MATHSYS
 //
 
-// RENDER -> PLAYGROUND
-export function playground(text: string, parent: HTMLElement, output: HTMLElement): codemirrorView.EditorView {
+// RENDER -> MATHSYS EXIT
+class MathsysExit extends Error {
+    constructor(public exitCode: number) {
+        super(`Mathsys halted with code ${exitCode}`);
+        this.name = "MathsysExit";
+    }
+}
+
+// MATHSYS -> PLAYGROUND
+export async function playground(text: string, parent: HTMLElement, output: HTMLElement): Promise<codemirrorView.EditorView> {
     let timer;
     const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
         if (update.docChanged) {
             clearTimeout(timer);
-            timer = setTimeout(() => {
-                string(update.state.doc.toString(), output);
-            }, 250);
+            timer = setTimeout(async() => {
+                await view(update.state.doc.toString(), output);
+            }, 125);
         }
     })
     const state = codemirrorState.EditorState.create({
@@ -67,25 +75,57 @@ export function playground(text: string, parent: HTMLElement, output: HTMLElemen
             codemirrorView.EditorView.lineWrapping
         ]
     })
-    string(state.doc.toString(), output);
+    await view(state.doc.toString(), output);
     return new codemirrorView.EditorView({
         state: state,
         parent: parent
     })
 }
 
-// RENDER -> STRING
-export async function string(code: string, element: HTMLElement): Promise<void> {
-    const result = await $.curl("mathsys/compile", {Mcode: code}) as boolean | string;
+// MATHSYS -> VIEW
+export async function view(code: string, element: HTMLElement): Promise<void> {
+    const result = await $.curl("mathsys/view", {Mcode: code}) as string | boolean;
     if (result !== false) {
         element.textContent = result as string;
-        katex.default(element, {
+        katex(element, {
             delimiters: [
                 {left: "$$", right: "$$", display: true},
-                {left: "$", right: "$", display: false}
+                {left: "$", right: "$", display: true}
             ],
             strict: false,
             throwOnError: false,
         });
     }
+}
+
+// MATHSYS -> COMPILE
+export async function run(code: string): Promise<string> {
+    const output = [];
+    let runtime: WebAssembly.Instance;
+    runtime = (await WebAssembly.instantiate(
+        await WebAssembly.compile(await $.stream("mathsys/compile", {Mcode: code})),
+        {
+            env: {},
+            sys: {
+                call1: (pointer, length) => {
+                    output.push(new TextDecoder("utf-8").decode(
+                        new Uint8Array((runtime.exports.memory as WebAssembly.Memory).buffer, pointer, length)
+                    ));
+                },
+                call60: (exitCode) => {
+                    throw new MathsysExit(exitCode);
+                }
+            }
+        }
+    ));
+    try {
+        (runtime.exports._start as Function)();
+    } catch (error) {
+        if (error instanceof MathsysExit) {
+            output.push(`Mathsys exited with code ${error.exitCode}.`)
+        } else {
+            throw error;
+        }
+    }
+    return output.join("");
 }
