@@ -6,6 +6,9 @@
 import * as $ from "$";
 import * as ß from "ß";
 
+// HEAD -> COMPONENTS
+import $Button from "ßButton";
+
 
 //
 //  REMOVE
@@ -39,6 +42,12 @@ export async function show(): Promise<void> {
                 type="button" 
                 value="Try it now"
                 onClick={async() => await $.redirect("/playground", true)}
+            />
+            <$Button
+                text="Try it now"
+                onClick={async() => await $.redirect("/playground", true)}
+                id="CTA"
+                tooltip=""
             />
         </>
     )

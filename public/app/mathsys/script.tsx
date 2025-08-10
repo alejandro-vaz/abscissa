@@ -30,7 +30,7 @@ export async function playground(text: string, parent: HTMLElement, output: HTML
             clearTimeout(timer);
             timer = setTimeout(async() => {
                 await view(update.state.doc.toString(), output);
-            }, 125);
+            }, 100);
         }
     })
     const state = codemirrorState.EditorState.create({
