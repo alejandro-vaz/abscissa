@@ -7,7 +7,7 @@ import * as $ from "$";
 import * as ß from "ß";
 
 // HEAD -> INTERFACE TOPBAR
-const origin = await $.connect("InterfaceTopbar");
+const root = await ß.createRoot("InterfaceTopbar");
 
 
 //
@@ -57,10 +57,10 @@ export async function activate(): Promise<void> {
     description = undefined;
     timer = undefined;
     topbarState = true;
-    await ß.inject(origin,
+    await ß.inject(root,
         <>
-            <h1 id="Title" ref={(node) => {title = node}}></h1>
-            <p id="Description" ref={(node) => {description = node}}></p>
+            <h1 id="Title" ref={ß.mount((node) => {title = node})}></h1>
+            <p id="Description" ref={ß.mount((node) => {description = node})}></p>
         </>
     )
     window.addEventListener("mousemove", alternate);
@@ -79,5 +79,5 @@ export async function activate(): Promise<void> {
 export async function deactivate(): Promise<void> {
     observer.disconnect();
     window.removeEventListener("mousemove", alternate);
-    await ß.inject(origin, <></>);
+    await ß.clean(root);
 }

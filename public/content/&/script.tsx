@@ -11,43 +11,27 @@ import $Button from "ßButton";
 
 
 //
-//  REMOVE
-//
-
-// REMOVE -> FUNCTION
-export async function hide(): Promise<void> {
-    await ß.inject($.SUG.ORG, <></>);
-}
-
-
-//
 //  CONTENT
 //
 
 // CONTENT -> FUNCTION
-export async function show(): Promise<void> {
+export default function $_(): Promise<ß.ReactNode> {
     // FUNCTION -> INTERFACE
-    await $.modulator(
+    $.modulator(
         "tooltip"
     )
-    // FUNCTION -> WINDOW
     $.setTitle("Abscissa");
     $.setDescription("Landing page.");
     // FUNCTION -> CONTENT
-    await ß.inject($.SUG.ORG, 
+    return ( 
         <>
             <h1>LeetCode but for math</h1>
             <h3>Learn math by solving real problems</h3>
-            <input 
-                type="button" 
-                value="Try it now"
-                onClick={async() => await $.redirect("/playground", true)}
-            />
             <$Button
                 text="Try it now"
-                onClick={async() => await $.redirect("/playground", true)}
+                onClick={async() => await $.redirect("/playground")}
                 id="CTA"
-                tooltip=""
+                tooltip="Try it now"
             />
         </>
     )

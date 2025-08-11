@@ -8,47 +8,30 @@ import * as ß from "ß";
 
 
 //
-//  REMOVE
-//
-
-// REMOVE -> FUNCTION
-export async function hide(): Promise<void> {
-    await ß.inject($.SUG.ORG, <></>);
-}
-
-
-//
 //  CONTENT
 //
 
 // CONTENT -> FUNCTION
-export async function show(): Promise<void> {
+export default function $_error(): Promise<ß.ReactNode> {
+    // FUNCTION -> VARIABLES
+    const [code, setCode] = ß.useState(404);
+    const [description, setDescription] = ß.useState("Not found.");
+    try {
+        switch (+$.SUG.VWD[1]) {
+            case 0: {
+                setCode(0);
+                setDescription("Vertical screen error.");
+            }
+        }
+    } catch {}
     // FUNCTION -> INTERFACE
-    await $.modulator(
+    $.modulator(
         "topbar"
     )
-    // FUNCTION -> WINDOW
-    let code;
-    let description;
-    let condition;
-    if ($.SUG.VWD[0] === "error") {
-        condition = +$.SUG.VWD[1];
-    } else {
-        condition = null;
-    }
-    switch (condition) {
-        case 0:
-            code = 0;
-            description = "Vertical screen error.";
-            break;
-        default:
-            code = 404;
-            description = "Not found.";
-    }
-    $.setTitle("Error");
+    $.setTitle(`Error ${code}`);
     $.setDescription(description);
     // FUNCTION -> CONTENT
-    await ß.inject($.SUG.ORG,
+    return (
         <>
             <h2>{code}</h2>
             <p>{description}</p>

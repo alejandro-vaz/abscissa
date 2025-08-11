@@ -13,7 +13,6 @@ declare module "$" {
         }, 
         TIT: string, 
         DES: string, 
-        ORG: HTMLElement,
         PAT: {
             Uemail: RegExp,
             Uhashpass: RegExp,
@@ -26,7 +25,6 @@ declare module "$" {
     export function modulator(...activate: string[]): Promise<void>;
     export function curl(script: string, data: object): Promise<object | boolean | string | number | null>;
     export function stream(script: string, data: object): Promise<ArrayBuffer>;
-    export function connect(path: string): Promise<HTMLElement>;
     export function delay(seconds: number): Promise<void>;
     export function check(input: string, pattern: RegExp): boolean
     export function debug(...variables: any[]): void;
@@ -39,26 +37,22 @@ declare module "$" {
 
 // VIEW -> &
 declare module "&" {
-    export function show(): Promise<void>;
-    export function hide(): Promise<void>;
+    export default function $_(): Promise<import("ß").ReactNode>;
 }
 
 // VIEW -> &DASHBOARD
 declare module "&dashboard" {
-    export function show(): Promise<void>;
-    export function hide(): Promise<void>;
+    export default function $_dashboard(): Promise<import("ß").ReactNode>;
 }
 
 // VIEW -> &ERROR
 declare module "&error" {
-    export function show(): Promise<void>;
-    export function hide(): Promise<void>;
+    export default function $_error(): Promise<import("ß").ReactNode>;
 }
 
 // VIEW -> &PLAYGROUND
 declare module "&playground" {
-    export function show(): Promise<void>;
-    export function hide(): Promise<void>;
+    export default function $_playground(): Promise<import("ß").ReactNode>;
 }
 
 
@@ -114,8 +108,9 @@ declare module "=topbar" {
 
 // EXTERN -> REACT
 declare module "react" {
-    export function useState(arg1: any): any;
+    export function useState<Type>(arg1: any): any;
     export function useEffect(arg1: any, arg2: any): any;
+    export function use<Type>(arg1: Promise<Type>): Type;
     export class ReactNode {}
     export class ReactElement {}
     export const FormEvent: any;
@@ -184,7 +179,7 @@ declare module "@dicebear/identicon" {
     const value: any;
     export default value;
 }
-declare module "€@dicebear/identicon" {export * from "@dicebear/identicon"}
+declare module "€@dicebear/identicon" {export {default} from "@dicebear/identicon"}
 
 // EXTERN -> MOTION
 declare module "motion/react" {
@@ -205,11 +200,19 @@ declare module "€motion/react" {export * from "motion/react"}
 declare module "ß" {
     export type ReactElement = import("€react").ReactElement;
     export type ReactNode = import("€react").ReactNode;
+    export function Suspense(arg1: {fallback?: ReactNode; children?: ReactNode}): ReactElement;
     export const span: any;
     export const button: any;
-    export function inject(root: HTMLElement, content: ReactNode): Promise<void>;
+    export type Reference = {node: HTMLElement; root: any; children: any[]};
+    export const Main: Reference;
+    export function connect(path: string): Promise<HTMLElement>;
+    export function createRoot(id: string): Promise<Reference>;
+    export function inject(reference: Reference, content: ReactNode): Promise<number>;
+    export function clean(reference: Reference): Promise<void>;
     export function useEffect(call: () => void): void;
-    export function useState(value: any): [any, (change) => void];
+    export function useState<Type>(value: any): [any, (change) => void];
+    export function use<Type>(promise: Promise<Type>): Type;
+    export function mount(call: (node) => any): (node) => Promise<void>;
 }
 
 // COMPONENTS -> BUTTON
@@ -223,6 +226,24 @@ declare module "ßButton" {
             tooltip: string,
             disabled?: boolean
         }
+    ): import("ß").ReactElement;
+}
+
+// COMPONENTS -> EDITOR
+declare module "ßEditor" {
+    export default function $Editor(
+        {initial, id, output}: {
+            initial: string,
+            id: string,
+            output: string
+        }
+    ): import("ß").ReactElement;
+}
+
+// COMPONENTS -> SUSPENSE
+declare module "ßSuspense" {
+    export default function $Suspense(
+        {}: {}
     ): import("ß").ReactElement;
 }
 

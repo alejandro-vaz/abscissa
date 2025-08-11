@@ -321,7 +321,7 @@
 - [X] (Patch) Improved problems appearance in dashboard.
 - [X] (Patch) Added *Python* linter config.
 ### *Abscissa* 4.3.4 `1-3-5`
-- [X] (Patch) Added `AGENTS.md`
+- [X] (Patch) Added `AGENTS.md`.
 - [X] (Minor) Added cryptography *API* extension.
 - [X] (Major) Updated to an unreleased version of *Mathsys* that allows executing code in the browser.
 - [X] (Minor) Added a binary stream function on frontend and a way of passing binary data from the *API.*

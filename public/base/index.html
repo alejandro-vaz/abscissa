@@ -22,9 +22,6 @@
     <!-- INTERFACE STYLING PRELOAD : NAVBAR -->
     <link rel="preload" href="/public/interface/navbar/style.css" as="style" type="text/css">
     <link rel="preload" href="/public/interface/navbar/svg/playground.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/public/interface/navbar/svg/search.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/public/interface/navbar/svg/settings.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/public/interface/navbar/svg/stats.svg" as="image" type="image/svg+xml">
     <link rel="preload" href="/public/interface/navbar/svg/user.svg" as="image" type="image/svg+xml">
     <!-- INTERFACE STYLING PRELOAD : TOOLTIP -->
     <link rel="preload" href="/public/interface/tooltip/style.css" as="style" type="text/css">
@@ -33,10 +30,7 @@
     <!--
         APP STYLING PRELOAD
     -->
-    <!-- APP STYLING PRELOAD : DICEBEAR -->
-    <link rel="preload" href="/public/app/dicebear/style.css" as="style" type="text/css">
     <!-- APP STYLING PRELOAD : MATHSYS -->
-    <link rel="preload" href="/public/app/mathsys/style.css" as="style" type="text/css">
     <link rel="preload" href="https://esm.sh/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" as="style" type="text/css" crossorigin="anonymous">
     <!-- APP STYLING PRELOAD : POPUP -->
     <link rel="preload" href="/public/app/popup/style.css" as="style" type="text/css">
@@ -69,10 +63,7 @@
     <!--
         APP STYLING RENDER
     -->
-    <!-- APP STYLING RENDER : DICEBEAR -->
-    <link rel="stylesheet" href="/public/app/dicebear/style.css">
     <!-- APP STYLING RENDER : MATHSYS -->
-    <link rel="stylesheet" href="/public/app/mathsys/style.css">
     <link rel="stylesheet" href="https://esm.sh/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
     <!-- APP STYLING RENDER : POPUP -->
     <link rel="stylesheet" href="/public/app/popup/style.css">
@@ -141,6 +132,8 @@
 
                 "ß": "/public/components/script.js",
                 "ßButton": "/public/components/Button.js",
+                "ßEditor": "/public/components/Editor.js",
+                "ßSuspense": "/public/components/Suspense.js",
                 "ßSVGIcon": "/public/components/SVGIcon.js",
                 "ßWordAppearText": "/public/components/WordAppearText.js"
             }
@@ -157,19 +150,5 @@
     <!-- SETTINGS : JAVASCRIPT -->
     <script type="module" src="/public/base/script.js"></script>
 </head>
-<body>
-    <!--
-        CONTENT
-    -->
-    <!-- CONTENT : APP MODULES -->
-    <div id="AppDicebear"></div>
-    <div id="AppMathsys"></div>
-    <div id="AppPopup"></div>
-    <!-- CONTENT : INTERFACE MODULES -->
-    <div id="InterfaceNavbar"></div>
-    <div id="InterfaceTooltip"></div>
-    <div id="InterfaceTopbar"></div>
-    <!-- CONTENT : VIEW -->
-    <div id="Main"></div>
-</body>
+<body></body>
 </html>

@@ -2,11 +2,14 @@
 //  HEAD
 //
 
+// HEAD -> ẞ
+import * as ß from "ß";
+
 // HEAD -> VIEWS
-import * as _ from "&";
-import * as _dashboard from "&dashboard";
-import * as _error from "&error";
-import * as _playground from "&playground";
+import $_ from "&";
+import $_dashboard from "&dashboard";
+import $_error from "&error";
+import $_playground from "&playground";
 
 // HEAD -> INTERFACE MODULES
 import * as __navbar from "=navbar";
@@ -28,7 +31,6 @@ export const SUG = {
     },
     get TIT(): string {return document.title},
     get DES(): string {return document.querySelector<HTMLMetaElement>('meta[name="description"]').content},
-    ORG: await connect("Main"),
     PAT: {
         Uemail: /^[A-Za-z0-9._%\-]{8,64}@gmail\.com$/,
         Uhashpass: /^.{8,64}$/,
@@ -45,35 +47,30 @@ export const SUG = {
 export async function redirect(target: string, append: boolean = true, divide: boolean = false): Promise<void> {
     if (target === window.location.pathname && append && !divide) {return}
     if (divide) {
-        window.open("https://" + window.location.host + target, "_blank");
+        window.open(`https://${window.location.host}${target}`, "blank");
     } else {
-        switch (SUG.ORG.classList[0]) {
-            case "_": await _.hide(); break;
-            case "_dashboard": await _dashboard.hide(); break;
-            case "_playground": await _playground.hide(); break;
-            default: await _error.hide();
-        }
-        SUG.ORG.classList.remove(...SUG.ORG.classList);
+        ß.Main.node.classList.remove(...ß.Main.node.classList);
+        await ß.clean(ß.Main);
         if (append) {history.pushState(null, '', target)}
         switch (SUG.VWD[0]) {
             case '': {
-                SUG.ORG.classList.add("_");
-                await _.show(); 
+                ß.Main.node.classList.add("_");
+                await ß.inject(ß.Main, <$_/>);
                 break;
             }
             case 'dashboard': {
-                SUG.ORG.classList.add("_dashboard");
-                await _dashboard.show(); 
+                ß.Main.node.classList.add("_dashboard");
+                await ß.inject(ß.Main, <$_dashboard/>);
                 break;
             }
             case 'playground': {
-                SUG.ORG.classList.add("_playground");
-                await _playground.show(); 
+                ß.Main.node.classList.add("_playground");
+                await ß.inject(ß.Main, <$_playground/>);
                 break;
             }
             default: {
-                SUG.ORG.classList.add("_error"); 
-                await _error.show();
+                ß.Main.node.classList.add("_error"); 
+                await ß.inject(ß.Main, <$_error/>);
             }
         }
     }
@@ -97,7 +94,8 @@ async function aspectRatio() {
 }
 
 // WINDOW MANAGEMENT -> ASPECT RATIO
-document.addEventListener('DOMContentLoaded', async() => {await redirect(window.location.pathname, false); await aspectRatio()})
+await redirect(window.location.pathname, false); 
+await aspectRatio()
 window.addEventListener("resize", aspectRatio);
 
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
@@ -126,7 +124,7 @@ export function setDescription(newDescription: string): void {
 //
 
 // MODULE MANAGEMENT -> MODULATOR
-export async function modulator(...activate: string[]): Promise<void> {
+export function modulator(...activate: string[]): void {
     const promises = [];
     for (const mod in SUG.IMD) {
         if (SUG.IMD[mod].active && !activate.includes(mod)) {
@@ -137,7 +135,7 @@ export async function modulator(...activate: string[]): Promise<void> {
             SUG.IMD[mod].active = true;
         }
     }
-    await Promise.all(promises);
+    Promise.all(promises);
 }
 
 
@@ -148,10 +146,7 @@ export async function modulator(...activate: string[]): Promise<void> {
 // API -> JSON RESPONSE
 export async function curl(script: string, data: object): Promise<object | boolean | string | number | null> {
     return (await fetch(
-        ("https://") +
-        (window.location.host) +
-        ("/api/") +
-        (script.replace(/^\/+/, '')),
+        `https://${window.location.host}/api/${script.replace(/^\/+/, '')}`,
         {
             cache: "no-store",
             method: 'POST',
@@ -197,34 +192,6 @@ export async function stream(script: string, data: object): Promise<ArrayBuffer>
         offset += chunk.length;
     }
     return result.buffer.slice(result.byteOffset, result.byteOffset + result.byteLength);
-}
-
-
-//
-//  ELEMENTS
-//
-
-// ELEMENTS -> CONNECT
-export async function connect(path: string): Promise<HTMLElement> {
-    let frames = 0;
-    return new Promise((resolve, reject) => {
-        function tryConnect() {
-            let current = document.body;
-            for (const id of path.split("/")) {
-                current = Array.from(current.children).find((child) => child.id === id) as HTMLElement;
-                if (current === undefined) {break}
-            }
-            if (current !== undefined) {resolve(current)} else {
-                frames++
-                if (frames >= 100) {
-                    reject(new Error(`Could not find element by path "${path}"`))
-                } else {
-                    requestAnimationFrame(tryConnect)
-                }
-            }
-        }
-        tryConnect();
-    })
 }
 
 

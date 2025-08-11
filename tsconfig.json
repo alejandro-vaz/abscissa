@@ -57,6 +57,8 @@
 
             "ß": ["public/components/script.js"],
             "ßButton": ["public/components/Button.js"],
+            "ßEditor": ["public/components/Editor.js"],
+            "ßSuspense": ["public/components/Suspense.js"],
             "ßSVGIcon": ["public/components/SVGIcon.js"],
             "ßWordAppearText": ["public/components/WordAppearText.js"]
         }

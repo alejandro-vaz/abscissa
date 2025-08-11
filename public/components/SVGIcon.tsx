@@ -31,7 +31,7 @@ export default function $SVGIcon(
             whileHover={{borderWidth: 0}}
             transition={{duration: 0.1, ease: "easeInOut"}}
         >
-            <img src={path}/>
+            <img id="Image" src={path}/>
         </ß.button>
     )
 }

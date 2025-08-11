@@ -7,7 +7,7 @@ import * as $ from "$";
 import * as ß from "ß";
 
 // HEAD -> INTERFACE TOOLTIP
-const origin = await $.connect("InterfaceTooltip");
+const root = await ß.createRoot("InterfaceTooltip");
 
 
 //
@@ -41,10 +41,8 @@ function mouseout(event: MouseEvent): void {
 export async function activate(): Promise<void> {
     timer = undefined;
     text = undefined;
-    await ß.inject(origin,
-        <>
-            <p id="Text" ref={(node) => {text = node}}></p>
-        </>
+    await ß.inject(root,
+        <p id="Text" ref={ß.mount((node) => {text = node})}></p>
     )
     window.addEventListener("mouseover", mouseover);
     window.addEventListener("mouseout", mouseout)
@@ -54,5 +52,5 @@ export async function activate(): Promise<void> {
 export async function deactivate(): Promise<void> {
     window.removeEventListener("mouseout", mouseout);
     window.removeEventListener("mouseover", mouseover);
-    await ß.inject(origin, <></>);
+    await ß.clean(root);
 }

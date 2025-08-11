@@ -9,47 +9,37 @@ import * as Mathsys from "#mathsys";
 
 
 //
-//  REMOVE
-//
-
-// REMOVE -> FUNCTION
-export async function hide(): Promise<void> {
-    await ß.inject($.SUG.ORG, <></>);
-}
-
-
-//
 //  CONTENT
 //
 
 // CONTENT -> FUNCTION
-export async function show(): Promise<void> {
+export default function $_dashboard(): ß.ReactNode {
+    // FUNCTION -> VARIABLES
+    const [data, setData] = ß.useState(null);
+    ß.useEffect(async() => {
+        setData(await $.curl("problem/lookup", {Pid: "00000000"}));
+    })
     // FUNCTION -> INTERFACE
-    await $.modulator(
+    $.modulator(
         "navbar",
         "tooltip",
         "topbar"
     )
-    // FUNCTION -> WINDOW
     $.setTitle("Dashboard");
     $.setDescription("Here is where the magic happens.");
     // FUNCTION -> CONTENT
-    const data = await $.curl("problem/lookup", {Pid: "00000000"}) as any;
-    const info = await $.curl("problem/lookup", {Pid: "00000001"}) as any;
-    await ß.inject($.SUG.ORG,
-        <>
-            <div id="Container">
-                <h2>Jump right in</h2>
-                <div class="problem" id="Daily" onClick={async() => await $.redirect("/problem/00000000")} tooltip="yeah">
-                    <div id="Wrapper">
-                        <h3 id="Title">{data.Pdataen.title}</h3>
-                        <div id="Data">
-                            <div id="Description" ref={async(node) => await Mathsys.view(data.Pdataen.instructions, node)}></div>
-                            <img id="Image"/>
-                        </div>
+    return (
+        <div id="Container">
+            <h2>Jump right in</h2>
+            <div class="problem" id="Daily" onClick={async() => await $.redirect("/problem/00000000")} tooltip="yeah">
+                <div id="Wrapper">
+                    <h3 id="Title">{data ? data.Pdataen.title : null}</h3>
+                    <div id="Data">
+                        <div id="Description" ref={ß.mount(async(node) => data ? await Mathsys.view(data.Pdataen.instructions, node) : null)}></div>
+                        <img id="Image"/>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
