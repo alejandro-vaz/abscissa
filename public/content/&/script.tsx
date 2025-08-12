@@ -15,10 +15,11 @@ import $Button from "ßButton";
 //
 
 // CONTENT -> FUNCTION
-export default function $_(): Promise<ß.ReactNode> {
+export default function $_(): ß.ReactNode {
     // FUNCTION -> INTERFACE
     $.modulator(
-        "tooltip"
+        "tooltip",
+        "topbar"
     )
     $.setTitle("Abscissa");
     $.setDescription("Landing page.");
@@ -31,7 +32,7 @@ export default function $_(): Promise<ß.ReactNode> {
                 text="Try it now"
                 onClick={async() => await $.redirect("/playground")}
                 id="CTA"
-                tooltip="Try it now"
+                data-tooltip="Try it now"
             />
         </>
     )

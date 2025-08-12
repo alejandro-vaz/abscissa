@@ -17,7 +17,7 @@
         padding: 0
         display: flex
         flex-wrap: nowrap
-        flex: 1 0 auto
+        flex: 0 0 auto
         box-sizing: border-box
         aspect-ratio: 1
         max-width: 100%
@@ -26,11 +26,15 @@
         border-color: transparent
         background: transparent
         border-radius: 100%
+        overflow: hidden
+        > #Image
+            width: 100%
+            height: 100%
     :where(.word-appear-text)
         > span
             display: inline-block
             white-space: pre
-    :where(.button)
+    :where(.button, .input-submit)
         box-sizing: border-box
         padding: root.$PADDING1
         border-radius: root.$RADIUS
@@ -38,3 +42,32 @@
         border-style: solid
         height: fit-content
         backdrop-filter: blur(1vw)
+    :where(.form)
+        +root.section(normal, center, center, $grow: false, $height: fit-content)
+        > input
+            width: 100%
+        > input:not(:first-of-type, :last-of-type)
+            border-radius: 0
+        > input:first-of-type
+            border-bottom-left-radius: 0
+            border-bottom-right-radius: 0
+        > input:last-of-type
+            border-top-left-radius: 0
+            border-top-right-radius: 0
+        > input:not(:last-of-type)
+            border-bottom-width: 0
+    :where(.input-password, .input-email, .input-text)
+        +root.cursor(text)
+        background-color: root.$BLURRED
+        backdrop-filter: blur(1vw)
+        font-family: monospace
+        padding: root.$PADDING1
+        border-radius: root.$RADIUS
+        box-sizing: border-box
+        border: root.$BORDER2 solid root.$ACCENT
+        height: fit-content
+        &:focus
+            outline: none
+        &::placeholder
+            color: root.$ACCENT
+            opacity: 0.5

@@ -154,7 +154,7 @@ INSERT INTO CONCEPTS (Kes, Ken, Kde) VALUES ("Álgebra", "Algebra", "Algebra");
 INSERT INTO USERS (Uname, Uemail, Uhashpass, Urole, Uid) VALUES (
   "root",
   "root@gmail.com",
-  "rootpassword",
+  "$argon2id$v=19$m=102400,t=2,p=8$AgM2N9CS0A12r3h3y2NqsA$ZVauIH5w8yMArk/ZZMNsHg",
   255,
   0
 );

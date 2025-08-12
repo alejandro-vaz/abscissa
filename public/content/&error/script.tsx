@@ -12,10 +12,10 @@ import * as ß from "ß";
 //
 
 // CONTENT -> FUNCTION
-export default function $_error(): Promise<ß.ReactNode> {
+export default function $_error(): ß.ReactNode {
     // FUNCTION -> VARIABLES
-    const [code, setCode] = ß.useState(404);
-    const [description, setDescription] = ß.useState("Not found.");
+    const [code, setCode] = ß.useState<number>(404);
+    const [description, setDescription] = ß.useState<string>("Not found.");
     try {
         switch (+$.SUG.VWD[1]) {
             case 0: {

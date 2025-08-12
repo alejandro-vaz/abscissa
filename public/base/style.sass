@@ -7,20 +7,6 @@
 
 
 //
-//  FONTS
-//
-
-// FONTS -> COMIC SANS MS
-@font-face
-    font-family: 'comicSansMS'
-    src: url('/public/fonts/comicSansMS.ttf') format('truetype')
-    font:
-        weight: normal
-        style: normal
-        display: block
-
-
-//
 //  DEFAULT
 //
 
@@ -41,36 +27,6 @@ $main-tooltip-height: 1.25vw
         font-family: "comicSansMS", "Comic Sans MS", monospace
         font-size: root.$FONTSIZE
         color: root.$ACCENT
-    :where(#Main)
-        +root.section(normal, normal, center, $width: calc(100% - $main-navbar-width-idle), $height: calc(100% - $main-topbar-height - $main-tooltip-height))
-        position: fixed
-        top: $main-topbar-height
-        right: 0
-    :where(input)
-        &[type="text"]
-            +root.input(text)
-        &[type="textarea"]
-            +root.input(textarea, $inline: false)
-        &[type="password"]
-            +root.input(password)
-        &[type="submit"]
-            +root.input(button)
-        &[type="email"]
-            +root.input(email)
-    :where(form)
-        +root.section(normal, center, center, $grow: false, $height: fit-content)
-        input
-            width: 100%
-        input:not(:first-of-type, :last-of-type)
-            border-radius: 0
-        input:first-of-type
-            border-bottom-left-radius: 0
-            border-bottom-right-radius: 0
-        input:last-of-type
-            border-top-left-radius: 0
-            border-top-right-radius: 0
-        input:not(:last-of-type)
-            border-bottom-width: 0
     :where(p)
         font-size: root.$FONTSIZE
         margin: 0.6vw 0 0.3vw 0

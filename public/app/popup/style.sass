@@ -13,7 +13,8 @@
 // POPUP -> NAMESPACE
 #AppPopup
     +root.section(normal, normal, center, $width: 100vw, $height: 100vh)
-    +root.blurred()
+    background-color: root.$BLURRED
+    backdrop-filter: blur(1vw)
     position: fixed
     top: 0
     left: 0
@@ -26,7 +27,7 @@
         border: root.$BORDER1 solid root.$DARK
         background-color: root.$TOUCH
         margin-top: root.$MARGIN
-        border-radius: root.$RADIUS
+        border-radius: root.$RADIUS + root.$PADDING1
         padding: root.$PADDING1
         > #Header
             +root.section(normal, flex-end, center, $direction: row, $height: 2vw, $grow: false)

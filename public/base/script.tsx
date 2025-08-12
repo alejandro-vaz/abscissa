@@ -18,30 +18,16 @@ import * as __topbar from "=topbar";
 
 
 //
-//  SUPERGLOBALS
-//
-
-// SUPERGLOBALS -> DICTIONARY
-export const SUG = {
-    get VWD(): string[] {return window.location.pathname.split("/").slice(1)},
-    IMD: {
-        navbar: {active: false, module: __navbar},
-        tooltip: {active: false, module: __tooltip},
-        topbar: {active: false, module: __topbar}
-    },
-    get TIT(): string {return document.title},
-    get DES(): string {return document.querySelector<HTMLMetaElement>('meta[name="description"]').content},
-    PAT: {
-        Uemail: /^[A-Za-z0-9._%\-]{8,64}@gmail\.com$/,
-        Uhashpass: /^.{8,64}$/,
-        Uname: /^[a-zA-Z0-9_-]{4,32}$/
-    }
-}
-
-
-//
 //  WINDOW MANAGEMENT
 //
+
+// WINDOW MANAGEMENT -> INITIAL LOAD
+await redirect(window.location.pathname, false);
+
+// WINDOW MANAGEMENT -> LOCATE
+export function locate(): string[] {
+    return window.location.pathname.split("/").slice(1);
+}
 
 // WINDOW MANAGEMENT -> REDIRECT
 export async function redirect(target: string, append: boolean = true, divide: boolean = false): Promise<void> {
@@ -49,10 +35,10 @@ export async function redirect(target: string, append: boolean = true, divide: b
     if (divide) {
         window.open(`https://${window.location.host}${target}`, "blank");
     } else {
+        ß.clean(ß.Main);
         ß.Main.node.classList.remove(...ß.Main.node.classList);
-        await ß.clean(ß.Main);
         if (append) {history.pushState(null, '', target)}
-        switch (SUG.VWD[0]) {
+        switch (locate()[0]) {
             case '': {
                 ß.Main.node.classList.add("_");
                 await ß.inject(ß.Main, <$_/>);
@@ -78,23 +64,23 @@ export async function redirect(target: string, append: boolean = true, divide: b
 
 // WINDOW MANAGEMENT -> CHECK ASPECT RATIO
 async function aspectRatio() {
+    const location = locate();
     if (
         window.innerWidth / window.innerHeight < 3 / 2 &&
-        SUG.VWD[0] !== 'error' &&
-        SUG.VWD[1] !== '0'
+        location[0] !== 'error' &&
+        location[1] !== '0'
     ) {
         await redirect('/error/0');
     } else if (
         window.innerWidth / window.innerHeight >= 3 / 2 &&
-        SUG.VWD[0] === 'error' &&
-        SUG.VWD[1] === '0'
+        location[0] === 'error' &&
+        location[1] === '0'
     ) {
         await redirect('/dashboard');
     }
 }
 
-// WINDOW MANAGEMENT -> ASPECT RATIO
-await redirect(window.location.pathname, false); 
+// WINDOW MANAGEMENT -> ENFORCE ASPECT RATIO
 await aspectRatio()
 window.addEventListener("resize", aspectRatio);
 
@@ -108,31 +94,48 @@ document.addEventListener("contextmenu", (event) => {
     event.preventDefault();
 })
 
-// WINDOW MANAGEMENT -> TITLE
+// WINDOW MANAGEMENT -> GET TITLE
+export function getTitle(): string {
+    return document.title;
+}
+
+// WINDOW MANAGEMENT -> SET TITLE
 export function setTitle(newTitle: string): void {
     document.title = newTitle;
 }
 
-// WINDOW MANAGEMENT -> DESCRIPTION
+// WINDOW MANAGEMENT -> GET DESCRIPTION
+export function getDescription(): string {
+    return document.querySelector<HTMLMetaElement>('meta[name="description"]').content;
+}
+
+// WINDOW MANAGEMENT -> SET DESCRIPTION
 export function setDescription(newDescription: string): void {
     document.querySelector('meta[name="description"]').setAttribute('content', newDescription);
 }
 
 
 //
-//  MODULE MANAGEMENT
+//  INTERFACE MANAGEMENT
 //
 
-// MODULE MANAGEMENT -> MODULATOR
+// INTERFACE MANAGEMENT -> REGISTRY
+const registry = {
+    navbar: {active: false, module: __navbar},
+    tooltip: {active: false, module: __tooltip},
+    topbar: {active: false, module: __topbar}
+}
+
+// INTERFACE MANAGEMENT -> MODULATOR
 export function modulator(...activate: string[]): void {
     const promises = [];
-    for (const mod in SUG.IMD) {
-        if (SUG.IMD[mod].active && !activate.includes(mod)) {
-            promises.push(SUG.IMD[mod].module.deactivate());
-            SUG.IMD[mod].active = false;
-        } else if (!SUG.IMD[mod].active && activate.includes(mod)) {
-            promises.push(SUG.IMD[mod].module.activate());
-            SUG.IMD[mod].active = true;
+    for (const mod in registry) {
+        if (registry[mod].active && !activate.includes(mod)) {
+            promises.push(registry[mod].module.deactivate());
+            registry[mod].active = false;
+        } else if (!registry[mod].active && activate.includes(mod)) {
+            promises.push(registry[mod].module.activate());
+            registry[mod].active = true;
         }
     }
     Promise.all(promises);

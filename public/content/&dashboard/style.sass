@@ -7,11 +7,12 @@
 
 
 //
-//  DASHBOARD
+//  &DASHBOARD
 //
 
-// DASHBOARD -> NAMESPACE
+// &DASHBOARD -> NAMESPACE
 ._dashboard
+    +root.modifier(true, true, true)
     align-items: center
     > #Container
         +root.section(normal, normal, normal, $width: 50%, $grow: false, $height: fit-content)
@@ -36,7 +37,8 @@
                 background: linear-gradient(to top right, root.$TOUCH, #112277)
             > #Wrapper
                 +root.section(normal, normal, normal, $grow: false, $height: 100%)
-                +root.blurred()
+                background-color: root.$BLURRED
+                backdrop-filter: blur(1vw)
                 border-radius: root.$RADIUS
                 padding: root.$PADDING1
                 > #Title

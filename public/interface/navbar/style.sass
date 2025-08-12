@@ -21,12 +21,9 @@ $interface-left: 1vw
     transition: left root.$TIMER2 root.$CURVE2
     > #Container
         +root.section(normal, center, center, $width: 4vw, $height: fit-content, $grow: false)
-        +root.blurred()
+        background-color: root.$BLURRED
+        backdrop-filter: blur(1vw)
         padding: root.$PADDING1 root.$PADDING2
         border: root.$BORDER1 solid root.$DARK
-        border-radius: root.$RADIUS
-        > .svg-icon
-            &:not(:last-of-type)
-                margin-bottom: root.$MARGIN
-            &:last-of-type
-                margin-bottom: 0
+        border-radius: 2vw
+        gap: root.$MARGIN

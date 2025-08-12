@@ -40,7 +40,11 @@
             "motion/react": ["https://esm.sh/motion@12.23.12/react"],
             "€motion/react": ["https://esm.sh/motion@12.23.12/react"],
 
+            "ga-gtag": ["https://esm.sh/ga-gtag@1.2.0"],
+            "€ga-gtag": ["https://esm.sh/ga-gtag@1.2.0"],
+
             "$": ["public/base/script.js"],
+            "SUG": ["public/base/SUG.js"],
 
             "&": ["public/content/&/script.js"],
             "&dashboard": ["public/content/&dashboard/script.js"],
@@ -57,10 +61,13 @@
 
             "ß": ["public/components/script.js"],
             "ßButton": ["public/components/Button.js"],
-            "ßEditor": ["public/components/Editor.js"],
+            "ßForm": ["public/components/Form.js"],
+            "ßInputEmail": ["public/components/InputEmail.js"],
+            "ßInputPassword": ["public/components/InputPassword.js"],
+            "ßInputSubmit": ["public/components/InputSubmit.js"],
+            "ßInputText": ["public/components/InputText.js"],
             "ßSuspense": ["public/components/Suspense.js"],
-            "ßSVGIcon": ["public/components/SVGIcon.js"],
-            "ßWordAppearText": ["public/components/WordAppearText.js"]
+            "ßSVGIcon": ["public/components/SVGIcon.js"]
         }
     },
     "exclude": [

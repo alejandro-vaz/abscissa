@@ -7,35 +7,31 @@ import * as ß from "ß";
 
 
 //
-//  BUTTON
+//  INPUTSUBMIT
 //
 
-// BUTTON -> ELEMENT
-export default function $Button(
-    {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled}: {
-        text: string,
-        onClick?: () => any,
-        onContextMenu?: () => any,
+// INPUTSUBMIT -> ELEMENT
+export default function $InputSubmit(
+    {id, text, ["data-tooltip"]: dataTooltip, disabled}: {
         id: string,
+        text: string,
         "data-tooltip": string,
         disabled?: boolean
     }
 ): ß.ReactElement {
     return (
-        <ß.button
+        <ß.input
+            type="submit" 
             id={id}
-            className="button"
-            onClick={onClick}
-            onContextMenu={onContextMenu}
-            data-tooltip={dataTooltip}
+            class="input-submit"
             initial={{borderColor: "#FFFFFF", color: "#FFFFFF", backgroundColor: "#0000004F", cursor: "pointer"}}
-            disabled={disabled}
             animate={disabled ? {backgroundColor: "#000000", cursor: "default"} : {}}
             whileHover={disabled ? {} : {backgroundColor: "#111111"}}
             whileTap={disabled ? {} : {borderColor: "#7f7fd2", color: "#7f7fd2"}}
             transition={{duration: 0.1, ease: "easeInOut"}}
-        >
-            {text}
-        </ß.button>
+            value={text}
+            data-tooltip={dataTooltip}
+            disabled={disabled}
+        />
     )
 }

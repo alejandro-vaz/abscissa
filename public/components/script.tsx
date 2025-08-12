@@ -3,13 +3,20 @@
 //
 
 // HEAD -> MODULES
-import * as $ from "$";
 import react from "€react";
+import * as SUG from "SUG";
+import * as gagtag from "€ga-gtag";
 import * as motion from "€motion/react";
 import * as reactdom from '€react-dom/client';
 
 // HEAD -> COMPONENTS
 import $Suspense from "ßSuspense";
+
+// HEAD -> ANALYTICS
+gagtag.install(SUG.TAG, {
+    send_page_view: false
+});
+
 
 //
 //  EXPORTS
@@ -19,13 +26,14 @@ import $Suspense from "ßSuspense";
 export type ReactElement = react.ReactElement;
 export type ReactNode = react.ReactNode;
 
-// EXPORTS -> REACT ELEMENTS
+// EXPORTS -> REACT FUNCTIONS
 export const Suspense = react.Suspense;
-export const use = react.use;
+export const useState = react.useState;
 
 // EXPORTS -> MOTION ELEMENTS
 export const span = motion.motion.span;
 export const button = motion.motion.button;
+export const input = motion.motion.input;
 
 // EXPORTS -> DEFAULT ROOT
 export const Main = await createRoot("Main");
@@ -92,14 +100,10 @@ export async function createRoot(id: string): Promise<Reference> {
 // MANIPULATION -> RENDER
 async function render(reference: Reference): Promise<void> {
     return new Promise<void>((resolve) => {
-        if (reference.children.length === 0 && reference.node.id === "Main"){
+        if (reference.children.length === 0 && reference.node.id === "Main") {
             reference.root.render(<$Suspense/>);
         } else {
-            reference.root.render(
-                <Suspense fallback={<$Suspense/>}>
-                    {reference.children}
-                </Suspense>
-            );
+            reference.root.render(reference.children[0]);
         }
         resolve();
     });
@@ -123,20 +127,27 @@ export async function clean(reference: Reference): Promise<void> {
 //  UTILITIES
 //
 
-// UTILITIES -> USEEFFECT
-export function useEffect(call: () => void): void {
-    react.useEffect(call, []);
+// UTILITIES -> ONRENDER
+export function onRender(call: () => any): void {
+    react.useEffect(() => {void call()}, []);
 }
 
-// UTILITIES -> USESTATE
-export function useState<Type>(value: any): [any, (change) => void] {
-    return react.useState<Type>(value);
-}
-
-// UTILITIES -> ON MOUNT
+// UTILITIES -> MOUNT
 export function mount(call: (node) => any): (node) => Promise<void> {
     return async(node) => {
         if ((node) == null) {return};
         await call(node);
     }
+}
+
+
+//
+//  ANALYTICS
+//
+
+// ANALYTICS
+export function view(pathname: string): void {
+    gagtag.gtag("event", "page_view", {
+        page_path: pathname
+    })
 }

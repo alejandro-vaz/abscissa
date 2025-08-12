@@ -55,21 +55,21 @@ export async function activate(): Promise<void> {
                 id="Dashboard"
                 onClick={async() => await $.redirect("/dashboard")}
                 onContextMenu={async() => await $.redirect("/dashboard", true, true)}
-                tooltip="Go to dashboard"
+                data-tooltip="Go to dashboard"
             />
             <$SVGIcon 
                 path="/public/interface/navbar/svg/playground.svg" 
                 id="Playground"
                 onClick={async() => await $.redirect("/playground")}
                 onContextMenu={async() => await $.redirect("/playground", true, true)}
-                tooltip="Go to playground"
+                data-tooltip="Go to playground"
             />
             <$SVGIcon 
                 path={validate ? DiceBear.icon(user.Uname) : "/public/interface/navbar/svg/user.svg"}
                 id="User"
                 onClick={async() => validate ? await $.redirect("/user") : Popup.create("auth")}
                 onContextMenu={async() => validate ? await $.redirect("/user", true, true) : Popup.create("auth")}
-                tooltip={validate ? "Go to your profile" : "Log in or register"}
+                data-tooltip={validate ? "Go to your profile" : "Log in or register"}
             />
         </div>
     );

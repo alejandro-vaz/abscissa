@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 import * as $ from "$";
+import * as ß from "ß";
 import katex from "€katex/contrib/auto-render";
 import * as codemirrorState from '€@codemirror/state';
 import * as codemirrorView from '€@codemirror/view';
@@ -23,63 +24,77 @@ class MathsysExit extends Error {
 }
 
 // MATHSYS -> PLAYGROUND
-export async function playground(text: string, parent: HTMLElement, output: HTMLElement): Promise<codemirrorView.EditorView> {
-    let timer;
-    const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
-        if (update.docChanged) {
-            clearTimeout(timer);
-            timer = setTimeout(async() => {
-                await view(update.state.doc.toString(), output);
-            }, 100);
-        }
-    })
-    const state = codemirrorState.EditorState.create({
-        doc: text,
-        extensions: [
-            codemirrorView.keymap.of(codemirrorCommands.historyKeymap),
-            codemirrorView.EditorView.theme(
-                {
-                    "&": {
-                        backgroundColor: "#000000",
-                        color: "#ffffff",
-                        borderRadius: "1vw",
-                        overflow: "hidden"
-                    },
-                    ".cm-content": {
-                        caretColor: "#ffffff"
-                    },
-                    ".cm-cursor": {
-                        borderLeftColor: "#ffffff"
-                    },
-                    ".cm-activeLine": {
-                        backgroundColor: "#111111"
-                    },
-                    ".cm-lineNumbers": {
-                        backgroundColor: "#111111",
-                        color: "#333333",
-                        width: "4ch",
-                        textAlign: "right"
-                    },
-                    ".cm-scroller": {
-                        scrollbarWidth: "none"
+export function $Playground(
+    {initial, id, output}: {
+        initial: string,
+        id: string,
+        output: string
+    }
+): ß.ReactElement {
+    return (
+        <div 
+            id={id}
+            ref={ß.mount(async(node) => {
+                const container = await ß.connect(output);
+                let timer;
+                const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
+                    if (update.docChanged) {
+                        clearTimeout(timer);
+                        timer = setTimeout(async() => {
+                            await view(update.state.doc.toString(), container);
+                        }, 100);
                     }
-                }, 
-                {
-                    dark: true
-                }
-            ),
-            outputListener,
-            codemirrorView.lineNumbers(),
-            codemirrorView.highlightActiveLine(),
-            codemirrorCommands.history(),
-            codemirrorView.EditorView.lineWrapping
-        ]
-    })
-    await view(state.doc.toString(), output);
-    return new codemirrorView.EditorView({
-        state: state,
-        parent: parent
-    })
+                })
+                const state = codemirrorState.EditorState.create({
+                    doc: initial,
+                    extensions: [
+                        codemirrorView.keymap.of(codemirrorCommands.historyKeymap),
+                        codemirrorView.EditorView.theme(
+                            {
+                                "&": {
+                                    backgroundColor: "#000000",
+                                    color: "#ffffff",
+                                    borderRadius: "1vw",
+                                    overflow: "hidden"
+                                },
+                                ".cm-content": {
+                                    caretColor: "#ffffff"
+                                },
+                                ".cm-cursor": {
+                                    borderLeftColor: "#ffffff"
+                                },
+                                ".cm-activeLine": {
+                                    backgroundColor: "#111111"
+                                },
+                                ".cm-lineNumbers": {
+                                    backgroundColor: "#111111",
+                                    color: "#333333",
+                                    width: "4ch",
+                                    textAlign: "right"
+                                },
+                                ".cm-scroller": {
+                                    scrollbarWidth: "none"
+                                }
+                            }, 
+                            {
+                                dark: true
+                            }
+                        ),
+                        outputListener,
+                        codemirrorView.lineNumbers(),
+                        codemirrorView.highlightActiveLine(),
+                        codemirrorCommands.history(),
+                        codemirrorView.EditorView.lineWrapping
+                    ]
+                })
+                await view(state.doc.toString(), container);
+                new codemirrorView.EditorView({
+                    state: state,
+                    parent: node
+                })
+            })}
+        ></div>
+    )
 }
 
 // MATHSYS -> VIEW
@@ -121,11 +136,7 @@ export async function run(code: string): Promise<string> {
     try {
         (runtime.exports._start as Function)();
     } catch (error) {
-        if (error instanceof MathsysExit) {
-            output.push(`Mathsys exited with code ${error.exitCode}.`)
-        } else {
-            throw error;
-        }
+        if (!(error instanceof MathsysExit)) {throw error}
     }
     return output.join("");
 }
