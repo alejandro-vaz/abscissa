@@ -7,6 +7,9 @@ import * as $ from "$";
 import * as ß from "ß";
 import * as Mathsys from "#mathsys";
 
+// HEAD -> COMPONENTS
+import $Suspense from "ßSuspense";
+
 
 //
 //  CONTENT
@@ -15,9 +18,14 @@ import * as Mathsys from "#mathsys";
 // CONTENT -> FUNCTION
 export default function $_dashboard(): ß.ReactNode {
     // FUNCTION -> VARIABLES
-    const [data, setData] = ß.useState<any>(null);
+    const [data, setData] = ß.useState<ProblemLookupResponse>(null);
+    const [view, setView] = ß.useState<string>(null);
+    const [ready, setReady] = ß.useState<boolean>(false);
     ß.onRender(async() => {
-        setData(await $.curl("problem/lookup", {Pid: "00000000"}));
+        const _data = await $.curl<ProblemLookupRequest, ProblemLookupResponse>("problem/lookup", {Pid: "00000000"});
+        setData(_data);
+        setView(await Mathsys.view(_data.Pdataen.instructions));
+        setReady(true);
     })
     // FUNCTION -> INTERFACE
     $.modulator(
@@ -38,14 +46,16 @@ export default function $_dashboard(): ß.ReactNode {
                 data-tooltip="yeah"
             > 
                 <div id="Wrapper">
-                    <h3 id="Title">{data ? data.Pdataen.title : null}</h3>
-                    <div id="Data">
-                        <div 
-                            id="Description" 
-                            ref={ß.mount(async(node) => data ? await Mathsys.view(data.Pdataen.instructions, node) : null)}>
+                    <$Suspense show={ready} id="Suspense">
+                        <h3 id="Title">{ready ? data.Pdataen.title : null}</h3>
+                        <div id="Data">
+                            <div 
+                                id="Description"
+                                ref={ß.mount((node) => Mathsys.render(view, node, true))}
+                            ></div>
+                            <img id="Image"/>
                         </div>
-                        <img id="Image"/>
-                    </div>
+                    </$Suspense>
                 </div>
             </div>
         </div>

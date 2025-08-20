@@ -22,8 +22,8 @@ let topbarState = true;
 
 // TOPBAR -> MUTATION OBSERVER
 const observer = new MutationObserver(() => {
-    title.innerText = $.SUG.TIT;
-    description.innerText = $.SUG.DES;
+    title.innerText = $.getTitle();
+    description.innerText = $.getDescription();
 })
 
 // TOPBAR -> OPENER FUNCTION

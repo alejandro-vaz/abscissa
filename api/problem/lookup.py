@@ -7,6 +7,55 @@ from website import *
 
 
 #
+#   REQUEST
+#
+
+# REQUEST -> FINAL
+class ProblemLookupRequest(BaseModel):
+    Pid: str = Field(..., pattern = SUG.PAT["Pid"])
+
+
+#
+#   RESPONSE
+#
+
+# RESPONSE -> PMETA CALCULATOR
+class Calculator(Enum):
+    scientific = "scientific"
+    graphing = "graphing"
+    financial = "financial"
+    advanced = "advanced"
+
+# RESPONSE -> PMETA
+class Pmeta(BaseModel):
+    calculator: bool | Calculator
+
+# RESPONSE -> PSOLUTION
+class Psolution(BaseModel):
+    value: str
+    error: float
+
+# RESPONSE -> PDATAXX
+class PdataXX(BaseModel):
+    title: str
+    instructions: str
+    editor: str
+    svg: str | None
+
+# RESPONSE -> FINAL
+class ProblemLookupResponse(BaseModel):
+    Pid: str = Field(..., pattern = SUG.PAT["Pid"])
+    Uid: int
+    Kid: int
+    Pedited: datetime
+    Pmeta: Pmeta
+    Psolution: Psolution
+    Pdataen: PdataXX
+    Pdataes: None | PdataXX
+    Pdatade: None | PdataXX
+
+
+#
 #   FUNCTION
 #
 
@@ -17,29 +66,32 @@ router = APIRouter()
 from website.extensions import (
     binary as _binary,
     database as _database,
-    post as _post,
-    response as _response
+    json as _json
 )
 
 # FUNCTION -> DECLARATION
 @router.post("/api/problem/lookup")
-async def output(request: Request) -> JSONResponse:
+async def output(request: Request, response: Response) -> ProblemLookupResponse:
+    # DECLARATION -> INPUT
+    try: packet = ProblemLookupRequest(**await request.json())
+    except: raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
-    binary = await _binary.namespace().init(request)
-    database = await _database.namespace().init(request)
-    post = await _post.namespace().init(request)
-    response = await _response.namespace().init(request)
-    # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks(): raise HTTPException(**SUG.ERR[0])
-    # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not post.exists("Pid"): raise HTTPException(**SUG.ERR[1])
-    # DECLARATION -> QUERY
-    binary.load(post.data["Pid"])
-    response.load(º(await database.query(
-        "SELECT * FROM PROBLEMS WHERE Pid = %s",
-        [
-            binary.data
-        ]
-    ), 0))
-    response.tojson("Pmeta", "Pdataen", "Pdataes", "Pdatade", "Psolution")
-    return response.get()
+    binary = await _binary.namespace().init(request, response)
+    database = await _database.namespace().init(request, response)
+    json = await _json.namespace().init(request, response)
+    # DECLARATION -> DATA
+    data = º(await database.query(
+            "SELECT * FROM PROBLEMS WHERE Pid = %s",
+            [
+                binary.toBytes(packet.Pid)
+            ]
+    ), 0)
+    json.parse(data, [
+        "Pmeta",
+        "Psolution",
+        "Pdataen",
+        "Pdataes",
+        "Pdatade"
+    ])
+    # DECLARATION -> RETURN
+    return ProblemLookupResponse(**data)

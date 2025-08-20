@@ -7,6 +7,15 @@ from website import *
 
 
 #
+#   REQUEST
+#
+
+# REQUEST -> FINAL
+class MathsysCompileRequest(BaseModel):
+    Mcode: str
+
+
+#
 #   FUNCTION
 #
 
@@ -16,22 +25,24 @@ router = APIRouter()
 # FUNCTION -> EXTENSIONS
 from website.extensions import (
     binary as _binary,
-    mathsys as _mathsys,
-    post as _post,
+    mathsys as _mathsys
 )
 
 # FUNCTION -> DECLARATION
 @router.post("/api/mathsys/compile")
-async def output(request: Request) -> StreamingResponse:
+async def output(request: Request, response: Response) -> StreamingResponse:
+    # DECLARATION -> INPUT
+    try: packet = MathsysCompileRequest(**await request.json())
+    except: raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
-    binary = await _binary.namespace().init(request)
-    mathsys = await _mathsys.namespace().init(request)
-    post = await _post.namespace().init(request)
-    # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks(): raise HTTPException(**SUG.ERR[0])
-    # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not post.exists("Mcode"): raise HTTPException(**SUG.ERR[1])
-    # DECLARATION -> QUERY
-    mathsys.load(post.data["Mcode"])
-    binary.load(mathsys.compile() if mathsys.validate else b"\x00")
-    return binary.get()
+    binary = await _binary.namespace().init(request, response)
+    mathsys = await _mathsys.namespace().init(request, response)
+    # DECLARATION -> DATA
+    if mathsys.process(packet.Mcode):
+        binary.load(mathsys.compile())
+    else:
+        mathsys.process("error")
+        binary.load(mathsys.compile())
+    data = binary.get()
+    # DECLARATION -> RETURN
+    return data

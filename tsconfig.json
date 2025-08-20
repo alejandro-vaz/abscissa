@@ -64,7 +64,6 @@
             "ßForm": ["public/components/Form.js"],
             "ßInputEmail": ["public/components/InputEmail.js"],
             "ßInputPassword": ["public/components/InputPassword.js"],
-            "ßInputSubmit": ["public/components/InputSubmit.js"],
             "ßInputText": ["public/components/InputText.js"],
             "ßSuspense": ["public/components/Suspense.js"],
             "ßSVGIcon": ["public/components/SVGIcon.js"]

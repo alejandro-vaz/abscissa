@@ -7,6 +7,9 @@ import * as $ from "$";
 import * as ß from "ß";
 import * as Mathsys from "#mathsys";
 
+// HEAD -> COMPONENTS
+import $Suspense from "ßSuspense";
+
 
 //
 //  CONTENT
@@ -24,9 +27,6 @@ export default function $_playground(): ß.ReactNode {
     $.setDescription("Experiment with Mathsys.");
     // FUNCTION -> CONTENT
     return (
-        <>
-            <Mathsys.$Playground initial="# Mathsys features" id="EditorContainer" output="Main/Output"/>
-            <div id="Output"></div>
-        </>
+        <Mathsys.$Playground id="EditorContainer" code="hello"/>
     )
 }

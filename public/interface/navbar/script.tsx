@@ -43,10 +43,10 @@ function alternate(event: MouseEvent) {
 // NAVBAR -> ACTIVATE
 export async function activate(): Promise<void> {
     navbarState = true;
-    const validate = await $.curl("session/validate", {});
-    let user;
-    if (validate) {
-        user = await $.curl("user/data", {});
+    const sessionValidate = await $.curl<SessionValidateRequest, SessionValidateResponse>("session/validate", {});
+    let userData;
+    if (sessionValidate.validated) {
+        userData = await $.curl<UserDataRequest, UserDataResponse>("user/data", {});
     }
     await ß.inject(root,
         <div id="Container">
@@ -65,15 +65,15 @@ export async function activate(): Promise<void> {
                 data-tooltip="Go to playground"
             />
             <$SVGIcon 
-                path={validate ? DiceBear.icon(user.Uname) : "/public/interface/navbar/svg/user.svg"}
+                path={sessionValidate.validated ? DiceBear.icon(userData.Uname) : "/public/interface/navbar/svg/user.svg"}
                 id="User"
-                onClick={async() => validate ? await $.redirect("/user") : Popup.create("auth")}
-                onContextMenu={async() => validate ? await $.redirect("/user", true, true) : Popup.create("auth")}
-                data-tooltip={validate ? "Go to your profile" : "Log in or register"}
+                onClick={async() => sessionValidate.validated ? await $.redirect("/user") : Popup.create("auth")}
+                onContextMenu={async() => sessionValidate.validated ? await $.redirect("/user", true, true) : Popup.create("auth")}
+                data-tooltip={sessionValidate.validated ? "Go to your profile" : "Log in or register"}
             />
         </div>
     );
-    window.addEventListener('mousemove', alternate)
+    window.addEventListener('mousemove', alternate);
 }
 
 // NAVBAR -> DEACTIVATE

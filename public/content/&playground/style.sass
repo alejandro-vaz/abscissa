@@ -13,13 +13,3 @@
 // &PLAYGROUND -> NAMESPACE
 ._playground
     +root.modifier(true, true, true)
-    flex-direction: row
-    > #EditorContainer
-        +root.section(normal, normal, normal, $width: 50%, $grow: false)
-        > .cm-editor
-            +root.cursor(text)
-            height: 100%
-            border: root.$ACCENT solid root.$BORDER2
-            border-radius: root.$RADIUS
-    > #Output
-        +root.section(normal, normal, center, $width: 50%, $grow: false)

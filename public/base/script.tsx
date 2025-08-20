@@ -146,9 +146,9 @@ export function modulator(...activate: string[]): void {
 //  API                                                                       
 //
 
-// API -> JSON RESPONSE
-export async function curl(script: string, data: object): Promise<object | boolean | string | number | null> {
-    return (await fetch(
+// API -> CALL
+export async function curl<Request, Response>(script: string, data: Request): Promise<Response> {
+    const response = (await fetch(
         `https://${window.location.host}/api/${script.replace(/^\/+/, '')}`,
         {
             cache: "no-store",
@@ -156,45 +156,34 @@ export async function curl(script: string, data: object): Promise<object | boole
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data as Request)
         }
-    )).json();
-}
-
-// API -> STREAMING RESPONSE
-export async function stream(script: string, data: object): Promise<ArrayBuffer> {
-    const response = await fetch(
-        ("https://") +
-        (window.location.host) +
-        ("/api/") +
-        (script.replace(/^\/+/, '')),
-        {
-            cache: "no-store",
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+    ));
+    switch (script) {
+        case "mathsys/compile": {
+            const reader = response.body.getReader();
+            const chunks = [] as Uint8Array[];
+            let totalLength = 0;
+            while (true) {
+                const {done, value} = await reader.read();
+                if (done) {break}
+                if (value) {
+                    chunks.push(value);
+                    totalLength += value.length;
+                }
+            }
+            const result = new Uint8Array(totalLength);
+            let offset = 0;
+            for (const chunk of chunks) {
+                result.set(chunk, offset);
+                offset += chunk.length;
+            }
+            return result.buffer.slice(result.byteOffset, result.byteOffset + result.byteLength) as Response;
         }
-    );
-    const reader = response.body.getReader();
-    const chunks: Uint8Array[] = [];
-    let totalLength = 0;
-    while (true) {
-        const {done, value} = await reader.read();
-        if (done) {break}
-        if (value) {
-            chunks.push(value);
-            totalLength += value.length;
+        default: {
+            return response.json() as Response;
         }
     }
-    const result = new Uint8Array(totalLength);
-    let offset = 0;
-    for (const chunk of chunks) {
-        result.set(chunk, offset);
-        offset += chunk.length;
-    }
-    return result.buffer.slice(result.byteOffset, result.byteOffset + result.byteLength);
 }
 
 

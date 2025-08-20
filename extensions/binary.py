@@ -18,13 +18,16 @@ class namespace:
     # CLASS -> VARIABLES
     data: bytes
     # CLASS -> INIT
-    async def init(self, request: Request) -> namespace: return self
+    async def init(self, request: Request, response: Response) -> namespace: return self
     # CLASS -> LOAD
-    def load(self, data: bytes | str) -> None:
-        self.data = data if isinstance(data, bytes) else bytes.fromhex(data)
+    def load(self, data: bytes) -> None:
+        self.data = data
     # CLASS -> SERIALIZE
-    def serialize(self) -> str:
-        return self.data.hex().upper()
+    def toStr(self, data: bytes) -> str:
+        return data.hex().upper()
+    # CLASS -> DESERIALIZE
+    def toBytes(self, data: str) -> bytes:
+        return bytes.fromhex(data)
     # CLASS -> GET
     def get(self) -> StreamingResponse:
         def iterator() -> object:

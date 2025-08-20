@@ -14,8 +14,7 @@ declare module "$" {
     // GENERAL -> INTERFACE MANAGEMENT
     export function modulator(...activate: string[]): void;
     // GENERAL -> API
-    export function curl(script: string, data: object): Promise<object | boolean | string | number | null>;
-    export function stream(script: string, data: object): Promise<ArrayBuffer>;
+    export function curl<Request, Response>(script: string, data: Request): Promise<Response>
     // GENERAL -> TIME
     export function delay(seconds: number): Promise<void>;
     // GENERAL -> REGEX

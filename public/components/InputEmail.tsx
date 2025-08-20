@@ -12,10 +12,11 @@ import * as ß from "ß";
 
 // INPUTEMAIL -> ELEMENT
 export default function $InputEmail(
-    {id, name, placeholder}: {
+    {id, name, placeholder, disabled}: {
         id: string,
         name: string,
-        placeholder?: boolean
+        placeholder?: boolean,
+        disabled?: boolean
     }
 ): ß.ReactElement {
     return (
@@ -26,6 +27,7 @@ export default function $InputEmail(
             class="input-email"
             placeholder={placeholder ? `${name}...` : null}
             autoComplete="off"
+            disabled={disabled}
         />
     )
 }

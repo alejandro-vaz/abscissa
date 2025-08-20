@@ -22,15 +22,16 @@ class namespace:
     code: str
     validate: bool
     # CLASS -> INIT
-    async def init(self, request: Request) -> namespace:
+    async def init(self, request: Request, response: Response) -> namespace:
         return self
     # CLASS -> LOAD
-    def load(self, code: str) -> None:
+    def process(self, code: str) -> bool:
         self.code = code
         self.validate = mathsys.validate(self.code)
+        return self.validate
     # CLASS -> VIEW
     def view(self) -> str:
-        return mathsys.view(self.code) if self.validate else ""
+        return mathsys.view(self.code)
     # CLASS -> COMPILE
-    def compile(self) -> bytes:
-        return mathsys.compile(self.code, "web") if self.validate else b""
+    def compile(self, target: str) -> bytes:
+        return mathsys.compile(self.code, target)

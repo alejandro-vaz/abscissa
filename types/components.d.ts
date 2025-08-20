@@ -12,6 +12,8 @@ declare module "ß" {
     export const span: any;
     export const button: any;
     export const input: any;
+    export const div: any;
+	export const AnimatePresence: any;
     export const Main: Reference;
     // SCRIPT -> DOM
     export function connect(path: string): Promise<HTMLElement>;
@@ -23,7 +25,7 @@ declare module "ß" {
     export function clean(reference: Reference): Promise<void>;
     // SCRIPT -> UTILITIES
     export function onRender(call: () => any): void;
-    export function mount(call: (node) => any): (node) => Promise<void>;
+    export function mount(call: (node) => any): (node) => void;
     // SCRIPT -> ANALYTICS
     export function view(pathname: string): void;
 }
@@ -32,13 +34,14 @@ declare module "ß" {
 declare module "ßButton" {
     // BUTTON -> ELEMENT
     export default function $Button(
-        {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled}: {
+        {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled, type}: {
             text: string,
             onClick?: () => any,
             onContextMenu?: () => any,
             id: string,
             "data-tooltip": string,
             disabled?: boolean
+            type?: string
         }
     ): import("ß").ReactElement;
 }
@@ -59,10 +62,11 @@ declare module "ßForm" {
 declare module "ßInputEmail" {
     // INPUTEMAIL -> ELEMENT
     export default function $InputEmail(
-        {id, name, placeholder}: {
+        {id, name, placeholder, disabled}: {
             id: string,
             name: string,
-            placeholder?: boolean
+            placeholder?: boolean,
+            disabled?: boolean
         }
     ): import("ß").ReactElement;
 }
@@ -71,22 +75,10 @@ declare module "ßInputEmail" {
 declare module "ßInputPassword" {
     // INPUTPASSWORD -> ELEMENT
     export default function $InputPassword(
-        {id, name, placeholder}: {
+        {id, name, placeholder, disabled}: {
             id: string,
             name: string,
-            placeholder?: boolean
-        }
-    ): import("ß").ReactElement;
-}
-
-// COMPONENTS -> INPUTSUBMIT
-declare module "ßInputSubmit" {
-    // INPUTSUBMIT -> ELEMENT
-    export default function $InputSubmit(
-        {id, text, ["data-tooltip"]: dataTooltip, disabled}: {
-            id: string,
-            text: string,
-            "data-tooltip": string,
+            placeholder?: boolean,
             disabled?: boolean
         }
     ): import("ß").ReactElement;
@@ -96,10 +88,11 @@ declare module "ßInputSubmit" {
 declare module "ßInputText" {
     // INPUTTEXT -> ELEMENT
     export default function $InputText(
-        {id, name, placeholder}: {
+        {id, name, placeholder, disabled}: {
             id: string,
             name: string,
-            placeholder?: boolean
+            placeholder?: boolean,
+            disabled?: boolean
         }
     ): import("ß").ReactElement;
 }
@@ -108,7 +101,11 @@ declare module "ßInputText" {
 declare module "ßSuspense" {
     // SUSPENSE -> ELEMENT
     export default function $Suspense(
-        {}: {}
+        {show, id, children}: {
+            show: boolean,
+            id: string,
+            children?: import("ß").ReactNode
+        }
     ): import("ß").ReactElement;
 }
 

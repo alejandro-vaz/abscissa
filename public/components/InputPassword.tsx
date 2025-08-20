@@ -12,10 +12,11 @@ import * as ß from "ß";
 
 // INPUTPASSWORD -> ELEMENT
 export default function $InputPassword(
-    {id, name, placeholder}: {
+    {id, name, placeholder, disabled}: {
         id: string,
         name: string,
-        placeholder?: boolean
+        placeholder?: boolean,
+        disabled?: boolean
     }
 ): ß.ReactElement {
     return (
@@ -26,6 +27,7 @@ export default function $InputPassword(
             id={id} 
             autoComplete="off"
             placeholder={placeholder ? `${name}...` : null}
+            disabled={disabled}
         />
     )
 }

@@ -5,13 +5,13 @@
 // HEAD -> MODULES
 import * as $ from "$";
 import * as ß from "ß";
+import * as SUG from "SUG";
 
 // HEAD -> COMPONENTS
 import $Button from "ßButton";
 import $Form from "ßForm";
 import $InputEmail from "ßInputEmail";
 import $InputPassword from "ßInputPassword";
-import $InputSubmit from "ßInputSubmit";
 import $InputText from "ßInputText";
 import $SVGIcon from "ßSVGIcon";
 
@@ -61,28 +61,27 @@ function $Auth(
                 setDisabled(true);
                 switch (mode) {
                     case true: {
-                        $.debug($.SUG.PAT);
                         if (!(
-                            $.check(data.get("username") as string, $.SUG.PAT.Uname) &&
-                            $.check(data.get("password") as string, $.SUG.PAT.Uhashpass)
+                            $.check(data.get("username") as string, SUG.PAT.Uname) &&
+                            $.check(data.get("password") as string, SUG.PAT.Uhashpass)
                         )) {break}
-                        if (await $.curl("user/login", {
-                            Uname: data.get("username"),
-                            Uhashpass: data.get("password"),
+                        if (await $.curl<UserLoginRequest, UserLoginResponse>("user/login", {
+                            Uname: data.get("username") as string,
+                            Uhashpass: data.get("password") as string,
                         })) {
                             window.location.reload();
                         }
                     }
                     case false: {
                         if (!(
-                            $.check(data.get("username") as string, $.SUG.PAT.Uname) &&
-                            $.check(data.get("email") as string, $.SUG.PAT.Uemail) &&
-                            $.check(data.get("password") as string, $.SUG.PAT.Uhashpass)
+                            $.check(data.get("username") as string, SUG.PAT.Uname) &&
+                            $.check(data.get("email") as string, SUG.PAT.Uemail) &&
+                            $.check(data.get("password") as string, SUG.PAT.Uhashpass)
                         )) {break}
-                        if (await $.curl("user/register", {
-                            Uname: data.get("username"),
-                            Uemail: data.get("email"),
-                            Uhashpass: data.get("password"),
+                        if (await $.curl<UserRegisterRequest, UserRegisterResponse>("user/register", {
+                            Uname: data.get("username") as string,
+                            Uemail: data.get("email") as string,
+                            Uhashpass: data.get("password") as string,
                         })) {
                             setMode(!mode);
                         }
@@ -90,19 +89,21 @@ function $Auth(
                 }
                 setDisabled(false);
             }}>
-                <$InputText id="Username" name="username" placeholder/>
-                {!mode && <$InputEmail id="Email" name="email" placeholder/>}
-                <$InputPassword id="Password" name="password" placeholder/>
-                <$InputSubmit 
+                <$InputText id="Username" name="username" placeholder disabled={disabled}/>
+                {!mode && <$InputEmail id="Email" name="email" placeholder disabled={disabled}/>}
+                <$InputPassword id="Password" name="password" placeholder disabled={disabled}/>
+                <$Button
                     id="Submit" 
-                    text={mode ? "Log in" : "Register"} 
+                    type="submit"
+                    text={mode ? "Log in" : "Register"}
                     data-tooltip={mode ? "Log in" : "Register"}
                     disabled={disabled}
                 />
-                {!mode && <p><a id="Agreement" href="https://www.termsfeed.com/live/76431b8a-3dd4-49ce-a030-9ed43aeb7300">By signing up you accept our privacy policy.</a></p>}
             </$Form>
+            {!mode && <p id="Agreement"><a id="Link" href="https://www.termsfeed.com/live/76431b8a-3dd4-49ce-a030-9ed43aeb7300">By signing up you accept our privacy policy.</a></p>}
             <$Button
                 text={mode ? "Don't have an account?" : "Already have an account?"}
+                disabled={disabled}
                 id="Change"
                 onClick={() => setMode(!mode)}
                 data-tooltip={mode ? "Register instead" : "Log in instead"}

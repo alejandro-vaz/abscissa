@@ -10,13 +10,13 @@ declare module "#dicebear" {
 // APP -> MATHSYS
 declare module "#mathsys" {
     export function $Playground(
-        {initial, id, output}: {
-            initial: string,
+        {id, code}: {
             id: string,
-            output: string
+            code: string
         }
-    ): import("ß").ReactElement;
-    export function view(code: string, element: HTMLElement): Promise<void>;
+    ): import("ß").ReactNode;
+    export function view(code: string): Promise<string>;
+    export function render(code: string, element: HTMLElement, display: boolean): void;
     export function run(code: string): Promise<string>;
 }
 

@@ -94,6 +94,7 @@ declare module "motion/react" {
         const span: any;
         const button: any;
         const input: any;
+        const div: any;
     }
 }
 declare module "€motion/react" {export * from "motion/react"}

@@ -1,6 +1,0 @@
-{
-    "title": "title here",
-    "instructions": "do x, y and z. you might want to include mathsys between tripple backticks. rendered as markdown",
-    "editor": "editor default mathsys",
-    "svg": "svg content here"
-}

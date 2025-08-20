@@ -13,9 +13,7 @@ import * as reactdom from '€react-dom/client';
 import $Suspense from "ßSuspense";
 
 // HEAD -> ANALYTICS
-gagtag.install(SUG.TAG, {
-    send_page_view: false
-});
+gagtag.install(SUG.TAG);
 
 
 //
@@ -34,6 +32,8 @@ export const useState = react.useState;
 export const span = motion.motion.span;
 export const button = motion.motion.button;
 export const input = motion.motion.input;
+export const div = motion.motion.div;
+export const AnimatePresence = motion.AnimatePresence;
 
 // EXPORTS -> DEFAULT ROOT
 export const Main = await createRoot("Main");
@@ -133,21 +133,9 @@ export function onRender(call: () => any): void {
 }
 
 // UTILITIES -> MOUNT
-export function mount(call: (node) => any): (node) => Promise<void> {
+export function mount(call: (node) => any): (node) => void {
     return async(node) => {
         if ((node) == null) {return};
-        await call(node);
+        void await call(node);
     }
-}
-
-
-//
-//  ANALYTICS
-//
-
-// ANALYTICS
-export function view(pathname: string): void {
-    gagtag.gtag("event", "page_view", {
-        page_path: pathname
-    })
 }

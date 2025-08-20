@@ -19,7 +19,7 @@ import random as rng
 # RANDOM -> CLASS
 class _random:
     # CLASS -> INIT
-    async def init(self, request: Request) -> namespace: return self
+    async def init(self, request: Request, response: Response) -> namespace: return self
     # CLASS -> RANDOM INTEGER
     def integer(self, minimum: int, maximum: int) -> int:
         return rng.randint(minimum, maximum)

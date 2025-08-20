@@ -10,43 +10,45 @@ import * as codemirrorState from '€@codemirror/state';
 import * as codemirrorView from '€@codemirror/view';
 import * as codemirrorCommands from '€@codemirror/commands';
 
+// HEAD -> COMPONENTS
+import $Suspense from "ßSuspense";
+
 
 //
 //  MATHSYS
 //
 
-// RENDER -> MATHSYS EXIT
-class MathsysExit extends Error {
-    constructor(public exitCode: number) {
-        super(`Mathsys halted with code ${exitCode}`);
-        this.name = "MathsysExit";
-    }
-}
-
 // MATHSYS -> PLAYGROUND
 export function $Playground(
-    {initial, id, output}: {
-        initial: string,
+    {id, code}: {
         id: string,
-        output: string
+        code: string
     }
-): ß.ReactElement {
+): ß.ReactNode {
+    const [ready, setReady] = ß.useState<boolean>(true);
+    const [editor, setEditor] = ß.useState<boolean>(false);
+    const [output, setOutput] = ß.useState<string>(null);
+    ß.onRender(async() => {
+        setReady(false);
+        setOutput(await view(code));
+        setReady(true);
+    })
     return (
-        <div 
-            id={id}
-            ref={ß.mount(async(node) => {
-                const container = await ß.connect(output);
-                let timer;
+        <div id={id} className="-mathsys-playground">
+            <div id="Editor" ref={ß.mount((node) => {
+                let timer: number;
                 const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
                     if (update.docChanged) {
                         clearTimeout(timer);
-                        timer = setTimeout(async() => {
-                            await view(update.state.doc.toString(), container);
-                        }, 100);
+                        timer = window.setTimeout(async() => {
+                            setReady(false);
+                            setOutput(await view(update.state.doc.toString()));
+                            setReady(true);
+                        }, 250);
                     }
-                })
-                const state = codemirrorState.EditorState.create({
-                    doc: initial,
+                });
+                const temporalState = codemirrorState.EditorState.create({
+                    doc: code,
                     extensions: [
                         codemirrorView.keymap.of(codemirrorCommands.historyKeymap),
                         codemirrorView.EditorView.theme(
@@ -86,31 +88,46 @@ export function $Playground(
                         codemirrorCommands.history(),
                         codemirrorView.EditorView.lineWrapping
                     ]
-                })
-                await view(state.doc.toString(), container);
-                new codemirrorView.EditorView({
-                    state: state,
-                    parent: node
-                })
-            })}
-        ></div>
+                });
+                if (!editor) {
+                    new codemirrorView.EditorView({state: temporalState, parent: node});
+                    setEditor(true);
+                }
+            })}></div>
+            <div id="Wrapper">
+                <$Suspense id="Suspense" show={ready}>
+                    <div id="Output" ref={ß.mount(async(node) => await render(output, node, true))}></div>
+                </$Suspense>
+            </div>
+        </div>
     )
 }
 
-// MATHSYS -> VIEW
-export async function view(code: string, element: HTMLElement): Promise<void> {
-    const result = await $.curl("mathsys/view", {Mcode: code}) as string | boolean;
-    if (result !== false) {
-        element.textContent = result as string;
-        katex(element, {
-            delimiters: [
-                {left: "$$", right: "$$", display: true},
-                {left: "$", right: "$", display: true}
-            ],
-            strict: false,
-            throwOnError: false,
-        });
+// MATHSYS -> MATHSYS EXIT
+class MathsysExit extends Error {
+    constructor(public exitCode: number) {
+        super(`Mathsys halted with code ${exitCode}`);
+        this.name = "MathsysExit";
     }
+}
+
+// MATHSYS -> VIEW
+export async function view(code: string): Promise<string> {
+    return (await $.curl<MathsysViewRequest, MathsysViewResponse>("mathsys/view", {Mcode: code})).output;
+}
+
+// MATHSYS -> KATEX
+export function render(code: string, element: HTMLElement, display: boolean): void {
+    if (code === null) {return}
+    element.textContent = code;
+    katex(element, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: display}
+        ],
+        strict: false,
+        throwOnError: false
+    })
 }
 
 // MATHSYS -> COMPILE
@@ -118,7 +135,7 @@ export async function run(code: string): Promise<string> {
     const output = [];
     let runtime: WebAssembly.Instance;
     runtime = (await WebAssembly.instantiate(
-        await WebAssembly.compile(await $.stream("mathsys/compile", {Mcode: code})),
+        await WebAssembly.compile(await $.curl<MathsysCompileRequest, MathsysCompileResponse>("mathsys/compile", {Mcode: code})),
         {
             env: {},
             sys: {

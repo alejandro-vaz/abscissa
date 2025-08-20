@@ -17,7 +17,7 @@ export default function $_error(): ß.ReactNode {
     const [code, setCode] = ß.useState<number>(404);
     const [description, setDescription] = ß.useState<string>("Not found.");
     try {
-        switch (+$.SUG.VWD[1]) {
+        switch (+$.locate()[1]) {
             case 0: {
                 setCode(0);
                 setDescription("Vertical screen error.");

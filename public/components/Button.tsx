@@ -12,13 +12,14 @@ import * as ß from "ß";
 
 // BUTTON -> ELEMENT
 export default function $Button(
-    {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled}: {
+    {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled, type}: {
         text: string,
         onClick?: () => any,
         onContextMenu?: () => any,
         id: string,
         "data-tooltip": string,
         disabled?: boolean
+        type?: string
     }
 ): ß.ReactElement {
     return (
@@ -34,8 +35,19 @@ export default function $Button(
             whileHover={disabled ? {} : {backgroundColor: "#111111"}}
             whileTap={disabled ? {} : {borderColor: "#7f7fd2", color: "#7f7fd2"}}
             transition={{duration: 0.1, ease: "easeInOut"}}
+            type={type}
         >
-            {text}
+            <ß.AnimatePresence initial={false} mode="popLayout">
+                <ß.span
+                    key={text}
+                    initial={{y: 10, opacity: 0}}
+                    animate={{y: 0, opacity: 1}}
+                    exit={{y: -10, opacity: 0}}
+                    transition={{duration: 0.1, ease: "easeInOut"}}
+                >
+                    {text}
+                </ß.span>
+            </ß.AnimatePresence>
         </ß.button>
     )
 }
