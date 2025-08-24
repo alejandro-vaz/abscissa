@@ -330,3 +330,22 @@
 - [X] (Patch) Renamed app module render to *Mathsys.*
 - [X] (Minor) Started adding *Motion* components with their own style and trimming the base `style.sass`.
 - [X] (Patch) Added *TSX* regex validation.
+### *Abscissa* 4.5.4 `2-3-13`
+- [X] (Patch) Fixed type checking in *Python* `include` function.
+- [X] (Patch) Improved `README.md` syntax.
+- [X] (Patch) Changed working directory from `/srv/www/website` to `srv/www/abscissa`.
+- [X] (Major) Added `pydantic` surronding the *API* for input and output sanitizing with request and response models.
+- [X] (Patch) Improved the safe access (`º`) *Python* function.
+- [X] (Patch) Upgraded to *Mathsys* 1.0.0.
+- [X] (Patch) Added `json` *Python* extension and removed `post` and `response`.
+- [X] (Patch) Forced database to use `JSON_OBJECT()` and 4-space indentation.
+- [X] (Patch) Removed analytics from database extension.
+- [X] (Minor) Added *Mathsys* `$Playground` *React* component.
+- [X] (Major) Started migrating to *React.*
+- [X] (Patch) Added `SUG.tsx` constant data.
+- [X] (Patch) Moved font declaration to `_root.sass`.
+- [X] (Patch) Added `modifier` function in `_root.sass` to set the size of `#Main`.
+- [X] (Patch) Removed unnecesary icons from the navbar.
+- [X] (Patch) Added *Google Analytics* via `ga-gtag` extern module.
+- [X] (Minor) Created custom react components to streamline development.
+- [X] (Minor) Added types under `types/`.
