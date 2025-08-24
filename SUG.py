@@ -28,7 +28,7 @@ DBC = {
 PDR = "/srv/www"
 
 # MASTER SUPERGLOBALS -> DIRECTORY
-DIR = "/srv/www/website"
+DIR = "/srv/www/abscissa"
 
 # MASTER SUPERGLOBALS -> REGEX PATTERNS
 PAT = {

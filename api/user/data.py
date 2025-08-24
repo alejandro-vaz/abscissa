@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -41,7 +41,7 @@ class UserDataResponse(BaseModel):
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     database as _database,
     json as _json
 )

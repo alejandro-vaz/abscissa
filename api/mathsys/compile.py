@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -23,7 +23,7 @@ class MathsysCompileRequest(BaseModel):
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     binary as _binary,
     mathsys as _mathsys
 )

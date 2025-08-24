@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -32,7 +32,7 @@ class MathsysValidateResponse(BaseModel):
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     mathsys as _mathsys
 )
 

@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -34,7 +34,7 @@ class UserRegisterResponse(BaseModel):
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     cryptography as _cryptography,
     database as _database
 )

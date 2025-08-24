@@ -41,6 +41,7 @@ export function $Playground(
                     if (update.docChanged) {
                         clearTimeout(timer);
                         timer = window.setTimeout(async() => {
+                            if (ready === false) {return}
                             setReady(false);
                             setOutput(await view(update.state.doc.toString()));
                             setReady(true);

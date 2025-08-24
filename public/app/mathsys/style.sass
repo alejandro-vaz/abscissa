@@ -12,6 +12,11 @@
 
 // MATHSYS -> NAMESPACE
 :where(html)
+    :where(.katex-display, .katex)
+        font-size: 1vw
+    :where(.newline)
+        display: block
+        height: root.$MARGIN
     :where(.-mathsys-playground)
         +root.section(normal, normal, normal, $direction: row)
         > #Editor

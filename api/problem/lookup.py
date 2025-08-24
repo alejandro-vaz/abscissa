@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -63,7 +63,7 @@ class ProblemLookupResponse(BaseModel):
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     binary as _binary,
     database as _database,
     json as _json

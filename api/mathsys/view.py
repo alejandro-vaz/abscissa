@@ -3,8 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from fastapi import HTTPException
-from website import *
+from abscissa import *
 
 
 #
@@ -33,7 +32,7 @@ class MathsysViewResponse(BaseModel):
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     mathsys as _mathsys
 )
 

@@ -4,6 +4,7 @@
 
 // HEAD -> MODULES
 @use "root"
+@use "sass:color"
 
 
 //
@@ -18,7 +19,9 @@ $main-tooltip-height: 1.25vw
 // DEFAULT -> STYLES
 :where(html)
     +root.cursor(default)
-    background-color: root.$INVERTED
+    width: 100vw
+    height: 100vh
+    background: radial-gradient(color.adjust(#4d4da0, $lightness: -40%), root.$INVERTED)
     :where(:not(.cm-editor, .cm-editor *))
         user-select: none
         -webkit-user-drag: none
@@ -47,8 +50,3 @@ $main-tooltip-height: 1.25vw
         font-size: 3 * root.$FONTSIZE
         margin: 1vw 0 0.5vw 0
         padding: 0
-    :where(.newline)
-        display: block
-        height: root.$MARGIN
-    :where(.katex-display, .katex)
-        font-size: 1vw
