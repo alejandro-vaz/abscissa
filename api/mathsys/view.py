@@ -3,7 +3,25 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
+
+
+#
+#   REQUEST
+#
+
+# REQUEST -> FINAL
+class MathsysViewRequest(BaseModel):
+    Mcode: str
+
+
+#
+#   RESPONSE
+#
+
+# RESPONSE -> FINAL
+class MathsysViewResponse(BaseModel):
+    output: str | None
 
 
 #
@@ -14,24 +32,21 @@ from website import *
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
-    mathsys as _mathsys,
-    post as _post,
-    response as _response
+from abscissa.extensions import (
+    mathsys as _mathsys
 )
 
 # FUNCTION -> DECLARATION
 @router.post("/api/mathsys/view")
-async def output(request: Request) -> JSONResponse:
+async def output(request: Request, response: Response) -> MathsysViewResponse:
+    # DECLARATION -> INPUT
+    try: packet = MathsysViewRequest(**await request.json()) 
+    except: raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
-    mathsys = await _mathsys.namespace().init(request)
-    post = await _post.namespace().init(request)
-    response = await _response.namespace().init(request)
-    # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks(): raise HTTPException(**SUG.ERR[0])
-    # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not post.exists("Mcode"): raise HTTPException(**SUG.ERR[1])
-    # DECLARATION -> QUERY
-    mathsys.load(post.data["Mcode"])
-    response.load(mathsys.view() if mathsys.validate else False)
-    return response.get()
+    mathsys = await _mathsys.namespace().init(request, response)
+    # DECLARATION -> DATA
+    data = {
+        "output": mathsys.view() if mathsys.process(packet.Mcode) else None
+    }
+    # DECLARATION -> RETURN
+    return MathsysViewResponse(**data)

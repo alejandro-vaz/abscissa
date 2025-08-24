@@ -1,6 +1,6 @@
-//                                                                            
+//
 //  HEAD                                                                      
-//                                                                            
+//
 
 // MODULES
 @use "../../base/root"
@@ -11,5 +11,24 @@
 //
 
 // MATHSYS -> NAMESPACE
-#AppMathsys
-    display: none
+:where(html)
+    :where(.katex-display, .katex)
+        font-size: 1vw
+    :where(.newline)
+        display: block
+        height: root.$MARGIN
+    :where(.-mathsys-playground)
+        +root.section(normal, normal, normal, $direction: row)
+        > #Editor
+            +root.section(normal, normal, normal, $width: 50%, $grow: false)
+            > .cm-editor
+                +root.cursor(text)
+                height: 100%
+                border-radius: root.$RADIUS
+        > #Wrapper
+            +root.section(normal, normal, normal, $width: 50%, $grow: false)
+            position: relative
+            > #Suspense
+                +root.section(normal, normal, normal)
+                > #Output
+                    +root.section(normal, normal, center)

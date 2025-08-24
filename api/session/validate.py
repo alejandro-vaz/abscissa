@@ -3,7 +3,24 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
+
+
+#
+#   REQUEST
+#
+
+# REQUEST -> FINAL
+class SessionValidateRequest(BaseModel): pass
+
+
+#
+#   RESPONSE
+#
+
+# RESPONSE -> FINAL
+class SessionValidateResponse(BaseModel):
+    validated: bool
 
 
 #
@@ -14,18 +31,21 @@ from website import *
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
-    database as _database,
-    response as _response
+from abscissa.extensions import (
+    database as _database
 )
 
 # FUNCTION -> DECLARATION
 @router.post("/api/session/validate")
-async def output(request: Request) -> JSONResponse:
+async def output(request: Request, response: Response) -> SessionValidateResponse:
+    # DECLARATION -> INPUT
+    try: packet = SessionValidateRequest(**await request.json())
+    except: raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
-    database = await _database.namespace().init(request)
-    response = await _response.namespace().init(request)
-    # DECLARATION -> QUERY
-    await database.analytics("validate")
-    response.load(database.validate)
-    return response.get()
+    database = await _database.namespace().init(request, response)
+    # DECLARATION -> DATA
+    data = {
+        "validated": database.validate
+    }
+    # DECLARATION -> RETURN
+    return SessionValidateResponse(**data)

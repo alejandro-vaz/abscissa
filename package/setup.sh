@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /srv/www/website/server
+cd /srv/www/abscissa/server
 cp abscissa.cnf /etc/mysql/conf.d/abscissa.cnf
 mkdir /run/mysqld
 systemctl restart mysql
@@ -11,5 +11,5 @@ cp abscissa.service /etc/systemd/system/abscissa.service
 systemctl enable abscissa
 systemctl start abscissa
 
-cd /srv/www/website/database
+cd /srv/www/abscissa/database
 mysql -u root -p < setup.sql

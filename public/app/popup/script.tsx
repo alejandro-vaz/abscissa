@@ -5,86 +5,113 @@
 // HEAD -> MODULES
 import * as $ from "$";
 import * as ß from "ß";
+import * as SUG from "SUG";
 
 // HEAD -> COMPONENTS
 import $Button from "ßButton";
+import $Form from "ßForm";
+import $InputEmail from "ßInputEmail";
+import $InputPassword from "ßInputPassword";
+import $InputText from "ßInputText";
 import $SVGIcon from "ßSVGIcon";
-import $WordAppearText from "ßWordAppearText";
 
-// HEAD -> APP POPUP
-const origin = await $.connect("AppPopup");
+// HEAD -> ROOT
+const root = await ß.createRoot("AppPopup");
 
 
 //
 //  PRESETS
 //
 
+// PRESETS -> WRAPPER
+function $Wrapper(
+    {children}: {
+        children?: ß.ReactNode
+    }
+): ß.ReactNode {
+    return (
+        <div id="Window">
+            <div id="Header">
+                <$SVGIcon
+                    path="/public/app/popup/svg/close.svg"
+                    id="Close"
+                    onClick={() => remove()}
+                    data-tooltip="Close window"
+                />
+            </div>
+            {children}
+        </div>
+    )
+}
+
 // PRESETS -> AUTH
-function $Auth({initialState}: {initialState: boolean}) {
+function $Auth(
+    {initialState}: {
+        initialState: boolean
+    }
+): ß.ReactNode {
     const [mode, setMode] = ß.useState(initialState);
     const [disabled, setDisabled] = ß.useState(false);
     return (
-        <>
-            <div id="Auth">
-                <h2 id="Title">{mode ? "Log in" : "Register"}</h2>
-                <form id="Form" noValidate onSubmit={async(event) => {
-                    event.preventDefault();
-                    const data = new FormData(event.currentTarget as HTMLFormElement);
-                    setDisabled(true);
-                    switch (mode) {
-                        case true: {
-                            $.debug($.SUG.PAT);
-                            if (!(
-                                $.check(data.get("username") as string, $.SUG.PAT.Uname) &&
-                                $.check(data.get("password") as string, $.SUG.PAT.Uhashpass)
-                            )) {break}
-                            if (await $.curl("user/login", {
-                                Uname: data.get("username"),
-                                Uhashpass: data.get("password"),
-                            })) {
-                                window.location.reload();
-                            }
-                        }
-                        case false: {
-                            if (!(
-                                $.check(data.get("username") as string, $.SUG.PAT.Uname) &&
-                                $.check(data.get("email") as string, $.SUG.PAT.Uemail) &&
-                                $.check(data.get("password") as string, $.SUG.PAT.Uhashpass)
-                            )) {break}
-                            if (await $.curl("user/register", {
-                                Uname: data.get("username"),
-                                Uemail: data.get("email"),
-                                Uhashpass: data.get("password"),
-                            })) {
-                                setMode(!mode);
-                            }
+        <div id="Auth">
+            <h2 id="Title">{mode ? "Log in" : "Register"}</h2>
+            <$Form id="Form" onSubmit={async(event) => {
+                event.preventDefault();
+                const data = new FormData(event.currentTarget as HTMLFormElement);
+                setDisabled(true);
+                switch (mode) {
+                    case true: {
+                        if (!(
+                            $.check(data.get("username") as string, SUG.PAT.Uname) &&
+                            $.check(data.get("password") as string, SUG.PAT.Uhashpass)
+                        )) {break}
+                        if (await $.curl<UserLoginRequest, UserLoginResponse>("user/login", {
+                            Uname: data.get("username") as string,
+                            Uhashpass: data.get("password") as string,
+                        })) {
+                            window.location.reload();
                         }
                     }
-                    setDisabled(false);
-                }}>
-                    <input id="Username" type="text" name="username" placeholder="username..." autoComplete="off"/>
-                    {!mode && <input id="Email" type="email" name="email" placeholder="email..." autoComplete="off"/>}
-                    <input id="Password" type="password" name="password" placeholder="password..." autoComplete="off"/>
-                    <input
-                        id="Submit"
-                        type="submit"
-                        value={mode ? "Log in" : "Register"}
-                        tooltip={mode ? "Log in" : "Register"}
-                        disabled={disabled}
-                    />
-                    {!mode && <$WordAppearText text="By signing up you accept our privacy policy." id="Agreement"/>}
-                </form>
+                    case false: {
+                        if (!(
+                            $.check(data.get("username") as string, SUG.PAT.Uname) &&
+                            $.check(data.get("email") as string, SUG.PAT.Uemail) &&
+                            $.check(data.get("password") as string, SUG.PAT.Uhashpass)
+                        )) {break}
+                        if (await $.curl<UserRegisterRequest, UserRegisterResponse>("user/register", {
+                            Uname: data.get("username") as string,
+                            Uemail: data.get("email") as string,
+                            Uhashpass: data.get("password") as string,
+                        })) {
+                            setMode(!mode);
+                        }
+                    }
+                }
+                setDisabled(false);
+            }}>
+                <$InputText id="Username" name="username" placeholder disabled={disabled}/>
+                {!mode && <$InputEmail id="Email" name="email" placeholder disabled={disabled}/>}
+                <$InputPassword id="Password" name="password" placeholder disabled={disabled}/>
                 <$Button
-                    text={mode ? "Don't have an account?" : "Already have an account?"}
-                    id="Change"
-                    onClick={() => setMode(!mode)}
-                    tooltip={mode ? "Register instead" : "Already have an account?"}
+                    id="Submit" 
+                    type="submit"
+                    text={mode ? "Log in" : "Register"}
+                    data-tooltip={mode ? "Log in" : "Register"}
+                    disabled={disabled}
                 />
-            </div>
-        </>
+            </$Form>
+            {!mode && <p id="Agreement"><a id="Link" href="https://www.termsfeed.com/live/76431b8a-3dd4-49ce-a030-9ed43aeb7300">By signing up you accept our privacy policy.</a></p>}
+            <$Button
+                text={mode ? "Don't have an account?" : "Already have an account?"}
+                disabled={disabled}
+                id="Change"
+                onClick={() => setMode(!mode)}
+                data-tooltip={mode ? "Register instead" : "Log in instead"}
+            />
+        </div>
     )
 };
-//https://www.termsfeed.com/live/76431b8a-3dd4-49ce-a030-9ed43aeb7300
+
 
 //
 //  POPUP
@@ -96,29 +123,15 @@ export async function create(preset: string, ...presetArguments: any[]): Promise
     switch (preset) {
         case "auth": content = <$Auth initialState={presetArguments[0]}/>;
     }
-    await ß.inject(origin,
-        <>
-            <div id="Window">
-                <div id="Header">
-                    <$SVGIcon
-                        path="/public/app/popup/svg/close.svg"
-                        id="Close"
-                        onClick={() => remove()}
-                        tooltip="Close window"
-                    />
-                </div>
-                {content}
-            </div>
-        </>
-    )
-    origin.style.pointerEvents = "auto";
-    origin.style.opacity = "1";
+    await ß.inject(root, <$Wrapper>{content}</$Wrapper>)
+    root.node.style.pointerEvents = "auto";
+    root.node.style.opacity = "1";
 }
 
 // POPUP -> REMOVE
 export async function remove(): Promise<void> {
-    origin.style.opacity = "0";
-    origin.style.pointerEvents = "none";
+    root.node.style.opacity = "0";
+    root.node.style.pointerEvents = "none";
     await $.delay(0.1);
-    await ß.inject(origin, <></>);
+    await ß.clean(root);
 }

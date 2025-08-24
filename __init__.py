@@ -12,6 +12,9 @@ import asyncio
 import aiomysql
 from aiomysql import Connection
 from typing import Any
+from pydantic import BaseModel, Field
+from datetime import datetime
+from enum import Enum
 
 # INITIALIZATION -> SUPERGLOBALS
 import SUG
@@ -26,15 +29,13 @@ def debug(*variables: Any) -> None:
     for variable in variables:
         print(f"DEBUG: {repr(variable)}", file=sys.stderr)
 
-# FUNCTIONS -> ADD
-def add(*extensions: str) -> str:
-    code = []
-    for extension in extensions:
-        with open(f"{SUG.DIR}/extensions/{extension}.py", "r") as file: code.append(file.read())
-    return "\n\n".join(code)
-
 # FUNCTIONS -> SAFE ACCESS
-def º(array: list | dict, key: int | str) -> Any:
-    match array:
-        case dict(): return array[key] if key in array else None
-        case list(): return array[int(key)] if int(key) < len(array) else None
+def º(array: list | dict, *keys: int | str) -> Any:
+    try:
+        if len(keys) == 1:
+            match array:
+                case list(): return array[keys[0] if isinstance(keys[0], int) else 0]
+                case dict(): return array[keys[0]]
+        else: return º(º(array, keys[0]), *keys[1:])
+    except: 
+        raise HTTPException(**SUG.ERR[2])

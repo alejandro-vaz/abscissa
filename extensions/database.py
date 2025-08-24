@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -22,13 +22,15 @@ import secrets
 class namespace:
     # CLASS -> VARIABLES
     connection: Connection
+    response: Response
     ip: str
     Sid: bytes | None
     validate: bool
     user: dict | None
     # CLASS -> INIT
-    async def init(self, request: Request) -> namespace:
+    async def init(self, request: Request, response: Response) -> namespace:
         self.connection = await aiomysql.connect(**SUG.DBC)
+        self.response = response
         self.ip = request.client.host
         if request.cookies.get("Sid") is not None: 
             self.Sid = bytes.fromhex(request.cookies.get("Sid"))
@@ -41,12 +43,12 @@ class namespace:
             self.user = º(await self.query(
                 "SELECT * FROM USERS WHERE Uid = %s",
                 [
-                    º(º(await self.query(
+                    º(await self.query(
                         "SELECT Uid FROM SESSIONS WHERE Sid = %s",
                         [
                             self.Sid
                         ]
-                    ), 0), "Uid")
+                    ), 0, "Uid")
                 ]
             ), 0) if self.validate else None
         else:
@@ -67,7 +69,7 @@ class namespace:
                 debug(error.args[0], error.args[1])
                 return False
     # CLASS -> SESSION
-    async def session(self, response: JSONResponse, Uid: int) -> JSONResponse:
+    async def session(self, Uid: int) -> None:
         self.Sid = secrets.token_bytes(32)
         await self.query(
             "INSERT INTO SESSIONS (Sid, Sip, Sexpires, Uid) VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE Sid = VALUES(Sid), Sip = VALUES(Sip), Sexpires = VALUES(Sexpires)",
@@ -78,20 +80,11 @@ class namespace:
                 Uid
             ]
         )
-        response.set_cookie(
+        self.response.set_cookie(
             "Sid",
             self.Sid.hex().upper(),
             max_age = datetime.timedelta(seconds = 604800),
             httponly = True,
             secure = True,
             samesite = "lax"
-        )
-        return response
-    # CLASS -> ANALYTICS
-    async def analytics(self, action: str) -> None:
-        await self.query(
-            "INSERT INTO ANALYTICS (Aaction) VALUES (%s)",
-            [
-                SUG.ACT[action]
-            ]
         )

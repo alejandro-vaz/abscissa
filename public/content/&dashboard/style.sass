@@ -7,11 +7,12 @@
 
 
 //
-//  DASHBOARD
+//  &DASHBOARD
 //
 
-// DASHBOARD -> NAMESPACE
+// &DASHBOARD -> NAMESPACE
 ._dashboard
+    +root.modifier(true, true, true)
     align-items: center
     > #Container
         +root.section(normal, normal, normal, $width: 50%, $grow: false, $height: fit-content)
@@ -28,21 +29,26 @@
             &:hover
                 +root.cursor(click)
                 > #Wrapper
-                    > #Title
-                        text-decoration: underline
+                    > #Suspense
+                        > #Title
+                            text-decoration: underline
             &:last-child
                 margin-bottom: 0
             &#Daily
                 background: linear-gradient(to top right, root.$TOUCH, #112277)
             > #Wrapper
-                +root.section(normal, normal, normal, $grow: false, $height: 100%)
-                +root.blurred()
+                +root.section(normal, normal, normal, $grow: false)
+                position: relative
+                background-color: root.$BLURRED
+                backdrop-filter: blur(1vw)
                 border-radius: root.$RADIUS
                 padding: root.$PADDING1
-                > #Title
-                    transition: text-decoration root.$TIMER2 root.$CURVE1
-                    margin: 0
-                > #Data
-                    +root.section(normal, normal, normal, $grow: true, $direction: row, $height: 0)
-                    > #Description
-                        +root.section(normal, normal, normal, $grow: true, $direction: column, $width: 0)
+                > #Suspense
+                    +root.section(normal, normal, normal)
+                    > #Title
+                        transition: text-decoration root.$TIMER2 root.$CURVE1
+                        margin: 0
+                    > #Data
+                        +root.section(normal, normal, normal, $grow: true, $direction: row, $height: 0)
+                        > #Description
+                            +root.section(normal, normal, normal, $grow: true, $direction: column, $width: 0)

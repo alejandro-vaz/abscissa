@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
 
 
 #
@@ -22,7 +22,7 @@ class namespace:
     # CLASS -> VARIABLES
     crc32date: int
     # CLASS -> INIT
-    async def init(self, request: Request) -> namespace:
+    async def init(self, request: Request, response: Response) -> namespace:
         self.crc32date = zlib.crc32(datetime.datetime.now().strftime('%Y-%m-%d').encode()) & 0xFFFFFFFF
         return self
     # CLASS -> TIME NOW

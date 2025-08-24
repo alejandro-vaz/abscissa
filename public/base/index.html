@@ -22,9 +22,6 @@
     <!-- INTERFACE STYLING PRELOAD : NAVBAR -->
     <link rel="preload" href="/public/interface/navbar/style.css" as="style" type="text/css">
     <link rel="preload" href="/public/interface/navbar/svg/playground.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/public/interface/navbar/svg/search.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/public/interface/navbar/svg/settings.svg" as="image" type="image/svg+xml">
-    <link rel="preload" href="/public/interface/navbar/svg/stats.svg" as="image" type="image/svg+xml">
     <link rel="preload" href="/public/interface/navbar/svg/user.svg" as="image" type="image/svg+xml">
     <!-- INTERFACE STYLING PRELOAD : TOOLTIP -->
     <link rel="preload" href="/public/interface/tooltip/style.css" as="style" type="text/css">
@@ -33,8 +30,6 @@
     <!--
         APP STYLING PRELOAD
     -->
-    <!-- APP STYLING PRELOAD : DICEBEAR -->
-    <link rel="preload" href="/public/app/dicebear/style.css" as="style" type="text/css">
     <!-- APP STYLING PRELOAD : MATHSYS -->
     <link rel="preload" href="/public/app/mathsys/style.css" as="style" type="text/css">
     <link rel="preload" href="https://esm.sh/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" as="style" type="text/css" crossorigin="anonymous">
@@ -50,7 +45,7 @@
     <link rel="preload" href="/public/content/&dashboard/style.css" as="style" type="text/css">
     <!-- VIEW STYLING PRELOAD : &ERROR -->
     <link rel="preload" href="/public/content/&error/style.css" as="style" type="text/css">
-    <!-- VIEW STYLING PRELOAD : PLAYGROUND -->
+    <!-- VIEW STYLING PRELOAD : $PLAYGROUND -->
     <link rel="preload" href="/public/content/&playground/style.css" as="style" type="text/css">
     <!--
         COMPONENTS STYLING RENDER
@@ -69,8 +64,6 @@
     <!--
         APP STYLING RENDER
     -->
-    <!-- APP STYLING RENDER : DICEBEAR -->
-    <link rel="stylesheet" href="/public/app/dicebear/style.css">
     <!-- APP STYLING RENDER : MATHSYS -->
     <link rel="stylesheet" href="/public/app/mathsys/style.css">
     <link rel="stylesheet" href="https://esm.sh/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
@@ -85,7 +78,7 @@
     <link rel="stylesheet" href="/public/content/&dashboard/style.css">
     <!-- VIEW STYLING RENDER : &ERROR -->
     <link rel="stylesheet" href="/public/content/&error/style.css">
-    <!-- VIEW STYLING RENDER : PLAYGROUND -->
+    <!-- VIEW STYLING RENDER : $PLAYGROUND -->
     <link rel="stylesheet" href="/public/content/&playground/style.css">
     <!--
         SETTINGS
@@ -124,7 +117,11 @@
                 "motion/react": "https://esm.sh/motion@12.23.12/react?deps=react@19.1.0,react-dom@19.1.0",
                 "€motion/react": "https://esm.sh/motion@12.23.12/react?deps=react@19.1.0,react-dom@19.1.0",
 
+                "ga-gtag": "https://esm.sh/ga-gtag@1.2.0",
+                "€ga-gtag": "https://esm.sh/ga-gtag@1.2.0",
+
                 "$": "/public/base/script.js",
+                "SUG":"/public/base/SUG.js",
 
                 "&": "/public/content/&/script.js",
                 "&dashboard": "/public/content/&dashboard/script.js",
@@ -141,35 +138,24 @@
 
                 "ß": "/public/components/script.js",
                 "ßButton": "/public/components/Button.js",
-                "ßSVGIcon": "/public/components/SVGIcon.js",
-                "ßWordAppearText": "/public/components/WordAppearText.js"
+                "ßForm": "/public/components/Form.js",
+                "ßInputEmail": "/public/components/InputEmail.js",
+                "ßInputPassword": "/public/components/InputPassword.js",
+                "ßInputText": "/public/components/InputText.js",
+                "ßSuspense": "/public/components/Suspense.js",
+                "ßSVGIcon": "/public/components/SVGIcon.js"
             }
         }
     </script>
     <!-- SETTINGS : CONFIGURATION -->
     <title>Abscissa</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Abscissa SPA powered by Mathsys.">
+    <meta name="description" content="LeetCode but for math. No multiple-choice-questions, no fill in the gaps. Solve math by solving, not guessing.">
     <meta name="keywords" content="abscissa math mathsys learn">
-    <meta name="google-site-verification" content="2tgFIaxhyJ3MNsE7lo_kYH1BJ6dgmQtBpvwqVTniLKg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alejandro Vaz">
     <!-- SETTINGS : JAVASCRIPT -->
     <script type="module" src="/public/base/script.js"></script>
 </head>
-<body>
-    <!--
-        CONTENT
-    -->
-    <!-- CONTENT : APP MODULES -->
-    <div id="AppDicebear"></div>
-    <div id="AppMathsys"></div>
-    <div id="AppPopup"></div>
-    <!-- CONTENT : INTERFACE MODULES -->
-    <div id="InterfaceNavbar"></div>
-    <div id="InterfaceTooltip"></div>
-    <div id="InterfaceTopbar"></div>
-    <!-- CONTENT : VIEW -->
-    <div id="Main"></div>
-</body>
+<body></body>
 </html>

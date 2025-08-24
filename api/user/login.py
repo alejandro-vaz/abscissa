@@ -3,7 +3,26 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
+
+
+#
+#   REQUEST
+#
+
+# REQUEST -> FINAL
+class UserLoginRequest(BaseModel):
+    Uname: str = Field(..., pattern = SUG.PAT["Uname"])
+    Uhashpass: str = Field(..., pattern = SUG.PAT["Uhashpass"])
+
+
+#
+#   RESPONSE
+#
+
+# RESPONSE -> FINAL
+class UserLoginResponse(BaseModel):
+    success: bool
 
 
 #
@@ -14,31 +33,29 @@ from website import *
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     cryptography as _cryptography,
-    database as _database,
-    post as _post,
-    response as _response
+    database as _database
 )
 
 # FUNCTION -> DECLARATION
 @router.post("/api/user/login")
-async def output(request: Request) -> JSONResponse:
+async def output(request: Request, response: Response) -> UserLoginResponse:
+    # DECLARATION -> INPUT
+    try: packet = UserLoginRequest(**await request.json())
+    except: raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
-    cryptography = await _cryptography.namespace().init(request)
-    database = await _database.namespace().init(request)
-    post = await _post.namespace().init(request)
-    response = await _response.namespace().init(request)
-    # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks(): raise HTTPException(**SUG.ERR[0])
-    # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not all(post.exists("Uhashpass", "Uname")): raise HTTPException(**SUG.ERR[1])
-    # DECLARATION -> QUERY
+    cryptography = await _cryptography.namespace().init(request, response)
+    database = await _database.namespace().init(request, response)
+    # DECLARATION -> DATA
     user = º(await database.query(
         "SELECT Uid, Uhashpass FROM USERS WHERE Uname = %s",
         [
-            post.data["Uname"]
+            packet.Uname
         ]
     ), 0)
-    response.load(cryptography.verify(º(user, "Uhashpass"), post.data["Uhashpass"]))
-    return await database.session(response.get(), º(user, "Uid")) if response.data else response.get()
+    success = cryptography.verify(º(user, "Uhashpass"), packet.Uhashpass)
+    if success: await database.session(º(user, "Uid"))
+    data = {"success": success}
+    # DECLARATION -> RETURN
+    return UserLoginResponse(**data)

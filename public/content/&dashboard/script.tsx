@@ -7,15 +7,8 @@ import * as $ from "$";
 import * as ß from "ß";
 import * as Mathsys from "#mathsys";
 
-
-//
-//  REMOVE
-//
-
-// REMOVE -> FUNCTION
-export async function hide(): Promise<void> {
-    await ß.inject($.SUG.ORG, <></>);
-}
+// HEAD -> COMPONENTS
+import $Suspense from "ßSuspense";
 
 
 //
@@ -23,33 +16,48 @@ export async function hide(): Promise<void> {
 //
 
 // CONTENT -> FUNCTION
-export async function show(): Promise<void> {
+export default function $_dashboard(): ß.ReactNode {
+    // FUNCTION -> VARIABLES
+    const [data, setData] = ß.useState<ProblemLookupResponse>(null);
+    const [view, setView] = ß.useState<string>(null);
+    const [ready, setReady] = ß.useState<boolean>(false);
+    ß.onRender(async() => {
+        const _data = await $.curl<ProblemLookupRequest, ProblemLookupResponse>("problem/lookup", {Pid: "00000000"});
+        setData(_data);
+        setView(await Mathsys.view(_data.Pdataen.instructions));
+        setReady(true);
+    })
     // FUNCTION -> INTERFACE
-    await $.modulator(
+    $.modulator(
         "navbar",
         "tooltip",
         "topbar"
     )
-    // FUNCTION -> WINDOW
     $.setTitle("Dashboard");
     $.setDescription("Here is where the magic happens.");
     // FUNCTION -> CONTENT
-    const data = await $.curl("problem/lookup", {Pid: "00000000"}) as any;
-    const info = await $.curl("problem/lookup", {Pid: "00000001"}) as any;
-    await ß.inject($.SUG.ORG,
-        <>
-            <div id="Container">
-                <h2>Jump right in</h2>
-                <div class="problem" id="Daily" onClick={async() => await $.redirect("/problem/00000000")} tooltip="yeah">
-                    <div id="Wrapper">
-                        <h3 id="Title">{data.Pdataen.title}</h3>
+    return (
+        <div id="Container">
+            <h2>Jump right in</h2>
+            <div 
+                class="problem" 
+                id="Daily" 
+                onClick={async() => await $.redirect("/problem/00000000")}  
+                data-tooltip="yeah"
+            > 
+                <div id="Wrapper">
+                    <$Suspense show={ready} id="Suspense">
+                        <h3 id="Title">{ready ? data.Pdataen.title : null}</h3>
                         <div id="Data">
-                            <div id="Description" ref={async(node) => await Mathsys.view(data.Pdataen.instructions, node)}></div>
+                            <div 
+                                id="Description"
+                                ref={ß.mount((node) => Mathsys.render(view, node, true))}
+                            ></div>
                             <img id="Image"/>
                         </div>
-                    </div>
+                    </$Suspense>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

@@ -3,7 +3,27 @@
 #
 
 # HANDLER -> LOAD
-from website import *
+from abscissa import *
+
+
+#
+#   REQUEST
+#
+
+# REQUEST -> FINAL
+class UserRegisterRequest(BaseModel):
+    Uname: str = Field(..., pattern = SUG.PAT["Uname"])
+    Uemail: str = Field(..., pattern = SUG.PAT["Uemail"])
+    Uhashpass: str = Field(..., pattern = SUG.PAT["Uhashpass"])
+
+
+#
+#   RESPONSE
+#
+
+# RESPONSE -> FINAL
+class UserRegisterResponse(BaseModel):
+    success: bool
 
 
 #
@@ -14,32 +34,29 @@ from website import *
 router = APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from website.extensions import (
+from abscissa.extensions import (
     cryptography as _cryptography,
-    database as _database,
-    post as _post,
-    response as _response
+    database as _database
 )
 
 # FUNCTION -> DECLARATION
 @router.post("/api/user/register")
 async def output(request: Request) -> JSONResponse:
+    # DECLARATION -> INPUT
+    try: packet = UserRegisterRequest(**await request.json())
+    except: raise HTTPException(**SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
-    cryptography = await _cryptography.namespace().init(request)
-    database = await _database.namespace().init(request)
-    post = await _post.namespace().init(request)
-    response = await _response.namespace().init(request)
-    # DECLARATION -> ARGUMENT CHECKS
-    if not post.checks(): raise HTTPException(**SUG.ERR[0])
-    # DECLARATION -> ARGUMENT RELATIONSHIP
-    if not all(post.exists("Uemail", "Uhashpass", "Uname")): raise HTTPException(**SUG.ERR[1])
-    # DECLARATION -> QUERY
-    response.load(await database.query(
+    cryptography = await _cryptography.namespace().init(request, response)
+    database = await _database.namespace().init(request, response)
+    # DECLARATION -> DATA
+    success = await database.query(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass) VALUES (%s, %s, %s)",
         [
-            post.data["Uname"],
-            post.data["Uemail"],
-            cryptography.hash(post.data["Uhashpass"])
+            packet.Uname,
+            packet.Uemail,
+            cryptography.hash(packet.Uhashpass)
         ]
-    ))
-    return response.get()
+    )
+    data = {"success": success}
+    # DECLARATION -> RESPONSE
+    return UserRegisterResponse(**data)

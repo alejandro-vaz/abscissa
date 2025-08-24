@@ -38,6 +38,20 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
 
 
 //
+//  FONTS
+//
+
+// FONTS -> COMIC SANS MS
+@font-face
+    font-family: 'comicSansMS'
+    src: url('/public/fonts/comicSansMS.ttf') format('truetype')
+    font:
+        weight: normal
+        style: normal
+        display: block
+
+
+//
 //  FUNCTIONS                                                                 
 //
 
@@ -59,47 +73,12 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
         @else
             flex: 0 0 auto
 
-// FUNCTIONS -> INPUT
-=input($type, $inline: true)
-    padding: $PADDING1
-    border-radius: $RADIUS
-    box-sizing: border-box
-    border: $BORDER2 solid $ACCENT
-    height: fit-content
-    @if $inline
-        display: inline-block
-    @else
-        display: block
-    &:focus
-        outline: none
-    @if $type == button
-        +cursor(click)
-        +blurred()
-        transition: border-color $TIMER1 $CURVE1, background-color $TIMER1 $CURVE1, color $TIMER1 $CURVE1
-        &:not(:disabled)
-            &:hover
-                background-color: $TOUCH
-            &:active
-                border-color: $LIGHT
-                color: $LIGHT
-        &:disabled
-            background-color: $INVERTED
-            +cursor(default)
-    @if $type == textarea
-        +cursor(text)
-        background-color: $INVERTED
-        font-family: monospace
-        resize: none
-        &::placeholder
-            color: $ACCENT
-            opacity: 0.5
-    @if $type == text or $type == password or $type == email
-        +cursor(text)
-        background-color: $INVERTED
-        font-family: monospace
-        &::placeholder
-            color: $ACCENT
-            opacity: 0.5
+// FUNCTIONS -> MODIFIER
+=modifier($topbar-bool, $navbar-bool, $tooltip-bool)
+    +section(normal, normal, center, $width: calc(100% - if($navbar-bool, 1vw, 0vw)), $height: calc(100% - if($tooltip-bool, 1.25vw, 0vw) - if($topbar-bool, 4.5vw, 0vw)))
+    position: fixed
+    top: if($topbar-bool, 4.5vw, 0vw)
+    right: 0
 
 // FUNCTIONS -> SCROLLBAR
 =scrollbar() 
@@ -113,8 +92,3 @@ $CURVE2: cubic-bezier(0.48, 0.19, 0.11, 1.7)
         cursor: pointer
     @if $type == text
         cursor: text
-
-// FUNCTIONS -> BLURRED
-=blurred()
-    background-color: $BLURRED
-    backdrop-filter: blur(1vw)

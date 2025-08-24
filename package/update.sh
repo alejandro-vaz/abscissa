@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /srv/www/website/database
+cd /srv/www/abscissa/database
 mysql -u root -p < update.sql

@@ -12,13 +12,14 @@ import * as ß from "ß";
 
 // BUTTON -> ELEMENT
 export default function $Button(
-    {text, onClick, onContextMenu, id, tooltip, disabled}: {
+    {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled, type}: {
         text: string,
-        onClick?: () => void,
-        onContextMenu?: () => void,
+        onClick?: () => any,
+        onContextMenu?: () => any,
         id: string,
-        tooltip: string,
+        "data-tooltip": string,
         disabled?: boolean
+        type?: string
     }
 ): ß.ReactElement {
     return (
@@ -27,15 +28,26 @@ export default function $Button(
             className="button"
             onClick={onClick}
             onContextMenu={onContextMenu}
-            tooltip={tooltip}
+            data-tooltip={dataTooltip}
             initial={{borderColor: "#FFFFFF", color: "#FFFFFF", backgroundColor: "#0000004F", cursor: "pointer"}}
             disabled={disabled}
             animate={disabled ? {backgroundColor: "#000000", cursor: "default"} : {}}
             whileHover={disabled ? {} : {backgroundColor: "#111111"}}
             whileTap={disabled ? {} : {borderColor: "#7f7fd2", color: "#7f7fd2"}}
             transition={{duration: 0.1, ease: "easeInOut"}}
+            type={type}
         >
-            {text}
+            <ß.AnimatePresence initial={false} mode="popLayout">
+                <ß.span
+                    key={text}
+                    initial={{y: 10, opacity: 0}}
+                    animate={{y: 0, opacity: 1}}
+                    exit={{y: -10, opacity: 0}}
+                    transition={{duration: 0.1, ease: "easeInOut"}}
+                >
+                    {text}
+                </ß.span>
+            </ß.AnimatePresence>
         </ß.button>
     )
 }
