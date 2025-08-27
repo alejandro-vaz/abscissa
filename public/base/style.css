@@ -1,1 +1,20 @@
 @import "tailwindcss" source("../");
+@font-face {
+    font-family: "comicSansMS";
+    src: url("/public/fonts/comicSansMS.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+@theme {
+    --color-primary: #4d4da0;
+    --color-secondary: #7f7fd2;
+    --font-family-sans: "comicSansMS";
+    --font-family-mono: monospace;
+}
+@layer base {
+    html {
+        font-family: var(--font-family-sans);
+        color: var(--color-black);
+    }
+}

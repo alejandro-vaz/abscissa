@@ -13,26 +13,26 @@
         "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
-            "$": ["public/base/script.js"],
-            "SUG": ["public/base/SUG.js"],
+            "$": ["public/base/script.tsx"],
+            "SUG": ["public/base/SUG.tsx"],
 
-            "&": ["public/content/&.js"],
-            "&dashboard": ["public/content/&dashboard.js"],
-            "&error": ["public/content/&error.js"],
-            "&playground": ["public/content/&playground.js"],
+            "&": ["public/content/&.tsx"],
+            "&dashboard": ["public/content/&dashboard.tsx"],
+            "&error": ["public/content/&error.tsx"],
+            "&playground": ["public/content/&playground.tsx"],
 
-            "#dicebear": ["public/app/dicebear.js"],
-            "#mathsys": ["public/app/mathsys.js"],
-            "#popup": ["public/app/popup.js"],
+            "#dicebear": ["public/app/dicebear.tsx"],
+            "#mathsys": ["public/app/mathsys.tsx"],
+            "#popup": ["public/app/popup.tsx"],
 
-            "ß": ["public/components/script.js"],
-            "ßButton": ["public/components/Button.js"],
-            "ßForm": ["public/components/Form.js"],
-            "ßInputEmail": ["public/components/InputEmail.js"],
-            "ßInputPassword": ["public/components/InputPassword.js"],
-            "ßInputText": ["public/components/InputText.js"],
-            "ßSuspense": ["public/components/Suspense.js"],
-            "ßSVGIcon": ["public/components/SVGIcon.js"]
+            "ß": ["public/components/ß.tsx"],
+            "ßButton": ["public/components/Button.tsx"],
+            "ßForm": ["public/components/Form.tsx"],
+            "ßInputEmail": ["public/components/InputEmail.tsx"],
+            "ßInputPassword": ["public/components/InputPassword.tsx"],
+            "ßInputText": ["public/components/InputText.tsx"],
+            "ßSuspense": ["public/components/Suspense.tsx"],
+            "ßSVGIcon": ["public/components/SVGIcon.tsx"]
         }
     },
     "exclude": [

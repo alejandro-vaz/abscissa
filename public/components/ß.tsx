@@ -73,30 +73,12 @@ export async function createRoot(id: string): Promise<Reference> {
     return reference;
 }
 
-
-//
-//  MANIPULATION
-//
-
 // MANIPULATION -> RENDER
 async function render(reference: Reference): Promise<void> {
     return new Promise<void>((resolve) => {
         reference.root.render(reference.children[0]);
         resolve();
     });
-}
-
-// MANIPULATION -> INJECT
-export async function inject(reference: Reference, content: ReactNode): Promise<number> {
-    reference.children = [content];
-    await render(reference);
-    return 0;
-}
-
-// MANIPULATION -> CLEAN
-export async function clean(reference: Reference): Promise<void> {
-    reference.children = [];
-    await render(reference);
 }
 
 

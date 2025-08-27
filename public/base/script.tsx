@@ -13,15 +13,10 @@ import $_playground from "&playground";
 
 
 //
-//  WINDOW MANAGEMENT
+//  VIEW
 //
 
-// WINDOW MANAGEMENT -> LOCATE
-export function locate(): string[] {
-    return window.location.pathname.split("/").slice(1);
-}
-
-// WINDOW MANAGEMENT -> APP
+// VIEW -> APP
 function $App(): ß.ReactNode {
     return (
         <ß.BrowserRouter>
@@ -29,6 +24,8 @@ function $App(): ß.ReactNode {
         </ß.BrowserRouter>
     );
 }
+
+// VIEW -> CONTENT
 function $Content(): ß.ReactNode {
     const navigate = ß.useNavigate();
     ß.useEffect(() => {
@@ -43,8 +40,20 @@ function $Content(): ß.ReactNode {
         </ß.Routes>
     );
 }
-ß.Main.root.render(<$App/>);
+
+// VIEW -> RENDER
 ß.Main.node.className = "h-screen w-screen";
+ß.Main.root.render(<$App/>);
+
+
+//
+//  WINDOW MANAGEMENT
+//
+
+// WINDOW MANAGEMENT -> LOCATE
+export function locate(): string[] {
+    return window.location.pathname.split("/").slice(1);
+}
 
 // WINDOW MANAGEMENT -> NAVIGATE
 let globalNavigate: ((to: string, options?: any) => void) | null = null;
@@ -62,28 +71,6 @@ export function redirect(target: string, append: boolean = true, divide: boolean
     }
 }
 
-// WINDOW MANAGEMENT -> CHECK ASPECT RATIO
-function aspectRatio(): void {
-    const location = locate();
-    if (
-        window.innerWidth / window.innerHeight < 3 / 2 &&
-        location[0] !== 'error' &&
-        location[1] !== '0'
-    ) {
-        redirect('/error/0');
-    } else if (
-        window.innerWidth / window.innerHeight >= 3 / 2 &&
-        location[0] === 'error' &&
-        location[1] === '0'
-    ) {
-        redirect('/dashboard');
-    }
-}
-
-// WINDOW MANAGEMENT -> ENFORCE ASPECT RATIO
-aspectRatio()
-window.addEventListener("resize", aspectRatio);
-
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
 window.addEventListener('popstate', async() => {
     redirect(window.location.pathname, false);
@@ -94,22 +81,18 @@ document.addEventListener("contextmenu", (event) => {
     event.preventDefault();
 })
 
-// WINDOW MANAGEMENT -> GET TITLE
+// WINDOW MANAGEMENT -> TITLE
 export function getTitle(): string {
     return document.title;
 }
-
-// WINDOW MANAGEMENT -> SET TITLE
 export function setTitle(newTitle: string): void {
     document.title = newTitle;
 }
 
-// WINDOW MANAGEMENT -> GET DESCRIPTION
+// WINDOW MANAGEMENT -> DESCRIPTION
 export function getDescription(): string {
     return document.querySelector<HTMLMetaElement>('meta[name="description"]').content;
 }
-
-// WINDOW MANAGEMENT -> SET DESCRIPTION
 export function setDescription(newDescription: string): void {
     document.querySelector('meta[name="description"]').setAttribute('content', newDescription);
 }
