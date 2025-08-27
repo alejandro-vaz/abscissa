@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-from abscissa import *
+import abscissa as æ
 
 
 #
@@ -20,18 +20,16 @@ import mathsys
 class namespace:
     # CLASS -> VARIABLES
     code: str
-    validate: bool
     # CLASS -> INIT
-    async def init(self, request: Request, response: Response) -> namespace:
-        return self
+    async def init(self, request: æ.Request, response: æ.Response) -> namespace: return self
     # CLASS -> LOAD
     def process(self, code: str) -> bool:
         self.code = code
-        self.validate = mathsys.validate(self.code)
-        return self.validate
-    # CLASS -> VIEW
-    def view(self) -> str:
-        return mathsys.view(self.code)
+        try:
+            mathsys.compile(self.code)
+            return True
+        except:
+            return False
     # CLASS -> COMPILE
-    def compile(self, target: str) -> bytes:
-        return mathsys.compile(self.code, target)
+    def compile(self) -> str:
+        return mathsys.compile(self.code)

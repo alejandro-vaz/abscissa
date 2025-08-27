@@ -3,14 +3,12 @@
 //
 
 // HEAD -> MODULES
-import react from "€react";
+import react from "react";
 import * as SUG from "SUG";
-import * as gagtag from "€ga-gtag";
-import * as motion from "€motion/react";
-import * as reactdom from '€react-dom/client';
-
-// HEAD -> COMPONENTS
-import $Suspense from "ßSuspense";
+import * as gagtag from "ga-gtag";
+import * as motion from "motion/react";
+import * as reactdom from 'react-dom/client';
+import * as router from "react-router-dom";
 
 // HEAD -> ANALYTICS
 gagtag.install(SUG.TAG);
@@ -28,6 +26,12 @@ export type ReactNode = react.ReactNode;
 export const Suspense = react.Suspense;
 export const useState = react.useState;
 
+// EXPORTS -> ROUTER
+export const Routes = router.Routes;
+export const Route = router.Route;
+export const useNavigate = router.useNavigate;
+export const BrowserRouter = router.BrowserRouter;
+
 // EXPORTS -> MOTION ELEMENTS
 export const span = motion.motion.span;
 export const button = motion.motion.button;
@@ -42,29 +46,6 @@ export const Main = await createRoot("Main");
 //
 //  DOM
 //
-
-// DOM -> CONNECT
-export async function connect(path: string): Promise<HTMLElement> {
-    let frames = 0;
-    return new Promise((resolve, reject) => {
-        function tryConnect() {
-            let current = document.body;
-            for (const id of path.split("/")) {
-                current = Array.from(current.children).find((child) => child.id === id) as HTMLElement;
-                if (current === undefined) {break}
-            }
-            if (current !== undefined) {resolve(current)} else {
-                frames++
-                if (frames >= 100) {
-                    reject(new Error(`Could not find element by path "${path}"`))
-                } else {
-                    requestAnimationFrame(tryConnect)
-                }
-            }
-        }
-        tryConnect();
-    })
-}
 
 // DOM -> REFERENCE
 export type Reference = {
@@ -100,11 +81,7 @@ export async function createRoot(id: string): Promise<Reference> {
 // MANIPULATION -> RENDER
 async function render(reference: Reference): Promise<void> {
     return new Promise<void>((resolve) => {
-        if (reference.children.length === 0 && reference.node.id === "Main") {
-            reference.root.render(<$Suspense/>);
-        } else {
-            reference.root.render(reference.children[0]);
-        }
+        reference.root.render(reference.children[0]);
         resolve();
     });
 }
@@ -131,6 +108,9 @@ export async function clean(reference: Reference): Promise<void> {
 export function onRender(call: () => any): void {
     react.useEffect(() => {void call()}, []);
 }
+
+// UTILITIES -> USEEFFECT
+export const useEffect = react.useEffect;
 
 // UTILITIES -> MOUNT
 export function mount(call: (node) => any): (node) => void {

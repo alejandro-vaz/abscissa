@@ -23,7 +23,7 @@ export default function $InputText(
         <input 
             type="text" 
             autoComplete="off"
-            class="input-text"
+            className="input-text"
             placeholder={placeholder ? `${name}...` : null}
             name={name}
             id={id}

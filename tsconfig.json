@@ -4,60 +4,26 @@
         "moduleResolution": "nodenext",
         "target": "ES2024",
         "jsx": "preserve",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
         "strictFunctionTypes": true,
         "noEmit": true,
         "sourceMap": true,
         "resolveJsonModule": true,
         "baseUrl": ".",
-        "paths": {                
-            "react": ["https://esm.sh/react@19.1.0"],
-            "€react": ["https://esm.sh/react@19.1.0"],
-
-            "react/jsx-runtime": ["https://esm.sh/react@19.1.0/jsx-runtime"],
-            "€react/jsx-runtime": ["https://esm.sh/react@19.1.0/jsx-runtime"],
-
-            "react-dom/client": ["https://esm.sh/react-dom@19.1.0/client"],
-            "€react-dom/client": ["https://esm.sh/react-dom@19.1.0/client"],
-
-            "katex/contrib/auto-render": ["https://esm.sh/katex@0.16.22/dist/contrib/auto-render.mjs"],
-            "€katex/contrib/auto-render": ["https://esm.sh/katex@0.16.22/dist/contrib/auto-render.mjs"],
-
-            "@codemirror/state": ["https://esm.sh/@codemirror/state@6.5.2"],
-            "€@codemirror/state": ["https://esm.sh/@codemirror/state@6.5.2"],
-
-            "@codemirror/view": ["https://esm.sh/@codemirror/view@6.38.1"],
-            "€@codemirror/view": ["https://esm.sh/@codemirror/view@6.38.1"],
-
-            "@codemirror/commands": ["https://esm.sh/@codemirror/commands@6.8.1"],
-            "€@codemirror/commands": ["https://esm.sh/@codemirror/commands@6.8.1"],
-            
-            "@dicebear/core": ["https://esm.sh/@dicebear/core@9.2.3"],
-            "€@dicebear/core": ["https://esm.sh/@dicebear/core@9.2.3"],
-
-            "@dicebear/identicon": ["https://esm.sh/@dicebear/identicon@9.2.3"],
-            "€@dicebear/identicon": ["https://esm.sh/@dicebear/identicon@9.2.3"],
-
-            "motion/react": ["https://esm.sh/motion@12.23.12/react"],
-            "€motion/react": ["https://esm.sh/motion@12.23.12/react"],
-
-            "ga-gtag": ["https://esm.sh/ga-gtag@1.2.0"],
-            "€ga-gtag": ["https://esm.sh/ga-gtag@1.2.0"],
-
+        "paths": {
             "$": ["public/base/script.js"],
             "SUG": ["public/base/SUG.js"],
 
-            "&": ["public/content/&/script.js"],
-            "&dashboard": ["public/content/&dashboard/script.js"],
-            "&error": ["public/content/&error/script.js"],
-            "&playground": ["public/content/&playground/script.js"],
+            "&": ["public/content/&.js"],
+            "&dashboard": ["public/content/&dashboard.js"],
+            "&error": ["public/content/&error.js"],
+            "&playground": ["public/content/&playground.js"],
 
-            "#dicebear": ["public/app/dicebear/script.js"],
-            "#mathsys": ["public/app/mathsys/script.js"],
-            "#popup": ["public/app/popup/script.js"],
-
-            "=navbar": ["public/interface/navbar/script.js"],
-            "=tooltip": ["public/interface/tooltip/script.js"],
-            "=topbar": ["public/interface/topbar/script.js"],
+            "#dicebear": ["public/app/dicebear.js"],
+            "#mathsys": ["public/app/mathsys.js"],
+            "#popup": ["public/app/popup.js"],
 
             "ß": ["public/components/script.js"],
             "ßButton": ["public/components/Button.js"],

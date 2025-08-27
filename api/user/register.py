@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from abscissa import *
+import abscissa as æ
 
 
 #
@@ -11,10 +11,10 @@ from abscissa import *
 #
 
 # REQUEST -> FINAL
-class UserRegisterRequest(BaseModel):
-    Uname: str = Field(..., pattern = SUG.PAT["Uname"])
-    Uemail: str = Field(..., pattern = SUG.PAT["Uemail"])
-    Uhashpass: str = Field(..., pattern = SUG.PAT["Uhashpass"])
+class UserRegisterRequest(æ.BaseModel):
+    Uname: str = æ.Field(..., pattern = æ.SUG.PAT["Uname"])
+    Uemail: str = æ.Field(..., pattern = æ.SUG.PAT["Uemail"])
+    Uhashpass: str = æ.Field(..., pattern = æ.SUG.PAT["Uhashpass"])
 
 
 #
@@ -22,7 +22,7 @@ class UserRegisterRequest(BaseModel):
 #
 
 # RESPONSE -> FINAL
-class UserRegisterResponse(BaseModel):
+class UserRegisterResponse(æ.BaseModel):
     success: bool
 
 
@@ -31,7 +31,7 @@ class UserRegisterResponse(BaseModel):
 #
 
 # FUNCTION -> ROUTER
-router = APIRouter()
+router = æ.APIRouter()
 
 # FUNCTION -> EXTENSIONS
 from abscissa.extensions import (
@@ -41,10 +41,10 @@ from abscissa.extensions import (
 
 # FUNCTION -> DECLARATION
 @router.post("/api/user/register")
-async def output(request: Request) -> JSONResponse:
+async def output(request: æ.Request, response: æ.Response) -> UserRegisterResponse:
     # DECLARATION -> INPUT
-    try: packet = UserRegisterRequest(**await request.json())
-    except: raise HTTPException(**SUG.ERR[0])
+    try: payload = UserRegisterRequest(**await request.json())
+    except: raise æ.HTTPException(**æ.SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
     cryptography = await _cryptography.namespace().init(request, response)
     database = await _database.namespace().init(request, response)
@@ -52,9 +52,9 @@ async def output(request: Request) -> JSONResponse:
     success = await database.query(
         "INSERT INTO USERS (Uname, Uemail, Uhashpass) VALUES (%s, %s, %s)",
         [
-            packet.Uname,
-            packet.Uemail,
-            cryptography.hash(packet.Uhashpass)
+            payload.Uname,
+            payload.Uemail,
+            cryptography.hash(payload.Uhashpass)
         ]
     )
     data = {"success": success}

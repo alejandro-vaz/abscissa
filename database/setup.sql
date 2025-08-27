@@ -131,14 +131,6 @@ CREATE TABLE `COMPLETED` (
     FOREIGN KEY (`Pid`) REFERENCES `PROBLEMS` (`Pid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- TABLES -> ANALYTICS
-CREATE TABLE `ANALYTICS` (
-    `Atime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-    COMMENT 'Time when the action was registered',
-    `Aaction` smallint UNSIGNED NOT NULL
-    COMMENT 'Action triggered'
-);
-
 
 --
 --  DEFAULTS
@@ -153,7 +145,7 @@ INSERT INTO CONCEPTS (Kes, Ken, Kde) VALUES ("Álgebra", "Algebra", "Algebra");
 -- DEFAULTS -> MY USER
 INSERT INTO USERS (Uname, Uemail, Uhashpass, Urole, Uid) VALUES (
     "root",
-    "root@gmail.com",
+    "root@abscissa.eu",
     "$argon2id$v=19$m=102400,t=2,p=8$AgM2N9CS0A12r3h3y2NqsA$ZVauIH5w8yMArk/ZZMNsHg",
     255,
     0

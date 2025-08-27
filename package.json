@@ -4,7 +4,7 @@
   "main": "public/content/general.js",
   "scripts": {
     "build/tsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
-    "build/sass": "sass --watch --no-source-map --style=compressed public/:public/",
+    "build/css": "tailwindcss -i ./public/base/style.css -o ./public/base/tailwind.css --watch --minify",
     "connect": "ssh 192.168.1.100 -l root",
     "chromium": "chromium --ignore-certificate-errors --user-data-dir=/tmp/dev-profile",
     "setup": "chmod +x package/setup.sh && bash package/setup.sh",
@@ -30,6 +30,21 @@
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
-    "sass": "^1.89.2"
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.1",
+    "@dicebear/core": "^9.2.4",
+    "@dicebear/identicon": "^9.2.4",
+    "@types/ga-gtag": "^1.2.0",
+    "@types/katex": "^0.16.7",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.7",
+    "ga-gtag": "^1.2.0",
+    "katex": "^0.16.22",
+    "motion": "^12.23.12",
+    "react": "^19.1.1",
+    "react-router-dom": "^7.8.2",
+    "@tailwindcss/cli": "^4.1.12",
+    "tailwindcss": "^4.1.12"
   }
 }

@@ -22,7 +22,7 @@ export default function $Form(
         <form
             id={id}
             onSubmit={onSubmit}
-            class="form"
+            className="form"
             noValidate
         >
             {children}

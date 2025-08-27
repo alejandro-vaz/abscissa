@@ -6,7 +6,7 @@
 declare module "$" {
     // GENERAL -> WINDOW MANAGEMENT
     export function locate(): string[];
-    export function redirect(target: string, append?: boolean, divide?: boolean): Promise<void>;
+    export function redirect(target: string, append?: boolean, divide?: boolean): void;
     export function getTitle(): string
     export function setTitle(newTitle: string): void;
     export function getDescription(): string
@@ -14,7 +14,7 @@ declare module "$" {
     // GENERAL -> INTERFACE MANAGEMENT
     export function modulator(...activate: string[]): void;
     // GENERAL -> API
-    export function curl<Request, Response>(script: string, data: Request): Promise<Response>
+    export function curl<Request, Response>(script: string, data?: Request): Promise<Response>
     // GENERAL -> TIME
     export function delay(seconds: number): Promise<void>;
     // GENERAL -> REGEX

@@ -5,8 +5,8 @@
 // COMPONENTS -> SCRIPT
 declare module "ß" {
     // SCRIPT -> EXPORTS
-    export type ReactElement = import("€react").ReactElement;
-    export type ReactNode = import("€react").ReactNode;
+    export type ReactElement = import("react").ReactElement;
+    export type ReactNode = import("react").ReactNode;
     export function Suspense(arg1: {fallback?: ReactNode; children?: ReactNode}): ReactElement;
     export function useState<Type>(value: Type | null): [Type | null, (change: Type | null) => void];
     export const span: any;
@@ -15,6 +15,10 @@ declare module "ß" {
     export const div: any;
 	export const AnimatePresence: any;
     export const Main: Reference;
+    export const Routes: any;
+    export const Route: any;
+    export const useNavigate: () => (to: string, options?: any) => void;
+    export const BrowserRouter: any;
     // SCRIPT -> DOM
     export function connect(path: string): Promise<HTMLElement>;
     export type Reference = {node: HTMLElement; root: any; children: any[]};
@@ -25,6 +29,7 @@ declare module "ß" {
     export function clean(reference: Reference): Promise<void>;
     // SCRIPT -> UTILITIES
     export function onRender(call: () => any): void;
+    export function useEffect(arg1: any, arg2: any): any;
     export function mount(call: (node) => any): (node) => void;
     // SCRIPT -> ANALYTICS
     export function view(pathname: string): void;
@@ -34,12 +39,11 @@ declare module "ß" {
 declare module "ßButton" {
     // BUTTON -> ELEMENT
     export default function $Button(
-        {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled, type}: {
+        {text, onClick, onContextMenu, id, disabled, type}: {
             text: string,
             onClick?: () => any,
             onContextMenu?: () => any,
             id: string,
-            "data-tooltip": string,
             disabled?: boolean
             type?: string
         }
@@ -113,12 +117,11 @@ declare module "ßSuspense" {
 declare module "ßSVGIcon" {
     // SVGICON -> ELEMENT
     export default function $SVGIcon(
-        {path, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip}: {
+        {path, onClick, onContextMenu, id}: {
             path: string,
             onClick?: () => any,
             onContextMenu?: () => any,
-            id: string,
-            "data-tooltip": string
+            id: string
         }
     ): import("ß").ReactElement;
 }

@@ -18,11 +18,7 @@ import $Suspense from "ßSuspense";
 // CONTENT -> FUNCTION
 export default function $_playground(): ß.ReactNode {
     // FUNCTION -> INTERFACE
-    $.modulator(
-        "navbar",
-        "tooltip",
-        "topbar"
-    )
+    $.modulator();
     $.setTitle("Playground");
     $.setDescription("Experiment with Mathsys.");
     // FUNCTION -> CONTENT

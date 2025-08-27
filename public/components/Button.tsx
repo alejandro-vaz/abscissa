@@ -12,12 +12,11 @@ import * as ß from "ß";
 
 // BUTTON -> ELEMENT
 export default function $Button(
-    {text, onClick, onContextMenu, id, ["data-tooltip"]: dataTooltip, disabled, type}: {
+    {text, onClick, onContextMenu, id, disabled, type}: {
         text: string,
         onClick?: () => any,
         onContextMenu?: () => any,
         id: string,
-        "data-tooltip": string,
         disabled?: boolean
         type?: string
     }
@@ -28,7 +27,6 @@ export default function $Button(
             className="button"
             onClick={onClick}
             onContextMenu={onContextMenu}
-            data-tooltip={dataTooltip}
             initial={{borderColor: "#FFFFFF", color: "#FFFFFF", backgroundColor: "#0000004F", cursor: "pointer"}}
             disabled={disabled}
             animate={disabled ? {backgroundColor: "#000000", cursor: "default"} : {}}

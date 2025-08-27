@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-from abscissa import *
+import abscissa as æ
 
 
 #
@@ -18,7 +18,7 @@ class namespace:
     # CLASS -> VARIABLES
     data: bytes
     # CLASS -> INIT
-    async def init(self, request: Request, response: Response) -> namespace: return self
+    async def init(self, request: æ.Request, response: æ.Response) -> namespace: return self
     # CLASS -> LOAD
     def load(self, data: bytes) -> None:
         self.data = data
@@ -29,9 +29,9 @@ class namespace:
     def toBytes(self, data: str) -> bytes:
         return bytes.fromhex(data)
     # CLASS -> GET
-    def get(self) -> StreamingResponse:
+    def get(self) -> æ.StreamingResponse:
         def iterator() -> object:
             size = 8192
             for index in range(0, len(self.data), size):
                 yield self.data[index:index+size]
-        return StreamingResponse(iterator(), media_type = "application/wasm")
+        return æ.StreamingResponse(iterator(), media_type = "application/wasm")

@@ -23,7 +23,7 @@ export default function $InputPassword(
         <input 
             type="password" 
             name={name} 
-            class="input-password"
+            className="input-password"
             id={id} 
             autoComplete="off"
             placeholder={placeholder ? `${name}...` : null}

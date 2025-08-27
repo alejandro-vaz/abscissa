@@ -4,6 +4,7 @@
 
 # HANDLER -> LOAD
 from abscissa import *
+import abscissa as æ
 
 
 #
@@ -11,8 +12,8 @@ from abscissa import *
 #
 
 # REQUEST -> FINAL
-class ProblemLookupRequest(BaseModel):
-    Pid: str = Field(..., pattern = SUG.PAT["Pid"])
+class ProblemLookupRequest(æ.BaseModel):
+    Pid: str = æ.Field(..., pattern = æ.SUG.PAT["Pid"])
 
 
 #
@@ -20,34 +21,34 @@ class ProblemLookupRequest(BaseModel):
 #
 
 # RESPONSE -> PMETA CALCULATOR
-class Calculator(Enum):
+class Calculator(æ.Enum):
     scientific = "scientific"
     graphing = "graphing"
     financial = "financial"
     advanced = "advanced"
 
 # RESPONSE -> PMETA
-class Pmeta(BaseModel):
+class Pmeta(æ.BaseModel):
     calculator: bool | Calculator
 
 # RESPONSE -> PSOLUTION
-class Psolution(BaseModel):
+class Psolution(æ.BaseModel):
     value: str
     error: float
 
 # RESPONSE -> PDATAXX
-class PdataXX(BaseModel):
+class PdataXX(æ.BaseModel):
     title: str
     instructions: str
     editor: str
     svg: str | None
 
 # RESPONSE -> FINAL
-class ProblemLookupResponse(BaseModel):
-    Pid: str = Field(..., pattern = SUG.PAT["Pid"])
+class ProblemLookupResponse(æ.BaseModel):
+    Pid: str = æ.Field(..., pattern = æ.SUG.PAT["Pid"])
     Uid: int
     Kid: int
-    Pedited: datetime
+    Pedited: æ.datetime
     Pmeta: Pmeta
     Psolution: Psolution
     Pdataen: PdataXX
@@ -60,7 +61,7 @@ class ProblemLookupResponse(BaseModel):
 #
 
 # FUNCTION -> ROUTER
-router = APIRouter()
+router = æ.APIRouter()
 
 # FUNCTION -> EXTENSIONS
 from abscissa.extensions import (
@@ -71,19 +72,19 @@ from abscissa.extensions import (
 
 # FUNCTION -> DECLARATION
 @router.post("/api/problem/lookup")
-async def output(request: Request, response: Response) -> ProblemLookupResponse:
+async def output(request: æ.Request, response: æ.Response) -> ProblemLookupResponse:
     # DECLARATION -> INPUT
-    try: packet = ProblemLookupRequest(**await request.json())
-    except: raise HTTPException(**SUG.ERR[0])
+    try: payload = ProblemLookupRequest(**await request.json())
+    except: raise æ.HTTPException(**æ.SUG.ERR[0])
     # DECLARATION -> ACTIVATE EXTENSIONS
     binary = await _binary.namespace().init(request, response)
     database = await _database.namespace().init(request, response)
     json = await _json.namespace().init(request, response)
     # DECLARATION -> DATA
-    data = º(await database.query(
+    data = æ.º(await database.query(
             "SELECT * FROM PROBLEMS WHERE Pid = %s",
             [
-                binary.toBytes(packet.Pid)
+                binary.toBytes(payload.Pid)
             ]
     ), 0)
     json.parse(data, [

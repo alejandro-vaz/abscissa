@@ -24,15 +24,11 @@ export default function $_dashboard(): ß.ReactNode {
     ß.onRender(async() => {
         const _data = await $.curl<ProblemLookupRequest, ProblemLookupResponse>("problem/lookup", {Pid: "00000000"});
         setData(_data);
-        setView(await Mathsys.view(_data.Pdataen.instructions));
+        setView(await Mathsys.compile(_data.Pdataen.instructions));
         setReady(true);
     })
     // FUNCTION -> INTERFACE
-    $.modulator(
-        "navbar",
-        "tooltip",
-        "topbar"
-    )
+    $.modulator();
     $.setTitle("Dashboard");
     $.setDescription("Here is where the magic happens.");
     // FUNCTION -> CONTENT
@@ -40,9 +36,9 @@ export default function $_dashboard(): ß.ReactNode {
         <div id="Container">
             <h2>Jump right in</h2>
             <div 
-                class="problem" 
+                className="problem" 
                 id="Daily" 
-                onClick={async() => await $.redirect("/problem/00000000")}  
+                onClick={() => $.redirect("/problem/00000000")}  
                 data-tooltip="yeah"
             > 
                 <div id="Wrapper">

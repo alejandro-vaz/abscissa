@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-from abscissa import *
+import abscissa as æ
 
 
 #
@@ -21,15 +21,15 @@ import secrets
 # DATABASE -> CLASS
 class namespace:
     # CLASS -> VARIABLES
-    connection: Connection
-    response: Response
+    connection: æ.Connection
+    response: æ.Response
     ip: str
     Sid: bytes | None
     validate: bool
     user: dict | None
     # CLASS -> INIT
-    async def init(self, request: Request, response: Response) -> namespace:
-        self.connection = await aiomysql.connect(**SUG.DBC)
+    async def init(self, request: æ.Request, response: æ.Response) -> namespace:
+        self.connection = await æ.aiomysql.connect(**æ.SUG.DBC)
         self.response = response
         self.ip = request.client.host
         if request.cookies.get("Sid") is not None: 
@@ -40,10 +40,10 @@ class namespace:
                     self.Sid 
                 ]
             ))
-            self.user = º(await self.query(
+            self.user = æ.º(await self.query(
                 "SELECT * FROM USERS WHERE Uid = %s",
                 [
-                    º(await self.query(
+                    æ.º(await self.query(
                         "SELECT Uid FROM SESSIONS WHERE Sid = %s",
                         [
                             self.Sid
@@ -66,7 +66,7 @@ class namespace:
                 await cursor.execute(command, parameters)
                 return [dict(zip([column[0] for column in cursor.description], row)) for row in await cursor.fetchall()] if cursor.description else True
             except Exception as error:
-                debug(error.args[0], error.args[1])
+                æ.debug(error.args[0], error.args[1])
                 return False
     # CLASS -> SESSION
     async def session(self, Uid: int) -> None:

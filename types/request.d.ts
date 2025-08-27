@@ -7,16 +7,6 @@ type MathsysCompileRequest = {
     Mcode: string
 };
 
-// MATHSYS -> VALIDATE
-type MathsysValidateRequest = {
-    Mcode: string
-};
-
-// MATHSYS -> VIEW
-type MathsysViewRequest = {
-    Mcode: string
-};
-
 
 //
 //  PROBLEM
@@ -29,19 +19,8 @@ type ProblemLookupRequest = {
 
 
 //
-//  SESSION
-//
-
-// SESSION -> VALIDATE
-type SessionValidateRequest = {};
-
-
-//
 //  USER
 //
-
-// USER -> DATA
-type UserDataRequest = {}
 
 // USER -> LOGIN
 type UserLoginRequest = {

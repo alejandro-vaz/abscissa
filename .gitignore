@@ -3,8 +3,8 @@
 #
 
 # IGNORE -> BUILD
-*.css
 *.js
+public/base/tailwind.css
 
 # IGNORE -> NODE
 node_modules/

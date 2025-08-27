@@ -5,8 +5,6 @@
 # MASTER SUPERGLOBALS -> SCRIPTS
 SRC = [
     "/mathsys/compile",
-    "/mathsys/validate",
-    "/mathsys/view",
     "/problem/lookup",
     "/session/validate",
     "/user/data",
@@ -33,7 +31,7 @@ DIR = "/srv/www/abscissa"
 # MASTER SUPERGLOBALS -> REGEX PATTERNS
 PAT = {
     "Pid": r'^[A-F0-9]{8}$',
-    "Uemail": r'^[A-Za-z0-9._%\-]{8,64}@gmail\.com$',
+    "Uemail": r'^[A-Za-z0-9._%\-]{8,64}@(gmail\.com|abscissa\.eu)$',
     "Uhashpass": r"^.{8,256}$",
     "Uname": r'^[a-zA-Z0-9_-]{4,32}$'
 }

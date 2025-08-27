@@ -15,9 +15,8 @@ declare module "#mathsys" {
             code: string
         }
     ): import("ß").ReactNode;
-    export function view(code: string): Promise<string>;
+    export function compile(code: string): Promise<string>;
     export function render(code: string, element: HTMLElement, display: boolean): void;
-    export function run(code: string): Promise<string>;
 }
 
 // APP -> POPUP

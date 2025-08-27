@@ -17,12 +17,9 @@ import $Button from "ßButton";
 // CONTENT -> FUNCTION
 export default function $_(): ß.ReactNode {
     // FUNCTION -> INTERFACE
-    $.modulator(
-        "tooltip",
-        "topbar"
-    )
+    $.modulator();
     $.setTitle("Abscissa");
-    $.setDescription("Landing page.");
+    $.setDescription("LeetCode but for math. Learn math by solving real problems.");
     // FUNCTION -> CONTENT
     return ( 
         <>
@@ -30,7 +27,7 @@ export default function $_(): ß.ReactNode {
             <h3>Learn math by solving real problems</h3>
             <$Button
                 text="Try it now"
-                onClick={async() => await $.redirect("/playground")}
+                onClick={() => $.redirect("/playground")}
                 id="CTA"
                 data-tooltip="Try it now"
             />

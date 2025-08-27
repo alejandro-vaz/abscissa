@@ -5,10 +5,10 @@
 // HEAD -> MODULES
 import * as $ from "$";
 import * as ß from "ß";
-import katex from "€katex/contrib/auto-render";
-import * as codemirrorState from '€@codemirror/state';
-import * as codemirrorView from '€@codemirror/view';
-import * as codemirrorCommands from '€@codemirror/commands';
+import katex from "katex/contrib/auto-render.js";
+import * as codemirrorState from '@codemirror/state';
+import * as codemirrorView from '@codemirror/view';
+import * as codemirrorCommands from '@codemirror/commands';
 
 // HEAD -> COMPONENTS
 import $Suspense from "ßSuspense";
@@ -30,7 +30,7 @@ export function $Playground(
     const [output, setOutput] = ß.useState<string>(null);
     ß.onRender(async() => {
         setReady(false);
-        setOutput(await view(code));
+        setOutput(await compile(code));
         setReady(true);
     })
     return (
@@ -43,7 +43,7 @@ export function $Playground(
                         timer = window.setTimeout(async() => {
                             if (ready === false) {return}
                             setReady(false);
-                            setOutput(await view(update.state.doc.toString()));
+                            setOutput(await compile(update.state.doc.toString()));
                             setReady(true);
                         }, 250);
                     }
@@ -104,22 +104,13 @@ export function $Playground(
     )
 }
 
-// MATHSYS -> MATHSYS EXIT
-class MathsysExit extends Error {
-    constructor(public exitCode: number) {
-        super(`Mathsys halted with code ${exitCode}`);
-        this.name = "MathsysExit";
-    }
-}
-
-// MATHSYS -> VIEW
-export async function view(code: string): Promise<string> {
-    return (await $.curl<MathsysViewRequest, MathsysViewResponse>("mathsys/view", {Mcode: code})).output;
+// MATHSYS -> COMPILE
+export async function compile(code: string): Promise<string> {
+    return (await $.curl<MathsysCompileRequest, MathsysCompileResponse>("mathsys/compile", {Mcode: code})).output;
 }
 
 // MATHSYS -> KATEX
 export function render(code: string, element: HTMLElement, display: boolean): void {
-    if (code === null) {return}
     element.textContent = code;
     katex(element, {
         delimiters: [
@@ -129,32 +120,4 @@ export function render(code: string, element: HTMLElement, display: boolean): vo
         strict: false,
         throwOnError: false
     })
-}
-
-// MATHSYS -> COMPILE
-export async function run(code: string): Promise<string> {
-    const output = [];
-    let runtime: WebAssembly.Instance;
-    runtime = (await WebAssembly.instantiate(
-        await WebAssembly.compile(await $.curl<MathsysCompileRequest, MathsysCompileResponse>("mathsys/compile", {Mcode: code})),
-        {
-            env: {},
-            sys: {
-                call1: (pointer, length) => {
-                    output.push(new TextDecoder("utf-8").decode(
-                        new Uint8Array((runtime.exports.memory as WebAssembly.Memory).buffer, pointer, length)
-                    ));
-                },
-                call60: (exitCode) => {
-                    throw new MathsysExit(exitCode);
-                }
-            }
-        }
-    ));
-    try {
-        (runtime.exports._start as Function)();
-    } catch (error) {
-        if (!(error instanceof MathsysExit)) {throw error}
-    }
-    return output.join("");
 }

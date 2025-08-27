@@ -24,7 +24,7 @@ export default function $InputEmail(
             type="email" 
             name={name}
             id={id}
-            class="input-email"
+            className="input-email"
             placeholder={placeholder ? `${name}...` : null}
             autoComplete="off"
             disabled={disabled}

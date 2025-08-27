@@ -3,15 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from abscissa import *
-
-
-#
-#   REQUEST
-#
-
-# REQUEST -> FINAL
-class UserDataRequest(BaseModel): pass
+import abscissa as æ
 
 
 #
@@ -19,15 +11,14 @@ class UserDataRequest(BaseModel): pass
 #
 
 # RESPONSE -> USETTINGS
-class Usettings(BaseModel): pass
+class Usettings(æ.BaseModel): pass
 
 # RESPONSE -> FINAL
-class UserDataResponse(BaseModel):
+class UserDataResponse(æ.BaseModel):
     Uid: int
-    Uname: str = Field(..., pattern = SUG.PAT["Uname"])
-    Uemail: str = Field(..., pattern = SUG.PAT["Uemail"])
-    Uhashpass: str = Field(..., pattern = SUG.PAT["Uhashpass"])
-    Ujoined: datetime
+    Uname: str = æ.Field(..., pattern = æ.SUG.PAT["Uname"])
+    Uemail: str = æ.Field(..., pattern = æ.SUG.PAT["Uemail"])
+    Ujoined: æ.datetime
     Usettings: Usettings
     Oid: int
     Urole: int
@@ -38,7 +29,7 @@ class UserDataResponse(BaseModel):
 #
 
 # FUNCTION -> ROUTER
-router = APIRouter()
+router = æ.APIRouter()
 
 # FUNCTION -> EXTENSIONS
 from abscissa.extensions import (
@@ -48,19 +39,17 @@ from abscissa.extensions import (
 
 # FUNCTION -> DECLARATION
 @router.post("/api/user/data")
-async def output(request: Request, response: Response) -> UserDataResponse:
-    # DECLARATION -> INPUT
-    try: packet = UserDataRequest(**await request.json())
-    except: raise HTTPException(**SUG.ERR[0])
+async def output(request: æ.Request, response: æ.Response) -> UserDataResponse:
     # DECLARATION -> ACTIVATE EXTENSIONS
     database = await _database.namespace().init(request, response)
     json = await _json.namespace().init(request, response)
     # DECLARATION -> USER AUTHENTIFIED WITH PERMISSIONS
-    if not (database.validate and º(database.user, "Urole") >= 0): raise HTTPException(**SUG.ERR[2])
+    if not (database.validate and æ.º(database.user, "Urole") >= 0): raise æ.HTTPException(**æ.SUG.ERR[2])
     # DECLARATION -> DATA
-    data = database.user
+    data: dict = database.user
     json.parse(data, [
         "Usettings"
     ])
+    data.pop("Uhashpass")
     # DECLARATION -> RESPONSE
     return UserDataResponse(**data)

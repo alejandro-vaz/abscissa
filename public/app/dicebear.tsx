@@ -3,8 +3,8 @@
 //
 
 // HEAD -> MODULES
-import * as dicebearCore from "€@dicebear/core";
-import * as identicon from "€@dicebear/identicon";
+import * as dicebearCore from "@dicebear/core/lib/core.js";
+import * as identicon from "@dicebear/identicon";
 
 
 //

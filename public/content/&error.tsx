@@ -25,9 +25,7 @@ export default function $_error(): ß.ReactNode {
         }
     } catch {}
     // FUNCTION -> INTERFACE
-    $.modulator(
-        "topbar"
-    )
+    $.modulator();
     $.setTitle(`Error ${code}`);
     $.setDescription(description);
     // FUNCTION -> CONTENT
