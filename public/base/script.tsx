@@ -7,7 +7,6 @@ import * as ß from "ß";
 
 // HEAD -> VIEWS
 import $_ from "&";
-import $_dashboard from "&dashboard";
 import $_error from "&error";
 import $_playground from "&playground";
 
@@ -17,27 +16,28 @@ import $_playground from "&playground";
 //
 
 // VIEW -> APP
-function $App(): ß.ReactNode {
+function $App(): ß.react.ReactNode {
     return (
-        <ß.BrowserRouter>
+        <ß.router.BrowserRouter>
             <$Content/>
-        </ß.BrowserRouter>
+        </ß.router.BrowserRouter>
     );
 }
 
 // VIEW -> CONTENT
-function $Content(): ß.ReactNode {
-    const navigate = ß.useNavigate();
-    ß.useEffect(() => {
+function $Content(): ß.react.ReactNode {
+    const navigate = ß.router.useNavigate();
+    ß.react.useEffect(() => {
         setGlobalNavigate(navigate);
     }, [navigate]);
     return (
-        <ß.Routes>
-            <ß.Route path="/" element={<$_/>}/>
-            <ß.Route path="/dashboard" element={<$_dashboard/>}/>
-            <ß.Route path="/playground" element={<$_playground/>}/>
-            <ß.Route path="*" element={<$_error/>}/>
-        </ß.Routes>
+        <ß.react.StrictMode>
+            <ß.router.Routes>
+                <ß.router.Route path="/" element={<$_ />}/>
+                <ß.router.Route path="/playground" element={<$_playground />}/>
+                <ß.router.Route path="*" element={<$_error />}/>
+            </ß.router.Routes>
+        </ß.react.StrictMode>
     );
 }
 
@@ -57,29 +57,23 @@ export function locate(): string[] {
 
 // WINDOW MANAGEMENT -> NAVIGATE
 let globalNavigate: ((to: string, options?: any) => void) | null = null;
-function setGlobalNavigate(navigate: (to: string, options?: any) => void): void {
-    globalNavigate = navigate;
-}
+function setGlobalNavigate(navigate: (to: string, options?: any) => void): void {globalNavigate = navigate}
 
 // WINDOW MANAGEMENT -> REDIRECT
 export function redirect(target: string, append: boolean = true, divide: boolean = false): void {
     if (target === window.location.pathname && append && !divide) {return}
-    if (divide) {
-        window.open(`https://${window.location.host}${target}`, "blank");
-    } else {
-        globalNavigate(target, {replace: !append});
-    }
+    divide ? window.open(`https://${window.location.host}${target}`, "blank") : globalNavigate(target, {replace: !append});
 }
 
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
-window.addEventListener('popstate', async() => {
+window.addEventListener("popstate", async() => {
     redirect(window.location.pathname, false);
-})
+});
 
 // WINDOW MANAGEMENT -> NO CONTEXTMENU
 document.addEventListener("contextmenu", (event) => {
     event.preventDefault();
-})
+});
 
 // WINDOW MANAGEMENT -> TITLE
 export function getTitle(): string {
@@ -91,10 +85,13 @@ export function setTitle(newTitle: string): void {
 
 // WINDOW MANAGEMENT -> DESCRIPTION
 export function getDescription(): string {
-    return document.querySelector<HTMLMetaElement>('meta[name="description"]').content;
+    return document.querySelector<HTMLMetaElement>('meta[name="description"]')
+        .content;
 }
 export function setDescription(newDescription: string): void {
-    document.querySelector('meta[name="description"]').setAttribute('content', newDescription);
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute("content", newDescription);
 }
 
 
@@ -103,7 +100,7 @@ export function setDescription(newDescription: string): void {
 //
 
 // INTERFACE MANAGEMENT -> REGISTRY
-const registry = {}
+const registry = {};
 
 // INTERFACE MANAGEMENT -> MODULATOR
 export function modulator(...activate: string[]): void {
@@ -122,22 +119,25 @@ export function modulator(...activate: string[]): void {
 
 
 //
-//  API                                                                       
+//  API
 //
 
 // API -> CALL
-export async function curl<Request, Response>(script: string, data?: Request): Promise<Response> {
-    const response = (await fetch(
-        `https://${window.location.host}/api/${script.replace(/^\/+/, '')}`,
+export async function curl<Request, Response>(
+    script: string,
+    data?: Request,
+): Promise<Response> {
+    const response = await fetch(
+        `https://${window.location.host}/api/${script.replace(/^\/+/, "")}`,
         {
             cache: "no-store",
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(data as Request)
-        }
-    ));
+            body: JSON.stringify(data as Request),
+        },
+    );
     switch (script) {
         default: {
             return response.json() as Response;
@@ -152,7 +152,9 @@ export async function curl<Request, Response>(script: string, data?: Request): P
 
 // TIME -> DELAY
 export async function delay(seconds: number): Promise<void> {
-    return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
+    return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1000);
+    });
 }
 
 
@@ -173,6 +175,6 @@ export function check(input: string, pattern: RegExp): boolean {
 // DEBUG -> FUNCTION
 export function debug(...variables: any[]): void {
     for (const variable of variables) {
-        console.log(variable)
+        console.log(variable);
     }
 }

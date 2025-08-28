@@ -1,26 +1,22 @@
 {
-    "presets": [
-        [
-            "@babel/preset-env",
-            {
-                "modules": false,
-                "targets": {
-                    "esmodules": true
-                },
-                "bugfixes": true
-            }
-        ],
-        [
-            "@babel/preset-react",
-            {
-                "runtime": "automatic"
-            }
-        ],
-        [
-            "@babel/preset-typescript"
-        ]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false,
+        "targets": {
+          "esmodules": true
+        },
+        "bugfixes": true
+      }
     ],
-    "plugins": [
-        "@babel/plugin-transform-class-properties"
-    ]
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
+    ],
+    ["@babel/preset-typescript"]
+  ],
+  "plugins": ["@babel/plugin-transform-class-properties"]
 }

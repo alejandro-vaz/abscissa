@@ -1,41 +1,38 @@
 {
-    "compilerOptions": {
-        "module": "nodenext",
-        "moduleResolution": "nodenext",
-        "target": "ES2024",
-        "jsx": "preserve",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "strictFunctionTypes": true,
-        "noEmit": true,
-        "sourceMap": true,
-        "resolveJsonModule": true,
-        "baseUrl": ".",
-        "paths": {
-            "$": ["public/base/script.tsx"],
-            "SUG": ["public/base/SUG.tsx"],
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "ES2024",
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strictFunctionTypes": true,
+    "noEmit": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "$": ["public/base/script.tsx"],
+      "SUG": ["public/base/SUG.tsx"],
 
-            "&": ["public/content/&.tsx"],
-            "&dashboard": ["public/content/&dashboard.tsx"],
-            "&error": ["public/content/&error.tsx"],
-            "&playground": ["public/content/&playground.tsx"],
+      "&": ["public/content/&.tsx"],
+      "&error": ["public/content/&error.tsx"],
+      "&playground": ["public/content/&playground.tsx"],
 
-            "#dicebear": ["public/app/dicebear.tsx"],
-            "#mathsys": ["public/app/mathsys.tsx"],
-            "#popup": ["public/app/popup.tsx"],
+      "#dicebear": ["public/app/dicebear.tsx"],
+      "#mathsys": ["public/app/mathsys.tsx"],
 
-            "ß": ["public/components/ß.tsx"],
-            "ßButton": ["public/components/Button.tsx"],
-            "ßForm": ["public/components/Form.tsx"],
-            "ßInputEmail": ["public/components/InputEmail.tsx"],
-            "ßInputPassword": ["public/components/InputPassword.tsx"],
-            "ßInputText": ["public/components/InputText.tsx"],
-            "ßSuspense": ["public/components/Suspense.tsx"],
-            "ßSVGIcon": ["public/components/SVGIcon.tsx"]
-        }
-    },
-    "exclude": [
-        "node_modules/",
-    ]
+      "ß": ["public/components/ß.tsx"],
+      "ßBackgrounds/Silk": ["public/components/Backgrounds/Silk.tsx"],
+      "ßButton": ["public/components/ßButton.tsx"],
+      "ßForm": ["public/components/ßForm.tsx"],
+      "ßInputEmail": ["public/components/ßInputEmail.tsx"],
+      "ßInputPassword": ["public/components/ßInputPassword.tsx"],
+      "ßInputText": ["public/components/ßInputText.tsx"],
+      "ßSuspense": ["public/components/ßSuspense.tsx"],
+      "ßSVGIcon": ["public/components/ßSVGIcon.tsx"]
+    }
+  },
+  "exclude": ["node_modules/"]
 }

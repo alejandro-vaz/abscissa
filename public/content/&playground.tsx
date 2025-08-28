@@ -7,22 +7,22 @@ import * as $ from "$";
 import * as ß from "ß";
 import * as Mathsys from "#mathsys";
 
-// HEAD -> COMPONENTS
-import $Suspense from "ßSuspense";
-
 
 //
 //  CONTENT
 //
 
 // CONTENT -> FUNCTION
-export default function $_playground(): ß.ReactNode {
+export default function $_playground(): ß.react.ReactNode {
     // FUNCTION -> INTERFACE
-    $.modulator();
-    $.setTitle("Playground");
-    $.setDescription("Experiment with Mathsys.");
+    ß.react.useEffect(() => {
+        $.setTitle("Playground");
+        $.setDescription("Experiment with Mathsys.");
+    }, []);
     // FUNCTION -> CONTENT
     return (
-        <Mathsys.$Playground id="EditorContainer" code="hello"/>
+        <div className="w-screen h-screen flex flex-col p-6">
+            <Mathsys.$Playground code="hello"/>
+        </div>
     )
 }

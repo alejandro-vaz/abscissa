@@ -12,27 +12,25 @@ import * as ß from "ß";
 //
 
 // CONTENT -> FUNCTION
-export default function $_error(): ß.ReactNode {
+export default function $_error(): ß.react.ReactNode {
     // FUNCTION -> VARIABLES
-    const [code, setCode] = ß.useState<number>(404);
-    const [description, setDescription] = ß.useState<string>("Not found.");
-    try {
+    const [code, setCode] = ß.react.useState<number>(0);
+    const [description, setDescription] = ß.react.useState<string>("Unknown error.");
+    ß.react.useEffect(() => {
+        let data: [number, string];
         switch (+$.locate()[1]) {
-            case 0: {
-                setCode(0);
-                setDescription("Vertical screen error.");
-            }
+            default: {data = [0, "Unknown error."]};
         }
-    } catch {}
-    // FUNCTION -> INTERFACE
-    $.modulator();
-    $.setTitle(`Error ${code}`);
-    $.setDescription(description);
+        setCode(data[0]);
+        setDescription(data[1]);
+        $.setTitle(`Error ${data[0]}`);
+        $.setDescription(data[1]);
+    }, []);
     // FUNCTION -> CONTENT
     return (
         <>
             <h2>{code}</h2>
             <p>{description}</p>
         </>
-    )
+    );
 }

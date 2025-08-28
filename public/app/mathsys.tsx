@@ -6,9 +6,9 @@
 import * as $ from "$";
 import * as ß from "ß";
 import katex from "katex/contrib/auto-render.js";
-import * as codemirrorState from '@codemirror/state';
-import * as codemirrorView from '@codemirror/view';
-import * as codemirrorCommands from '@codemirror/commands';
+import * as codemirrorState from "@codemirror/state";
+import * as codemirrorView from "@codemirror/view";
+import * as codemirrorCommands from "@codemirror/commands";
 
 // HEAD -> COMPONENTS
 import $Suspense from "ßSuspense";
@@ -19,94 +19,116 @@ import $Suspense from "ßSuspense";
 //
 
 // MATHSYS -> PLAYGROUND
-export function $Playground(
-    {id, code}: {
-        id: string,
-        code: string
-    }
-): ß.ReactNode {
-    const [ready, setReady] = ß.useState<boolean>(true);
-    const [editor, setEditor] = ß.useState<boolean>(false);
-    const [output, setOutput] = ß.useState<string>(null);
-    ß.onRender(async() => {
-        setReady(false);
-        setOutput(await compile(code));
-        setReady(true);
-    })
-    return (
-        <div id={id} className="-mathsys-playground">
-            <div id="Editor" ref={ß.mount((node) => {
-                let timer: number;
-                const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
-                    if (update.docChanged) {
-                        clearTimeout(timer);
-                        timer = window.setTimeout(async() => {
-                            if (ready === false) {return}
-                            setReady(false);
-                            setOutput(await compile(update.state.doc.toString()));
-                            setReady(true);
-                        }, 250);
-                    }
-                });
-                const temporalState = codemirrorState.EditorState.create({
-                    doc: code,
-                    extensions: [
-                        codemirrorView.keymap.of(codemirrorCommands.historyKeymap),
-                        codemirrorView.EditorView.theme(
-                            {
-                                "&": {
-                                    backgroundColor: "#000000",
-                                    color: "#ffffff",
-                                    borderRadius: "1vw",
-                                    overflow: "hidden"
-                                },
-                                ".cm-content": {
-                                    caretColor: "#ffffff"
-                                },
-                                ".cm-cursor": {
-                                    borderLeftColor: "#ffffff"
-                                },
-                                ".cm-activeLine": {
-                                    backgroundColor: "#111111"
-                                },
-                                ".cm-lineNumbers": {
-                                    backgroundColor: "#111111",
-                                    color: "#333333",
-                                    width: "4ch",
-                                    textAlign: "right"
-                                },
-                                ".cm-scroller": {
-                                    scrollbarWidth: "none"
-                                }
-                            }, 
-                            {
-                                dark: true
-                            }
-                        ),
-                        outputListener,
-                        codemirrorView.lineNumbers(),
-                        codemirrorView.highlightActiveLine(),
-                        codemirrorCommands.history(),
-                        codemirrorView.EditorView.lineWrapping
-                    ]
-                });
-                if (!editor) {
-                    new codemirrorView.EditorView({state: temporalState, parent: node});
-                    setEditor(true);
+export function $Playground({code}: {code: string}): ß.react.ReactNode {
+    const [ready, setReady] = ß.react.useState<boolean>(false);
+    const [output, setOutput] = ß.react.useState<string>("");
+    const editorContainerRef = ß.react.useRef<HTMLDivElement>(null);
+    const outputContainerRef = ß.react.useRef<HTMLDivElement>(null);
+    const editorInitializedRef = ß.react.useRef<boolean>(false);
+    const debounceTimerRef = ß.react.useRef<number | null>(null);
+    const isCompilingRef = ß.react.useRef<boolean>(false);
+    ß.react.useEffect(() => {
+        let isActive = true;
+        (async() => {
+            setReady(false);
+            const compiled = await compile(code);
+            if (!isActive) {return}
+            setOutput(compiled);
+            setReady(true);
+        })();
+        return () => {isActive = false};
+    }, [code]);
+    ß.react.useEffect(() => {
+        if (editorInitializedRef.current) { return; }
+        if (!editorContainerRef.current) { return; }
+        const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
+            if (update.docChanged) {
+                if (debounceTimerRef.current !== null) {
+                    window.clearTimeout(debounceTimerRef.current);
                 }
-            })}></div>
-            <div id="Wrapper">
-                <$Suspense id="Suspense" show={ready}>
-                    <div id="Output" ref={ß.mount(async(node) => await render(output, node, true))}></div>
+                debounceTimerRef.current = window.setTimeout(async() => {
+                    if (isCompilingRef.current) { return; }
+                    isCompilingRef.current = true;
+                    setReady(false);
+                    const compiled = await compile(update.state.doc.toString());
+                    setOutput(compiled);
+                    setReady(true);
+                    isCompilingRef.current = false;
+                }, 250);
+            }
+        });
+        const temporalState = codemirrorState.EditorState.create({
+            doc: code,
+            extensions: [
+                codemirrorView.keymap.of(codemirrorCommands.historyKeymap),
+                codemirrorView.EditorView.theme(
+                    {
+                        "&": {
+                            backgroundColor: "#000000",
+                            color: "#ffffff",
+                            borderRadius: "1vw",
+                            overflow: "hidden",
+                            height: "100%"
+                        },
+                        ".cm-content": {
+                            caretColor: "#ffffff",
+                        },
+                        ".cm-cursor": {
+                            borderLeftColor: "#ffffff",
+                        },
+                        ".cm-activeLine": {
+                            backgroundColor: "#111111",
+                        },
+                        ".cm-lineNumbers": {
+                            backgroundColor: "#111111",
+                            color: "#333333",
+                            width: "4ch",
+                            textAlign: "right",
+                        },
+                        ".cm-scroller": {
+                            scrollbarWidth: "none",
+                        },
+                    },
+                    { dark: true },
+                ),
+                outputListener,
+                codemirrorView.lineNumbers(),
+                codemirrorView.highlightActiveLine(),
+                codemirrorCommands.history(),
+                codemirrorView.EditorView.lineWrapping,
+            ],
+        });
+        new codemirrorView.EditorView({
+            state: temporalState,
+            parent: editorContainerRef.current,
+        });
+        editorInitializedRef.current = true;
+        return () => {
+            if (debounceTimerRef.current !== null) {
+                window.clearTimeout(debounceTimerRef.current);
+            }
+        };
+    }, []);
+    ß.react.useEffect(() => {
+        if (!outputContainerRef.current) {return}
+        render(output, outputContainerRef.current, true);
+    }, [output, ready]);
+    return (
+        <div className="flex flex-row h-full w-full">
+            <div className="flex-none w-1/2" ref={editorContainerRef}></div>
+            <div className="flex-none w-1/2 relative">
+                <$Suspense show={ready}>
+                    <div className="items-center" ref={outputContainerRef}></div>
                 </$Suspense>
             </div>
         </div>
-    )
+    );
 }
 
 // MATHSYS -> COMPILE
 export async function compile(code: string): Promise<string> {
-    return (await $.curl<MathsysCompileRequest, MathsysCompileResponse>("mathsys/compile", {Mcode: code})).output;
+    return (
+        await $.curl<MathsysCompileRequest, MathsysCompileResponse>("mathsys/compile", {Mcode: code})).output;
 }
 
 // MATHSYS -> KATEX
@@ -114,10 +136,10 @@ export function render(code: string, element: HTMLElement, display: boolean): vo
     element.textContent = code;
     katex(element, {
         delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: display}
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: display },
         ],
         strict: false,
-        throwOnError: false
-    })
+        throwOnError: false,
+    });
 }

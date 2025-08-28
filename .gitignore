@@ -6,5 +6,6 @@
 *.js
 public/base/tailwind.css
 
-# IGNORE -> NODE
+# IGNORE -> FOLDERS
 node_modules/
+cache/

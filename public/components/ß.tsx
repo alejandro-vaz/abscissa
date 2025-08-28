@@ -7,7 +7,7 @@ import react from "react";
 import * as SUG from "SUG";
 import * as gagtag from "ga-gtag";
 import * as motion from "motion/react";
-import * as reactdom from 'react-dom/client';
+import * as dom from "react-dom/client";
 import * as router from "react-router-dom";
 
 // HEAD -> ANALYTICS
@@ -18,26 +18,8 @@ gagtag.install(SUG.TAG);
 //  EXPORTS
 //
 
-// EXPORTS -> REACT TYPES
-export type ReactElement = react.ReactElement;
-export type ReactNode = react.ReactNode;
-
-// EXPORTS -> REACT FUNCTIONS
-export const Suspense = react.Suspense;
-export const useState = react.useState;
-
-// EXPORTS -> ROUTER
-export const Routes = router.Routes;
-export const Route = router.Route;
-export const useNavigate = router.useNavigate;
-export const BrowserRouter = router.BrowserRouter;
-
-// EXPORTS -> MOTION ELEMENTS
-export const span = motion.motion.span;
-export const button = motion.motion.button;
-export const input = motion.motion.input;
-export const div = motion.motion.div;
-export const AnimatePresence = motion.AnimatePresence;
+// EXPORTS -> MODULES
+export {react, motion, dom, router};
 
 // EXPORTS -> DEFAULT ROOT
 export const Main = await createRoot("Main");
@@ -49,9 +31,9 @@ export const Main = await createRoot("Main");
 
 // DOM -> REFERENCE
 export type Reference = {
-    node: HTMLElement,
-    root: any,
-    children: any[]
+    node: HTMLElement;
+    root: any;
+    children: any[];
 };
 
 
@@ -62,12 +44,12 @@ export type Reference = {
 // ROOT -> CREATE
 export async function createRoot(id: string): Promise<Reference> {
     const node = document.createElement("div");
-    node.id = id
+    node.id = id;
     document.body.appendChild(node);
     const reference = {
         node: node,
-        root: reactdom.createRoot(node),
-        children:[]
+        root: dom.createRoot(node),
+        children: [],
     } as Reference;
     await render(reference);
     return reference;
@@ -86,18 +68,12 @@ async function render(reference: Reference): Promise<void> {
 //  UTILITIES
 //
 
-// UTILITIES -> ONRENDER
-export function onRender(call: () => any): void {
-    react.useEffect(() => {void call()}, []);
-}
-
-// UTILITIES -> USEEFFECT
-export const useEffect = react.useEffect;
-
 // UTILITIES -> MOUNT
 export function mount(call: (node) => any): (node) => void {
-    return async(node) => {
-        if ((node) == null) {return};
-        void await call(node);
-    }
+    return async (node) => {
+        if (node == null) {
+            return;
+        }
+        void (await call(node));
+    };
 }

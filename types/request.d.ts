@@ -4,9 +4,8 @@
 
 // MATHSYS -> COMPILE
 type MathsysCompileRequest = {
-    Mcode: string
+  Mcode: string;
 };
-
 
 //
 //  PROBLEM
@@ -14,9 +13,8 @@ type MathsysCompileRequest = {
 
 // PROBLEM -> LOOKUP
 type ProblemLookupRequest = {
-    Pid: string
+  Pid: string;
 };
-
 
 //
 //  USER
@@ -24,13 +22,13 @@ type ProblemLookupRequest = {
 
 // USER -> LOGIN
 type UserLoginRequest = {
-    Uhashpass: string,
-    Uname: string
-}
+  Uhashpass: string;
+  Uname: string;
+};
 
 // USER -> REGISTER
 type UserRegisterRequest = {
-    Uemail: string,
-    Uhashpass: string,
-    Uname: string
-}
+  Uemail: string;
+  Uhashpass: string;
+  Uname: string;
+};
