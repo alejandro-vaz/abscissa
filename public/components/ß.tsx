@@ -9,6 +9,8 @@ import * as gagtag from "ga-gtag";
 import * as motion from "motion/react";
 import * as dom from "react-dom/client";
 import * as router from "react-router-dom";
+import * as fiber from "@react-three/fiber";
+import * as three from "three";
 
 // HEAD -> ANALYTICS
 gagtag.install(SUG.TAG);
@@ -19,10 +21,10 @@ gagtag.install(SUG.TAG);
 //
 
 // EXPORTS -> MODULES
-export {react, motion, dom, router};
+export {react, motion, dom, router, fiber, three};
 
 // EXPORTS -> DEFAULT ROOT
-export const Main = await createRoot("Main");
+export const Main = createRoot("Main");
 
 
 //
@@ -31,49 +33,40 @@ export const Main = await createRoot("Main");
 
 // DOM -> REFERENCE
 export type Reference = {
-    node: HTMLElement;
-    root: any;
-    children: any[];
+    node: HTMLElement,
+    root: dom.Root
 };
 
-
-//
-//  ROOT
-//
-
-// ROOT -> CREATE
-export async function createRoot(id: string): Promise<Reference> {
+// DOM -> CREATE ROOT
+export function createRoot(id: string): Reference {
     const node = document.createElement("div");
     node.id = id;
     document.body.appendChild(node);
-    const reference = {
+    return {
         node: node,
-        root: dom.createRoot(node),
-        children: [],
+        root: dom.createRoot(node)
     } as Reference;
-    await render(reference);
-    return reference;
-}
-
-// MANIPULATION -> RENDER
-async function render(reference: Reference): Promise<void> {
-    return new Promise<void>((resolve) => {
-        reference.root.render(reference.children[0]);
-        resolve();
-    });
 }
 
 
 //
-//  UTILITIES
+//  COMPONENTS
 //
 
-// UTILITIES -> MOUNT
-export function mount(call: (node) => any): (node) => void {
-    return async (node) => {
-        if (node == null) {
-            return;
-        }
-        void (await call(node));
-    };
+// COMPONENTS -> BACKGROUNDS
+import {default as Background$Silk} from "./ßBackground/$Silk.js";
+export const Background = {
+    $Silk: Background$Silk
+}
+
+// COMPONENTS -> BUTTON
+import {default as Button$CallToAction} from "./ßButton/$CallToAction.js";
+export const Button = {
+    $CallToAction: Button$CallToAction
+}
+
+// COMPONENTS -> SUSPENSE
+import {default as Suspense$Spinner} from "./ßSuspense/$Spinner.js";
+export const Suspense = {
+    $Spinner: Suspense$Spinner
 }

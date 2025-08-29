@@ -5,26 +5,29 @@
 // HEAD -> TOOLS
 import * as ß from "ß";
 
+
 //
 //  SUSPENSE
 //
 
-// SUSPENSE -> ELEMENT
-export default function $Suspense({show, children}: {
-    show: boolean;
-    children?: ß.react.ReactNode;
+// SUSPENSE -> SPINNER
+export default function $Spinner({show, children, className}: {
+    show: boolean,
+    children?: ß.react.ReactNode,
+    className?: string
 }): ß.react.ReactElement {
     return (
         <ß.motion.AnimatePresence>
             {show ? (
-                <ß.motion.motion.span
+                <ß.motion.motion.div
                     key="content"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.1, delay: 0.1 }}
+                    className={className}
                 >
                     {children}
-                </ß.motion.motion.span>
+                </ß.motion.motion.div>
             ) : (
                 <ß.motion.motion.span
                     key="spinner"

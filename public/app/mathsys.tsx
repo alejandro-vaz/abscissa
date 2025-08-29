@@ -10,16 +10,17 @@ import * as codemirrorState from "@codemirror/state";
 import * as codemirrorView from "@codemirror/view";
 import * as codemirrorCommands from "@codemirror/commands";
 
-// HEAD -> COMPONENTS
-import $Suspense from "ßSuspense";
-
 
 //
 //  MATHSYS
 //
 
 // MATHSYS -> PLAYGROUND
-export function $Playground({code}: {code: string}): ß.react.ReactNode {
+export function $Playground({code, width, height}: {
+    code: string,
+    width: string,
+    height: string
+}): ß.react.ReactNode {
     const [ready, setReady] = ß.react.useState<boolean>(false);
     const [output, setOutput] = ß.react.useState<string>("");
     const editorContainerRef = ß.react.useRef<HTMLDivElement>(null);
@@ -39,8 +40,8 @@ export function $Playground({code}: {code: string}): ß.react.ReactNode {
         return () => {isActive = false};
     }, [code]);
     ß.react.useEffect(() => {
-        if (editorInitializedRef.current) { return; }
-        if (!editorContainerRef.current) { return; }
+        if (editorInitializedRef.current) {return}
+        if (!editorContainerRef.current) {return}
         const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
             if (update.docChanged) {
                 if (debounceTimerRef.current !== null) {
@@ -114,12 +115,12 @@ export function $Playground({code}: {code: string}): ß.react.ReactNode {
         render(output, outputContainerRef.current, true);
     }, [output, ready]);
     return (
-        <div className="flex flex-row h-full w-full">
+        <div className={`flex flex-row ${width} ${height}`}>
             <div className="flex-none w-1/2" ref={editorContainerRef}></div>
             <div className="flex-none w-1/2 relative">
-                <$Suspense show={ready}>
-                    <div className="items-center" ref={outputContainerRef}></div>
-                </$Suspense>
+                <ß.Suspense.$Spinner show={ready} className="h-full w-full">
+                    <span className="items-center" ref={outputContainerRef}></span>
+                </ß.Suspense.$Spinner>
             </div>
         </div>
     );

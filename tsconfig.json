@@ -24,14 +24,11 @@
       "#mathsys": ["public/app/mathsys.tsx"],
 
       "ß": ["public/components/ß.tsx"],
-      "ßBackgrounds/Silk": ["public/components/Backgrounds/Silk.tsx"],
       "ßButton": ["public/components/ßButton.tsx"],
       "ßForm": ["public/components/ßForm.tsx"],
       "ßInputEmail": ["public/components/ßInputEmail.tsx"],
       "ßInputPassword": ["public/components/ßInputPassword.tsx"],
-      "ßInputText": ["public/components/ßInputText.tsx"],
-      "ßSuspense": ["public/components/ßSuspense.tsx"],
-      "ßSVGIcon": ["public/components/ßSVGIcon.tsx"]
+      "ßInputText": ["public/components/ßInputText.tsx"]
     }
   },
   "exclude": ["node_modules/"]
