@@ -66,7 +66,9 @@ export const Button = {
 }
 
 // COMPONENTS -> SUSPENSE
+import {default as Suspense$Hide} from "./ßSuspense/$Hide.js";
 import {default as Suspense$Spinner} from "./ßSuspense/$Spinner.js";
 export const Suspense = {
+    $Hide: Suspense$Hide,
     $Spinner: Suspense$Spinner
 }

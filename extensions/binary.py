@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-import abscissa as æ
+import __init__ as æ
 
 
 #
@@ -18,7 +18,7 @@ class namespace:
     # CLASS -> VARIABLES
     data: bytes
     # CLASS -> INIT
-    async def init(self, request: æ.Request, response: æ.Response) -> namespace: return self
+    async def init(self, socket: æ.WebSocket) -> namespace: return self
     # CLASS -> LOAD
     def load(self, data: bytes) -> None:
         self.data = data
@@ -30,7 +30,7 @@ class namespace:
         return bytes.fromhex(data)
     # CLASS -> GET
     def get(self) -> æ.StreamingResponse:
-        def iterator() -> object:
+        def iterator():
             size = 8192
             for index in range(0, len(self.data), size):
                 yield self.data[index:index+size]

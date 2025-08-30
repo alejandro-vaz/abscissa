@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-import abscissa as æ
+import __init__ as æ
 
 
 #
@@ -21,7 +21,7 @@ class namespace:
     # CLASS -> VARIABLES
     hasher: argon2.PasswordHasher
     # CLASS -> INIT
-    async def init(self, request: æ.Request, response: æ.Response) -> namespace: 
+    async def init(self, socket: æ.WebSocket) -> namespace: 
         self.hasher = argon2.PasswordHasher()
         return self
     # CLASS -> HASH

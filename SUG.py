@@ -2,16 +2,6 @@
 #   MASTER SUPERGLOBALS
 #
 
-# MASTER SUPERGLOBALS -> SCRIPTS
-SRC = [
-    "/mathsys/compile",
-    "/problem/lookup",
-    "/session/validate",
-    "/user/data",
-    "/user/login",
-    "/user/register"
-]
-
 # MASTER SUPERGLOBALS -> DATABASE CREDENTIALS
 DBC = {
     "host": "localhost",

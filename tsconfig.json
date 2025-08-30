@@ -19,6 +19,7 @@
       "&": ["public/content/&.tsx"],
       "&error": ["public/content/&error.tsx"],
       "&playground": ["public/content/&playground.tsx"],
+      "&features": ["public/content/&features.tsx"],
 
       "#dicebear": ["public/app/dicebear.tsx"],
       "#mathsys": ["public/app/mathsys.tsx"],

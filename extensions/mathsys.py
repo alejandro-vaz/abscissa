@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 # HANDLER -> LOAD
-import abscissa as æ
+import __init__ as æ
 
 
 #
@@ -21,7 +21,7 @@ class namespace:
     # CLASS -> VARIABLES
     code: str
     # CLASS -> INIT
-    async def init(self, request: æ.Request, response: æ.Response) -> namespace: return self
+    async def init(self, socket: æ.WebSocket) -> namespace: return self
     # CLASS -> LOAD
     def process(self, code: str) -> bool:
         self.code = code

@@ -13,12 +13,12 @@ import * as ß from "ß";
 
 // CONTENT -> FUNCTION
 export default function $_(): ß.react.ReactNode {
-    // FUNCTION -> INTERFACE
+    // FUNCTION -> USEEFFECT
     ß.react.useEffect(() => {
         $.setTitle("Abscissa");
         $.setDescription("LeetCode but for math. Learn math by solving real problems.");
     }, []);
-    // FUNCTION -> CONTENT
+    // FUNCTION -> RETURN
     return ( 
         <>
             <ß.Background.$Silk color="#1E1E40"/>
@@ -27,7 +27,7 @@ export default function $_(): ß.react.ReactNode {
                 <h3 className="text-xl mb-12">Learn math by solving real problems</h3>
                 <ß.Button.$CallToAction
                     text="Try it now"
-                    tooltip="Yes"
+                    tooltip="Playground"
                     redirect="/playground"
                     width="w-32"
                 />

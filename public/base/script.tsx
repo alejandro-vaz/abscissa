@@ -9,6 +9,7 @@ import * as ß from "ß";
 import $_ from "&";
 import $_error from "&error";
 import $_playground from "&playground";
+import $_features from "&features";
 
 
 //
@@ -33,9 +34,10 @@ function $Content(): ß.react.ReactNode {
     return (
         <ß.react.StrictMode>
             <ß.router.Routes>
-                <ß.router.Route path="/" element={<$_ />}/>
-                <ß.router.Route path="/playground" element={<$_playground />}/>
-                <ß.router.Route path="*" element={<$_error />}/>
+                <ß.router.Route path="/" element={<$_/>}/>
+                <ß.router.Route path="/playground" element={<$_playground/>}/>
+                <ß.router.Route path="/features" element={<$_features/>}/>
+                <ß.router.Route path="*" element={<$_error/>}/>
             </ß.router.Routes>
         </ß.react.StrictMode>
     );
@@ -122,7 +124,7 @@ export function modulator(...activate: string[]): void {
 //  API
 //
 
-// API -> CALL
+// API -> CURL
 export async function curl<Request, Response>(
     script: string,
     data?: Request,
@@ -142,6 +144,31 @@ export async function curl<Request, Response>(
         default: {
             return response.json() as Response;
         }
+    }
+}
+
+// API -> VIA
+export class via {
+    private socket: WebSocket;
+    private queue: any[];
+    constructor(endpoint: string, handler: (data: any) => void | Promise<void>) {
+        this.socket = new WebSocket(`wss://${window.location.host}/api/${endpoint.replace(/^\/+/, "")}`);
+        this.socket.onmessage = (event) => handler(JSON.parse(event.data));
+        this.queue = [];
+        this.socket.onopen = () => {
+            for (const message of this.queue) {this.socket.send(JSON.stringify(message))}
+            this.queue = [];
+        }
+    }
+    send<Request>(data: Request): void {
+        if (this.socket.readyState === this.socket.OPEN) {
+            this.socket.send(JSON.stringify(data as Request));
+        } else {
+            this.queue.push(data);
+        }
+    }
+    close(): void {
+        this.socket.close();
     }
 }
 

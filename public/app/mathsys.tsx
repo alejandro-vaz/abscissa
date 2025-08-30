@@ -21,43 +21,21 @@ export function $Playground({code, width, height}: {
     width: string,
     height: string
 }): ß.react.ReactNode {
-    const [ready, setReady] = ß.react.useState<boolean>(false);
+    // PLAYGROUND -> USESTATE
+    const [queue, setQueue] = ß.react.useState<number>(0);
+    const [text, setText] = ß.react.useState<string>("");
     const [output, setOutput] = ß.react.useState<string>("");
-    const editorContainerRef = ß.react.useRef<HTMLDivElement>(null);
-    const outputContainerRef = ß.react.useRef<HTMLDivElement>(null);
-    const editorInitializedRef = ß.react.useRef<boolean>(false);
-    const debounceTimerRef = ß.react.useRef<number | null>(null);
-    const isCompilingRef = ß.react.useRef<boolean>(false);
+    // PLAYGROUND -> USEREF
+    const via = ß.react.useRef<$.via>(null);
+    const editorContainer = ß.react.useRef<HTMLDivElement>(null);
+    const outputContainer = ß.react.useRef<HTMLDivElement>(null);
+    // PLAYGROUND -> USEEFFECT
     ß.react.useEffect(() => {
-        let isActive = true;
-        (async() => {
-            setReady(false);
-            const compiled = await compile(code);
-            if (!isActive) {return}
-            setOutput(compiled);
-            setReady(true);
-        })();
-        return () => {isActive = false};
-    }, [code]);
-    ß.react.useEffect(() => {
-        if (editorInitializedRef.current) {return}
-        if (!editorContainerRef.current) {return}
-        const outputListener = codemirrorView.EditorView.updateListener.of((update) => {
-            if (update.docChanged) {
-                if (debounceTimerRef.current !== null) {
-                    window.clearTimeout(debounceTimerRef.current);
-                }
-                debounceTimerRef.current = window.setTimeout(async() => {
-                    if (isCompilingRef.current) { return; }
-                    isCompilingRef.current = true;
-                    setReady(false);
-                    const compiled = await compile(update.state.doc.toString());
-                    setOutput(compiled);
-                    setReady(true);
-                    isCompilingRef.current = false;
-                }, 250);
-            }
+        via.current = new $.via("mathsys/compile", (data: MathsysCompileResponse) => {
+            setQueue(value => value - 1);
+            setOutput(data.output);
         });
+        const outputListener = codemirrorView.EditorView.updateListener.of((update) => update.docChanged ? setText(update.state.doc.toString()) : null);
         const temporalState = codemirrorState.EditorState.create({
             doc: code,
             extensions: [
@@ -101,35 +79,28 @@ export function $Playground({code, width, height}: {
         });
         new codemirrorView.EditorView({
             state: temporalState,
-            parent: editorContainerRef.current,
+            parent: editorContainer.current
         });
-        editorInitializedRef.current = true;
-        return () => {
-            if (debounceTimerRef.current !== null) {
-                window.clearTimeout(debounceTimerRef.current);
-            }
-        };
+        setText(code);
+        return () => via.current ? via.current.close() : null;
     }, []);
     ß.react.useEffect(() => {
-        if (!outputContainerRef.current) {return}
-        render(output, outputContainerRef.current, true);
-    }, [output, ready]);
+        setQueue(value => value + 1);
+        via.current.send<MathsysCompileRequest>({Mcode: text});
+    }, [text])
+    ß.react.useEffect(() => {
+        if (queue === 0) {render(output, outputContainer.current, true)}
+    }, [output, queue])
     return (
         <div className={`flex flex-row ${width} ${height}`}>
-            <div className="flex-none w-1/2" ref={editorContainerRef}></div>
+            <div className="flex-none w-1/2" ref={editorContainer}></div>
             <div className="flex-none w-1/2 relative">
-                <ß.Suspense.$Spinner show={ready} className="h-full w-full">
-                    <span className="items-center" ref={outputContainerRef}></span>
+                <ß.Suspense.$Spinner show={queue === 0} className="h-full w-full">
+                    <span className="items-center" ref={outputContainer}></span>
                 </ß.Suspense.$Spinner>
             </div>
         </div>
     );
-}
-
-// MATHSYS -> COMPILE
-export async function compile(code: string): Promise<string> {
-    return (
-        await $.curl<MathsysCompileRequest, MathsysCompileResponse>("mathsys/compile", {Mcode: code})).output;
 }
 
 // MATHSYS -> KATEX
