@@ -7,111 +7,93 @@ import * as ß from "ß";
 
 // HEAD -> VIEWS
 import $_ from "&";
-import $_dashboard from "&dashboard";
 import $_error from "&error";
 import $_playground from "&playground";
+import $_features from "&features";
 
-// HEAD -> INTERFACE MODULES
-import * as __navbar from "=navbar";
-import * as __tooltip from "=tooltip";
-import * as __topbar from "=topbar";
+
+//
+//  VIEW
+//
+
+// VIEW -> APP
+function $App(): ß.react.ReactNode {
+    return (
+        <ß.router.BrowserRouter>
+            <$Content/>
+        </ß.router.BrowserRouter>
+    );
+}
+
+// VIEW -> CONTENT
+function $Content(): ß.react.ReactNode {
+    const navigate = ß.router.useNavigate();
+    ß.react.useEffect(() => {
+        setGlobalNavigate(navigate);
+    }, [navigate]);
+    return (
+        <ß.react.StrictMode>
+            <ß.router.Routes>
+                <ß.router.Route path="/" element={<$_/>}/>
+                <ß.router.Route path="/playground" element={<$_playground/>}/>
+                <ß.router.Route path="/features" element={<$_features/>}/>
+                <ß.router.Route path="*" element={<$_error/>}/>
+            </ß.router.Routes>
+        </ß.react.StrictMode>
+    );
+}
+
+// VIEW -> RENDER
+ß.Main.node.className = "h-screen w-screen";
+ß.Main.root.render(<$App/>);
 
 
 //
 //  WINDOW MANAGEMENT
 //
 
-// WINDOW MANAGEMENT -> INITIAL LOAD
-await redirect(window.location.pathname, false);
-
 // WINDOW MANAGEMENT -> LOCATE
 export function locate(): string[] {
     return window.location.pathname.split("/").slice(1);
 }
 
+// WINDOW MANAGEMENT -> NAVIGATE
+let globalNavigate: ((to: string, options?: any) => void) | null = null;
+function setGlobalNavigate(navigate: (to: string, options?: any) => void): void {globalNavigate = navigate}
+
 // WINDOW MANAGEMENT -> REDIRECT
-export async function redirect(target: string, append: boolean = true, divide: boolean = false): Promise<void> {
+export function redirect(target: string, append: boolean = true, divide: boolean = false): void {
     if (target === window.location.pathname && append && !divide) {return}
-    if (divide) {
-        window.open(`https://${window.location.host}${target}`, "blank");
-    } else {
-        ß.clean(ß.Main);
-        ß.Main.node.classList.remove(...ß.Main.node.classList);
-        if (append) {history.pushState(null, '', target)}
-        switch (locate()[0]) {
-            case '': {
-                ß.Main.node.classList.add("_");
-                await ß.inject(ß.Main, <$_/>);
-                break;
-            }
-            case 'dashboard': {
-                ß.Main.node.classList.add("_dashboard");
-                await ß.inject(ß.Main, <$_dashboard/>);
-                break;
-            }
-            case 'playground': {
-                ß.Main.node.classList.add("_playground");
-                await ß.inject(ß.Main, <$_playground/>);
-                break;
-            }
-            default: {
-                ß.Main.node.classList.add("_error"); 
-                await ß.inject(ß.Main, <$_error/>);
-            }
-        }
-    }
+    divide ? window.open(`https://${window.location.host}${target}`, "blank") : globalNavigate(target, {replace: !append});
 }
-
-// WINDOW MANAGEMENT -> CHECK ASPECT RATIO
-async function aspectRatio() {
-    const location = locate();
-    if (
-        window.innerWidth / window.innerHeight < 3 / 2 &&
-        location[0] !== 'error' &&
-        location[1] !== '0'
-    ) {
-        await redirect('/error/0');
-    } else if (
-        window.innerWidth / window.innerHeight >= 3 / 2 &&
-        location[0] === 'error' &&
-        location[1] === '0'
-    ) {
-        await redirect('/dashboard');
-    }
-}
-
-// WINDOW MANAGEMENT -> ENFORCE ASPECT RATIO
-await aspectRatio()
-window.addEventListener("resize", aspectRatio);
 
 // WINDOW MANAGEMENT -> BUTTON NAVIGATION
-window.addEventListener('popstate', async() => {
-    await redirect(window.location.pathname, false);
-})
+window.addEventListener("popstate", async() => {
+    redirect(window.location.pathname, false);
+});
 
 // WINDOW MANAGEMENT -> NO CONTEXTMENU
 document.addEventListener("contextmenu", (event) => {
     event.preventDefault();
-})
+});
 
-// WINDOW MANAGEMENT -> GET TITLE
+// WINDOW MANAGEMENT -> TITLE
 export function getTitle(): string {
     return document.title;
 }
-
-// WINDOW MANAGEMENT -> SET TITLE
 export function setTitle(newTitle: string): void {
     document.title = newTitle;
 }
 
-// WINDOW MANAGEMENT -> GET DESCRIPTION
+// WINDOW MANAGEMENT -> DESCRIPTION
 export function getDescription(): string {
-    return document.querySelector<HTMLMetaElement>('meta[name="description"]').content;
+    return document.querySelector<HTMLMetaElement>('meta[name="description"]')
+        .content;
 }
-
-// WINDOW MANAGEMENT -> SET DESCRIPTION
 export function setDescription(newDescription: string): void {
-    document.querySelector('meta[name="description"]').setAttribute('content', newDescription);
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute("content", newDescription);
 }
 
 
@@ -120,11 +102,7 @@ export function setDescription(newDescription: string): void {
 //
 
 // INTERFACE MANAGEMENT -> REGISTRY
-const registry = {
-    navbar: {active: false, module: __navbar},
-    tooltip: {active: false, module: __tooltip},
-    topbar: {active: false, module: __topbar}
-}
+const registry = {};
 
 // INTERFACE MANAGEMENT -> MODULATOR
 export function modulator(...activate: string[]): void {
@@ -143,46 +121,54 @@ export function modulator(...activate: string[]): void {
 
 
 //
-//  API                                                                       
+//  API
 //
 
-// API -> CALL
-export async function curl<Request, Response>(script: string, data: Request): Promise<Response> {
-    const response = (await fetch(
-        `https://${window.location.host}/api/${script.replace(/^\/+/, '')}`,
+// API -> CURL
+export async function curl<Request, Response>(
+    script: string,
+    data?: Request,
+): Promise<Response> {
+    const response = await fetch(
+        `https://${window.location.host}/api/${script.replace(/^\/+/, "")}`,
         {
             cache: "no-store",
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(data as Request)
-        }
-    ));
+            body: JSON.stringify(data as Request),
+        },
+    );
     switch (script) {
-        case "mathsys/compile": {
-            const reader = response.body.getReader();
-            const chunks = [] as Uint8Array[];
-            let totalLength = 0;
-            while (true) {
-                const {done, value} = await reader.read();
-                if (done) {break}
-                if (value) {
-                    chunks.push(value);
-                    totalLength += value.length;
-                }
-            }
-            const result = new Uint8Array(totalLength);
-            let offset = 0;
-            for (const chunk of chunks) {
-                result.set(chunk, offset);
-                offset += chunk.length;
-            }
-            return result.buffer.slice(result.byteOffset, result.byteOffset + result.byteLength) as Response;
-        }
         default: {
             return response.json() as Response;
         }
+    }
+}
+
+// API -> VIA
+export class via {
+    private socket: WebSocket;
+    private queue: any[];
+    constructor(endpoint: string, handler: (data: any) => void | Promise<void>) {
+        this.socket = new WebSocket(`wss://${window.location.host}/api/${endpoint.replace(/^\/+/, "")}`);
+        this.socket.onmessage = (event) => handler(JSON.parse(event.data));
+        this.queue = [];
+        this.socket.onopen = () => {
+            for (const message of this.queue) {this.socket.send(JSON.stringify(message))}
+            this.queue = [];
+        }
+    }
+    send<Request>(data: Request): void {
+        if (this.socket.readyState === this.socket.OPEN) {
+            this.socket.send(JSON.stringify(data as Request));
+        } else {
+            this.queue.push(data);
+        }
+    }
+    close(): void {
+        this.socket.close();
     }
 }
 
@@ -193,7 +179,9 @@ export async function curl<Request, Response>(script: string, data: Request): Pr
 
 // TIME -> DELAY
 export async function delay(seconds: number): Promise<void> {
-    return new Promise((resolve) => {setTimeout(resolve, seconds * 1000)})
+    return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1000);
+    });
 }
 
 
@@ -214,6 +202,6 @@ export function check(input: string, pattern: RegExp): boolean {
 // DEBUG -> FUNCTION
 export function debug(...variables: any[]): void {
     for (const variable of variables) {
-        console.log(variable)
+        console.log(variable);
     }
 }

@@ -1,0 +1,73 @@
+/*          */
+/*  IMPORTS */
+/*          */
+
+/* IMPORTS -> TAILWIND */
+@import "tailwindcss" source("../");
+
+
+/*              */
+/*  FONTS       */
+/*              */
+
+/* FONTS -> COMIC SANS */
+@font-face {
+    font-family: "comicSansMS";
+    src: url("/public/fonts/comicSansMS.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+
+/*        */
+/*  THEME */
+/*        */
+
+/* THEME -> DEFINITION */
+@theme {
+    /* DEFINITION -> PRIMARY COLOR */
+    --color-primary-50: #f0f0f9;
+    --color-primary-100: #e1e1f3;
+    --color-primary-200: #c3c3e7;
+    --color-primary-300: #a5a5db;
+    --color-primary-400: #8787cf;
+    --color-primary-500: #4d4da0;
+    --color-primary-600: #3d3d80;
+    --color-primary-700: #2e2e60;
+    --color-primary-800: #1e1e40;
+    --color-primary-900: #0f0f20;
+    --color-primary-950: #080810;
+    /* DEFINITION -> SECONDARY COLOR */
+    --color-secondary-50: #f5f5fc;
+    --color-secondary-100: #ebebf9;
+    --color-secondary-200: #d7d7f3;
+    --color-secondary-300: #c3c3ed;
+    --color-secondary-400: #afafe7;
+    --color-secondary-500: #7f7fd2;
+    --color-secondary-600: #6666a8;
+    --color-secondary-700: #4d4d7e;
+    --color-secondary-800: #333354;
+    --color-secondary-900: #1a1a2a;
+    --color-secondary-950: #0d0d15;
+    /* DEFINITION -> FONTS */
+    --font-family-sans: "comicSansMS";
+    --font-family-mono: monospace;
+}
+
+/* THEME -> LAYER */
+@layer base {
+    html {
+        font-family: var(--font-family-sans);
+        color: var(--color-white);
+        background-color: var(--color-black);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+    }
+}

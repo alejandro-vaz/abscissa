@@ -1,4 +1,3 @@
 {
-    "reportMissingImports": false,
-    "reportUndefinedVariable": false
+    "reportMissingImports": false
 }

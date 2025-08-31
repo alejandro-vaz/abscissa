@@ -8,26 +8,16 @@ from importlib import util
 import sys
 import SUG
 
+# HEAD -> API
+from api.mathsys import (compile)
+
 
 #
 #   GATEWAY
 #
 
-# GATEWAY -> DIR MOD
-sys.path.append(SUG.PDR)
-sys.path.append(SUG.DIR)
-
 # GATEWAY -> APPLICATION
 app = FastAPI()
 
-# GATEWAY -> INCLUDE
-def include(name: str) -> object:
-    spec = util.spec_from_file_location(name, f"{SUG.DIR}/api{name}.py")
-    if spec is None or spec.loader is None: return
-    module = util.module_from_spec(spec)
-    sys.modules[name] = module
-    spec.loader.exec_module(module)
-    return module
-
 # GATEWAY -> SCRIPTS
-for script in SUG.SRC: app.include_router(getattr(include(script), "router"))
+for script in [compile]: app.include_router(script.router)

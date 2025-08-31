@@ -3,7 +3,7 @@
 #
 
 # HANDLER -> LOAD
-from abscissa import *
+import __init__ as æ
 
 
 #
@@ -11,8 +11,17 @@ from abscissa import *
 #
 
 # REQUEST -> FINAL
-class MathsysCompileRequest(BaseModel):
+class MathsysCompileRequest(æ.BaseModel):
     Mcode: str
+
+
+#
+#   RESPONSE
+#
+
+# RESPONSE -> FINAL
+class MathsysCompileResponse(æ.BaseModel):
+    output: str
 
 
 #
@@ -20,29 +29,17 @@ class MathsysCompileRequest(BaseModel):
 #
 
 # FUNCTION -> ROUTER
-router = APIRouter()
+router = æ.APIRouter()
 
 # FUNCTION -> EXTENSIONS
-from abscissa.extensions import (
-    binary as _binary,
+from extensions import (
     mathsys as _mathsys
 )
 
 # FUNCTION -> DECLARATION
-@router.post("/api/mathsys/compile")
-async def output(request: Request, response: Response) -> StreamingResponse:
-    # DECLARATION -> INPUT
-    try: packet = MathsysCompileRequest(**await request.json())
-    except: raise HTTPException(**SUG.ERR[0])
-    # DECLARATION -> ACTIVATE EXTENSIONS
-    binary = await _binary.namespace().init(request, response)
-    mathsys = await _mathsys.namespace().init(request, response)
-    # DECLARATION -> DATA
-    if mathsys.process(packet.Mcode):
-        binary.load(mathsys.compile())
-    else:
-        mathsys.process("error")
-        binary.load(mathsys.compile())
-    data = binary.get()
-    # DECLARATION -> RETURN
-    return data
+@router.websocket("/api/mathsys/compile")
+@æ.handler(MathsysCompileRequest, MathsysCompileResponse, [_mathsys])
+async def output(payload: MathsysCompileRequest, extensions: list[æ.Any]) -> dict:
+    [mathsys] = extensions
+    if not mathsys.process(payload.Mcode): mathsys.process("error")
+    return {"output": mathsys.compile()}
