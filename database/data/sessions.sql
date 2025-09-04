@@ -4,7 +4,7 @@
 
 -- TABLE -> SESSIONS
 Create table `SESSIONS` (
-    `Sid` Binary(32) unique primary key not null comment
+    `Sid` Binary(32) primary key not null comment
         'Private.
         Session ID.',
     `Uid` Integer unsigned unique not null comment
@@ -18,7 +18,7 @@ Create table `SESSIONS` (
         When the session expires.',
     Foreign key (`Uid`) references `USERS` (`Uid`)
         On delete cascade on update cascade
-) auto_increment = 0;
+);
 
 
 --
@@ -33,13 +33,15 @@ Create procedure CreateSessions(
 ) begin
     Declare sessionBytes binary(32);
     Set sessionBytes = random_bytes(32);
-    Delete from SESSIONS where Uid = id;
     Insert into SESSIONS (Sid, Uid, Sip, Sexpires) values (
-        sessionBytes,
-        id,
-        ip,
+        sessionBytes, 
+        id, 
+        ip, 
         date_add(now(), interval 7 day)
-    );
+    ) on duplicate key update
+        Sid = values(Sid),
+        Sip = values(Sip),
+        Sexpires = values(Sexpires);
     Select Uid from SESSIONS where Sid = sessionBytes;
 End //
 Delimiter ;

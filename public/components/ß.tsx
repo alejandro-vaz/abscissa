@@ -61,8 +61,10 @@ export const Background = {
 
 // COMPONENTS -> BUTTON
 import {default as Button$CallToAction} from "./ßButton/$CallToAction.js";
+import {default as Button$Small} from "./ßButton/$Small.js";
 export const Button = {
-    $CallToAction: Button$CallToAction
+    $CallToAction: Button$CallToAction,
+    $Small: Button$Small
 }
 
 // COMPONENTS -> SUSPENSE

@@ -4,7 +4,7 @@
 
 -- TABLE -> FEATURES
 Create table `FEATURES` (
-    `Fid` Smallint unsigned unique primary key not null auto_increment comment
+    `Fid` Smallint unsigned primary key not null auto_increment comment
         'Public.
         Feature request ID.',
     `Fname` Varchar(128) unique not null comment
@@ -30,10 +30,10 @@ Create procedure CreateFeatures(
     content text
 ) begin
     Insert into FEATURES (Fname, Ftext) values (
-        title,
+        title, 
         content
     );
-    Select * from FEATURES where Fid = last_insert_id();
+    Select * from FEATURES where Fname = title;
 End //
 Delimiter ;
 
@@ -47,17 +47,19 @@ Delimiter ;
 -- PROCEDURES -> UPVOTE FEATURES
 Delimiter //
 Create procedure UpvoteFeatures(
-    id smallint
+    id smallint unsigned
 ) begin
     Update FEATURES set Fvotes = Fvotes + 1 where Fid = id;
+    Select * from FEATURES where Fid = id;
 End //
 Delimiter ;
 
 -- PROCEDURES -> DOWNVOTE FEATURES
 Delimiter //
 Create procedure DownvoteFeatures(
-    id smallint
+    id smallint unsigned
 ) begin 
     Update FEATURES set Fvotes = Fvotes - 1 where Fid = id;
+    Select * from FEATURES where Fid = id;
 End //
 Delimiter ;

@@ -17,10 +17,10 @@ export default function $Hide({show, children, className}: {
     className?: string
 }): ß.react.ReactElement {
     return (
-        show ? (
-            <ß.motion.motion.div className={className}>
-                {children}
-            </ß.motion.motion.div>
-        ) : (null)
-    );
+        <div
+            className={`${className} relative overflow-hidden`}
+        >
+            {show ? children : <></>}
+        </div>
+    )
 }

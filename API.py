@@ -9,7 +9,9 @@ import sys
 import SUG
 
 # HEAD -> API
-from api.mathsys import (compile)
+from api.mathsys import (
+    compile as mathsysCompile
+)
 
 
 #
@@ -20,4 +22,4 @@ from api.mathsys import (compile)
 app = FastAPI()
 
 # GATEWAY -> SCRIPTS
-for script in [compile]: app.include_router(script.router)
+for script in [mathsysCompile]: app.include_router(script.router)

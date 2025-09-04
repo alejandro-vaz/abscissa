@@ -3,13 +3,12 @@
   "version": "4.10.5",
   "main": "public/content/general.js",
   "scripts": {
-    "build/tsx": "babel . --extensions \".tsx\" --watch --out-dir . --out-file-extension .js",
+    "build/tsx": "babel public --extensions \".tsx\" --watch --out-dir public --out-file-extension .js",
     "build/css": "tailwindcss -i ./public/base/style.css -o ./public/base/tailwind.css --watch --minify",
     "add/tsx": "npx jsrepo add",
     "connect": "ssh 192.168.1.100 -l root",
     "chromium": "chromium --ignore-certificate-errors --user-data-dir=/tmp/dev-profile",
-    "setup": "chmod +x package/setup.sh && bash package/setup.sh",
-    "update": "chmod +x package/update.sh && bash package/update.sh"
+    "setup": "chmod +x package/setup.sh && bash package/setup.sh"
   },
   "repository": {
     "type": "git",
@@ -50,5 +49,8 @@
     "react-router-dom": "^7.8.2",
     "tailwindcss": "^4.1.12",
     "three": "^0.179.1"
+  },
+  "dependencies": {
+    "react-dom": "^19.1.1"
   }
 }

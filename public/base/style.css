@@ -70,4 +70,8 @@
         -moz-user-drag: none;
         -o-user-drag: none;
     }
+    .newline {
+        display: block;
+        height: 0.5rem;
+    }
 }

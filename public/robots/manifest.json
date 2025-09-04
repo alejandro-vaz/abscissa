@@ -1,0 +1,39 @@
+{
+    "id": "/",
+    "name": "Abscissa",
+    "short_name": "Abscissa",
+    "description": "LeetCode but for math. No multiple-choice-questions, no fill in the gaps. Solve math by solving, not guessing.",
+    "lang": "en-US",
+    "dir": "ltr",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#000000",
+    "theme_color": "#4D4DA0",
+    "categories": ["education", "math"],
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "icons": [
+        {
+            "src": "/public/ico/logoLight.ico",
+            "sizes": "256x256",
+            "type": "image/x-icon",
+            "purpose": "any"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/public/img/og:image.png",
+            "sizes": "2000x1050",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/public/img/og:image.png",
+            "sizes": "2000x1050",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ]
+}

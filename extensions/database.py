@@ -36,18 +36,13 @@ class namespace:
     # CLASS -> INIT
     async def init(self, socket: æ.WebSocket) -> namespace:
         self.connection = await æ.aiomysql.connect(**æ.SUG.DBC)
+        await self.connection.autocommit(True)
         return self
     # CLASS -> QUERY
     async def query(self, command: str, parameters: list) -> æ.Any:
-        typeList = self.procedures[command]
-        for index in range(len(parameters)): assert isinstance(parameters[index], typeList[index])
-        sql = f"{command}({', '.join(['%s'] * len(parameters))})"
+        for index in range(len(parameters)): assert isinstance(parameters[index], self.procedures[command][index])
         async with self.connection.cursor() as cursor:
-            await cursor.execute(sql, parameters)
+            await cursor.execute(f"Call {command}({', '.join(['%s'] * len(parameters))})", parameters)
             rows = await cursor.fetchall()
-            if len(rows) == 1 and len(rows[0]) == 1:
-                return rows[0][0]
-            elif rows is None:
-                return None
-            else:
-                return [dict(zip([column[0] for column in cursor.description], row)) for row in rows]
+            if len(rows) == 1 and len(rows[0]) == 1: return rows[0][0]
+            return [dict(zip([column[0] for column in cursor.description], row)) for row in rows] if rows is not None else None

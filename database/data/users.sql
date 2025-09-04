@@ -4,7 +4,7 @@
 
 -- TABLE -> USERS
 Create table `USERS` (
-    `Uid` Integer unsigned unique primary key not null auto_increment comment
+    `Uid` Integer unsigned primary key not null auto_increment comment
         'Public. 
         Unique identifier.',
     `Uname` Varchar(32) unique not null comment
@@ -31,18 +31,18 @@ Create procedure CreateUsers(
     password varchar(256)
 ) begin
     Insert into USERS (Uname, Uemail, Uhashpass) values (
-        username,
-        email,
+        username, 
+        email, 
         password
     );
-    Select Uid, Uname from USERS where Uid = last_insert_id();
+    Select Uid, Uname from USERS where Uname = username;
 End //
 Delimiter ;
 
 -- PROCEDURES -> GET PRIVATE USERS
 Delimiter //
 Create procedure GetPrivateUsers(
-    id integer
+    id int unsigned
 ) begin
     Select * from USERS where Uid = id;
 End //
@@ -51,7 +51,7 @@ Delimiter ;
 -- PROCEDURES -> GET UID USERS
 Delimiter //
 Create procedure GetUidUsers(
-    id integer
+    id int unsigned
 ) begin
     Select Uid, Uname from USERS where Uid = id;
 End //
@@ -72,8 +72,8 @@ Delimiter ;
 --
 
 -- DEFAULTS -> ROOT USER
-INSERT INTO USERS (Uname, Uemail, Uhashpass) values (
-    "root",
-    "root@abscissa.eu",
-    "$argon2id$v=19$m=102400,t=2,p=8$AgM2N9CS0A12r3h3y2NqsA$ZVauIH5w8yMArk/ZZMNsHg"
+Call CreateUsers(
+    'root',
+    'root@abscissa.eu',
+    '$argon2id$v=19$m=102400,t=2,p=8$AgM2N9CS0A12r3h3y2NqsA$ZVauIH5w8yMArk/ZZMNsHg'
 );

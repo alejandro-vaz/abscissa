@@ -69,10 +69,17 @@ void main() {
 }
 `;
 
+
+//
+//  INTERFACES
+//
+
+// INTERFACES -> UNIFORMVALUE
 interface UniformValue<T = number | ß.three.Color> {
     value: T;
 }
 
+// INTERFACES -> SILKUNIFORMS
 interface SilkUniforms {
     uSpeed: UniformValue<number>;
     uScale: UniformValue<number>;
@@ -83,27 +90,30 @@ interface SilkUniforms {
     [uniform: string]: ß.three.IUniform;
 }
 
-
-
+// INTERFACES -> SILKPLANEPROPS
 interface SilkPlaneProps {
     uniforms: SilkUniforms;
 }
 
+
+//
+//  SILKPLANE
+//
+
+// SILKPLANE -> FUNCTION
 const SilkPlane = ß.react.forwardRef<ß.three.Mesh, SilkPlaneProps>(function SilkPlane(
-    { uniforms },
+    {uniforms},
     ref
 ) {
-    const { viewport } = ß.fiber.useThree();
-
+    const {viewport} = ß.fiber.useThree();
     ß.react.useLayoutEffect(() => {
-        const mesh = ref as React.RefObject<ß.three.Mesh | null>;
+        const mesh = ref as ß.react.RefObject<ß.three.Mesh | null>;
         if (mesh.current) {
             mesh.current.scale.set(viewport.width, viewport.height, 1);
         }
     }, [ref, viewport]);
-
     ß.fiber.useFrame((_state: ß.fiber.RootState, delta: number) => {
-        const mesh = ref as React.RefObject<ß.three.Mesh | null>;
+        const mesh = ref as ß.react.RefObject<ß.three.Mesh | null>;
         if (mesh.current) {
             const material = mesh.current.material as ß.three.ShaderMaterial & {
                 uniforms: SilkUniforms;
@@ -111,7 +121,6 @@ const SilkPlane = ß.react.forwardRef<ß.three.Mesh, SilkPlaneProps>(function Si
             material.uniforms.uTime.value += 0.1 * delta;
         }
     });
-
     return (
         <mesh ref={ref}>
             <planeGeometry args={[1, 1, 1, 1]} />
@@ -123,9 +132,16 @@ const SilkPlane = ß.react.forwardRef<ß.three.Mesh, SilkPlaneProps>(function Si
         </mesh>
     );
 });
+
+// SILKPLANE -> DISPLAYNAME
 SilkPlane.displayName = "SilkPlane";
 
 
+//
+//  EXPORT
+//
+
+// EXPORT -> SILK
 export default function $Silk({color}: {
     color: string
 }): ß.react.ReactElement {
