@@ -3,7 +3,7 @@
 //
 
 // HEAD -> MODULES
-import * as dicebearCore from "@dicebear/core/lib/core.js";
+import * as dicebearCore from "@dicebear/core";
 import * as identicon from "@dicebear/identicon";
 
 //
@@ -12,15 +12,10 @@ import * as identicon from "@dicebear/identicon";
 
 // DICEBEAR -> ICON
 export function icon(username: string): string {
-  return `data:image/svg+xml;base64,${btoa(
-    String.fromCharCode(
-      ...new TextEncoder().encode(
-        dicebearCore
-          .createAvatar(identicon, {
-            seed: username,
-          })
-          .toString(),
-      ),
-    ),
-  )}`;
+    return `data:image/svg+xml;base64,${btoa(
+        String.fromCharCode(...new TextEncoder().encode(dicebearCore.createAvatar(identicon, {
+                        seed: username,
+                    }).toString(),
+        ))
+    )}`;
 }

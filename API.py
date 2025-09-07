@@ -4,12 +4,15 @@
 
 # HEAD -> MODULES
 from fastapi import FastAPI
-from importlib import util
-import sys
-import SUG
 
 # HEAD -> API
-from api.mathsys import (compile)
+from api.features import (
+    create as featuresCreate,
+    get as featuresGet
+)
+from api.mathsys import (
+    compile as mathsysCompile
+)
 
 
 #
@@ -20,4 +23,8 @@ from api.mathsys import (compile)
 app = FastAPI()
 
 # GATEWAY -> SCRIPTS
-for script in [compile]: app.include_router(script.router)
+for script in [
+    featuresCreate,
+    featuresGet,
+    mathsysCompile
+]: app.include_router(script.router)

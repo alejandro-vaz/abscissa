@@ -3,6 +3,7 @@
 //
 
 // HEAD -> TOOLS
+import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -15,12 +16,12 @@ export default function $Hide({show, children, className}: {
     show: boolean,
     children?: ß.react.ReactNode,
     className?: string
-}): ß.react.ReactElement {
+}): ß.react.ReactNode {
     return (
-        show ? (
-            <ß.motion.motion.div className={className}>
-                {children}
-            </ß.motion.motion.div>
-        ) : (null)
-    );
+        <div
+            className={`${className} relative overflow-hidden`}
+        >
+            {show ? children : <></>}
+        </div>
+    )
 }

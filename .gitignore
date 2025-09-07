@@ -8,4 +8,3 @@ public/base/tailwind.css
 
 # IGNORE -> FOLDERS
 node_modules/
-cache/

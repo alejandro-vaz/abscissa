@@ -12,7 +12,7 @@ import __init__ as æ
 
 # REQUEST -> FINAL
 class MathsysCompileRequest(æ.BaseModel):
-    Mcode: str
+    Mcode: str = æ.Field(min_length = 0, max_length = 16384)
 
 
 #
@@ -21,7 +21,7 @@ class MathsysCompileRequest(æ.BaseModel):
 
 # RESPONSE -> FINAL
 class MathsysCompileResponse(æ.BaseModel):
-    output: str
+    output: str = æ.Field(min_length = 0, max_length = 16384)
 
 
 #

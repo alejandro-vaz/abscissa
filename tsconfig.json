@@ -24,12 +24,7 @@
       "#dicebear": ["public/app/dicebear.tsx"],
       "#mathsys": ["public/app/mathsys.tsx"],
 
-      "ß": ["public/components/ß.tsx"],
-      "ßButton": ["public/components/ßButton.tsx"],
-      "ßForm": ["public/components/ßForm.tsx"],
-      "ßInputEmail": ["public/components/ßInputEmail.tsx"],
-      "ßInputPassword": ["public/components/ßInputPassword.tsx"],
-      "ßInputText": ["public/components/ßInputText.tsx"]
+      "ß": ["public/components/ß.tsx"]
     }
   },
   "exclude": ["node_modules/"]

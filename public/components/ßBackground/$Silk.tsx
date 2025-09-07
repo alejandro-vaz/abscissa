@@ -3,6 +3,7 @@
 //
 
 // HEAD -> TOOLS
+import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -69,10 +70,17 @@ void main() {
 }
 `;
 
+
+//
+//  INTERFACES
+//
+
+// INTERFACES -> UNIFORMVALUE
 interface UniformValue<T = number | ß.three.Color> {
     value: T;
 }
 
+// INTERFACES -> SILKUNIFORMS
 interface SilkUniforms {
     uSpeed: UniformValue<number>;
     uScale: UniformValue<number>;
@@ -83,27 +91,30 @@ interface SilkUniforms {
     [uniform: string]: ß.three.IUniform;
 }
 
-
-
+// INTERFACES -> SILKPLANEPROPS
 interface SilkPlaneProps {
     uniforms: SilkUniforms;
 }
 
+
+//
+//  SILKPLANE
+//
+
+// SILKPLANE -> FUNCTION
 const SilkPlane = ß.react.forwardRef<ß.three.Mesh, SilkPlaneProps>(function SilkPlane(
-    { uniforms },
+    {uniforms},
     ref
 ) {
-    const { viewport } = ß.fiber.useThree();
-
+    const {viewport} = ß.fiber.useThree();
     ß.react.useLayoutEffect(() => {
-        const mesh = ref as React.RefObject<ß.three.Mesh | null>;
+        const mesh = ref as ß.react.RefObject<ß.three.Mesh | null>;
         if (mesh.current) {
             mesh.current.scale.set(viewport.width, viewport.height, 1);
         }
     }, [ref, viewport]);
-
     ß.fiber.useFrame((_state: ß.fiber.RootState, delta: number) => {
-        const mesh = ref as React.RefObject<ß.three.Mesh | null>;
+        const mesh = ref as ß.react.RefObject<ß.three.Mesh | null>;
         if (mesh.current) {
             const material = mesh.current.material as ß.three.ShaderMaterial & {
                 uniforms: SilkUniforms;
@@ -111,7 +122,6 @@ const SilkPlane = ß.react.forwardRef<ß.three.Mesh, SilkPlaneProps>(function Si
             material.uniforms.uTime.value += 0.1 * delta;
         }
     });
-
     return (
         <mesh ref={ref}>
             <planeGeometry args={[1, 1, 1, 1]} />
@@ -123,25 +133,26 @@ const SilkPlane = ß.react.forwardRef<ß.three.Mesh, SilkPlaneProps>(function Si
         </mesh>
     );
 });
+
+// SILKPLANE -> DISPLAYNAME
 SilkPlane.displayName = "SilkPlane";
 
 
-export default function $Silk({color}: {
-    color: string
-}): ß.react.ReactElement {
+//
+//  EXPORT
+//
+
+// EXPORT -> SILK
+export default function $Silk(): ß.react.ReactNode {
     const meshRef = ß.react.useRef<ß.three.Mesh>(null);
     const uniforms = ß.react.useMemo<SilkUniforms>(() => ({
         uSpeed: {value: 3},
         uScale: {value: 1},
         uNoiseIntensity: {value: 1},
-        uColor: {value: new ß.three.Color(...((color) => [
-            parseInt(color.slice(1, 3), 16) / 255,
-            parseInt(color.slice(3, 5), 16) / 255,
-            parseInt(color.slice(5, 7), 16) / 255
-        ])(color))},
+        uColor: {value: new ß.three.Color(30/255, 30/255, 64/255)},
         uRotation: {value: 0.1},
         uTime: {value: 0}
-    }), [color]);
+    }), []);
     return (
         <div className="absolute inset-0 h-screen w-screen -z-10">
             <ß.fiber.Canvas dpr={[1, 2]} frameloop="always">

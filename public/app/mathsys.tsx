@@ -77,12 +77,15 @@ export function $Playground({code, width, height}: {
                 codemirrorView.EditorView.lineWrapping,
             ],
         });
-        new codemirrorView.EditorView({
+        const editor = new codemirrorView.EditorView({
             state: temporalState,
             parent: editorContainer.current
         });
         setText(code);
-        return () => via.current ? via.current.close() : null;
+        return () => {
+            via.current.close();
+            editor.destroy();
+        };
     }, []);
     ß.react.useEffect(() => {
         setQueue(value => value + 1);
@@ -91,14 +94,19 @@ export function $Playground({code, width, height}: {
     ß.react.useEffect(() => {
         if (queue === 0) {render(output, outputContainer.current, true)}
     }, [output, queue])
+    // PLAYGROUND -> RETURN
     return (
-        <div className={`flex flex-row ${width} ${height}`}>
-            <div className="flex-none w-1/2" ref={editorContainer}></div>
-            <div className="flex-none w-1/2 relative">
-                <ß.Suspense.$Spinner show={queue === 0} className="h-full w-full">
-                    <span className="items-center" ref={outputContainer}></span>
-                </ß.Suspense.$Spinner>
-            </div>
+        <div className={`flex flex-col-reverse lg:flex-row gap-4 ${width} ${height}`}>
+            <div className="flex-1 lg:h-full" ref={editorContainer}></div>
+            <ß.Suspense.$Spinner show={queue === 0} className="flex-1 pt-0 lg:pt-8 lg:h-full">
+                <ß.Button.$Small 
+                    text="Copy LaTeX" 
+                    action={() => navigator.clipboard.writeText(output)} 
+                    className="w-full lg:w-28 lg:top-0 lg:right-0 z-10 lg:absolute"
+                    tooltip="Copied!"
+                />
+                <p className="items-center h-fit block" ref={outputContainer}></p>
+            </ß.Suspense.$Spinner>
         </div>
     );
 }
@@ -108,8 +116,8 @@ export function render(code: string, element: HTMLElement, display: boolean): vo
     element.textContent = code;
     katex(element, {
         delimiters: [
-            { left: "$$", right: "$$", display: true },
-            { left: "$", right: "$", display: display },
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: display},
         ],
         strict: false,
         throwOnError: false,

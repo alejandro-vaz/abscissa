@@ -19,13 +19,13 @@ export default function $CallToAction({text, tooltip, disabled, type, width, red
     type?: "button" | "submit" | "reset",
     width: string,
     redirect: string
-}): ß.react.ReactElement {
+}): ß.react.ReactNode {
     const [hover, setHover] = ß.react.useState(false);
     return (
         <ß.motion.motion.button
-            className={`${width} h-fit overflow-hidden px-3 py-3 font-bold bg-black items-center justify-center border-primary-400 border-2 rounded-xl hover:cursor-pointer`}
-            onClick={() => $.redirect(redirect)}
-            onContextMenu={() => $.redirect(redirect, true, true)}
+            className={`${width} h-fit overflow-hidden px-3 py-3 font-bold bg-black items-center justify-center border-primary-200 border-2 rounded-xl hover:cursor-pointer`}
+            onClick={() => $.redirect(redirect, false)}
+            onContextMenu={() => $.redirect(redirect, true)}
             disabled={disabled}
             type={type}
             onMouseEnter={() => setHover(true)}

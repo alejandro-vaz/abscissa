@@ -19,10 +19,9 @@ export default function $_(): ß.react.ReactNode {
         $.setDescription("LeetCode but for math. Learn math by solving real problems.");
     }, []);
     // FUNCTION -> RETURN
-    return ( 
-        <>
-            <ß.Background.$Silk color="#1E1E40"/>
-            <div className="w-screen h-screen flex flex-col items-center text-center p-6 pt-16">
+    return (
+        <ß.$Main background="$Silk">
+            <div className="w-full h-full flex flex-col items-center text-center p-6 pt-16">
                 <h1 className="text-5xl mb-6 font-bold">LeetCode but for math</h1>
                 <h3 className="text-xl mb-12">Learn math by solving real problems</h3>
                 <ß.Button.$CallToAction
@@ -32,6 +31,6 @@ export default function $_(): ß.react.ReactNode {
                     width="w-32"
                 />
             </div>
-        </>
+        </ß.$Main>
     )
 }

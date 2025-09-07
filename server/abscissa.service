@@ -1,4 +1,4 @@
-[Unit]
+<[Unit]
 Description=Abscissa FastAPI Service
 After=network.target
 
@@ -6,7 +6,7 @@ After=network.target
 User=www-data
 Group=www-data
 WorkingDirectory=/srv/www/abscissa
-ExecStart=python3 -m uvicorn API:app --host 127.0.0.1 --port 8000 --log-level info --reload
+ExecStart=/srv/www/abscissa/.venv/bin/python -m uvicorn API:app --host 127.0.0.1 --port 8000 --log-level info --reload
 Restart=on-failure
 
 [Install]
