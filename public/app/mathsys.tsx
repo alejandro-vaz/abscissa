@@ -96,9 +96,9 @@ export function $Playground({code, width, height}: {
     }, [output, queue])
     // PLAYGROUND -> RETURN
     return (
-        <div className={`flex flex-col lg:flex-row ${width} ${height}`}>
-            <div className="flex-none h-1/2 lg:w-1/2 lg:h-full" ref={editorContainer}></div>
-            <ß.Suspense.$Spinner show={queue === 0} className="flex-none h-1/2 pt-0 lg:pt-8 lg:w-1/2 lg:h-full">
+        <div className={`flex flex-col-reverse lg:flex-row gap-4 ${width} ${height}`}>
+            <div className="flex-1 lg:h-full" ref={editorContainer}></div>
+            <ß.Suspense.$Spinner show={queue === 0} className="flex-1 pt-0 lg:pt-8 lg:h-full">
                 <ß.Button.$Small 
                     text="Copy LaTeX" 
                     action={() => navigator.clipboard.writeText(output)} 
@@ -116,8 +116,8 @@ export function render(code: string, element: HTMLElement, display: boolean): vo
     element.textContent = code;
     katex(element, {
         delimiters: [
-            { left: "$$", right: "$$", display: true },
-            { left: "$", right: "$", display: display },
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: display},
         ],
         strict: false,
         throwOnError: false,

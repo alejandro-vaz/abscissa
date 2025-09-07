@@ -3,6 +3,7 @@
 //
 
 // HEAD -> TOOLS
+import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -142,22 +143,16 @@ SilkPlane.displayName = "SilkPlane";
 //
 
 // EXPORT -> SILK
-export default function $Silk({color}: {
-    color: string
-}): ß.react.ReactElement {
+export default function $Silk(): ß.react.ReactNode {
     const meshRef = ß.react.useRef<ß.three.Mesh>(null);
     const uniforms = ß.react.useMemo<SilkUniforms>(() => ({
         uSpeed: {value: 3},
         uScale: {value: 1},
         uNoiseIntensity: {value: 1},
-        uColor: {value: new ß.three.Color(...((color) => [
-            parseInt(color.slice(1, 3), 16) / 255,
-            parseInt(color.slice(3, 5), 16) / 255,
-            parseInt(color.slice(5, 7), 16) / 255
-        ])(color))},
+        uColor: {value: new ß.three.Color(30/255, 30/255, 64/255)},
         uRotation: {value: 0.1},
         uTime: {value: 0}
-    }), [color]);
+    }), []);
     return (
         <div className="absolute inset-0 h-screen w-screen -z-10">
             <ß.fiber.Canvas dpr={[1, 2]} frameloop="always">

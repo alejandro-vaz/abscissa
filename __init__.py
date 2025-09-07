@@ -11,7 +11,7 @@ import asyncio
 import aiomysql
 from aiomysql import Connection
 from typing import Any
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, TypeAdapter, create_model
 from datetime import datetime
 from enum import Enum
 
@@ -47,3 +47,8 @@ def handler(requestModel: Any, responseModel: Any, extensions: list[Any]) -> Any
             except WebSocketDisconnect: pass
         return hand
     return decorator
+
+
+#
+#   EXPORTS
+#

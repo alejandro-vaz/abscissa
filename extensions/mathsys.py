@@ -26,7 +26,7 @@ class namespace:
     def process(self, code: str) -> bool:
         self.code = code
         try:
-            mathsys.compile(self.code)
+            self.compile()
             return True
         except:
             return False

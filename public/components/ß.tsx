@@ -24,40 +24,53 @@ gagtag.install(SUG.TAG);
 export {react, motion, dom, router, fiber, three};
 
 // EXPORTS -> DEFAULT ROOT
-export const Main = createRoot("Main");
+export const Body = {
+    node: document.body,
+    root: dom.createRoot(document.body)
+}
 
 
 //
-//  DOM
+//  MAIN
 //
 
-// DOM -> REFERENCE
-export type Reference = {
-    node: HTMLElement,
-    root: dom.Root
-};
+// MAIN -> WRAPPER
+export function $Main({background, children, navbar}: {
+    background?: keyof typeof Background,
+    children: react.ReactNode,
+    navbar?: keyof typeof Navbar
+}): react.ReactNode {
+    return (
+        <>  
+            {background && Background[background]()}
+            {navbar ? Navbar[navbar]({children}) : children}
+        </>
+    );
+}
 
-// DOM -> CREATE ROOT
-export function createRoot(id: string): Reference {
-    const node = document.createElement("div");
-    node.id = id;
-    document.body.appendChild(node);
-    return {
-        node: node,
-        root: dom.createRoot(node)
-    } as Reference;
+
+//
+//  PRIVATE COMPONENTS
+//
+
+// PRIVATE COMPONENTS -> BACKGROUND
+import {default as Background$Silk} from "./ßBackground/$Silk.js";
+import {default as Background$Fluid} from "./ßBackground/$Fluid.js";
+const Background = {
+    $Silk: Background$Silk,
+    $Fluid: Background$Fluid
+}
+
+// PRIVATE COMPONENTS -> NAVBAR
+import {default as Navbar$Usual} from "./ßNavbar/$Usual.js";
+const Navbar = {
+    $Usual: Navbar$Usual
 }
 
 
 //
 //  COMPONENTS
 //
-
-// COMPONENTS -> BACKGROUNDS
-import {default as Background$Silk} from "./ßBackground/$Silk.js";
-export const Background = {
-    $Silk: Background$Silk
-}
 
 // COMPONENTS -> BUTTON
 import {default as Button$CallToAction} from "./ßButton/$CallToAction.js";

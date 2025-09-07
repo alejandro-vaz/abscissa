@@ -3,6 +3,7 @@
 //
 
 // HEAD -> TOOLS
+import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -15,7 +16,7 @@ export default function $Spinner({show, children, className}: {
     show: boolean,
     children?: ß.react.ReactNode,
     className?: string
-}): ß.react.ReactElement {
+}): ß.react.ReactNode {
     return (
         <div
             className={`${className} relative overflow-hidden`}

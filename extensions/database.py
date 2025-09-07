@@ -13,26 +13,27 @@ import __init__ as æ
 #   DATABASE
 #
 
-# DATABASE -> MODULES
-import json
+# DATABASE -> PROCEDURES
+procedures = {}
+for name, types in {
+    "CreateFeatures": [str, str],
+    "GetAllFeatures": [],
+    "UpvoteFeatures": [int],
+    "DownvoteFeatures": [int],
+    "CreateSessions": [int, str],
+    "GetPrivateSessions": [int],
+    "ValidateSessions": [bytes, str],
+    "CreateUsers": [str, str, str],
+    "GetPrivateUsers": [int],
+    "GetUidUsers": [int],
+    "GetUnameUsers": [str]
+}.items():
+    procedures[name] = æ.create_model(f"{name}Params", **{f"arg{index}": (valueType, ...) for index, valueType in enumerate(types)})
 
 # DATABASE -> CLASS
 class namespace:
     # CLASS -> VARIABLES
     connection: æ.Connection
-    procedures = {
-        "CreateFeatures": [str, str],
-        "GetAllFeatures": [],
-        "UpvoteFeatures": [int],
-        "DownvoteFeatures": [int],
-        "CreateSessions": [int, str],
-        "GetPrivateSessions": [int],
-        "ValidateSessions": [bytes, str],
-        "CreateUsers": [str, str, str],
-        "GetPrivateUsers": [int],
-        "GetUidUsers": [int],
-        "GetUnameUsers": [str]
-    }
     # CLASS -> INIT
     async def init(self, socket: æ.WebSocket) -> namespace:
         self.connection = await æ.aiomysql.connect(**æ.SUG.DBC)
@@ -40,7 +41,7 @@ class namespace:
         return self
     # CLASS -> QUERY
     async def query(self, command: str, parameters: list) -> æ.Any:
-        for index in range(len(parameters)): assert isinstance(parameters[index], self.procedures[command][index])
+        æ.TypeAdapter(procedures[command]).validate_python({f"arg{index}": value for index, value in enumerate(parameters)})
         async with self.connection.cursor() as cursor:
             await cursor.execute(f"Call {command}({', '.join(['%s'] * len(parameters))})", parameters)
             rows = await cursor.fetchall()

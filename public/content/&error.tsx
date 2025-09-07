@@ -41,13 +41,13 @@ export default function $_error(): ß.react.ReactNode {
     }, [error]);
     // FUNCTION -> RETURN
     return (
-        <>
-            <div className="w-screen h-screen flex flex-col items-center text-center p-6 pt-16">
+        <ß.$Main>
+            <div className="w-full h-full flex flex-col items-center text-center p-6 pt-16">
                 <ß.Suspense.$Hide show={show} className="w-full h-full">
                     <h1 className="text-3xl font-bold mb-5">{error}</h1>
                     <p className="text-xl">{ERRORS[error]}</p>
                 </ß.Suspense.$Hide>
             </div>
-        </>
-    );
+        </ß.$Main>
+    )
 }

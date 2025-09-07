@@ -7,8 +7,8 @@
     "build/css": "tailwindcss -i ./public/base/style.css -o ./public/base/tailwind.css --watch --minify",
     "add/tsx": "npx jsrepo add",
     "connect": "ssh 192.168.1.100 -l root",
-    "chromium": "chromium --ignore-certificate-errors --user-data-dir=/tmp/dev-profile",
-    "setup": "chmod +x package/setup.sh && bash package/setup.sh"
+    "setup": "chmod +x package/setup.sh && bash package/setup.sh",
+    "test": "sshpass -p 'orangepi' rsync -av --exclude 'node_modules' --exclude '.git' --exclude '.venv' . www-data@192.168.1.100:/srv/www/abscissa/"
   },
   "repository": {
     "type": "git",

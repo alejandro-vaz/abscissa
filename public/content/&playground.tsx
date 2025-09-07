@@ -33,14 +33,14 @@ vector = [0, 1]
     }, []);
     // FUNCTION -> RETURN
     return (
-        <>
-            <div className="w-screen h-screen flex flex-col p-6">
+        <ß.$Main navbar="$Usual" background="$Fluid">
+            <div className="w-full h-full flex flex-col p-6 pt-0">
                 <Mathsys.$Playground code={code} width="w-full" height="h-5/6"/>
                 <div className="text-center items-center mt-5 h-1/6">
                     <h2 className="text-3xl mb-5">Suggest a feature</h2>
                     <ß.Button.$CallToAction text="Feature dashboard" width="w-48" redirect="/features"/>
                 </div>
             </div>
-        </>
+        </ß.$Main>
     )
 }

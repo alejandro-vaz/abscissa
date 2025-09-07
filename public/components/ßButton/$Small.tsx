@@ -17,7 +17,7 @@ export default function $Small({text, tooltip, className, action}: {
     tooltip?: string,
     className?: string,
     action: () => any
-}): ß.react.ReactElement {
+}): ß.react.ReactNode {
     const [clicks, setClicks] = ß.react.useState<number>(0);
     return (
         <ß.motion.motion.button

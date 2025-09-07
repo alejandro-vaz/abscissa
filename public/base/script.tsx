@@ -44,8 +44,8 @@ function $Content(): ß.react.ReactNode {
 }
 
 // VIEW -> RENDER
-ß.Main.node.className = "h-screen w-screen";
-ß.Main.root.render(<$App/>);
+ß.Body.node.className = "h-screen w-screen";
+ß.Body.root.render(<$App/>);
 
 
 //
@@ -62,13 +62,22 @@ let globalNavigate: ((to: string, options?: any) => void) | null = null;
 function setGlobalNavigate(navigate: (to: string, options?: any) => void): void {globalNavigate = navigate}
 
 // WINDOW MANAGEMENT -> REDIRECT
-export function redirect(target: string, append: boolean = true, divide: boolean = false): void {
-    if (target === window.location.pathname && append && !divide) {return}
-    if (divide) {
-        const newWindow = window.open(`https://${window.location.host}${target}`, "blank", "noopener,noreferrer");
-        if (newWindow) {newWindow.opener = null}
+export function redirect(target: string, divide: boolean): void {
+    if (target.startsWith('https://')) {
+        if (divide) {
+            const newWindow = window.open(target, "blank", "noopener,noreferrer");
+            if (newWindow) {newWindow.opener = null}
+        } else {
+            window.location.href = target;
+        }
     } else {
-        globalNavigate(target, {replace: !append});
+        if (target === window.location.pathname && !divide) {return}
+        if (divide) {
+            const newWindow = window.open(`https://${window.location.host}${target}`, "blank", "noopener,noreferrer");
+            if (newWindow) {newWindow.opener = null}
+        } else {
+            globalNavigate(target, {replace: false});
+        }
     }
 }
 
