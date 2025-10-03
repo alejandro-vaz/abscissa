@@ -11,8 +11,8 @@ import __init__ as æ
 #
 
 # REQUEST -> FINAL
-class MathsysCompileRequest(æ.BaseModel):
-    Mcode: str = æ.Field(min_length = 0, max_length = 16384)
+class MathsysCompileRequest(æ.pydantic.BaseModel):
+    Mcode: str = æ.pydantic.Field(min_length = 0, max_length = 16384)
 
 
 #
@@ -20,8 +20,8 @@ class MathsysCompileRequest(æ.BaseModel):
 #
 
 # RESPONSE -> FINAL
-class MathsysCompileResponse(æ.BaseModel):
-    output: str = æ.Field(min_length = 0, max_length = 16384)
+class MathsysCompileResponse(æ.pydantic.BaseModel):
+    output: str = æ.pydantic.Field(min_length = 0, max_length = 16384)
 
 
 #
@@ -29,17 +29,17 @@ class MathsysCompileResponse(æ.BaseModel):
 #
 
 # FUNCTION -> ROUTER
-router = æ.APIRouter()
+router = æ.fastapi.APIRouter()
 
 # FUNCTION -> EXTENSIONS
 from extensions import (
-    mathsys as _mathsys
+    math as _math
 )
 
 # FUNCTION -> DECLARATION
 @router.websocket("/api/mathsys/compile")
-@æ.handler(MathsysCompileRequest, MathsysCompileResponse, [_mathsys])
-async def output(payload: MathsysCompileRequest, extensions: list[æ.Any]) -> dict:
-    [mathsys] = extensions
-    if not mathsys.process(payload.Mcode): mathsys.process("error")
-    return {"output": mathsys.compile()}
+@æ.handler(MathsysCompileRequest, MathsysCompileResponse, [_math])
+async def output(payload: MathsysCompileRequest, extensions: list[æ.typing.Any]) -> dict:
+    [math] = extensions
+    math.process(payload.Mcode)
+    return {"output": math.compiled}

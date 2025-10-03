@@ -27,7 +27,7 @@ export default function $CallToAction({text, tooltip, disabled, type, width, red
             onClick={() => $.redirect(redirect, false)}
             onContextMenu={() => $.redirect(redirect, true)}
             disabled={disabled}
-            type={type}
+            type={type ?? "button"}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >

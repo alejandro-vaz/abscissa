@@ -35,7 +35,7 @@ Create procedure CreateUsers(
         email, 
         password
     );
-    Select Uid, Uname from USERS where Uname = username;
+    Select Uid, Uname from USERS where Uid = last_insert_id() order by Uid asc;
 End //
 Delimiter ;
 
@@ -44,7 +44,7 @@ Delimiter //
 Create procedure GetPrivateUsers(
     id int unsigned
 ) begin
-    Select * from USERS where Uid = id;
+    Select * from USERS where Uid = id order by Uid asc;
 End //
 Delimiter ;
 
@@ -53,7 +53,7 @@ Delimiter //
 Create procedure GetUidUsers(
     id int unsigned
 ) begin
-    Select Uid, Uname from USERS where Uid = id;
+    Select Uid, Uname from USERS where Uid = id order by Uid asc;
 End //
 Delimiter ;
 
@@ -62,7 +62,7 @@ Delimiter //
 Create procedure GetUnameUsers(
     username varchar(32)
 ) begin
-    Select Uid, Uname from USERS where Uname = username;
+    Select Uid, Uname from USERS where Uname = username order by Uid asc;
 End //
 Delimiter ;
 

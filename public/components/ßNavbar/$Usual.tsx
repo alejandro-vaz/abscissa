@@ -44,7 +44,7 @@ export default function $Usual({children}: {
                     <$Item redirect="/playground">
                         <h3 className="text-lg">Playground</h3>
                     </$Item>
-                    <$Item redirect="/features">
+                    <$Item redirect="https://abscissa.featurebase.app">
                         <h3 className="text-lg">Features</h3>
                     </$Item>
                     <$Item redirect="https://docs.abscissa.eu">

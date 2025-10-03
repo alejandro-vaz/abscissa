@@ -24,4 +24,3 @@ Set sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 -- SETUP -> TABLES
 Source ./data/users.sql;
 Source ./data/sessions.sql;
-Source ./data/features.sql;

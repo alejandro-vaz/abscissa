@@ -11,13 +11,14 @@ import * as ß from "ß";
 //  CONTENT
 //
 
+// CONTENT -> ERRORS
+const ERRORS = {
+    0: "Unknown error.",
+    404: "Not found."
+} as {[key: number]: string}
+
 // CONTENT -> FUNCTION
 export default function $_error(): ß.react.ReactNode {
-    // FUNCTION -> CONST
-    const ERRORS = {
-        0: "Unknown error.",
-        404: "Not found."
-    } as {[key: number]: string}
     // FUNCTION -> USESTATE
     const [error, setError] = ß.react.useState<number>(0);
     const [show, setShow] = ß.react.useState<boolean>(false);
@@ -41,7 +42,7 @@ export default function $_error(): ß.react.ReactNode {
     }, [error]);
     // FUNCTION -> RETURN
     return (
-        <ß.$Main>
+        <ß.$Main background="$Solid">
             <div className="w-full h-full flex flex-col items-center text-center p-6 pt-16">
                 <ß.Suspense.$Hide show={show} className="w-full h-full">
                     <h1 className="text-3xl font-bold mb-5">{error}</h1>

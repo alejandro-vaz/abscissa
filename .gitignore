@@ -6,5 +6,26 @@
 *.js
 public/base/tailwind.css
 
+# IGNORE -> ANDROID BUILDS
+app-release-signed.apk
+app-release-signed.apk.idsig
+app-release-unsigned-aligned.apk
+store_icon.png
+manifest-checksum.txt
+build/
+.gradle/
+android.keystore
+app/
+gradle/
+build.gradle
+gradle.properties
+gradlew
+gradlew.bat
+settings.gradle
+
+# IGNORE -> VENV
+.venv/
+include/
+
 # IGNORE -> FOLDERS
 node_modules/

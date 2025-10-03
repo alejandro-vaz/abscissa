@@ -4,7 +4,7 @@
 
 And to accomplish our goal we are also developing [*Mathsys,*](https://github.com/alejandro-vaz/mathsys) which aims to be the programming language for math. It is meant to be simple yet powerful.
 
-It is currently on the early stages, so don't get too motivated. This is a pre-alpha and most of the features that will be available on the final product are not even close being to developed just yet.
+It is currently on the early stages, so don't get too motivated. This is an alpha and most of the features that will be available on the final product are not even close to being developed just yet.
 
 **We ship every Sunday.**
 
