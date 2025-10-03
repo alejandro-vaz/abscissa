@@ -21,8 +21,8 @@
     "path": "/home/local/base/code/abscissa/android.keystore",
     "alias": "android"
   },
-  "appVersionName": "v4.13.1",
-  "appVersionCode": 2,
+  "appVersionName": "v4.15.0",
+  "appVersionCode": 3,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://app.abscissa.eu/public/robots/manifest.json",
@@ -44,5 +44,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "v4.13.1"
+  "appVersion": "v4.15.0"
 }
