@@ -9,7 +9,6 @@ import * as ß from "ß";
 import $_ from "&";
 import $_error from "&error";
 import $_playground from "&playground";
-import $_features from "&features";
 
 
 //
@@ -36,7 +35,6 @@ function $Content(): ß.react.ReactNode {
             <ß.router.Routes>
                 <ß.router.Route path="/" element={<$_/>}/>
                 <ß.router.Route path="/playground" element={<$_playground/>}/>
-                <ß.router.Route path="/features" element={<$_features/>}/>
                 <ß.router.Route path="*" element={<$_error/>}/>
             </ß.router.Routes>
         </ß.react.StrictMode>
@@ -64,23 +62,12 @@ function setGlobalNavigate(navigate: (to: string, options?: any) => void): void 
 // WINDOW MANAGEMENT -> REDIRECT
 export function redirect(target: string, divide: boolean): void {
     if (target.startsWith('https://')) {
-        if (divide) {
-            const newWindow = window.open(target, "blank", "noopener,noreferrer");
-            if (newWindow) {newWindow.opener = null}
-        } else {
-            window.location.href = target;
-        }
+        divide ? window.open(target, "_blank", "noopener,noreferrer").opener = null : window.location.href = target;
     } else {
         if (target === window.location.pathname && !divide) {return}
-        if (divide) {
-            const newWindow = window.open(`https://${window.location.host}${target}`, "blank", "noopener,noreferrer");
-            if (newWindow) {newWindow.opener = null}
-        } else {
-            globalNavigate(target, {replace: false});
-        }
+        divide ? window.open(`https://${window.location.host}${target}`, "_blank", "noopener,noreferrer").opener = null : globalNavigate(target, {replace: false});
     }
 }
-
 
 // WINDOW MANAGEMENT -> NO CONTEXTMENU
 document.addEventListener("contextmenu", (event) => {
@@ -104,29 +91,6 @@ export function setDescription(newDescription: string): void {
     document
         .querySelector('meta[name="description"]')
         .setAttribute("content", newDescription);
-}
-
-
-//
-//  INTERFACE MANAGEMENT
-//
-
-// INTERFACE MANAGEMENT -> REGISTRY
-const registry = {};
-
-// INTERFACE MANAGEMENT -> MODULATOR
-export function modulator(...activate: string[]): void {
-    const promises = [];
-    for (const mod in registry) {
-        if (registry[mod].active && !activate.includes(mod)) {
-            promises.push(registry[mod].module.deactivate());
-            registry[mod].active = false;
-        } else if (!registry[mod].active && activate.includes(mod)) {
-            promises.push(registry[mod].module.activate());
-            registry[mod].active = true;
-        }
-    }
-    void Promise.all(promises);
 }
 
 

@@ -12,20 +12,22 @@ import * as Mathsys from "#mathsys";
 //  CONTENT
 //
 
+// CONTENT -> INITIAL CODE
+const CODE = `# ARITHMETIC
+x == 2 * 3
+y = 2x^2^ - 4x + 7
+
+# VECTORS
+vector = [0, 1]
+
+# LIMITS
+e == lim alpha -> inf of (1 + 1 / alpha)^alpha^
+
+# WRITE...
+`
+
 // CONTENT -> FUNCTION
 export default function $_playground(): ß.react.ReactNode {
-    // FUNCTION -> CONST
-    const code = `# Mathsys 0.10.2 features
-#
-# Arithmetic
-x = 2 * 3
-y = 2*x - 4
-#
-# Vectors
-vector = [0, 1]
-#
-# Write your code ...
-`
     // FUNCTION -> USEEFFECT
     ß.react.useEffect(() => {
         $.setTitle("Playground | Abscissa");
@@ -33,12 +35,12 @@ vector = [0, 1]
     }, []);
     // FUNCTION -> RETURN
     return (
-        <ß.$Main navbar="$Usual" background="$Fluid">
+        <ß.$Main navbar="$Usual" background="$Solid">
             <div className="w-full h-full flex flex-col p-6 pt-0">
-                <Mathsys.$Playground code={code} width="w-full" height="h-5/6"/>
+                <Mathsys.$Playground code={CODE} width="w-full" height="h-5/6"/>
                 <div className="text-center items-center mt-5 h-1/6">
                     <h2 className="text-3xl mb-5">Suggest a feature</h2>
-                    <ß.Button.$CallToAction text="Feature dashboard" width="w-48" redirect="/features"/>
+                    <ß.Button.$CallToAction text="Feature dashboard" width="w-48" redirect="https://abscissa.featurebase.app"/>
                 </div>
             </div>
         </ß.$Main>

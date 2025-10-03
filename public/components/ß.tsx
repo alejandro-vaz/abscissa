@@ -3,7 +3,7 @@
 //
 
 // HEAD -> MODULES
-import react from "react";
+import * as react from "react";
 import * as SUG from "SUG";
 import * as gagtag from "ga-gtag";
 import * as motion from "motion/react";
@@ -37,13 +37,15 @@ export const Body = {
 // MAIN -> WRAPPER
 export function $Main({background, children, navbar}: {
     background?: keyof typeof Background,
-    children: react.ReactNode,
+    children?: react.ReactNode,
     navbar?: keyof typeof Navbar
 }): react.ReactNode {
+    const BackgroundComponent = background ? Background[background] : null;
+    const NavbarComponent = navbar ? Navbar[navbar] : null;
     return (
         <>  
-            {background && Background[background]()}
-            {navbar ? Navbar[navbar]({children}) : children}
+            {BackgroundComponent && <BackgroundComponent/>}
+            {NavbarComponent ? <NavbarComponent>{children}</NavbarComponent> : children}
         </>
     );
 }
@@ -56,9 +58,11 @@ export function $Main({background, children, navbar}: {
 // PRIVATE COMPONENTS -> BACKGROUND
 import {default as Background$Silk} from "./ßBackground/$Silk.js";
 import {default as Background$Fluid} from "./ßBackground/$Fluid.js";
+import {default as Background$Solid} from "./ßBackground/$Solid.js";
 const Background = {
     $Silk: Background$Silk,
-    $Fluid: Background$Fluid
+    $Fluid: Background$Fluid,
+    $Solid: Background$Solid
 }
 
 // PRIVATE COMPONENTS -> NAVBAR

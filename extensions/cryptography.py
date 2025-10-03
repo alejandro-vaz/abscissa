@@ -2,9 +2,6 @@
 #   HANDLER
 #
 
-# HANDLER -> FUTURE
-from __future__ import annotations
-
 # HANDLER -> LOAD
 import __init__ as æ
 
@@ -21,7 +18,7 @@ class namespace:
     # CLASS -> VARIABLES
     hasher: argon2.PasswordHasher
     # CLASS -> INIT
-    async def init(self, socket: æ.WebSocket) -> namespace: 
+    async def init(self, socket: æ.fastapi.WebSocket): 
         self.hasher = argon2.PasswordHasher()
         return self
     # CLASS -> HASH

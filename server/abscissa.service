@@ -1,6 +1,7 @@
-<[Unit]
+[Unit]
 Description=Abscissa FastAPI Service
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=www-data

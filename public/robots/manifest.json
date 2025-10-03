@@ -20,6 +20,12 @@
             "sizes": "256x256",
             "type": "image/x-icon",
             "purpose": "any"
+        },
+        {
+            "src": "/public/svg/logoLight.svg",
+            "sizes": "144x144",
+            "type": "image/svg+xml",
+            "purpose": "any"
         }
     ],
     "screenshots": [

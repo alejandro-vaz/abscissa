@@ -28,7 +28,7 @@ Create table `SESSIONS` (
 -- PROCEDURES -> CREATE SESSIONS
 Delimiter //
 Create procedure CreateSessions(
-    id integer,
+    id integer unsigned,
     ip varchar(64)
 ) begin
     Declare sessionBytes binary(32);
@@ -42,16 +42,16 @@ Create procedure CreateSessions(
         Sid = values(Sid),
         Sip = values(Sip),
         Sexpires = values(Sexpires);
-    Select Uid from SESSIONS where Sid = sessionBytes;
+    Select Uid from SESSIONS where Sid = sessionBytes order by Uid asc;
 End //
 Delimiter ;
 
 -- PROCEDURES -> GET PRIVATE SESSIONS
 Delimiter //
 Create procedure GetPrivateSessions(
-    id integer
+    id integer unsigned
 ) begin
-    Select * from SESSIONS where Uid = id;
+    Select * from SESSIONS where Uid = id order by Uid asc;
 End //
 Delimiter ;
 
