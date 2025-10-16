@@ -3,7 +3,6 @@
 //
 
 // HEAD -> TOOLS
-import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -24,8 +23,8 @@ export default function $CallToAction({text, tooltip, disabled, type, width, red
     return (
         <ß.motion.motion.button
             className={`${width} h-fit overflow-hidden px-3 py-3 font-bold bg-black items-center justify-center border-primary-200 border-2 rounded-xl hover:cursor-pointer`}
-            onClick={() => $.redirect(redirect, false)}
-            onContextMenu={() => $.redirect(redirect, true)}
+            onClick={() => ß.redirect(redirect, false)}
+            onContextMenu={() => ß.redirect(redirect, true)}
             disabled={disabled}
             type={type ?? "button"}
             onMouseEnter={() => setHover(true)}

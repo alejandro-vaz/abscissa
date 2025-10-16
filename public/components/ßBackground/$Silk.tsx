@@ -3,7 +3,6 @@
 //
 
 // HEAD -> TOOLS
-import * as $ from "$";
 import * as ß from "ß";
 
 

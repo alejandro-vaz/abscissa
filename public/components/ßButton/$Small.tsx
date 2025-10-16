@@ -3,7 +3,6 @@
 //
 
 // HEAD -> TOOLS
-import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -26,12 +25,12 @@ export default function $Small({text, tooltip, className, action}: {
                 (async() => {
                     setClicks(click => click + 1);
                     action();
-                    await $.delay(1)
+                    await ß.delay(1);
                     setClicks(click => click - 1);
                 })()
             }}
-            initial={{cursor: "default", backgroundColor: "#ffffff19"}}
-            whileHover={{cursor: "pointer", backgroundColor: "#ffffff30"}}
+            initial={{cursor: "default", backgroundColor: "#000000e6"}}
+            whileHover={{cursor: "pointer", backgroundColor: "#000000cf"}}
             transition={{duration: 0.1}}
         >
             <ß.motion.AnimatePresence initial={false} mode="wait">

@@ -53,7 +53,7 @@ class namespace:
     # CLASS -> VARIABLES
     connection: æ.aiomysql.Connection
     # CLASS -> INIT
-    async def init(self, socket: æ.fastapi.WebSocket):
+    async def init(self, socket: æ.fastapi.WebSocket) -> æ.typing.Self:
         self.connection = await æ.aiomysql.connect(**æ.SUG.DBC)
         return self
     # CLASS -> QUERY

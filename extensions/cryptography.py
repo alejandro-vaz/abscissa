@@ -18,7 +18,7 @@ class namespace:
     # CLASS -> VARIABLES
     hasher: argon2.PasswordHasher
     # CLASS -> INIT
-    async def init(self, socket: æ.fastapi.WebSocket): 
+    async def init(self, socket: æ.fastapi.WebSocket) -> æ.typing.Self: 
         self.hasher = argon2.PasswordHasher()
         return self
     # CLASS -> HASH

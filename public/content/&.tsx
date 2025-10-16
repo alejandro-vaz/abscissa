@@ -3,7 +3,6 @@
 //
 
 // HEAD -> MODULES
-import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -15,8 +14,8 @@ import * as ß from "ß";
 export default function $_(): ß.react.ReactNode {
     // FUNCTION -> USEEFFECT
     ß.react.useEffect(() => {
-        $.setTitle("Abscissa");
-        $.setDescription("LeetCode but for math. Learn math by solving real problems.");
+        ß.setTitle("Abscissa");
+        ß.setDescription("LeetCode but for math. Learn math by solving real problems.");
     }, []);
     // FUNCTION -> RETURN
     return (

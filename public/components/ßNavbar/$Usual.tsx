@@ -3,7 +3,6 @@
 //
 
 // HEAD -> TOOLS
-import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -19,8 +18,8 @@ function $Item({children, redirect}: {
     return (
         <ß.motion.motion.div
             className="h-full w-fit rounded-full hover:cursor-pointer flex justify-center items-center text-center"
-            onClick={() => $.redirect(redirect, false)}
-            onContextMenu={() => $.redirect(redirect, true)}
+            onClick={() => ß.redirect(redirect, false)}
+            onContextMenu={() => ß.redirect(redirect, true)}
         >
             {children}
         </ß.motion.motion.div>
@@ -36,7 +35,7 @@ export default function $Usual({children}: {
         <div className="absolute h-screen w-screen flex flex-col">
             <div className="top-0 left-0 h-20 flex-none flex items-center justify-center p-4">
                 <ß.motion.motion.div
-                    className="h-full w-fit min-w-12 rounded-full backdrop-blur-md bg-gray-950/50 flex flex-row p-2 items-center justify-center gap-8 pr-8"
+                    className="h-full w-fit min-w-12 rounded-full border backdrop-blur-md bg-gray-950/50 flex flex-row p-2 items-center justify-center gap-8 pr-8"
                 >
                     <$Item redirect="/">
                         <img src="/public/svg/logoLight.svg" className="h-full aspect-square"/>
@@ -45,14 +44,14 @@ export default function $Usual({children}: {
                         <h3 className="text-lg">Playground</h3>
                     </$Item>
                     <$Item redirect="https://abscissa.featurebase.app">
-                        <h3 className="text-lg">Features</h3>
+                        <h3 className="text-lg">Feedback</h3>
                     </$Item>
                     <$Item redirect="https://docs.abscissa.eu">
                         <h3 className="text-lg">Docs</h3>
                     </$Item>
                 </ß.motion.motion.div>
             </div>
-            <div className="flex-1 overflow-visible">
+            <div className="flex-1 overflow-scroll hide-scrollbar max-w-full max-h-full">
                 {children}
             </div>
         </div>

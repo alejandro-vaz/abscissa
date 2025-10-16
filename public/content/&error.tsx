@@ -3,7 +3,6 @@
 //
 
 // HEAD -> MODULES
-import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -24,7 +23,7 @@ export default function $_error(): ß.react.ReactNode {
     const [show, setShow] = ß.react.useState<boolean>(false);
     // FUNCTION -> USEEFFECT
     ß.react.useEffect(() => {
-        const location = $.locate();
+        const location = ß.locate();
         if (location[0] === "error") {
             try {
                 if (+location[1] in ERRORS) {setError(+location[1])}
@@ -37,8 +36,8 @@ export default function $_error(): ß.react.ReactNode {
         setShow(true);
     }, []);
     ß.react.useEffect(() => {
-        $.setTitle(`Error ${error} | Abscissa`);
-        $.setDescription(`An error occurred on Abscissa: ${ERRORS[error]}`);
+        ß.setTitle(`Error ${error} | Abscissa`);
+        ß.setDescription(`An error occurred on Abscissa: ${ERRORS[error]}`);
     }, [error]);
     // FUNCTION -> RETURN
     return (

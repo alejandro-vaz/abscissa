@@ -3,7 +3,6 @@
 //
 
 // HEAD -> MODULES
-import * as $ from "$";
 import * as ß from "ß";
 import * as Mathsys from "#mathsys";
 
@@ -13,7 +12,8 @@ import * as Mathsys from "#mathsys";
 //
 
 // CONTENT -> INITIAL CODE
-const CODE = `# ARITHMETIC
+const CODE = `# full syntax guide: https://docs.abscissa.eu/Mathsys/Learn
+# ARITHMETIC
 x == 2 * 3
 y = 2x^2^ - 4x + 7
 
@@ -21,28 +21,22 @@ y = 2x^2^ - 4x + 7
 vector = [0, 1]
 
 # LIMITS
-e == lim alpha -> inf of (1 + 1 / alpha)^alpha^
+e == lim n->inf of (1 + 1 / n)^n^
 
-# WRITE...
+# WRITE YOUR OWN MATH...
 `
 
 // CONTENT -> FUNCTION
 export default function $_playground(): ß.react.ReactNode {
     // FUNCTION -> USEEFFECT
     ß.react.useEffect(() => {
-        $.setTitle("Playground | Abscissa");
-        $.setDescription("Interactive Mathsys playground that transpiles to LaTeX.");
+        ß.setTitle("Playground | Abscissa");
+        ß.setDescription("Interactive Mathsys playground that transpiles to LaTeX.");
     }, []);
     // FUNCTION -> RETURN
     return (
         <ß.$Main navbar="$Usual" background="$Solid">
-            <div className="w-full h-full flex flex-col p-6 pt-0">
-                <Mathsys.$Playground code={CODE} width="w-full" height="h-5/6"/>
-                <div className="text-center items-center mt-5 h-1/6">
-                    <h2 className="text-3xl mb-5">Suggest a feature</h2>
-                    <ß.Button.$CallToAction text="Feature dashboard" width="w-48" redirect="https://abscissa.featurebase.app"/>
-                </div>
-            </div>
+            <Mathsys.$Playground code={CODE} className="w-full h-full p-6 pt-0" paper copy/>
         </ß.$Main>
     )
 }

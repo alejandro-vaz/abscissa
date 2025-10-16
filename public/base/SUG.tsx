@@ -1,6 +1,0 @@
-//
-//  SUPERGLOBALS
-//
-
-// SUPERGLOBALS -> TAG
-export const TAG = "G-46CZCGTLM5";

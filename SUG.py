@@ -17,10 +17,3 @@ PDR = "/srv/www"
 
 # MASTER SUPERGLOBALS -> DIRECTORY
 DIR = "/srv/www/abscissa"
-
-# MASTER SUPERGLOBALS -> ERROR CODES
-ERR = [
-    {"status_code": 400, "detail": "Bad request"},
-    {"status_code": 403, "detail": "Forbidden"},
-    {"status_code": 422, "detail": "Unprocessable"}
-]

@@ -3,7 +3,6 @@
 //
 
 // HEAD -> TOOLS
-import * as $ from "$";
 import * as ß from "ß";
 
 
@@ -25,7 +24,7 @@ export default function $Spinner({show, children, className}: {
                 {show ? (
                     <ß.motion.motion.div 
                         key="content"
-                        className="w-full h-full"
+                        className="w-full h-full max-w-full max-h-full"
                         initial={{opacity: 0}}
                         animate={{opacity: 1}}
                         transition={{duration: 0.1, delay: 0.1}}
