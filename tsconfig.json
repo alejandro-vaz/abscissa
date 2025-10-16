@@ -13,8 +13,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "$": ["public/base/script.tsx"],
-      "SUG": ["public/base/SUG.tsx"],
+      "ß": ["public/ß.tsx"],
 
       "&": ["public/content/&.tsx"],
       "&error": ["public/content/&error.tsx"],
@@ -22,9 +21,7 @@
       "&features": ["public/content/&features.tsx"],
 
       "#dicebear": ["public/app/dicebear.tsx"],
-      "#mathsys": ["public/app/mathsys.tsx"],
-
-      "ß": ["public/components/ß.tsx"]
+      "#mathsys": ["public/app/mathsys.tsx"]
     }
   },
   "exclude": ["node_modules/"]

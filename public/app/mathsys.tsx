@@ -3,7 +3,6 @@
 //
 
 // HEAD -> MODULES
-import * as $ from "$";
 import * as ß from "ß";
 import katex from "katex/contrib/auto-render.js";
 import * as codemirrorState from "@codemirror/state";
@@ -16,22 +15,23 @@ import * as codemirrorCommands from "@codemirror/commands";
 //
 
 // MATHSYS -> PLAYGROUND
-export function $Playground({code, width, height}: {
+export function $Playground({code, className, paper, copy}: {
     code: string,
-    width: string,
-    height: string
+    className: string,
+    paper?: boolean,
+    copy?: boolean
 }): ß.react.ReactNode {
     // PLAYGROUND -> USESTATE
     const [queue, setQueue] = ß.react.useState<number>(0);
     const [text, setText] = ß.react.useState<string>("");
     const [output, setOutput] = ß.react.useState<string>("");
     // PLAYGROUND -> USEREF
-    const via = ß.react.useRef<$.via>(null);
+    const via = ß.react.useRef<ß.via>(null);
     const editorContainer = ß.react.useRef<HTMLDivElement>(null);
     const outputContainer = ß.react.useRef<HTMLDivElement>(null);
     // PLAYGROUND -> USEEFFECT
     ß.react.useEffect(() => {
-        via.current = new $.via("mathsys/compile", (data: MathsysCompileResponse) => {
+        via.current = new ß.via("mathsys/compile", (data: MathsysCompileResponse) => {
             setQueue(value => value - 1);
             setOutput(data.output);
         });
@@ -45,8 +45,8 @@ export function $Playground({code, width, height}: {
                         "&": {
                             backgroundColor: "#000000",
                             color: "#ffffff",
-                            borderRadius: "1vw",
-                            overflow: "hidden",
+                            borderRadius: "1rem",
+                            overflow: "auto",
                             height: "100%"
                         },
                         ".cm-content": {
@@ -96,16 +96,21 @@ export function $Playground({code, width, height}: {
     }, [output, queue])
     // PLAYGROUND -> RETURN
     return (
-        <div className={`flex flex-col-reverse lg:flex-row gap-4 ${width} ${height}`}>
+        <div className={`flex flex-col-reverse lg:flex-row gap-4 ${className}`}>
             <div className="flex-1 lg:h-full" ref={editorContainer}></div>
-            <ß.Suspense.$Spinner show={queue === 0} className="flex-1 pt-0 lg:pt-8 lg:h-full">
-                <ß.Button.$Small 
-                    text="Copy LaTeX" 
-                    action={() => navigator.clipboard.writeText(output)} 
-                    className="w-full lg:w-28 lg:top-0 lg:right-0 z-10 lg:absolute"
-                    tooltip="Copied!"
-                />
-                <p className="items-center h-fit block" ref={outputContainer}></p>
+            <ß.Suspense.$Spinner show={queue === 0} className={`flex-1 ${copy && "pt-8"} h-1/2 lg:h-full ${paper && "bg-gray-300 paper-noise rounded-md"}`}>
+                {copy && (
+                    <ß.Button.$Small 
+                        text="Copy LaTeX" 
+                        action={() => navigator.clipboard.writeText(output)} 
+                        className="w-full top-0 right-0 z-10 absolute"
+                        tooltip="Copied!"
+                    />
+                )}
+                <p
+                    className={`overflow-y-auto hide-scrollbar block items-center flex-1 w-full h-full text-lg ${paper ? "text-black" : "text-white"}`}
+                    ref={outputContainer}
+                ></p>
             </ß.Suspense.$Spinner>
         </div>
     );
@@ -116,10 +121,11 @@ export function render(code: string, element: HTMLElement, display: boolean): vo
     element.textContent = code;
     katex(element, {
         delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: display},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "\\(", right: "\\)", display: display},
         ],
         strict: false,
         throwOnError: false,
     });
+    element.scrollTop = element.scrollHeight;
 }
